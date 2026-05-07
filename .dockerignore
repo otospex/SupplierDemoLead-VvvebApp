@@ -4,6 +4,7 @@
 
 # Files needed by Dockerfile / Dockerfile.dokploy:
 !php.ini
+!init.dokploy.sh
 
 # Custom plugin sources + browser-served assets (Dockerfile.dokploy COPYs these).
 !plugins
