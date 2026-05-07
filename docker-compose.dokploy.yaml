@@ -1,0 +1,54 @@
+services:
+  php:
+    image: vvveb/vvvebcms:latest
+    restart: unless-stopped
+    environment:
+      VVVEB_HOST: db
+      VVVEB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: db
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ENGINE: mysqli
+    volumes:
+      - app_data:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - internal
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=dokploy-network
+      - traefik.http.routers.independance.rule=Host(`independance.otospex.dev`)
+      - traefik.http.routers.independance.entrypoints=websecure
+      - traefik.http.routers.independance.tls.certresolver=letsencrypt
+      - traefik.http.services.independance.loadbalancer.server.port=80
+      - traefik.http.routers.independance-http.rule=Host(`independance.otospex.dev`)
+      - traefik.http.routers.independance-http.entrypoints=web
+      - traefik.http.routers.independance-http.middlewares=independance-redirect
+      - traefik.http.middlewares.independance-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.independance-redirect.redirectscheme.permanent=true
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  db_data:
+  app_data:
+
+networks:
+  internal:
+    driver: bridge
+  dokploy-network:
+    external: true

@@ -6,7 +6,8 @@
       "Bash(docker-compose --version)",
       "Bash(sudo -n ss -tlnp)",
       "Bash(curl -sS -o /dev/null -w \"app: %{http_code}\\\\n\" http://localhost:8090/)",
-      "Bash(curl -sS -o /dev/null -w \"phpmyadmin: %{http_code}\\\\n\" http://localhost:8091/)"
+      "Bash(curl -sS -o /dev/null -w \"phpmyadmin: %{http_code}\\\\n\" http://localhost:8091/)",
+      "Bash(grep -rIn '--include=*.php' -E 'getenv\\\\\\(|\\\\$_ENV\\\\[' /home/otospex/Documents/GitHub/SupplierDemoLead-VvvebApp/config /home/otospex/Documents/GitHub/SupplierDemoLead-VvvebApp/install /home/otospex/Documents/GitHub/SupplierDemoLead-VvvebApp/env.php)"
     ]
   }
 }
