@@ -36,6 +36,12 @@ if [ ! -f /var/www/html/public/index.php ]; then
     chmod -R 744 ${DIR_PUBLIC}/admin/index.php
     chmod -R 744 ${DIR_PUBLIC}/vadmin/index.php
     chmod -R 733 ${DIR_CONFIG}
+
+    # Upstream init.sh leaves these unwritable — Vvveb installer bails with
+    # "plugins is not writable" / "public/themes is not writable" without these.
+    chmod -R 755 ${DIR_PLUGINS}
+    chmod -R 755 ${DIR_PUBLIC}/plugins
+    chmod -R 755 ${DIR_PUBLIC}/themes
 fi
 
 # Overlay our plugin + theme on top of the upstream-bootstrapped tree.
@@ -44,9 +50,10 @@ if [ -d /opt/lpc-overlay ]; then
     echo "[init] Applying lead-platform-connector overlay…"
     cp -a /opt/lpc-overlay/. /var/www/html/
     chown -R www-data:www-data \
-        /var/www/html/plugins/lead-platform-connector \
-        /var/www/html/public/plugins/lead-platform-connector \
-        /var/www/html/public/themes/landing 2>/dev/null || true
+        /var/www/html/plugins \
+        /var/www/html/public/plugins \
+        /var/www/html/public/themes 2>/dev/null || true
+    chmod -R u+rwX,go+rX /var/www/html/plugins /var/www/html/public/plugins /var/www/html/public/themes 2>/dev/null || true
 fi
 
 exec /usr/bin/supervisord -c /etc/supervisord.conf
