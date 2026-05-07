@@ -1,2 +1,27 @@
+# Default-deny — only paths explicitly un-ignored below are sent to the Docker build context.
+# Keeps the build small and prevents accidentally shipping local artifacts (storage, node_modules, .git, etc.).
 *
+
+# Files needed by Dockerfile / Dockerfile.dokploy:
 !php.ini
+
+# Custom plugin sources + browser-served assets (Dockerfile.dokploy COPYs these).
+!plugins
+!plugins/lead-platform-connector
+!plugins/lead-platform-connector/**
+!public
+!public/plugins
+!public/plugins/lead-platform-connector
+!public/plugins/lead-platform-connector/**
+
+# Theme overrides.
+!public/themes
+!public/themes/landing
+!public/themes/landing/**
+
+# Re-ignore noisy subdirs that may live inside the un-ignored paths.
+**/.git
+**/.DS_Store
+**/node_modules
+**/storage/cache/*
+**/storage/compiled-templates/*
