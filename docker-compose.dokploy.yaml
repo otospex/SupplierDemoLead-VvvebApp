@@ -1,6 +1,10 @@
 services:
   php:
-    image: vvveb/vvvebcms:latest
+    # Build a custom image from this repo so plugin + theme customizations ship
+    # with every deploy. Upstream vvvebcms is used as the base inside Dockerfile.dokploy.
+    build:
+      context: .
+      dockerfile: Dockerfile.dokploy
     restart: unless-stopped
     environment:
       VVVEB_HOST: db
@@ -11,7 +15,13 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_ENGINE: mysqli
     volumes:
-      - app_data:/var/www/html
+      # Persist only user-generated runtime data; everything else (code, plugins,
+      # themes) comes from the image so each deploy ships fresh.
+      - app_storage:/var/www/html/storage
+      - app_media:/var/www/html/public/media
+      - app_page_cache:/var/www/html/public/page-cache
+      - app_image_cache:/var/www/html/public/image-cache
+      - app_config:/var/www/html/config
     depends_on:
       - db
     networks:
@@ -45,7 +55,11 @@ services:
 
 volumes:
   db_data:
-  app_data:
+  app_storage:
+  app_media:
+  app_page_cache:
+  app_image_cache:
+  app_config:
 
 networks:
   internal:

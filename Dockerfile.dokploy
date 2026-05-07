@@ -1,0 +1,28 @@
+# Production image for Dokploy deploys.
+#
+# Layers this repo's plugin + customizations on top of the upstream vvvebcms
+# image so every git push results in fresh code inside the container.
+#
+# Used by docker-compose.dokploy.yaml via `build: { context: ., dockerfile: Dockerfile.dokploy }`.
+
+FROM vvveb/vvvebcms:latest
+
+# Custom plugin sources (admin controllers, app proxy, components, SQL DSL, install schemas).
+COPY plugins/lead-platform-connector \
+     /var/www/html/plugins/lead-platform-connector
+
+# Browser-served plugin assets (admin HTML templates, editor JS, runtime JS, icon).
+COPY public/plugins/lead-platform-connector \
+     /var/www/html/public/plugins/lead-platform-connector
+
+# Theme tweaks (landing page customizations).
+COPY public/themes/landing /var/www/html/public/themes/landing
+
+# Custom PHP config (OPcache settings, upload limits, etc.).
+COPY php.ini /usr/local/etc/php/php.ini
+
+# Ownership + permissions so PHP-FPM (www-data) can read the new files.
+RUN chown -R www-data:www-data \
+        /var/www/html/plugins/lead-platform-connector \
+        /var/www/html/public/plugins/lead-platform-connector \
+        /var/www/html/public/themes/landing
