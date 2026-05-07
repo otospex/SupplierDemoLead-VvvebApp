@@ -15,13 +15,14 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_ENGINE: mysqli
     volumes:
-      # Persist only user-generated runtime data; everything else (code, plugins,
-      # themes) comes from the image so each deploy ships fresh.
-      - app_storage:/var/www/html/storage
-      - app_media:/var/www/html/public/media
-      - app_page_cache:/var/www/html/public/page-cache
-      - app_image_cache:/var/www/html/public/image-cache
-      - app_config:/var/www/html/config
+      # Single explicit named volume for /var/www/html. This overrides the
+      # anonymous volume Docker would otherwise create from the upstream image's
+      # `VOLUME /var/www/html/` declaration. On first start the volume is empty,
+      # init.dokploy.sh's check (`! -f public/index.php`) is true, Vvveb is
+      # downloaded into the volume, and our overlay copies on top. On subsequent
+      # starts the volume is preserved (uploaded media, generated DB models,
+      # config, page cache) but the overlay re-applies fresh plugin code.
+      - app_root:/var/www/html
     depends_on:
       - db
     networks:
@@ -55,11 +56,7 @@ services:
 
 volumes:
   db_data:
-  app_storage:
-  app_media:
-  app_page_cache:
-  app_image_cache:
-  app_config:
+  app_root:
 
 networks:
   internal:

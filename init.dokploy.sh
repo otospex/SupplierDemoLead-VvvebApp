@@ -6,7 +6,10 @@
 
 set -e
 
-if [ ! -d /var/www/html/public/ ]; then
+# Use a real Vvveb file as the existence check, not just /public/.
+# Volume mounts auto-create parent directories, so /public/ may exist as an
+# empty directory even on a fresh install — checking for index.php is reliable.
+if [ ! -f /var/www/html/public/index.php ]; then
     export DIR_VVVEB='/var/www/html'
     export DIR_CONFIG=${DIR_VVVEB}'/config'
     export DIR_PUBLIC=${DIR_VVVEB}'/public'
