@@ -9,7 +9,9 @@ if (! defined('V_VERSION')) {
 class LeadClient {
 
 	public static function send(string $platformUrl, string $apiKey, array $payload, int $timeoutSec = 8): array {
-		$url = rtrim($platformUrl, '/') . '/api/v1/leads';
+		// The Platform URL field is the full endpoint (e.g. https://host/api/v1/leads).
+		// We POST to it as-is; the admin form labels it accordingly.
+		$url = rtrim($platformUrl, '/');
 		$body = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
 		$ch = curl_init($url);
