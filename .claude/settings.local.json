@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker --version)",
+      "Bash(docker compose *)",
+      "Bash(docker-compose --version)",
+      "Bash(sudo -n ss -tlnp)",
+      "Bash(curl -sS -o /dev/null -w \"app: %{http_code}\\\\n\" http://localhost:8090/)",
+      "Bash(curl -sS -o /dev/null -w \"phpmyadmin: %{http_code}\\\\n\" http://localhost:8091/)"
+    ]
+  }
+}

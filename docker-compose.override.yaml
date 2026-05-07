@@ -1,0 +1,8 @@
+services:
+  php:
+    ports: !override
+      - "8090:80"
+
+  phpmyadmin:
+    ports: !override
+      - "8091:80"
