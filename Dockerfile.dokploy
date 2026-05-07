@@ -1,28 +1,33 @@
 # Production image for Dokploy deploys.
 #
-# Layers this repo's plugin + customizations on top of the upstream vvvebcms
-# image so every git push results in fresh code inside the container.
+# The upstream vvveb/vvvebcms image downloads the Vvveb application from
+# www.vvveb.com at first container start (via /init.sh) into /var/www/html,
+# but ONLY if /var/www/html/public/ doesn't already exist. So we cannot COPY
+# our files directly into /var/www/html at build time — that would short-circuit
+# init.sh and leave the app missing.
 #
-# Used by docker-compose.dokploy.yaml via `build: { context: ., dockerfile: Dockerfile.dokploy }`.
+# Strategy: stash our overlays at /opt/lpc-overlay/ during build, then replace
+# the upstream init.sh with a version that runs upstream bootstrap first, copies
+# our overlays on top, and then starts supervisord (php-fpm + nginx).
 
 FROM vvveb/vvvebcms:latest
 
-# Custom plugin sources (admin controllers, app proxy, components, SQL DSL, install schemas).
+# 1. Stage our overlays in a neutral path that upstream init.sh's existence check ignores.
 COPY plugins/lead-platform-connector \
-     /var/www/html/plugins/lead-platform-connector
+     /opt/lpc-overlay/plugins/lead-platform-connector
 
-# Browser-served plugin assets (admin HTML templates, editor JS, runtime JS, icon).
 COPY public/plugins/lead-platform-connector \
-     /var/www/html/public/plugins/lead-platform-connector
+     /opt/lpc-overlay/public/plugins/lead-platform-connector
 
-# Theme tweaks (landing page customizations).
-COPY public/themes/landing /var/www/html/public/themes/landing
+COPY public/themes/landing \
+     /opt/lpc-overlay/public/themes/landing
 
-# Custom PHP config (OPcache settings, upload limits, etc.).
+# 2. Custom PHP config (outside /var/www/html — applied at build time).
 COPY php.ini /usr/local/etc/php/php.ini
 
-# Ownership + permissions so PHP-FPM (www-data) can read the new files.
-RUN chown -R www-data:www-data \
-        /var/www/html/plugins/lead-platform-connector \
-        /var/www/html/public/plugins/lead-platform-connector \
-        /var/www/html/public/themes/landing
+# 3. Replace init.sh:
+#    - keep upstream bootstrap logic (curl + unzip Vvveb on first run)
+#    - copy our overlay AFTER bootstrap, EVERY run (so plugin updates land on redeploy)
+#    - start supervisord at the end (same as upstream)
+COPY init.dokploy.sh /init.sh
+RUN chmod +x /init.sh
