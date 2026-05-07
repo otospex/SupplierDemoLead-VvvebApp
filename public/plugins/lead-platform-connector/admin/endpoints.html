@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="/favicon.ico">
+	<base href="">
+	<title>Vvveb - Lead endpoints</title>
+	<link href="css/admin.css" rel="stylesheet">
+</head>
+
+<body class="endpoints">
+
+	<div id="container">
+
+		<div class="sidebar" data-v-copy-from="index.html,.sidebar"></div>
+
+		<div class="main">
+
+			<div class="clearfix top-header" data-v-copy-from="index.html,.top-header"></div>
+
+			<form id="settings-form" action="" method="post" class="settings" data-v-lead_endpoint>
+				<input type="hidden" name="action" id="action" value="save">
+				<input type="hidden" name="csrf" data-v-csrf>
+
+				<div class="actions">
+					<div class="title">
+						<h4 class="text-muted mt-2">
+							<i class="icon-cloud-upload-outline"></i>
+							<span>Lead endpoints</span>
+						</h4>
+					</div>
+					<div class="btns">
+						<a href="/admin/index.php?module=plugins/lead-platform-connector/endpoint" title="Add new" class="btn btn-primary">
+							<i class="la la-plus"></i> <span>New endpoint</span>
+						</a>
+					</div>
+				</div>
+
+				<div id="main-content">
+
+					<div class="notifications" data-v-notifications data-v-copy-from="index.html,.notifications"></div>
+
+					<div class="content clearfix settings">
+
+						<div class="bulk-actions px-2 mb-2" style="display:none">
+							<button type="submit" name="action" value="delete" data-v-check-permission-delete title="Delete selected"
+								class="btn btn-outline-secondary bg-body-tertiary text-danger">
+								<i class="icon-trash-outline"></i> Delete selected
+							</button>
+						</div>
+
+						<div class="table-responsive">
+							<table class="table table-hover middle-align" data-v-lead_endpoints>
+
+								<thead>
+									<tr>
+										<th class="col-cb">
+											<label class="form-check">
+												<input type="checkbox" class="form-check-input" name="lead_endpoint[]" data-v-vvveb-action="table.bulkSelect">
+												<span class="form-check-label"></span>
+											</label>
+										</th>
+										<th><i class="icon-cube-outline"></i><span>Slug</span></th>
+										<th><span>Label</span></th>
+										<th><span>Platform URL</span></th>
+										<th><span>Campaign</span></th>
+										<th><span>Rate</span></th>
+										<th><span>Active</span></th>
+										<th class="actions text-center" style="width:150px"><span>Actions</span></th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr class="endpoint" data-v-lead_endpoint data-v-class-if-active="lead_endpoint.active=1">
+										<td class="checkbox">
+											<label class="form-check">
+												<input type="checkbox" class="form-check-input" name="lead_endpoint_id[]" data-v-vvveb-action="table.selectRow" data-v-lead_endpoint-lead_endpoint_id>
+												<span class="form-check-label"></span>
+											</label>
+										</td>
+										<td>
+											<a data-v-lead_endpoint-edit-url><code data-v-lead_endpoint-slug>slug</code></a>
+										</td>
+										<td><span data-v-lead_endpoint-label>label</span></td>
+										<td class="text-muted small"><span data-v-lead_endpoint-platform_url>https://...</span></td>
+										<td><span data-v-lead_endpoint-campaign>campaign</span></td>
+										<td><span data-v-lead_endpoint-rate_limit>30</span>/min</td>
+										<td>
+											<span class="badge bg-success" data-v-if="lead_endpoint.active=1">on</span>
+											<span class="badge bg-secondary" data-v-if="lead_endpoint.active=0">off</span>
+										</td>
+										<td class="actions">
+											<div class="btn-group">
+												<a class="btn btn-icon btn-outline-secondary" data-v-lead_endpoint-edit-url>
+													<i class="la la-pencil-alt text-primary"></i><span>Edit</span>
+												</a>
+												<button type="button" class="btn btn-icon btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" data-bs-reference="parent">
+													<span class="visually-hidden">Toggle</span>
+												</button>
+												<ul class="dropdown-menu">
+													<li data-v-check-permission-delete>
+														<button type="submit" name="lead_endpoint_id[]" value="" class="dropdown-item text-danger" onclick="document.getElementById('action').value='delete';return confirm('Are you sure?')" data-v-lead_endpoint-lead_endpoint_id>
+															<i class="icon-trash-outline"></i><span>Delete</span>
+														</button>
+													</li>
+												</ul>
+											</div>
+										</td>
+									</tr>
+
+									<tr data-v-if-not="this.count > 0" class="no-items">
+										<td colspan="100">
+											<div class="text-center mb-4">
+												<div>
+													<i class="icon-cloud-upload-outline display-4 lh-1 text-secondary text-opacity-75"></i>
+													<div class="mt-3">No endpoints configured yet — click "New endpoint" to add one.</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div class="d-flex justify-content-end ">
+								<div id="pagination" data-v-pagination data-v-copy-from="content/posts.html,#pagination"></div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div id="main-footer" data-v-copy-from="index.html,#main-footer"></div>
+	</div>
+
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script id="admin-js" type="module" src="/js/admin.js"></script>
+</body>
+</html>

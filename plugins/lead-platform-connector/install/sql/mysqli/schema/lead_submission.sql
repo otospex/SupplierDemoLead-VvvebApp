@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS `lead_submission` (
+  `lead_submission_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `endpoint_slug` varchar(64) NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
+  `platform_lead_id` varchar(64) DEFAULT NULL,
+  `http_status` INT DEFAULT NULL,
+  `phone_hash` varchar(64) DEFAULT NULL,
+  `email_hash` varchar(64) DEFAULT NULL,
+  `payload` text DEFAULT NULL,
+  `response` text DEFAULT NULL,
+  `error` text DEFAULT NULL,
+  `client_ip` varchar(45) DEFAULT NULL,
+  `user_agent` varchar(255) DEFAULT NULL,
+  `source_page` varchar(255) DEFAULT NULL,
+  `attempts` tinyint(3) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`lead_submission_id`),
+  KEY `status_date` (`status`,`created_at`,`lead_submission_id`),
+  KEY `endpoint_date` (`endpoint_slug`,`created_at`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;

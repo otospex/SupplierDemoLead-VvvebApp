@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="/favicon.ico">
+	<base href="">
+	<title>Vvveb - Lead endpoint</title>
+	<link href="css/admin.css" rel="stylesheet">
+</head>
+
+<body class="endpoint">
+
+	<div id="container">
+
+		<div class="sidebar" data-v-copy-from="index.html,.sidebar"></div>
+
+		<div class="main">
+
+			<div class="clearfix top-header" data-v-copy-from="index.html,.top-header"></div>
+
+			<form id="settings-form" action="" method="post" class="settings" data-v-lead_endpoint>
+				<input type="hidden" name="action" id="action" value="save">
+				<input type="hidden" name="csrf" data-v-csrf>
+				<input type="hidden" name="lead_endpoint_id" data-v-lead_endpoint-lead_endpoint_id>
+
+				<div class="actions flex-column flex-md-row">
+					<div class="title">
+						<h4 class="text-muted my-3">
+							<i class="icon-cloud-upload-outline"></i>
+							<span>Endpoint configuration</span>
+						</h4>
+					</div>
+					<div class="btns">
+						<a href="/admin/index.php?module=plugins/lead-platform-connector/endpoints" title="Endpoints" class="btn btn-outline-secondary pe-3">
+							<i class="la la-arrow-left"></i><span>Endpoints</span>
+						</a>
+						<button type="submit" class="btn btn-primary btn-icon ms-1">
+							<i class="icon-create-outline"></i><span>Save</span>
+						</button>
+					</div>
+				</div>
+
+				<div id="main-content">
+
+					<div class="notifications" data-v-notifications data-v-copy-from="index.html,.notifications"></div>
+
+					<div class="content clearfix">
+						<div class="container-fluid p-3">
+							<div class="row g-3">
+
+								<div class="col-md-4">
+									<label class="form-label">Slug *</label>
+									<input type="text" class="form-control" name="slug" required pattern="[a-z0-9_-]+" data-v-lead_endpoint-slug>
+									<small class="text-muted">Used by the form block. Browser-visible — never put secrets here.</small>
+								</div>
+								<div class="col-md-4">
+									<label class="form-label">Label</label>
+									<input type="text" class="form-control" name="label" data-v-lead_endpoint-label>
+								</div>
+								<div class="col-md-4">
+									<label class="form-label d-block">Active</label>
+									<div class="form-check form-switch mt-2">
+										<!-- hidden default ensures POST always carries active=0 even when unticked -->
+											<input type="hidden" name="active" value="0">
+											<input class="form-check-input" type="checkbox" name="active" value="1" data-v-lead_endpoint-active_checkbox>
+										<label class="form-check-label">Enabled</label>
+									</div>
+								</div>
+
+								<div class="col-md-8">
+									<label class="form-label">Platform URL *</label>
+									<input type="url" class="form-control" name="platform_url" required placeholder="https://leads.example.com" data-v-lead_endpoint-platform_url>
+									<small class="text-muted">The plugin will POST to <code>{url}/api/v1/leads</code>.</small>
+								</div>
+								<div class="col-md-4">
+									<label class="form-label">Campaign slug *</label>
+									<input type="text" class="form-control" name="campaign" required data-v-lead_endpoint-campaign>
+								</div>
+
+								<div class="col-md-12">
+									<label class="form-label">API Key (X-Api-Key)</label>
+									<input type="password" class="form-control" name="api_key" autocomplete="new-password" placeholder="lp_..." data-v-lead_endpoint-api_key_field>
+									<small class="text-muted">Encrypted at rest. Never sent to browsers. Stored only on this server.</small>
+								</div>
+
+								<div class="col-md-12">
+									<label class="form-label">Field map (JSON, optional)</label>
+									<textarea class="form-control font-monospace" name="field_map" rows="4"
+										placeholder='{"first_name":"name","phone_number":"phone","budget":"tool_answers.budget"}' data-v-lead_endpoint-field_map></textarea>
+									<small class="text-muted">Map your form's <code>name</code> attributes to platform fields. Use dot-notation for nested (e.g. <code>tool_answers.budget</code>). Unmapped non-standard fields go into <code>tool_answers</code>.</small>
+								</div>
+
+								<div class="col-md-8">
+									<label class="form-label">Allowed origins</label>
+									<textarea class="form-control" name="allowed_origins" rows="2" placeholder="example.com, *.example.com" data-v-lead_endpoint-allowed_origins_text></textarea>
+									<small class="text-muted">Comma or newline separated. Empty = allow same-host only. Use <code>*.example.com</code> for subdomain wildcard.</small>
+								</div>
+								<div class="col-md-4">
+									<label class="form-label">Rate limit (per IP / minute)</label>
+									<input type="number" min="0" class="form-control" name="rate_limit" data-v-lead_endpoint-rate_limit>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div id="main-footer" data-v-copy-from="index.html,#main-footer"></div>
+	</div>
+
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script id="admin-js" type="module" src="/js/admin.js"></script>
+</body>
+</html>
