@@ -22,6 +22,9 @@ COPY public/plugins/lead-platform-connector \
 COPY public/themes/landing \
      /opt/lpc-overlay/public/themes/landing
 
+COPY public/themes/souverainete-digitale \
+     /opt/lpc-overlay/public/themes/souverainete-digitale
+
 # 2. Custom PHP config (outside /var/www/html — applied at build time).
 COPY php.ini /usr/local/etc/php/php.ini
 

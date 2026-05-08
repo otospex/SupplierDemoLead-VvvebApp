@@ -54,6 +54,12 @@ if [ -d /opt/lpc-overlay ]; then
         /var/www/html/public/plugins \
         /var/www/html/public/themes 2>/dev/null || true
     chmod -R u+rwX,go+rX /var/www/html/plugins /var/www/html/public/plugins /var/www/html/public/themes 2>/dev/null || true
+
+    # Cache invalidation: themes/plugins lists are scanned from disk and cached.
+    # Volume persists across redeploys, so a freshly-overlaid theme stays
+    # invisible in the admin until this cache is busted.
+    rm -f /var/www/html/storage/cache/vvveb.themes_list_* \
+          /var/www/html/storage/cache/vvveb.plugins_list_* 2>/dev/null || true
 fi
 
 exec /usr/bin/supervisord -c /etc/supervisord.conf
