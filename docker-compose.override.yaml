@@ -2,6 +2,8 @@ services:
   php:
     ports: !override
       - "8090:80"
+    volumes:
+      - ./php.ini:/usr/local/etc/php/conf.d/zz-dev.ini:ro
 
   phpmyadmin:
     ports: !override

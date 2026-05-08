@@ -86,10 +86,29 @@
 								</div>
 
 								<div class="col-md-12">
-									<label class="form-label">Field map (JSON, optional)</label>
+									<label class="form-label d-flex align-items-center justify-content-between">
+										<span>Field map (JSON, optional)</span>
+										<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#field-map-example" aria-expanded="false" aria-controls="field-map-example">
+											<i class="la la-eye"></i> Voir exemple
+										</button>
+									</label>
 									<textarea class="form-control font-monospace" name="field_map" rows="4"
 										placeholder='{"first_name":"name","phone_number":"phone","budget":"tool_answers.budget"}' data-v-lead_endpoint-field_map></textarea>
-									<small class="text-muted">Map your form's <code>name</code> attributes to platform fields. Use dot-notation for nested (e.g. <code>tool_answers.budget</code>). Unmapped non-standard fields go into <code>tool_answers</code>.</small>
+									<small class="text-muted">Format: each key is the form field <code>name</code>; the value is <code>"required"</code> when the field must be filled, or <code>""</code> (empty string) when optional. Use dot-notation for nested targets (e.g. <code>tool_answers.budget</code>). Unmapped non-standard fields go into <code>tool_answers</code>.</small>
+									<div class="collapse mt-2" id="field-map-example">
+										<div class="card card-body bg-light">
+											<small class="text-muted d-block mb-1">Example — <code>"required"</code> means the field is mandatory, <code>""</code> means optional:</small>
+<pre class="mb-0 font-monospace small">{
+    "campaign": "storm-damage-dmv",
+    "full_name": "required",
+    "telephone": "required",
+    "email_address": "",
+    "postal_code": "",
+    "damage_type": "",
+    "has_insurance": ""
+}</pre>
+										</div>
+									</div>
 								</div>
 
 								<div class="col-md-8">

@@ -62,20 +62,23 @@
             if (k.indexOf('zip') >= 0 || k.indexOf('postal') >= 0) return 'text';
             return 'text';
         };
-        const isRequired = function (k, t) {
-            const lk = (k + ' ' + (t || '')).toLowerCase();
-            return /name|phone|tel|email/.test(lk);
+        // Required flag is driven by the field-map value: "required" = mandatory,
+        // anything else (empty string, etc.) = optional.
+        const isRequired = function (value) {
+            return typeof value === 'string' && value.trim().toLowerCase() === 'required';
         };
 
         let html = '<div class="row g-3">';
         keys.forEach(function (k) {
-            const target = fieldMap[k];
-            const type   = inputTypeFor(k, target);
-            const req    = isRequired(k, target) ? ' required' : '';
-            const label  = humanize(k);
+            const target   = fieldMap[k];
+            const type     = inputTypeFor(k, target);
+            const required = isRequired(target);
+            const req      = required ? ' required' : '';
+            const star     = required ? ' <span class="text-danger" aria-hidden="true">*</span>' : '';
+            const label    = humanize(k);
             html +=
                 '<div class="col-md-6">' +
-                    '<label class="form-label">' + label + '</label>' +
+                    '<label class="form-label">' + label + star + '</label>' +
                     '<input type="' + type + '" class="form-control" name="' + k + '"' + req + '>' +
                 '</div>';
         });
@@ -149,11 +152,11 @@
 
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label">Full name</label>
+                        <label class="form-label">Full name <span class="text-danger" aria-hidden="true">*</span></label>
                         <input type="text" class="form-control" name="full_name" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Phone</label>
+                        <label class="form-label">Phone <span class="text-danger" aria-hidden="true">*</span></label>
                         <input type="tel" class="form-control" name="telephone" required>
                     </div>
                     <div class="col-md-12">

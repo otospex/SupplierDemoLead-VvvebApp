@@ -92,6 +92,30 @@ class LeadPlatformConnectorPlugin {
 	function install() {
 		$install = new Install();
 		$install->run();
+
+		// Bust any stale generated-model files so they regenerate against the
+		// now-existing tables. Without this, models cached when the tables were
+		// missing keep an empty column whitelist → INSERTs with no fields.
+		$this->clearGeneratedModelCache();
+	}
+
+	/**
+	 * Delete cached SQL models for this plugin. The framework regenerates them
+	 * on next use by introspecting live columns.
+	 */
+	private function clearGeneratedModelCache() {
+		$dirs = [
+			DIR_ROOT . 'storage/model/admin/plugins/leadplatformconnector',
+			DIR_ROOT . 'storage/model/app/plugins/leadplatformconnector',
+		];
+		foreach ($dirs as $dir) {
+			if (! is_dir($dir)) {
+				continue;
+			}
+			foreach ((array) glob($dir . '/*.php') as $file) {
+				@unlink($file);
+			}
+		}
 	}
 
 	/**
@@ -107,27 +131,36 @@ class LeadPlatformConnectorPlugin {
 		}
 
 		try {
-			$db = Db::getInstance();
-			$stmt = $db->execute('SHOW TABLES LIKE :name', ['name' => 'lead_endpoint']);
-			$exists = false;
-			if ($stmt) {
-				if (method_exists($stmt, 'get_result')) {
-					$res = $stmt->get_result();
-					$exists = $res && $res->num_rows > 0;
-				} else {
-					$rows = $db->fetchAll($stmt);
-					$exists = is_array($rows) && count($rows) > 0;
-				}
-			}
+			$exists = $this->leadEndpointTableExists();
 
 			if (! $exists) {
 				$this->install();
+				// Re-check: only set the flag if install actually succeeded.
+				// If install silently failed (perms, DB not ready), leave the
+				// flag absent so we retry on the next admin request.
+				$exists = $this->leadEndpointTableExists();
 			}
 
-			@touch($flag);
+			if ($exists) {
+				@touch($flag);
+			}
 		} catch (\Throwable $e) {
 			// Don't break the admin if the DB isn't ready yet (e.g. during install).
 		}
+	}
+
+	private function leadEndpointTableExists(): bool {
+		$db = Db::getInstance();
+		$stmt = $db->execute('SHOW TABLES LIKE :name', ['name' => 'lead_endpoint']);
+		if (! $stmt) {
+			return false;
+		}
+		if (method_exists($stmt, 'get_result')) {
+			$res = $stmt->get_result();
+			return (bool) ($res && $res->num_rows > 0);
+		}
+		$rows = $db->fetchAll($stmt);
+		return is_array($rows) && count($rows) > 0;
 	}
 
 	function app() {
