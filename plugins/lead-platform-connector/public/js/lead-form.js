@@ -36,6 +36,11 @@
 		if (!form || form.__lpcBound) return;
 		form.__lpcBound = true;
 
+		// Let the browser run HTML5 validation on the `required` inputs the
+		// editor generates. The original template carried `novalidate` to keep
+		// the editor experience clean; on the live page we want native checks.
+		form.removeAttribute('novalidate');
+
 		var cfg = {
 			endpoint:    form.getAttribute('data-endpoint') || '',
 			csrf:        form.getAttribute('data-csrf') || '',
@@ -51,6 +56,14 @@
 		form.addEventListener('submit', function (ev) {
 			ev.preventDefault();
 
+			// HTML5 validation: surface the native tooltip on empty required
+			// fields and stop here. We only do this client-side; the platform
+			// is still authoritative.
+			if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
+				if (typeof form.reportValidity === 'function') form.reportValidity();
+				return;
+			}
+
 			if (!cfg.endpoint || !cfg.csrf || !cfg.submitUrl) {
 				showAlert(wrap, 'error', 'Form is not configured.');
 				return;
@@ -63,10 +76,11 @@
 				return;
 			}
 
-			// Time gate (defeat bot autofill)
+			// Time gate (defeat bot autofill). Only triggers right after a
+			// fresh page load — humans normally take more than a second.
 			var elapsed = Date.now() - cfg.renderTs;
 			if (cfg.renderTs && elapsed < cfg.minTimeMs) {
-				showAlert(wrap, 'error', 'Please take a moment to complete the form.');
+				showAlert(wrap, 'error', 'One moment — the form just loaded. Please try again.');
 				return;
 			}
 
