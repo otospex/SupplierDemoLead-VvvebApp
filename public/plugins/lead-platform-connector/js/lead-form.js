@@ -1,29 +1,54 @@
+/*
+ * Lead Platform Connector — published-page runtime
+ *
+ * Finds every <form data-v-endpoint="..."> on the page, fetches a fresh CSRF
+ * token + submit URL from the plugin's token endpoint, and intercepts submit
+ * to POST the lead JSON to the plugin's submit controller.
+ *
+ * Doesn't depend on the template engine writing any data attributes onto the
+ * form — the form just needs `data-v-endpoint=<slug>`, which the editor sets.
+ */
 (function () {
 	'use strict';
 
+	const TOKEN_URL  = '/index.php?module=plugins/lead-platform-connector/submit&action=token';
+	const HONEYPOT   = 'company_website';
+	const MIN_TIMEMS = 1500;
+
 	function readUtmFromUrl() {
-		var params = new URLSearchParams(window.location.search || '');
-		var utm = {};
-		var keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid','msclkid'];
-		keys.forEach(function (k) {
-			var v = params.get(k);
+		const params = new URLSearchParams(window.location.search || '');
+		const utm = {};
+		['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid','msclkid'].forEach(function (k) {
+			const v = params.get(k);
 			if (v) utm[k] = v;
 		});
 		return utm;
 	}
 
-	function showAlert(wrap, type, message) {
-		var el = wrap.querySelector('[data-v-leadform-' + type + ']');
-		if (!el) return;
-		if (message) el.textContent = message;
-		el.classList.remove('d-none');
-		var other = wrap.querySelector('[data-v-leadform-' + (type === 'success' ? 'error' : 'success') + ']');
+	function ensureAlertBox(form, kind) {
+		const attr = 'data-v-leadform-' + kind;
+		const existing = form.parentNode ? form.parentNode.querySelector('[' + attr + ']') : null;
+		if (existing) return existing;
+		const box = document.createElement('div');
+		box.setAttribute(attr, '');
+		box.setAttribute('role', 'alert');
+		box.className = 'alert ' + (kind === 'success' ? 'alert-success' : 'alert-danger') + ' d-none';
+		if (form.parentNode) form.parentNode.insertBefore(box, form);
+		return box;
+	}
+
+	function showAlert(form, type, message) {
+		const box = ensureAlertBox(form, type);
+		if (message) box.textContent = message;
+		box.classList.remove('d-none');
+		const otherKind = type === 'success' ? 'error' : 'success';
+		const other = form.parentNode ? form.parentNode.querySelector('[data-v-leadform-' + otherKind + ']') : null;
 		if (other) other.classList.add('d-none');
 	}
 
 	function serialize(form, honeypotName) {
-		var fd = new FormData(form);
-		var out = {};
+		const fd = new FormData(form);
+		const out = {};
 		fd.forEach(function (value, key) {
 			if (key === honeypotName) return;
 			out[key] = value;
@@ -31,70 +56,49 @@
 		return out;
 	}
 
-	function attach(wrap) {
-		var form = wrap.querySelector('form[data-v-leadform-config]');
+	function attach(form, cfg) {
 		if (!form || form.__lpcBound) return;
 		form.__lpcBound = true;
 
-		// Let the browser run HTML5 validation on the `required` inputs the
-		// editor generates. The original template carried `novalidate` to keep
-		// the editor experience clean; on the live page we want native checks.
+		// The form may carry novalidate from the editor; on the live page we
+		// want native HTML5 validation on `required` inputs.
 		form.removeAttribute('novalidate');
-
-		var cfg = {
-			endpoint:    form.getAttribute('data-endpoint') || '',
-			csrf:        form.getAttribute('data-csrf') || '',
-			submitUrl:   form.getAttribute('data-submit-url') || '',
-			honeypot:    form.getAttribute('data-honeypot') || 'company_website',
-			successUrl:  form.getAttribute('data-success-url') || '',
-			successMsg:  form.getAttribute('data-success-msg') || '',
-			errorMsg:    form.getAttribute('data-error-msg') || '',
-			renderTs:    parseInt(form.getAttribute('data-render-ts') || '0', 10),
-			minTimeMs:   parseInt(wrap.getAttribute('data-v-min_time_ms') || '1500', 10),
-		};
 
 		form.addEventListener('submit', function (ev) {
 			ev.preventDefault();
 
-			// HTML5 validation: surface the native tooltip on empty required
-			// fields and stop here. We only do this client-side; the platform
-			// is still authoritative.
 			if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
 				if (typeof form.reportValidity === 'function') form.reportValidity();
 				return;
 			}
 
-			if (!cfg.endpoint || !cfg.csrf || !cfg.submitUrl) {
-				showAlert(wrap, 'error', 'Form is not configured.');
-				return;
-			}
-
-			// Honeypot
-			var hp = form.querySelector('[name="' + cfg.honeypot + '"]');
+			const hp = form.querySelector('[name="' + HONEYPOT + '"]');
 			if (hp && hp.value) {
-				showAlert(wrap, 'success', cfg.successMsg);
+				showAlert(form, 'success', 'Thanks — your request was received.');
 				return;
 			}
 
-			// Time gate (defeat bot autofill). Only triggers right after a
-			// fresh page load — humans normally take more than a second.
-			var elapsed = Date.now() - cfg.renderTs;
-			if (cfg.renderTs && elapsed < cfg.minTimeMs) {
-				showAlert(wrap, 'error', 'One moment — the form just loaded. Please try again.');
+			const elapsed = Date.now() - cfg.renderTs;
+			if (cfg.renderTs && elapsed < MIN_TIMEMS) {
+				showAlert(form, 'error', 'One moment — the form just loaded. Please try again.');
 				return;
 			}
 
-			var btn = form.querySelector('[data-v-leadform-submit]');
-			if (btn) { btn.disabled = true; btn.dataset.origLabel = btn.textContent; btn.textContent = 'Sending…'; }
+			const btn = form.querySelector('button[type=submit], input[type=submit]');
+			if (btn) {
+				btn.disabled = true;
+				btn.dataset.origLabel = btn.textContent || btn.value || 'Submit';
+				if ('textContent' in btn) btn.textContent = 'Sending…';
+			}
 
-			var fields = serialize(form, cfg.honeypot);
-			var payload = {
-				endpoint:     cfg.endpoint,
-				csrf:         cfg.csrf,
-				fields:       fields,
-				utm:          readUtmFromUrl(),
-				source_page:  window.location.pathname + window.location.search,
-				referrer:     document.referrer || '',
+			const fields = serialize(form, HONEYPOT);
+			const payload = {
+				endpoint:    cfg.endpoint,
+				csrf:        cfg.csrf,
+				fields:      fields,
+				utm:         readUtmFromUrl(),
+				source_page: window.location.pathname + window.location.search,
+				referrer:    document.referrer || '',
 			};
 
 			fetch(cfg.submitUrl, {
@@ -105,32 +109,66 @@
 			})
 			.then(function (r) { return r.json().then(function (j) { return { http: r.status, body: j }; }); })
 			.then(function (res) {
-				if (btn) { btn.disabled = false; btn.textContent = btn.dataset.origLabel || 'Submit'; }
+				if (btn) {
+					btn.disabled = false;
+					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Submit';
+				}
 
 				if (res.body && res.body.ok) {
-					if (cfg.successUrl) {
-						window.location.href = cfg.successUrl;
-						return;
-					}
-					showAlert(wrap, 'success', cfg.successMsg);
+					showAlert(form, 'success', 'Thanks — your request was received.');
 					form.reset();
+					// Refresh token after a successful submit (single-use semantics in practice).
+					fetchToken(cfg.endpoint).then(function (next) { if (next) cfg.csrf = next.csrf; cfg.renderTs = next ? next.renderTs : cfg.renderTs; });
 				} else {
-					var msg = (res.body && res.body.message) ? res.body.message : cfg.errorMsg;
-					showAlert(wrap, 'error', msg);
+					const msg = (res.body && res.body.message) ? res.body.message : 'Sorry, something went wrong. Please try again.';
+					showAlert(form, 'error', msg);
+					if (res.http === 419) {
+						// Token expired — refresh it.
+						fetchToken(cfg.endpoint).then(function (next) { if (next) { cfg.csrf = next.csrf; cfg.renderTs = next.renderTs; } });
+					}
 				}
 			})
 			.catch(function () {
-				if (btn) { btn.disabled = false; btn.textContent = btn.dataset.origLabel || 'Submit'; }
-				showAlert(wrap, 'error', cfg.errorMsg);
+				if (btn) {
+					btn.disabled = false;
+					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Submit';
+				}
+				showAlert(form, 'error', 'Network error. Please try again.');
 			});
 		});
 	}
 
+	function fetchToken(slug) {
+		return fetch(TOKEN_URL + '&slug=' + encodeURIComponent(slug), {
+			credentials: 'same-origin',
+			headers: { 'Accept': 'application/json' },
+		})
+		.then(function (r) { return r.json(); })
+		.then(function (j) {
+			if (!j || !j.ok || !j.csrf || !j.submit_url) return null;
+			return { csrf: j.csrf, submitUrl: j.submit_url, renderTs: j.render_ts || Date.now() };
+		})
+		.catch(function () { return null; });
+	}
+
 	function init() {
-		var sel = '[data-v-component-plugin-lead-platform-connector-leadform],'
-				+ '[data-v-component-plugin-lead-platform-connector-lead-form]';
-		var wraps = document.querySelectorAll(sel);
-		wraps.forEach(attach);
+		const forms = document.querySelectorAll('form[data-v-endpoint]');
+		forms.forEach(function (form) {
+			const slug = form.getAttribute('data-v-endpoint');
+			if (!slug) return;
+			fetchToken(slug).then(function (tok) {
+				if (!tok) {
+					console.warn('[LPC] could not acquire token for slug', slug);
+					return;
+				}
+				attach(form, {
+					endpoint:  slug,
+					csrf:      tok.csrf,
+					submitUrl: tok.submitUrl,
+					renderTs:  tok.renderTs,
+				});
+			});
+		});
 	}
 
 	if (document.readyState === 'loading') {

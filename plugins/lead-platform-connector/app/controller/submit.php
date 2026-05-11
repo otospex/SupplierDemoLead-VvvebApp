@@ -163,6 +163,37 @@ class Submit {
 		}
 	}
 
+	/**
+	 * Public token endpoint used by lead-form.js on the published page to
+	 * acquire a fresh CSRF token + submit URL for a given endpoint slug.
+	 *
+	 *   GET /index.php?module=plugins/lead-platform-connector/submit&action=token&slug=<slug>
+	 *
+	 * No session/auth — the slug must reference an active endpoint, and the
+	 * issued token is bound to that slug (HMAC) so it can't be used elsewhere.
+	 */
+	function token() {
+		$slug = isset($_GET['slug']) ? trim((string) $_GET['slug']) : '';
+		if ($slug === '' || ! preg_match('/^[a-z0-9_-]{2,64}$/i', $slug)) {
+			$this->json(400, ['ok' => false, 'message' => 'Invalid slug']);
+		}
+
+		$endpoint = $this->fetchEndpoint($slug);
+		if (! $endpoint) {
+			$this->json(404, ['ok' => false, 'message' => 'Unknown endpoint']);
+		}
+
+		// Same-origin headers; harmless on direct page-load fetches.
+		header('Cache-Control: no-store');
+
+		$this->json(200, [
+			'ok'         => true,
+			'csrf'       => CsrfToken::issue($slug),
+			'submit_url' => '/index.php?module=plugins/lead-platform-connector/submit',
+			'render_ts'  => (int) (microtime(true) * 1000),
+		]);
+	}
+
 	function index() {
 		$raw = file_get_contents('php://input');
 		$req = json_decode($raw ?: '', true);

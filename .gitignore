@@ -11,6 +11,16 @@ public/themes/*/*.html
 !public/themes/souverainete-digitale/*.html
 public/admin/themes/*/*.html
 !public/admin/themes/*/src/*.html
+
+# Editor save-snapshots (auto-generated on every page save)
+public/themes/*/backup/
+public/admin/themes/*/backup/
+
+# Lead Platform Connector — encryption key (per-environment secret)
+storage/lead-platform-connector.key
+
+# vtpl backup files (created during editor development)
+system/vtpl/*.bak
 .codelite
 vendor
 node_modules

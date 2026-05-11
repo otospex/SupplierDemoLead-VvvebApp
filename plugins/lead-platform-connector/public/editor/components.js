@@ -1,13 +1,22 @@
-/* Lead Platform Connector — editor block
- * Adds a "Lead Form (Platform)" component under the Plugins group.
- * Endpoint slug is a dropdown populated from /admin/?module=plugins/lead-platform-connector/api&action=endpoints
- * Picking an endpoint regenerates the form fields from its Field map.
+/* Lead Platform Connector — editor extension
+ *
+ * Extends the native Vvveb `html/form` block with a "Lead Form" accordion in
+ * the Content tab containing a single Endpoint select dropdown, populated from
+ * the plugin's admin Endpoints page. Picking an endpoint:
+ *   - sets data-v-endpoint="<slug>" on the form (the only LPC-related attr
+ *     ever written to saved HTML),
+ *   - sets a data-v-component-* marker the runtime component scanner needs,
+ *   - regenerates the form's user-facing fields from the endpoint's field_map.
+ *
+ * URL, API key, and field map are configured in the plugin's admin Endpoints
+ * page (admin/?module=plugins/lead-platform-connector/endpoints), NOT here.
  */
 
 (function () {
     'use strict';
 
-    // Cache for endpoint list, populated on first dropdown render.
+    // ---- Endpoint cache --------------------------------------------------
+
     let LPC_ENDPOINTS = null;
     let LPC_ENDPOINTS_BY_SLUG = {};
 
@@ -28,45 +37,45 @@
     }
 
     function buildOptions(endpoints, current) {
-        // SelectInput expects an array of { value, text }.
         const opts = [{ value: '', text: '— pick an endpoint —' }];
         endpoints.forEach(function (e) {
             opts.push({ value: e.slug, text: e.label + ' (' + e.slug + ')' });
         });
-        // If the saved value isn't in the list, keep it so users see what was set.
+        // If the saved slug isn't in the active list, keep it visible.
         if (current && !endpoints.some(function (e) { return e.slug === current; })) {
             opts.push({ value: current, text: current + ' (inactive or removed)' });
         }
         return opts;
     }
 
-    /**
-     * Convert a field map JSON to an HTML form-fields fragment.
-     * Source key (LHS) becomes the input `name` attribute.
-     * Heuristics decide input type and label.
-     */
+    // ---- Field generation from endpoint field_map -----------------------
+
+    function escapeHtml(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+            return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+        });
+    }
+
+    function humanize(s) {
+        return String(s).replace(/[_-]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+    }
+
+    function inputTypeFor(sourceKey, targetPath) {
+        const k = String(sourceKey).toLowerCase();
+        const t = String(targetPath || '').toLowerCase();
+        if (k.indexOf('email') >= 0 || t === 'email') return 'email';
+        if (k.indexOf('phone') >= 0 || k.indexOf('tel') >= 0 || t === 'phone') return 'tel';
+        return 'text';
+    }
+
+    function isRequired(value) {
+        return typeof value === 'string' && value.trim().toLowerCase() === 'required';
+    }
+
     function fieldMapToFormHtml(fieldMap) {
         if (!fieldMap || typeof fieldMap !== 'object') return '';
-
         const keys = Object.keys(fieldMap);
         if (!keys.length) return '';
-
-        const humanize = function (s) {
-            return s.replace(/[_-]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-        };
-        const inputTypeFor = function (sourceKey, targetPath) {
-            const k = sourceKey.toLowerCase();
-            const t = (targetPath || '').toLowerCase();
-            if (k.indexOf('email') >= 0 || t === 'email') return 'email';
-            if (k.indexOf('phone') >= 0 || k.indexOf('tel') >= 0 || t === 'phone') return 'tel';
-            if (k.indexOf('zip') >= 0 || k.indexOf('postal') >= 0) return 'text';
-            return 'text';
-        };
-        // Required flag is driven by the field-map value: "required" = mandatory,
-        // anything else (empty string, etc.) = optional.
-        const isRequired = function (value) {
-            return typeof value === 'string' && value.trim().toLowerCase() === 'required';
-        };
 
         let html = '<div class="row g-3">';
         keys.forEach(function (k) {
@@ -76,10 +85,11 @@
             const req      = required ? ' required' : '';
             const star     = required ? ' <span class="text-danger" aria-hidden="true">*</span>' : '';
             const label    = humanize(k);
+            const safeKey  = escapeHtml(k);
             html +=
                 '<div class="col-md-6">' +
-                    '<label class="form-label">' + label + star + '</label>' +
-                    '<input type="' + type + '" class="form-control" name="' + k + '"' + req + '>' +
+                    '<label class="form-label">' + escapeHtml(label) + star + '</label>' +
+                    '<input type="' + type + '" class="form-control" name="' + safeKey + '"' + req + '>' +
                 '</div>';
         });
         html += '</div>';
@@ -87,182 +97,146 @@
     }
 
     /**
-     * Replace the current form's fields (everything inside <form> except hidden honeypot
-     * and the submit button) with newly-generated fields from the endpoint's field map.
+     * Replace form's user-facing fields with ones generated from the field map.
+     * Skip when:
+     *  - form has data-lpc-keep-design (opt-out for hand-crafted designs),
+     *  - or every field-map key already has a matching input (avoids clobber
+     *    on the spurious onChange that fires when the editor first loads
+     *    with a saved endpoint value).
      */
-    function regenerateFormFields(rootElement, fieldMap) {
-        if (!rootElement) return;
-        const form = rootElement.querySelector('form[data-v-leadform-config]');
-        if (!form) return;
+    function regenerateFormFields(form, fieldMap) {
+        if (!form || !fieldMap) return;
+        if (form.hasAttribute('data-lpc-keep-design')) return;
 
-        const newFieldsHtml = fieldMapToFormHtml(fieldMap);
-        if (!newFieldsHtml) return;
+        const keys = Object.keys(fieldMap);
+        if (!keys.length) return;
 
-        // Find the existing top-level fields wrapper (.row.g-3) and replace it.
+        const allPresent = keys.every(function (k) {
+            return form.querySelector('[name="' + (window.CSS && CSS.escape ? CSS.escape(k) : k) + '"]') !== null;
+        });
+        if (allPresent) return;
+
+        const newHtml = fieldMapToFormHtml(fieldMap);
+        if (!newHtml) return;
+
         const existingRow = form.querySelector(':scope > .row.g-3, :scope > div > .row.g-3');
         const wrapper = document.createElement('div');
-        wrapper.innerHTML = newFieldsHtml;
+        wrapper.innerHTML = newHtml;
         const newRow = wrapper.firstElementChild;
 
         if (existingRow && newRow) {
             existingRow.parentNode.replaceChild(newRow, existingRow);
         } else if (newRow) {
-            // Insert at the top of the form (before honeypot/submit).
-            form.insertBefore(newRow, form.firstChild);
+            const submit = form.querySelector('button[type=submit], input[type=submit]');
+            if (submit) form.insertBefore(newRow, submit);
+            else form.insertBefore(newRow, form.firstChild);
         }
     }
 
-    // Warm the endpoints cache as soon as the editor loads.
-    fetchEndpoints(function () {});
+    // ---- Component marker for runtime discovery -------------------------
+    //
+    // The server-side component scanner only matches elements carrying a
+    // data-v-component-* attribute (system/component/component.php:441). When
+    // a slug is set we mark the form so the runtime template fires and
+    // injects CSRF token + submit URL.
 
-    Vvveb.ComponentsGroup['Plugins'] = Vvveb.ComponentsGroup['Plugins'] ?? [];
-    Vvveb.ComponentsGroup['Plugins'].push("lead-platform-connector/lead-form");
+    const COMPONENT_MARKER = 'data-v-component-plugin-lead-platform-connector-leadform';
 
-    Vvveb.Components.extend("_base", "lead-platform-connector/lead-form", {
-        image: "icons/cloud-upload.svg",
-        name: "Lead Form (Platform)",
-        attributes: ["data-v-component-plugin-lead-platform-connector-leadform"],
-        html: `<div data-v-component-plugin-lead-platform-connector-leadform
-                data-v-endpoint=""
-                data-v-success_url=""
-                data-v-success_msg="Thanks — your request was received."
-                data-v-error_msg="Sorry, something went wrong. Please try again."
-                data-v-honeypot="company_website"
-                data-v-min_time_ms="1500"
-                class="lpc-lead-form-wrap">
+    function setMarker(form, on) {
+        if (!form) return;
+        if (on) form.setAttribute(COMPONENT_MARKER, '1');
+        else form.removeAttribute(COMPONENT_MARKER);
+    }
 
-            <div class="alert alert-success d-none" data-v-leadform-success role="alert">
-                Thanks — your request was received.
-            </div>
-            <div class="alert alert-danger d-none" data-v-leadform-error role="alert">
-                Sorry, something went wrong. Please try again.
-            </div>
+    // ---- Property registration on native html/form ----------------------
+    //
+    // Sort values 100..101 keep our properties AFTER the native Action /
+    // Method / Encoding type (sort default 0) and BEFORE the _base "General"
+    // accordion (sort 1000+). That keeps each accordion holding the right
+    // properties: Form → Action/Method/Encoding, Lead Form → Endpoint,
+    // General → Id/Title/Class.
 
-            <form data-v-leadform-config
-                data-endpoint=""
-                data-csrf=""
-                data-submit-url=""
-                data-honeypot="company_website"
-                data-success-url=""
-                data-success-msg=""
-                data-error-msg=""
-                data-render-ts=""
-                method="post"
-                novalidate>
+    function getNativeForm() {
+        const reg = (Vvveb.Components && Vvveb.Components._components) || {};
+        return reg['html/form'];
+    }
 
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Full name <span class="text-danger" aria-hidden="true">*</span></label>
-                        <input type="text" class="form-control" name="full_name" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Phone <span class="text-danger" aria-hidden="true">*</span></label>
-                        <input type="tel" class="form-control" name="telephone" required>
-                    </div>
-                    <div class="col-md-12">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email_address">
-                    </div>
-                </div>
+    function extendForm() {
+        if (!getNativeForm()) {
+            return setTimeout(extendForm, 50);
+        }
 
-                <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
-                    <label>Do not fill this field</label>
-                    <input type="text" name="company_website" tabindex="-1" autocomplete="off">
-                </div>
+        const props = [
+            {
+                name: 'Lead Form',
+                key: 'lpc_section',
+                inputtype: SectionInput,
+                section: 'content',
+                sort: 100,
+                data: { header: 'Lead Form' },
+            },
+            {
+                name: 'Endpoint',
+                key: 'lpc_endpoint',
+                htmlAttr: 'data-v-endpoint',
+                section: 'lpc_section',
+                sort: 101,
+                inputtype: SelectInput,
+                data: { options: [{ value: '', text: 'Loading…' }] },
 
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-primary" data-v-leadform-submit>
-                        Submit
-                    </button>
-                </div>
-            </form>
-        </div>`,
-        properties: [{
-            name: "Endpoint",
-            key: "endpoint",
-            htmlAttr: "data-v-endpoint",
-            inputtype: SelectInput,
-            data: { options: [{ value: '', text: 'Loading…' }] },
+                beforeInit: function (form) {
+                    const property = this;
+                    const current = (form && form.getAttribute) ? (form.getAttribute('data-v-endpoint') || '') : '';
 
-            // Vvveb calls beforeInit when rendering each property in the right panel.
-            // Update property.data.options synchronously from cache when possible,
-            // and re-fetch in the background so the next render is fresh.
-            beforeInit: function (node) {
-                const property = this;
-                const current = node && node.getAttribute ? (node.getAttribute('data-v-endpoint') || '') : '';
-
-                if (LPC_ENDPOINTS) {
-                    property.data = property.data || {};
-                    property.data.options = buildOptions(LPC_ENDPOINTS, current);
-                }
-
-                fetchEndpoints(function (endpoints) {
-                    property.data = property.data || {};
-                    property.data.options = buildOptions(endpoints, current);
-
-                    // If the right panel select is already on screen, repopulate it now.
-                    const panel = document.querySelector('#right-panel') || document;
-                    const sel = panel.querySelector('select[name="endpoint"]');
-                    if (sel) {
-                        const prev = sel.value;
-                        sel.innerHTML = property.data.options.map(function (o) {
-                            const isSel = (o.value === current || o.value === prev) ? ' selected' : '';
-                            return '<option value="' + o.value + '"' + isSel + '>' + o.text + '</option>';
-                        }).join('');
+                    if (LPC_ENDPOINTS) {
+                        property.data = property.data || {};
+                        property.data.options = buildOptions(LPC_ENDPOINTS, current);
                     }
-                });
-            },
 
-            onChange: function (node, value /*, input, component, origEvent */) {
-                // Always regenerate the form fields when the endpoint changes.
-                if (!value) {
-                    node.setAttribute('data-v-endpoint', '');
-                    return node;
-                }
-                node.setAttribute('data-v-endpoint', value);
+                    fetchEndpoints(function (endpoints) {
+                        property.data = property.data || {};
+                        property.data.options = buildOptions(endpoints, current);
 
-                const ep = LPC_ENDPOINTS_BY_SLUG[value];
-                if (ep && ep.field_map && Object.keys(ep.field_map).length) {
-                    regenerateFormFields(node, ep.field_map);
-                }
-                return node;
+                        // If the right panel select is already on screen, repopulate it now.
+                        const panel = document.querySelector('#right-panel') || document;
+                        const sel = panel.querySelector('select[name="lpc_endpoint"]');
+                        if (sel) {
+                            sel.innerHTML = property.data.options.map(function (o) {
+                                const isSel = (o.value === current) ? ' selected' : '';
+                                return '<option value="' + escapeHtml(o.value) + '"' + isSel + '>' + escapeHtml(o.text) + '</option>';
+                            }).join('');
+                        }
+                    });
+                },
+
+                onChange: function (form, value) {
+                    if (!form || form.tagName !== 'FORM') return form;
+                    if (!value) {
+                        form.removeAttribute('data-v-endpoint');
+                        setMarker(form, false);
+                        return form;
+                    }
+                    form.setAttribute('data-v-endpoint', value);
+                    setMarker(form, true);
+
+                    const ep = LPC_ENDPOINTS_BY_SLUG[value];
+                    if (ep && ep.field_map && Object.keys(ep.field_map).length) {
+                        regenerateFormFields(form, ep.field_map);
+                    }
+                    return form;
+                },
             },
-        }, {
-            name: "",
-            key: "endpoint_warning",
-            inline: false,
-            col: 12,
-            inputtype: NoticeInput,
-            data: {
-                type: 'info',
-                title: '',
-                text: 'Pick an active endpoint. Form fields auto-regenerate from the endpoint\'s Field Map. The browser never sees the API key.'
-            }
-        }, {
-            name: "Success redirect URL",
-            key: "success_url",
-            htmlAttr: "data-v-success_url",
-            inputtype: TextInput
-        }, {
-            name: "Success message",
-            key: "success_msg",
-            htmlAttr: "data-v-success_msg",
-            inputtype: TextInput
-        }, {
-            name: "Error message",
-            key: "error_msg",
-            htmlAttr: "data-v-error_msg",
-            inputtype: TextInput
-        }, {
-            name: "Honeypot field name",
-            key: "honeypot",
-            htmlAttr: "data-v-honeypot",
-            inputtype: TextInput
-        }, {
-            name: "Minimum submit delay (ms)",
-            key: "min_time_ms",
-            htmlAttr: "data-v-min_time_ms",
-            inputtype: NumberInput
-        }]
-    });
+        ];
+
+        Vvveb.Components.extend('html/form', 'html/form', { properties: props });
+    }
+
+    if (typeof Vvveb !== 'undefined' && Vvveb.Components) {
+        extendForm();
+    } else {
+        window.addEventListener('load', extendForm);
+    }
+
+    // Warm the cache.
+    fetchEndpoints(function () {});
 })();

@@ -4,6 +4,28 @@ services:
       - "8090:80"
     volumes:
       - ./php.ini:/usr/local/etc/php/conf.d/zz-dev.ini:ro
+    # Local-dev entrypoint: ensure PHP-FPM (running as www-data, uid 82 inside
+    # the container) can write to theme directories, even though host files are
+    # owned by your dev user. Grants `o+w` on theme dirs and ensures each
+    # theme has a backup/ folder, then chains to upstream init.sh.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -e
+        for theme_dir in /var/www/html/public/themes/*/; do
+          [ -d "$$theme_dir" ] || continue
+          mkdir -p "$${theme_dir}backup"
+          chmod -R o+w "$$theme_dir" 2>/dev/null || true
+        done
+        # Storage + config also need writes (cache, sites.php, etc).
+        chmod -R o+w /var/www/html/storage /var/www/html/config 2>/dev/null || true
+
+        # Chain to upstream init.sh — it's a no-op on subsequent runs (public/
+        # already exists), but on first install it bootstraps Vvveb. It ends
+        # with `exec supervisord`, so this `exec` line is what actually keeps
+        # the container alive serving requests.
+        exec /init.sh
 
   phpmyadmin:
     ports: !override

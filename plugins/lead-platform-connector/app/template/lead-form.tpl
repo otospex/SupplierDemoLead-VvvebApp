@@ -17,14 +17,14 @@
 	$_lpc_render_ts   = (int) ($leadform['render_ts'] ?? 0);
 ?>
 
-@leadform [data-v-leadform-config]|data-endpoint    = <?php echo $_lpc_endpoint; ?>
-@leadform [data-v-leadform-config]|data-csrf        = <?php echo $_lpc_csrf; ?>
-@leadform [data-v-leadform-config]|data-submit-url  = <?php echo $_lpc_submit_url; ?>
-@leadform [data-v-leadform-config]|data-honeypot    = <?php echo $_lpc_honeypot; ?>
-@leadform [data-v-leadform-config]|data-success-url = <?php echo $_lpc_success_url; ?>
-@leadform [data-v-leadform-config]|data-success-msg = <?php echo $_lpc_success_msg; ?>
-@leadform [data-v-leadform-config]|data-error-msg   = <?php echo $_lpc_error_msg; ?>
-@leadform [data-v-leadform-config]|data-render-ts   = <?php echo $_lpc_render_ts; ?>
+@leadform|data-endpoint    = <?php echo $_lpc_endpoint; ?>
+@leadform|data-csrf        = <?php echo $_lpc_csrf; ?>
+@leadform|data-submit-url  = <?php echo $_lpc_submit_url; ?>
+@leadform|data-honeypot    = <?php echo $_lpc_honeypot; ?>
+@leadform|data-success-url = <?php echo $_lpc_success_url; ?>
+@leadform|data-success-msg = <?php echo $_lpc_success_msg; ?>
+@leadform|data-error-msg   = <?php echo $_lpc_error_msg; ?>
+@leadform|data-render-ts   = <?php echo $_lpc_render_ts; ?>
 
 @leadform|after = <?php
 	if (! isset($GLOBALS['_lpc_runtime_emitted'])) {

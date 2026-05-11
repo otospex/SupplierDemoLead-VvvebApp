@@ -3,6 +3,7 @@
 namespace Vvveb\Plugins\LeadPlatformConnector\Controller;
 
 use Vvveb\Plugins\LeadPlatformConnector\System\Repo;
+use Vvveb\System\User\Admin;
 
 #[\AllowDynamicProperties]
 class Api {
@@ -18,11 +19,18 @@ class Api {
 		exit;
 	}
 
+	private function requireAdmin(): void {
+		if (! Admin::current()) {
+			$this->json(403, ['ok' => false, 'message' => 'Unauthorized']);
+		}
+	}
+
 	/**
 	 * Lists active endpoints with their field maps for editor consumption.
 	 * URL: /admin/index.php?module=plugins/lead-platform-connector/api&action=endpoints
 	 */
 	function endpoints() {
+		$this->requireAdmin();
 		try {
 			$rows = Repo::many(
 				'SELECT slug, label, campaign, field_map, active

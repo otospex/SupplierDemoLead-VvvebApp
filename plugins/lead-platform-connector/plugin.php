@@ -164,9 +164,32 @@ class LeadPlatformConnectorPlugin {
 	}
 
 	function app() {
-		$this->view = View::getInstance();
-		$template   = $this->view->getTemplateEngineInstance();
-		$template->loadTemplateFile(__DIR__ . '/app/template/lead-form.tpl');
+		// Inject <script src=".../lead-form.js"> into every visitor-facing page
+		// via output buffering. We can't rely on the vtpl-based template that
+		// used to live in app/template/lead-form.tpl because vtpl doesn't
+		// recompile when only a plugin .tpl changes (view::checkNeedRecompile
+		// only inspects theme/tpl mtimes), and the @leadform|attr selector
+		// pattern was not reliably matching on native html/form blocks. The
+		// runtime form discovers its CSRF token via a fetch() to the plugin's
+		// public token endpoint instead of reading it from a server-written
+		// data-csrf attribute, so we don't need the template engine at all
+		// here — just need the JS on the page.
+		ob_start(function ($html) {
+			if (! is_string($html) || $html === '') return $html;
+			// Only inject when a Lead Form is present on the page.
+			if (strpos($html, 'data-v-endpoint=') === false) return $html;
+			if (strpos($html, 'plugins/lead-platform-connector/js/lead-form.js') !== false) return $html;
+
+			$src = (defined('PUBLIC_PATH') ? PUBLIC_PATH : '/') . 'plugins/lead-platform-connector/js/lead-form.js';
+			$tag = '<script src="' . htmlspecialchars($src, ENT_QUOTES) . '" defer></script>';
+
+			// Inject before </body> if present, otherwise append.
+			$pos = stripos($html, '</body>');
+			if ($pos !== false) {
+				return substr($html, 0, $pos) . $tag . substr($html, $pos);
+			}
+			return $html . $tag;
+		});
 	}
 
 	function __construct() {

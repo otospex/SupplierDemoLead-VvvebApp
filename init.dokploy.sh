@@ -55,6 +55,16 @@ if [ -d /opt/lpc-overlay ]; then
         /var/www/html/public/themes 2>/dev/null || true
     chmod -R u+rwX,go+rX /var/www/html/plugins /var/www/html/public/plugins /var/www/html/public/themes 2>/dev/null || true
 
+    # Ensure every theme has a writable backup/ folder. Vvveb's visual editor
+    # copies the current page into backup/ before overwriting on save; without
+    # the directory the save bails with "<theme>/backup folder not writable!".
+    for theme_dir in /var/www/html/public/themes/*/; do
+        [ -d "$theme_dir" ] || continue
+        mkdir -p "${theme_dir}backup"
+        chown www-data:www-data "${theme_dir}backup"
+        chmod 775 "${theme_dir}backup"
+    done
+
     # Cache invalidation: themes/plugins lists are scanned from disk and cached.
     # Volume persists across redeploys, so a freshly-overlaid theme stays
     # invisible in the admin until this cache is busted.
