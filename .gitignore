@@ -20,6 +20,10 @@ public/admin/themes/*/backup/
 # Lead Platform Connector — encryption key (per-environment secret)
 storage/lead-platform-connector.key
 
+# One-time DB seed marker (written into the persistent volume at runtime;
+# must never be committed or it will make the seeder skip on a fresh deploy)
+storage/.seed-souverainete-applied
+
 # vtpl backup files (created during editor development)
 system/vtpl/*.bak
 .codelite
