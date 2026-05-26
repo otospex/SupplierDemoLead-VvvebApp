@@ -5,6 +5,8 @@
 # Files needed by Dockerfile / Dockerfile.dokploy:
 !php.ini
 !init.dokploy.sh
+!seed.dokploy.php
+!seed.dokploy.sql
 
 # Custom plugin sources + browser-served assets (Dockerfile.dokploy COPYs these).
 !plugins
@@ -19,6 +21,8 @@
 !public/themes
 !public/themes/landing
 !public/themes/landing/**
+!public/themes/souverainete-digitale
+!public/themes/souverainete-digitale/**
 
 # Re-ignore noisy subdirs that may live inside the un-ignored paths.
 **/.git
