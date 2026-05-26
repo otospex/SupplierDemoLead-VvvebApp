@@ -1,6 +1,7 @@
 storage/compiled-templates/*
 storage/cache/*
 config/db.php
+docs/superpowers/plans/scripts/db-backup-*
 app/model/*
 admin/model/*
 public/image-cache/*
