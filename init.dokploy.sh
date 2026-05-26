@@ -72,4 +72,14 @@ if [ -d /opt/lpc-overlay ]; then
           /var/www/html/storage/cache/vvveb.plugins_list_* 2>/dev/null || true
 fi
 
+# One-time DB seed for the souverainete-digitale multi-page content (pages,
+# template repoint, rich content, /page/method). Guarded by a marker file in
+# the persistent volume, so it runs ONCE and never clobbers later live edits.
+# Run in the BACKGROUND so a slow DB never delays the web server, and guarded
+# with `|| true` so a seeding hiccup never aborts container start (set -e).
+if [ -f /opt/seed/seed.dokploy.php ]; then
+    echo "[init] Scheduling one-time DB seed (background)…"
+    ( php /opt/seed/seed.dokploy.php || true ) &
+fi
+
 exec /usr/bin/supervisord -c /etc/supervisord.conf

@@ -25,6 +25,12 @@ COPY public/themes/landing \
 COPY public/themes/souverainete-digitale \
      /opt/lpc-overlay/public/themes/souverainete-digitale
 
+# 1b. One-time DB seed scripts. Staged OUTSIDE /opt/lpc-overlay so the
+#     `cp -a /opt/lpc-overlay/.` webroot overlay does NOT copy them into the
+#     public tree (keeps seed.dokploy.sql from ever being web-served).
+COPY seed.dokploy.php /opt/seed/seed.dokploy.php
+COPY seed.dokploy.sql /opt/seed/seed.dokploy.sql
+
 # 2. Custom PHP config (outside /var/www/html — applied at build time).
 COPY php.ini /usr/local/etc/php/php.ini
 
