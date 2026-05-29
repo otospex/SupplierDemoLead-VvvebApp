@@ -126,7 +126,9 @@ img { max-width: 100%; height: auto; }
   position: relative;
 }
 
-.sd-nav .nav-link::after {
+/* Underline indicator — only on plain links, never the dropdown toggle
+   (the toggle gets a caret arrow instead, see below). */
+.sd-nav .nav-link:not(.dropdown-toggle)::after {
   content: "";
   position: absolute;
   bottom: 0.2rem;
@@ -142,7 +144,7 @@ img { max-width: 100%; height: auto; }
   color: var(--sd-primary);
 }
 
-.sd-nav .nav-link:hover::after {
+.sd-nav .nav-link:not(.dropdown-toggle):hover::after {
   width: 24px;
 }
 
@@ -151,8 +153,30 @@ img { max-width: 100%; height: auto; }
   font-weight: 600;
 }
 
-.sd-nav .nav-link.active::after {
+.sd-nav .nav-link:not(.dropdown-toggle).active::after {
   width: 24px;
+}
+
+/* Dropdown toggle caret — a clean chevron that signals the sub-menu and
+   rotates up when the menu is open. Replaces Bootstrap's default border caret. */
+.sd-nav .nav-link.dropdown-toggle::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-left: 0.4em;
+  margin-bottom: 0.12em;
+  border: 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  vertical-align: middle;
+}
+
+.sd-nav .nav-link.dropdown-toggle.show::after {
+  transform: rotate(-135deg);
+  margin-bottom: -0.06em;
 }
 
 .sd-nav .dropdown-menu {
