@@ -463,3 +463,1733 @@ INSERT INTO post_to_taxonomy_item (post_id, taxonomy_item_id) SELECT @post4, @ca
 REPLACE INTO post_content (post_id, language_id, name, slug, content, excerpt, meta_keywords, meta_description) VALUES (@post4, @lang, 'NIS2 Compliance Checklist: Are You Ready for the Directive?', 'nis2-compliance-checklist', '<p>The NIS2 directive significantly widens the scope and raises the bar of cybersecurity obligations across the European Union. Where its predecessor touched a relatively narrow set of operators, NIS2 reaches deep into the economy &mdash; and it makes senior management personally accountable. If your organisation qualifies as an essential or important entity, the time to prepare is now. Use the checklist below to gauge honestly where you stand and where the gaps are.</p><div class="sd-section-header" style="margin-top:2.25rem;"><h2>Does NIS2 apply to you?</h2><p class="section-lead">NIS2 covers a far broader set of sectors than the original directive: energy, transport, banking and financial-market infrastructure, health, drinking and waste water, digital infrastructure, public administration, space, postal services, waste management, chemicals, food, manufacturing and digital providers.</p></div><p>Within those sectors, medium and large entities are generally in scope, classified as either \'essential\' or \'important\' entities, with supervision and penalties scaled to that classification. Smaller organisations can still be pulled in where they play a critical role in a supply chain. The safest assumption for any mid-sized or larger organisation in a covered sector is that NIS2 applies &mdash; and to confirm scope early rather than discover it during an incident.</p><div class="sd-section-header" style="margin-top:2.25rem;"><h2>Your NIS2 readiness checklist</h2></div><div class="row g-4"><div class="col-md-6"><div class="sd-card"><h3>1. Governance &amp; accountability</h3><p>Management bodies must approve cybersecurity measures, oversee their implementation and can be held personally liable for failures. Ask: is your board engaged, trained and documenting its oversight?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>2. Risk-management measures</h3><p>Documented policies for risk analysis, system security, cryptography and the handling of vulnerabilities. Ask: are yours current, evidenced and actually followed in practice?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>3. Incident detection &amp; handling</h3><p>Processes to detect, respond to and recover from incidents, including an early-warning notification within 24 hours of a significant incident. Ask: can you realistically meet that clock today?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>4. Business continuity</h3><p>Backups, disaster recovery and crisis management that are regularly tested, not merely written down. Ask: when did you last run a real restoration and crisis exercise?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>5. Supply-chain security</h3><p>Assess and manage the security of your suppliers and service providers; their weaknesses become your exposure. Ask: do your contracts and assessments reflect this?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>6. Reporting &amp; registration</h3><p>Know your competent national authority, your registration duties and the full incident timeline: early warning, formal notification and final report. Ask: are these responsibilities assigned and rehearsed?</p></div></div></div><div class="sd-section-header" style="margin-top:2.25rem;"><h2>The incident-reporting timeline</h2><p class="section-lead">NIS2 sets a demanding, multi-stage reporting clock that many organisations underestimate until they are mid-incident.</p></div><p>On becoming aware of a significant incident, an early warning is generally due within 24 hours, followed by a fuller incident notification within 72 hours, and a final report typically within a month. Meeting this cadence under the pressure of a live incident requires the workflow, contacts and templates to exist in advance. Building and rehearsing that reporting playbook before you need it is one of the highest-value preparations you can make.</p><div class="sd-section-header" style="margin-top:2.25rem;"><h2>How sovereign infrastructure helps with NIS2</h2><p class="section-lead">Hosting critical workloads on SecNumCloud-qualified, European infrastructure addresses several NIS2 control areas simultaneously.</p></div><p>Security, supply-chain trust and jurisdictional protection are handled by design on a qualified sovereign platform, which means a large body of the evidence NIS2 expects is inherited rather than built from scratch. Independent audit reports, documented controls and a European operating model substantially reduce the burden on your own team &mdash; turning what would be a sprawling internal effort into a focused exercise of mapping inherited controls to your obligations.</p><div class="sd-section-header" style="margin-top:2.25rem;"><h2>Frequently asked questions</h2></div><div class="sd-card"><h3>What are the penalties for non-compliance?</h3><p>NIS2 introduces significant administrative fines and, notably, personal liability for management bodies, with an enforcement ambition comparable to GDPR. The reputational and operational consequences of a poorly handled incident often exceed the fines themselves.</p></div><div class="sd-card"><h3>How fast must we report an incident?</h3><p>An early warning is generally required within 24 hours of becoming aware of a significant incident, followed by a fuller notification within 72 hours and a final report typically within a month.</p></div><div class="sd-card"><h3>Where should we start?</h3><p>Begin with a scoping and gap assessment that maps the NIS2 obligations against your current posture. That assessment produces a prioritised remediation plan, so you tackle the highest-risk gaps first rather than trying to do everything at once.</p></div><div class="sd-card"><h3>Is NIS2 just a bigger version of GDPR?</h3><p>They overlap but differ in focus. GDPR governs personal-data protection; NIS2 governs the cybersecurity and resilience of essential and important entities. Many organisations are subject to both, and a sovereign, well-governed platform supports each.</p></div><div class="sd-section-header" style="margin-top:2.5rem;"><p class="section-lead">Sovereignty is a journey, and the right partner makes it faster and safer. </p><a href="/page/contact" class="sd-btn sd-btn-primary">Talk to a sovereignty expert <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>', 'A practical checklist to assess your NIS2 readiness across scope, governance, risk and reporting.', 'nis2, nis2 compliance, nis2 checklist, cybersecurity directive, incident reporting, essential entities, risk management', 'A practical NIS2 compliance checklist for European organisations: scope, governance, risk management, incident reporting and how to prepare.');
 REPLACE INTO post_content (post_id, language_id, name, slug, content, excerpt, meta_keywords, meta_description) VALUES (@post4, @lang_fr, 'Checklist de conformité NIS2 : êtes-vous prêt pour la directive ?', 'checklist-conformite-nis2', '<p>La directive NIS2 élargit fortement le périmètre et relève le niveau des obligations de cybersécurité dans toute l\'Union européenne. Là où la directive précédente ne touchait qu\'un ensemble relativement restreint d\'opérateurs, NIS2 pénètre profondément l\'économie &mdash; et elle rend la direction générale personnellement responsable. Si votre organisation est une entité essentielle ou importante, le moment de vous préparer, c\'est maintenant. Utilisez la checklist ci-dessous pour évaluer honnêtement où vous en êtes et où se situent les écarts.</p><div class="sd-section-header" style="margin-top:2.25rem;"><h2>NIS2 vous concerne-t-elle ?</h2><p class="section-lead">NIS2 couvre un ensemble de secteurs bien plus large que la directive d\'origine : énergie, transport, banque et infrastructures des marchés financiers, santé, eau potable et eaux usées, infrastructures numériques, administration publique, espace, services postaux, gestion des déchets, produits chimiques, alimentation, industrie et fournisseurs numériques.</p></div><p>Au sein de ces secteurs, les entités moyennes et grandes entrent généralement dans le périmètre, classées comme entités « essentielles » ou « importantes », avec une supervision et des sanctions proportionnées à ce classement. De plus petites organisations peuvent néanmoins être concernées lorsqu\'elles jouent un rôle critique dans une chaîne d\'approvisionnement. L\'hypothèse la plus prudente pour toute organisation de taille moyenne ou grande d\'un secteur couvert est que NIS2 s\'applique &mdash; et de confirmer le périmètre tôt plutôt que de le découvrir pendant un incident.</p><div class="sd-section-header" style="margin-top:2.25rem;"><h2>Votre checklist de préparation NIS2</h2></div><div class="row g-4"><div class="col-md-6"><div class="sd-card"><h3>1. Gouvernance &amp; responsabilité</h3><p>Les organes de direction doivent approuver les mesures de cybersécurité, en superviser la mise en œuvre et peuvent voir leur responsabilité personnelle engagée en cas de manquement. Question : votre direction est-elle impliquée, formée et documente-t-elle sa supervision ?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>2. Mesures de gestion des risques</h3><p>Des politiques documentées d\'analyse des risques, de sécurité des systèmes, de cryptographie et de traitement des vulnérabilités. Question : les vôtres sont-elles à jour, étayées et réellement suivies en pratique ?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>3. Détection &amp; traitement des incidents</h3><p>Des processus pour détecter, répondre et se relever des incidents, dont une alerte précoce dans les 24 heures suivant un incident significatif. Question : tenez-vous réellement ce délai aujourd\'hui ?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>4. Continuité d\'activité</h3><p>Sauvegardes, reprise après sinistre et gestion de crise régulièrement testées, et pas seulement écrites. Question : à quand remonte votre dernier exercice réel de restauration et de crise ?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>5. Sécurité de la chaîne d\'approvisionnement</h3><p>Évaluez et maîtrisez la sécurité de vos fournisseurs et prestataires ; leurs faiblesses deviennent votre exposition. Question : vos contrats et évaluations en tiennent-ils compte ?</p></div></div><div class="col-md-6"><div class="sd-card"><h3>6. Notification &amp; enregistrement</h3><p>Connaissez votre autorité nationale compétente, vos obligations d\'enregistrement et le calendrier complet : alerte précoce, notification formelle et rapport final. Question : ces responsabilités sont-elles attribuées et répétées ?</p></div></div></div><div class="sd-section-header" style="margin-top:2.25rem;"><h2>Le calendrier de notification des incidents</h2><p class="section-lead">NIS2 fixe un calendrier de notification exigeant et en plusieurs étapes que beaucoup d\'organisations sous-estiment jusqu\'à se retrouver en plein incident.</p></div><p>Dès la prise de connaissance d\'un incident significatif, une alerte précoce est généralement due dans les 24 heures, suivie d\'une notification d\'incident plus complète dans les 72 heures, puis d\'un rapport final, en général sous un mois. Tenir cette cadence sous la pression d\'un incident en cours suppose que le processus, les contacts et les modèles existent à l\'avance. Construire et répéter ce plan de notification avant d\'en avoir besoin est l\'une des préparations à plus forte valeur que vous puissiez mener.</p><div class="sd-section-header" style="margin-top:2.25rem;"><h2>En quoi une infrastructure souveraine aide pour NIS2</h2><p class="section-lead">Héberger les charges critiques sur une infrastructure européenne qualifiée SecNumCloud répond simultanément à plusieurs domaines de contrôle de NIS2.</p></div><p>Sécurité, confiance dans la chaîne d\'approvisionnement et protection juridictionnelle sont traitées par conception sur une plateforme souveraine qualifiée, ce qui signifie qu\'une grande partie des preuves attendues par NIS2 est héritée plutôt que construite de zéro. Rapports d\'audit indépendants, contrôles documentés et modèle d\'exploitation européen réduisent considérablement la charge pesant sur vos équipes &mdash; transformant un vaste chantier interne en un exercice ciblé de mise en correspondance des contrôles hérités avec vos obligations.</p><div class="sd-section-header" style="margin-top:2.25rem;"><h2>Questions fréquentes</h2></div><div class="sd-card"><h3>Quelles sanctions en cas de non-conformité ?</h3><p>NIS2 introduit des amendes administratives significatives et, surtout, une responsabilité personnelle des organes de direction, avec une ambition d\'application comparable au RGPD. Les conséquences réputationnelles et opérationnelles d\'un incident mal géré dépassent souvent les amendes elles-mêmes.</p></div><div class="sd-card"><h3>Sous quel délai faut-il notifier un incident ?</h3><p>Une alerte précoce est généralement requise dans les 24 heures suivant la prise de connaissance d\'un incident significatif, suivie d\'une notification plus complète sous 72 heures et d\'un rapport final, en général sous un mois.</p></div><div class="sd-card"><h3>Par où commencer ?</h3><p>Commencez par un cadrage et une analyse d\'écarts qui confrontent les obligations NIS2 à votre posture actuelle. Cette analyse produit un plan de remédiation priorisé, afin de traiter d\'abord les écarts les plus à risque plutôt que de tout mener de front.</p></div><div class="sd-card"><h3>NIS2 n\'est-elle qu\'une version élargie du RGPD ?</h3><p>Elles se recoupent mais diffèrent par leur objet. Le RGPD régit la protection des données personnelles ; NIS2 régit la cybersécurité et la résilience des entités essentielles et importantes. Beaucoup d\'organisations sont soumises aux deux, et une plateforme souveraine bien gouvernée soutient l\'une comme l\'autre.</p></div><div class="sd-section-header" style="margin-top:2.5rem;"><p class="section-lead">La souveraineté est un cheminement, et le bon partenaire le rend plus rapide et plus sûr. </p><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Parler à un expert en souveraineté <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>', 'Une checklist pratique pour évaluer votre préparation NIS2 : périmètre, gouvernance, risques et notification.', 'nis2, conformité nis2, checklist nis2, directive cybersécurité, notification incident, entités essentielles, gestion des risques', 'Checklist pratique de conformité NIS2 pour les organisations européennes : périmètre, gouvernance, gestion des risques, notification d\'incident et préparation.');
 
+
+-- =====================================================================
+-- v6: 14 FR + 14 EN resource pages (styled hero+TOC+sidebar), 18 page
+--     rewrites (services/about/method + 6 service pages, EN+FR), and
+--     homepage <title>/meta in site.settings. Slug-keyed, idempotent.
+-- =====================================================================
+SET NAMES utf8mb4;
+-- ===== v6 additions: 28 new resource pages (FR+EN) + 18 rewrites =====
+SET @lang := (SELECT language_id FROM language WHERE slug='en' OR code LIKE 'en%' ORDER BY language_id LIMIT 1); SET @lang:=IFNULL(@lang,1);
+SET @lang_fr := (SELECT language_id FROM language WHERE slug='fr' OR code LIKE 'fr%' ORDER BY language_id LIMIT 1); SET @lang_fr:=IFNULL(@lang_fr,2);
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>About</span><h2>Experts dedicated to your <span class="sd-gradient-text">digital sovereignty</span></h2><p class="section-lead">We help European businesses and public organisations take back full control of their digital assets — from strategy to deployment, with one standard: sovereignty without compromising on performance.</p></div>
+<p><strong>Digital sovereignty consulting</strong> demands a dual skill set, legal and technical. Our consultants master both the regulatory stakes — CLOUD Act, GDPR, NIS2 directive, ANSSI SecNumCloud qualification — and cloud engineering, turning abstract obligations into concrete, secure, reversible architectures. We do not resell infrastructure: we defend your interest.</p></section>
+<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Our mission</span><h2>Making sovereignty <span class="sd-gradient-text">attainable and measurable</span></h2><p class="section-lead">Too many organisations endure dependence on non-European players without measuring the risk. Our mission: objectify that dependence, then reduce it through fact-based decisions.</p></div>
+<p>A majority of corporate data flows through US-subject providers today — often unknowingly, via everyday tools. The <strong>CLOUD Act</strong> makes that data potentially accessible to a foreign authority, in direct tension with GDPR. We help clients out of that grey zone with a clear path from assessment to compliance.</p></section>
+<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Our values</span><h2>What guides every <span class="sd-gradient-text">engagement</span></h2></div>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Independence</h3><p>No infrastructure resale: our recommendations serve your interest, never a vendor\'s.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Evidence-based</h3><p>Decisions grounded in a factual map of your dependencies, not intuition.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Reversibility</h3><p>No proprietary lock-in: open standards and portability on every project.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Confidentiality</h3><p>Data processed in Europe, GDPR compliance and end-to-end confidentiality.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Regulatory rigour</h3><p>An up-to-date reading of the CLOUD Act, GDPR, NIS2 and ANSSI frameworks.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Performance</h3><p>Sovereignty without sacrificing service levels — and we prove it.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Let\'s talk about your project</strong> — personalised reply within 24 business hours, no commitment, data processed in Europe. <a href="/en/page/contact">Contact us</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AboutPage", "@id": "https://souverainete-digitale.fr/page/about#main", "name": "About", "description": "Independent digital sovereignty experts: we support businesses and the public sector, from strategy to deployment, across Europe.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/about", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "About", "item": "https://souverainete-digitale.fr/page/about"}]}]}</script>', meta_description='Independent digital sovereignty experts: we support businesses and the public sector, from strategy to deployment, across Europe.' WHERE slug='about' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>À propos</span><h2>Des experts dédiés à votre <span class="sd-gradient-text">souveraineté numérique</span></h2><p class="section-lead">Nous accompagnons entreprises et organisations publiques européennes pour reprendre le contrôle total de leurs actifs numériques — de la stratégie au déploiement, avec une exigence : la souveraineté sans compromis sur la performance.</p></div>
+
+<p>Le conseil en <strong>souveraineté numérique</strong> exige une double compétence, juridique et technique. Nos consultants maîtrisent à la fois les enjeux réglementaires — CLOUD Act, RGPD, directive NIS2, qualification SecNumCloud de l\'ANSSI — et l\'ingénierie cloud, pour traduire des obligations abstraites en architectures concrètes, sécurisées et réversibles. Nous ne vendons pas d\'infrastructure : nous défendons votre intérêt.</p></section>
+
+<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Notre mission</span><h2>Rendre la souveraineté <span class="sd-gradient-text">atteignable et mesurable</span></h2><p class="section-lead">Trop d\'organisations subissent leur dépendance à des acteurs extra-européens sans en mesurer le risque. Notre mission : objectiver cette dépendance, puis la réduire par des décisions fondées sur des faits.</p></div>
+<p>Une part majoritaire des données d\'entreprise transite aujourd\'hui par des fournisseurs soumis au droit américain — souvent à l\'insu des équipes, via des outils du quotidien. Le <strong>CLOUD Act</strong> rend ces données potentiellement accessibles à une autorité étrangère, en tension directe avec le RGPD. Nous aidons nos clients à sortir de cette zone grise par une trajectoire claire, du diagnostic à la mise en conformité.</p></section>
+
+<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Notre expertise</span><h2>Un savoir-faire <span class="sd-gradient-text">juridique et technique</span></h2></div>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Cloud souverain</h3><p>Conception et migration vers des infrastructures certifiées SecNumCloud, immunisées contre le CLOUD Act, avec réversibilité garantie.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Protection des données</h3><p>Chiffrement de bout en bout, gestion souveraine des clés (HSM/KMS) et conformité RGPD by design.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Cybersécurité &amp; SOC</h3><p>Détection des menaces 24/7, réponse à incident et tests d\'intrusion, alignés sur NIS2.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Conformité &amp; audit</h3><p>RGPD, SecNumCloud, ISO 27001, HDS, NIS2 — préparés et vérifiés par des auditeurs accrédités.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Stratégie &amp; conseil</h3><p>Cartographie des dépendances, analyse de risque et feuille de route pluriannuelle de souveraineté.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Formation</h3><p>Sensibilisation, ateliers CLOUD Act/RGPD/NIS2 et certifications pour ancrer la souveraineté dans vos équipes.</p></div></div>
+</div></section>
+
+<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Nos valeurs</span><h2>Ce qui guide chacune de nos <span class="sd-gradient-text">interventions</span></h2></div>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Indépendance</h3><p>Aucune revente d\'infrastructure : nos recommandations servent votre intérêt, jamais celui d\'un fournisseur.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Approche par la preuve</h3><p>Des décisions fondées sur une cartographie factuelle de vos dépendances, pas sur des intuitions.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Réversibilité</h3><p>Pas de verrou propriétaire : standards ouverts et portabilité garantie sur chaque projet.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Confidentialité</h3><p>Données traitées en Europe, conformité RGPD et confidentialité de bout en bout.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Exigence réglementaire</h3><p>Une lecture à jour du CLOUD Act, du RGPD, de NIS2 et des référentiels ANSSI.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Performance</h3><p>La souveraineté sans sacrifier le niveau de service : c\'est aujourd\'hui possible, nous le démontrons.</p></div></div>
+</div></section>
+
+<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Notre couverture</span><h2>Une présence <span class="sd-gradient-text">strictement européenne</span></h2><p class="section-lead">Nous intervenons dans 14 pays européens, sur des datacenters certifiés Tier III/IV en France, en Allemagne, aux Pays-Bas et au Luxembourg.</p></div>
+<p>Cette implantation européenne n\'est pas un détail : c\'est la condition même de la souveraineté. Hébergement, exploitation et gouvernance restent dans le périmètre du droit européen, à l\'écart des juridictions extraterritoriales. Pour comprendre les fondements de cette approche, consultez nos ressources sur le <a href="/fr/page/cloud-act-france">CLOUD Act</a>, le <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> et la <a href="/fr/page/souverainete-numerique-guide">souveraineté numérique</a>.</p>
+<blockquote class="sd-cta"><strong>Parlons de votre projet</strong> — réponse personnalisée sous 24h ouvrées, sans engagement, données traitées en Europe. <a href="/fr/page/contact">Nous contacter</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AboutPage", "@id": "https://souverainete-digitale.fr/page/a-propos#main", "name": "À propos", "description": "Experts indépendants en souveraineté numérique : cloud souverain, protection des données, cybersécurité et conformité RGPD/NIS2/SecNumCloud, pour entreprises et secteur public en Europe.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/a-propos", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "À propos", "item": "https://souverainete-digitale.fr/page/a-propos"}]}]}</script>', meta_description='Experts ind�pendants en souverainet� num�rique : cloud souverain, protection des donn�es, cybers�curit� et conformit� RGPD/NIS2/SecNumCloud, pour entreprises et secteur public en Europe.' WHERE slug='a-propos' AND language_id=@lang_fr;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Our solutions</span><h2>A complete approach to <span class="sd-gradient-text">digital sovereignty</span></h2><p class="section-lead">From initial assessment to operational rollout, our experts cover the full lifecycle of your digital sovereignty strategy: sovereign cloud, data protection, cybersecurity, compliance, consulting and training.</p></div>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/sovereign-cloud">Sovereign cloud</a></h3><p>Migration and hosting on certified European infrastructure, immune to the CLOUD Act.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/data-protection">Data protection</a></h3><p>End-to-end encryption, sovereign key management (HSM/KMS) and GDPR-compliant retention.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/cybersecurity-soc">Cybersecurity &amp; SOC</a></h3><p>24/7 threat detection, sovereign managed SOC and penetration testing.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/compliance-audit">Compliance &amp; Audit</a></h3><p>GDPR audit, SecNumCloud qualification, ISO 27001, HDS and NIS2.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/strategy-consulting">Strategy &amp; Consulting</a></h3><p>Dependency mapping, risk analysis and a multi-year sovereignty roadmap.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/training">Training</a></h3><p>Awareness, workshops and certifications to embed sovereignty in your teams.</p></div></div>
+</div>
+<p>Every engagement starts from a factual baseline and leads to prioritised actions. Begin with a <a href="/en/page/sovereignty-assessment">sovereignty assessment</a>, or explore our resources on the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a> and <a href="/en/page/data-sovereignty">data sovereignty</a>.</p>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — find the right combination of solutions for your organisation. <a href="/en/page/contact">Talk to an expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "@id": "https://souverainete-digitale.fr/page/services#main", "name": "Services", "description": "A complete approach to digital sovereignty: sovereign cloud, data protection, cybersecurity, compliance, consulting and training.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/services", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://souverainete-digitale.fr/page/services"}]}]}</script>', meta_description='A complete approach to digital sovereignty: sovereign cloud, data protection, cybersecurity, compliance, consulting and training.' WHERE slug='services' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Nos solutions</span><h2>Une approche complète de la <span class="sd-gradient-text">souveraineté numérique</span></h2><p class="section-lead">De l\'évaluation initiale au déploiement opérationnel, nos experts couvrent tout le cycle de vie de votre stratégie de souveraineté numérique : cloud souverain, protection des données, cybersécurité, conformité, conseil et formation.</p></div>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/cloud-souverain">Cloud souverain</a></h3><p>Migration et hébergement sur une infrastructure européenne certifiée SecNumCloud, immunisée contre le CLOUD Act.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/protection-donnees">Protection des données</a></h3><p>Chiffrement de bout en bout, gestion souveraine des clés (HSM/KMS) et conservation conforme au RGPD.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/cybersecurite-soc">Cybersécurité &amp; SOC</a></h3><p>Détection des menaces 24/7, SOC souverain managé et tests d\'intrusion sur vos charges critiques.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/conformite-audit">Conformité &amp; Audit</a></h3><p>Audit RGPD, qualification SecNumCloud, ISO 27001, HDS et conformité NIS2.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/strategie-conseil">Stratégie &amp; Conseil</a></h3><p>Cartographie des dépendances, analyse de risque et feuille de route pluriannuelle de souveraineté.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/formation">Formation</a></h3><p>Sensibilisation, ateliers et certifications pour ancrer la souveraineté dans vos équipes.</p></div></div>
+</div>
+<p>Chaque mission part d\'un état des lieux factuel et débouche sur des actions priorisées. Vous pouvez commencer par un <a href="/fr/page/diagnostic-souverainete">diagnostic de souveraineté</a> ou explorer nos <a href="/fr/page/cloud-act-france">ressources sur le CLOUD Act</a> et la <a href="/fr/page/souverainete-numerique-guide">souveraineté numérique</a>.</p>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — trouvez la combinaison de solutions adaptée à votre organisation. <a href="/fr/page/contact">Parler à un expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "@id": "https://souverainete-digitale.fr/page/solutions#main", "name": "Solutions", "description": "Une approche complète de la souveraineté numérique : cloud souverain, protection des données, cybersécurité, conformité, conseil et formation.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/solutions", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Solutions", "item": "https://souverainete-digitale.fr/page/solutions"}]}]}</script>', meta_description='Une approche compl�te de la souverainet� num�rique : cloud souverain, protection des donn�es, cybers�curit�, conformit�, conseil et formation.' WHERE slug='solutions' AND language_id=@lang_fr;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Method &amp; Certifications</span><h2>Recognised, <span class="sd-gradient-text">audited and verifiable</span> standards</h2><p class="section-lead">Every service we run is built on demanding frameworks, certified by accredited independent auditors. Sovereignty and security are not declared — they are proven.</p></div>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/secnumcloud-certification">SecNumCloud (ANSSI 3.2)</a></h3><p>The French security visa guaranteeing a cloud immune to extra-European laws.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>ISO 27001</h3><p>Information security management to the international reference standard.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/healthcare-data-hosting">HDS</a></h3><p>Certified health-data hosting for the medical sector.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/gdpr-data-hosting">GDPR</a></h3><p>Compliance with the European personal-data regulation.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/en/page/nis2-directive-compliance">NIS2</a></h3><p>Compliance with the EU cybersecurity directive.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>SOC 2</h3><p>Security, availability and confidentiality controls audited to SOC 2.</p></div></div>
+</div>
+<p>Our method applies these frameworks end to end: Tier III/IV certified data centres in France, Germany, the Netherlands and Luxembourg, end-to-end encryption and guaranteed reversibility. For the regulatory foundations, see our guides on the <a href="/en/page/us-cloud-act-explained">CLOUD Act</a> and the <a href="/en/page/trusted-cloud">trusted cloud</a>.</p>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — let\'s confirm which certifications your activity requires. <a href="/en/page/contact">Talk to an expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AboutPage", "@id": "https://souverainete-digitale.fr/page/method#main", "name": "Method & Certifications", "description": "Recognised, audited standards: SecNumCloud, ISO 27001, HDS, GDPR, NIS2, SOC 2. Sovereignty is proven, not declared.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/method", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Method & Certifications", "item": "https://souverainete-digitale.fr/page/method"}]}]}</script>', meta_description='Recognised, audited standards: SecNumCloud, ISO 27001, HDS, GDPR, NIS2, SOC 2. Sovereignty is proven, not declared.' WHERE slug='method' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Méthode &amp; Certifications</span><h2>Des standards <span class="sd-gradient-text">reconnus, audités et vérifiables</span></h2><p class="section-lead">Chaque service que nous opérons s\'appuie sur des référentiels exigeants, certifiés par des auditeurs indépendants accrédités. La souveraineté et la sécurité ne se déclarent pas : elles se prouvent.</p></div>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/secnumcloud-qualification-anssi">SecNumCloud (ANSSI 3.2)</a></h3><p>Le visa de sécurité français garantissant un cloud immunisé contre les lois extra-européennes.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>ISO 27001</h3><p>Management de la sécurité de l\'information selon la norme internationale de référence.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/hebergement-donnees-de-sante-hds">HDS</a></h3><p>Hébergement de données de santé certifié, pour les acteurs du secteur médical.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/rgpd-hebergement-donnees">RGPD</a></h3><p>Conformité au règlement européen sur la protection des données personnelles.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/directive-nis2-conformite">NIS2</a></h3><p>Mise en conformité à la directive européenne sur la cybersécurité.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>SOC 2</h3><p>Contrôles de sécurité, disponibilité et confidentialité audités selon le référentiel SOC 2.</p></div></div>
+</div>
+<p>Notre méthode applique ces référentiels de bout en bout : datacenters Tier III/IV certifiés en France, en Allemagne, aux Pays-Bas et au Luxembourg, chiffrement de bout en bout et réversibilité garantie. Pour comprendre les fondements réglementaires, consultez nos guides sur le <a href="/fr/page/cloud-act-france">CLOUD Act</a> et le <a href="/fr/page/cloud-de-confiance">cloud de confiance</a>.</p>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — vérifions ensemble quelles certifications votre activité requiert. <a href="/fr/page/contact">Parler à un expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AboutPage", "@id": "https://souverainete-digitale.fr/page/certifications#main", "name": "Méthode & Certifications", "description": "Des standards reconnus et audités : SecNumCloud, ISO 27001, HDS, RGPD, NIS2, SOC 2. La souveraineté se prouve.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/certifications", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Méthode & Certifications", "item": "https://souverainete-digitale.fr/page/certifications"}]}]}</script>', meta_description='Des standards reconnus et audit�s : SecNumCloud, ISO 27001, HDS, RGPD, NIS2, SOC 2. La souverainet� se prouve.' WHERE slug='certifications' AND language_id=@lang_fr;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Sovereign Cloud</span><h2><span class="sd-gradient-text">Sovereign cloud hosting</span>, beyond the reach of foreign law</h2><p class="section-lead">Migrate and run your workloads on certified European infrastructure (SecNumCloud, ISO 27001, HDS), with full control over where your data lives, who accesses it and how it is operated — with no exposure to the US CLOUD Act or any other foreign jurisdiction.</p></div>
+<p>A <strong>sovereign cloud</strong> is defined not by a data-centre address but by three inseparable guarantees: <strong>data sovereignty</strong> (storage and processing in Europe, customer-controlled keys via HSM/KMS), <strong>operational sovereignty</strong> (operated by staff under European law) and <strong>legal sovereignty</strong> (immunity to the CLOUD Act). We help you choose and run hosting that genuinely meets all three.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>SecNumCloud-certified hosting</h3><p>Infrastructure qualified by ANSSI, immune to extra-European laws — the benchmark for a trusted cloud.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Data in Europe, keys with you</h3><p>European-only storage, end-to-end encryption and sovereign key management: even the host cannot read your data.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Guaranteed reversibility</h3><p>Portable formats, open standards and clear exit clauses — no proprietary lock-in.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Migration without downtime</h3><p>Progressive batch cut-over, non-critical loads first, end-to-end service continuity.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>GDPR &amp; HDS compliance</h3><p>Hosting compliant with GDPR and, for health data, HDS-certified — compliance by architecture.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Legal sovereignty</h3><p>No US-subject operator in the chain: the only structural way to escape the CLOUD Act.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — our experts assess your sovereignty needs and the right migration path. <a href="/en/page/contact">Talk to an expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/sovereign-cloud#main", "name": "Sovereign Cloud", "description": "SecNumCloud-certified sovereign cloud hosting, immune to the US CLOUD Act: data in Europe, controlled keys, guaranteed reversibility.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/sovereign-cloud", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Sovereign Cloud", "item": "https://souverainete-digitale.fr/page/sovereign-cloud"}]}]}</script>', meta_description='SecNumCloud-certified sovereign cloud hosting, immune to the US CLOUD Act: data in Europe, controlled keys, guaranteed reversibility.' WHERE slug='sovereign-cloud' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Cloud Souverain</span><h2>Hébergement <span class="sd-gradient-text">cloud souverain</span>, à l\'abri des lois extraterritoriales</h2><p class="section-lead">Migrez et exploitez vos charges sur une infrastructure européenne certifiée (SecNumCloud, ISO 27001, HDS), avec un contrôle total de l\'emplacement de vos données, de leurs accès et de leur exploitation — sans exposition au CLOUD Act américain ni à aucune autre juridiction étrangère.</p></div>
+<p>Un <strong>cloud souverain</strong> ne se définit pas par l\'adresse de son datacenter mais par trois garanties indissociables : la <strong>souveraineté des données</strong> (stockage et traitement en Europe, clés maîtrisées via HSM/KMS), la <strong>souveraineté opérationnelle</strong> (exploitation par des personnels relevant du droit européen) et la <strong>souveraineté juridique</strong> (immunité face au CLOUD Act). Nous vous aidons à choisir et à opérer un hébergement qui coche réellement ces trois cases.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Hébergement certifié SecNumCloud</h3><p>Infrastructure qualifiée par l\'ANSSI, immunisée contre les législations extra-européennes — la référence du cloud de confiance français.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Données en Europe, clés à vous</h3><p>Stockage exclusivement européen, chiffrement de bout en bout et gestion souveraine des clés : même l\'hébergeur ne peut lire vos données.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Réversibilité garantie</h3><p>Formats portables, standards ouverts et clauses de sortie claires : aucun verrou propriétaire, vous restez libre de partir.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Migration sans interruption</h3><p>Bascule progressive par lots, charges non critiques d\'abord, continuité de service de bout en bout.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Conformité RGPD &amp; HDS</h3><p>Hébergement conforme au RGPD et, pour les données de santé, certifié HDS — la conformité par l\'architecture, pas par les promesses.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Souveraineté juridique</h3><p>Aucun opérateur soumis au droit américain dans la chaîne : le seul moyen structurel d\'échapper au CLOUD Act.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — nos experts évaluent votre besoin de souveraineté et la trajectoire de migration adaptée. <a href="/fr/page/contact">Parler à un expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/cloud-souverain#main", "name": "Cloud Souverain", "description": "Hébergement cloud souverain certifié SecNumCloud, immunisé contre le CLOUD Act : données en Europe, clés maîtrisées, réversibilité garantie.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/cloud-souverain", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Country", "name": "France"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Cloud Souverain", "item": "https://souverainete-digitale.fr/page/cloud-souverain"}]}]}</script>', meta_description='H�bergement cloud souverain certifi� SecNumCloud, immunis� contre le CLOUD Act : donn�es en Europe, cl�s ma�tris�es, r�versibilit� garantie.' WHERE slug='cloud-souverain' AND language_id=@lang_fr;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Data Protection</span><h2>Encryption, key sovereignty and <span class="sd-gradient-text">GDPR by design</span></h2><p class="section-lead">Protect your personal and strategic data end to end with sovereign encryption, hardware key management (HSM) and retention policies built for GDPR. Your keys, your control — even your cloud provider cannot read your data.</p></div>
+<p>Enterprise <strong>data protection</strong> is more than encryption: it requires full control of the data lifecycle, from classification to erasure, including sovereign key management. That is the condition for real GDPR compliance and resistance to unauthorised access, including under the CLOUD Act.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>End-to-end encryption</h3><p>Data encrypted in transit and at rest with robust, audited algorithms.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Sovereign key management</h3><p>Hold and rotate your own keys via HSM and KMS hosted in Europe. BYOK and HYOK supported.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>GDPR-compliant retention</h3><p>Automated retention, minimisation and right-to-erasure, compliant with no manual effort.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Data classification</h3><p>Discover, label and govern sensitive data across your estate so the right controls follow automatically.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Pseudonymisation</h3><p>Reduce risk on personal data through controlled pseudonymisation and anonymisation.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Traceability &amp; logging</h3><p>Tamper-proof access logs to demonstrate GDPR accountability.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — secure your sensitive data with a sovereign architecture. <a href="/en/page/contact">Talk to an expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/data-protection#main", "name": "Data Protection", "description": "End-to-end encryption, sovereign key management (HSM) and GDPR by design. Your keys, your control.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/data-protection", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Data Protection", "item": "https://souverainete-digitale.fr/page/data-protection"}]}]}</script>', meta_description='End-to-end encryption, sovereign key management (HSM) and GDPR by design. Your keys, your control.' WHERE slug='data-protection' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Protection des Données</span><h2>Chiffrement, souveraineté des clés et <span class="sd-gradient-text">RGPD by design</span></h2><p class="section-lead">Protégez vos données personnelles et stratégiques de bout en bout grâce au chiffrement souverain, à la gestion matérielle des clés (HSM) et à des politiques de conservation conçues pour le RGPD. Vos clés, votre contrôle — même votre fournisseur cloud ne peut lire vos données.</p></div>
+<p>La <strong>protection des données en entreprise</strong> ne se limite pas au chiffrement : elle exige une maîtrise complète du cycle de vie de la donnée, de sa classification à son effacement, en passant par la gestion souveraine des clés. C\'est la condition d\'une conformité RGPD réelle et d\'une résistance aux accès non autorisés, y compris ceux qu\'autorise le CLOUD Act.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Chiffrement de bout en bout</h3><p>Données chiffrées en transit et au repos avec des algorithmes robustes et audités, contre les fuites et les accès non autorisés.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Gestion souveraine des clés</h3><p>Détenez et faites tourner vos propres clés via HSM et KMS hébergés en Europe. BYOK et HYOK pris en charge.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Conservation conforme au RGPD</h3><p>Conservation, minimisation et droit à l\'effacement automatisés, pour rester conforme sans effort manuel.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Classification des données</h3><p>Découvrez, étiquetez et gouvernez les données sensibles de tout votre patrimoine pour que les bons contrôles s\'appliquent automatiquement.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Pseudonymisation</h3><p>Réduisez le risque sur les données personnelles par pseudonymisation et anonymisation maîtrisées.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Traçabilité &amp; journalisation</h3><p>Journaux d\'accès inviolables pour démontrer votre conformité (principe d\'accountability du RGPD).</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — sécurisez vos données sensibles avec une architecture souveraine. <a href="/fr/page/contact">Parler à un expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/protection-donnees#main", "name": "Protection des Données", "description": "Chiffrement de bout en bout, gestion souveraine des clés (HSM) et conservation RGPD by design. Vos clés, votre contrôle.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/protection-donnees", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Country", "name": "France"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Protection des Données", "item": "https://souverainete-digitale.fr/page/protection-donnees"}]}]}</script>', meta_description='Chiffrement de bout en bout, gestion souveraine des cl�s (HSM) et conservation RGPD by design. Vos cl�s, votre contr�le.' WHERE slug='protection-donnees' AND language_id=@lang_fr;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Cybersecurity &amp; SOC</span><h2>Threat detection and a <span class="sd-gradient-text">24/7 sovereign managed SOC</span></h2><p class="section-lead">A sovereign Security Operations Centre (SOC), managed around the clock, that monitors, detects and responds to threats on your critical workloads — operated in Europe, by cleared teams, with no dependence on a non-European vendor.</p></div>
+<p>Enterprise <strong>cybersecurity</strong> is no longer just antivirus: it demands continuous detection, rapid response and regular offensive testing. Our <strong>managed SOC</strong> combines 24/7 monitoring, threat intelligence and remediation on sovereign infrastructure, consistent with your NIS2 obligations.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>24/7 threat detection</h3><p>Continuous monitoring (SIEM/XDR), event correlation and analyst-qualified alerts, day and night.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Incident response</h3><p>Containment, investigation and remediation led by experts, with a pre-defined response plan.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Penetration testing</h3><p>Regular offensive testing tailored to your critical workloads to find flaws before attackers do.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Sovereign SOC</h3><p>Operated in Europe by cleared staff, with no telemetry sent outside the EU.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>NIS2 compliance</h3><p>24-hour incident notification, risk management and supply-chain security aligned with NIS2.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Threat intelligence</h3><p>Sector-specific threat intelligence built into detection to anticipate attacks.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — assess your protection level and the right SOC scope. <a href="/en/page/contact">Talk to an expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/cybersecurity-soc#main", "name": "Cybersecurity & SOC", "description": "24/7 sovereign managed SOC: threat detection, incident response and penetration testing, aligned with NIS2.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/cybersecurity-soc", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Cybersecurity & SOC", "item": "https://souverainete-digitale.fr/page/cybersecurity-soc"}]}]}</script>', meta_description='24/7 sovereign managed SOC: threat detection, incident response and penetration testing, aligned with NIS2.' WHERE slug='cybersecurity-soc' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Cybersécurité &amp; SOC</span><h2>Détection des menaces et <span class="sd-gradient-text">SOC souverain managé 24/7</span></h2><p class="section-lead">Un centre opérationnel de sécurité (SOC) souverain, infogéré 24h/24, qui surveille, détecte et répond aux menaces sur vos charges critiques — opéré en Europe, par des équipes habilitées, sans dépendance à un éditeur extra-européen.</p></div>
+<p>La <strong>cybersécurité en entreprise</strong> ne se résume plus à un antivirus : elle exige une détection continue, une capacité de réponse rapide et des tests offensifs réguliers. Notre <strong>SOC managé</strong> combine supervision 24/7, threat intelligence et remédiation, le tout sur une infrastructure souveraine cohérente avec vos obligations NIS2.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Détection des menaces 24/7</h3><p>Supervision continue (SIEM/XDR), corrélation d\'événements et alertes qualifiées par des analystes, jour et nuit.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Réponse à incident</h3><p>Confinement, investigation et remédiation pilotés par des experts, avec plan de réponse défini à l\'avance.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Tests d\'intrusion (pentest)</h3><p>Tests offensifs réguliers adaptés à vos charges critiques pour révéler les failles avant les attaquants.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>SOC souverain</h3><p>Opéré en Europe par des personnels habilités, sans télémétrie envoyée hors UE ni dépendance à un cloud extra-européen.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Conformité NIS2</h3><p>Notification d\'incident sous 24h, gestion du risque et sécurisation de la chaîne d\'approvisionnement alignées sur NIS2.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Threat intelligence</h3><p>Veille sur les menaces ciblant votre secteur, intégrée à la détection pour anticiper les attaques.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — évaluez votre niveau de protection et le périmètre d\'un SOC adapté. <a href="/fr/page/contact">Parler à un expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/cybersecurite-soc#main", "name": "Cybersécurité & SOC", "description": "SOC souverain managé 24/7 : détection des menaces, réponse à incident et tests d\'intrusion, alignés sur NIS2.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/cybersecurite-soc", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Country", "name": "France"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Cybersécurité & SOC", "item": "https://souverainete-digitale.fr/page/cybersecurite-soc"}]}]}</script>', meta_description='SOC souverain manag� 24/7 : d�tection des menaces, r�ponse � incident et tests d\'intrusion, align�s sur NIS2.' WHERE slug='cybersecurite-soc' AND language_id=@lang_fr;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Compliance &amp; Audit</span><h2>Compliance audits for <span class="sd-gradient-text">GDPR, SecNumCloud, ISO 27001, HDS &amp; NIS2</span></h2><p class="section-lead">Support for regulatory readiness and certification: GDPR audit, SecNumCloud qualification, ISO 27001 and HDS certification, NIS2 directive. Demanding frameworks, audited by accredited third parties, for verifiable compliance.</p></div>
+<p>A <strong>GDPR compliance audit</strong> and certification are not formalities: they are trust levers and often contractual prerequisites. We map your gaps, prioritise actions and support you through to certification — GDPR, SecNumCloud, ISO 27001, HDS, NIS2.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>GDPR audit</h3><p>Processing mapping, gap analysis and record-keeping for demonstrable GDPR compliance.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>SecNumCloud qualification</h3><p>Preparation for the ANSSI 3.2 framework: a trusted cloud immune to the CLOUD Act.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>ISO 27001</h3><p>An information security management system aligned with the international standard.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>HDS certification</h3><p>Health-data hosting: support for the framework and accredited audit.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>NIS2 compliance</h3><p>Scope assessment, risk management and incident-notification setup.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Independent audits</h3><p>Every requirement verified by accredited auditors: enforceable, not self-declared.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — identify your compliance gaps and the shortest path to certification. <a href="/en/page/contact">Talk to an expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/compliance-audit#main", "name": "Compliance & Audit", "description": "GDPR audit, SecNumCloud qualification, ISO 27001, HDS and NIS2, verified by accredited auditors.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/compliance-audit", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Compliance & Audit", "item": "https://souverainete-digitale.fr/page/compliance-audit"}]}]}</script>', meta_description='GDPR audit, SecNumCloud qualification, ISO 27001, HDS and NIS2, verified by accredited auditors.' WHERE slug='compliance-audit' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Conformité &amp; Audit</span><h2>Audit de conformité <span class="sd-gradient-text">RGPD, SecNumCloud, ISO 27001, HDS &amp; NIS2</span></h2><p class="section-lead">Accompagnement à la préparation et à la mise en conformité réglementaire : audit RGPD, qualification SecNumCloud, certification ISO 27001 et HDS, directive NIS2. Des référentiels exigeants, audités par des tiers accrédités, pour une conformité vérifiable.</p></div>
+<p>L\'<strong>audit de conformité RGPD</strong> et les démarches de certification ne sont pas des formalités : ce sont des leviers de confiance et, souvent, des prérequis contractuels. Nous cartographions vos écarts, priorisons les actions et vous accompagnons jusqu\'à l\'obtention — RGPD, SecNumCloud, ISO 27001, HDS, NIS2.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Audit RGPD</h3><p>Cartographie des traitements, analyse d\'écart et registre, pour une conformité démontrable au RGPD.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Qualification SecNumCloud</h3><p>Préparation au référentiel 3.2 de l\'ANSSI : la garantie d\'un cloud de confiance immunisé contre le CLOUD Act.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>ISO 27001</h3><p>Mise en place d\'un système de management de la sécurité de l\'information conforme à la norme internationale.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Certification HDS</h3><p>Hébergement de données de santé : accompagnement au référentiel et à l\'audit accrédité.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Conformité NIS2</h3><p>Évaluation d\'assujettissement, gestion du risque et dispositif de notification d\'incident.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Audits indépendants</h3><p>Chaque exigence est vérifiée par des auditeurs accrédités : une conformité opposable, pas déclarative.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — identifiez vos écarts de conformité et le chemin le plus court vers la certification. <a href="/fr/page/contact">Parler à un expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/conformite-audit#main", "name": "Conformité & Audit", "description": "Audit de conformité RGPD, qualification SecNumCloud, ISO 27001, HDS et NIS2, vérifiés par des auditeurs accrédités.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/conformite-audit", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Country", "name": "France"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Conformité & Audit", "item": "https://souverainete-digitale.fr/page/conformite-audit"}]}]}</script>', meta_description='Audit de conformit� RGPD, qualification SecNumCloud, ISO 27001, HDS et NIS2, v�rifi�s par des auditeurs accr�dit�s.' WHERE slug='conformite-audit' AND language_id=@lang_fr;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Strategy &amp; Consulting</span><h2><span class="sd-gradient-text">Digital sovereignty consulting</span>: from audit to roadmap</h2><p class="section-lead">Mapping of your digital dependencies, identification of extraterritoriality risks, inventory of sensitive data and a multi-year sovereignty roadmap — so you decide on facts, not intuition.</p></div>
+<p><strong>Digital sovereignty consulting</strong> always begins with an honest map: which services you use, who really operates them, what data flows through. From that picture follow a risk analysis and a prioritised roadmap aligned with your regulatory and budget constraints.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Dependency mapping</h3><p>Inventory of services, hosts and sub-processors, flagging operators subject to foreign law.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Risk analysis</h3><p>Assessment of CLOUD Act exposure and compliance risk, ranked by criticality.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Sovereignty roadmap</h3><p>A multi-year, sequenced and costed path from diagnosis to delivery.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Data classification</h3><p>Separate sensitive and regulated data to target sovereignty effort where it counts.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Provider selection</h3><p>Objective comparison of sovereign offers (OVHcloud, AWS, Microsoft, SAP) against your real needs.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Programme steering</h3><p>Regular reviews, KPIs and continuous improvement of your sovereignty posture.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — get a first sovereignty path that fits. <a href="/en/page/sovereignty-assessment">Start the assessment</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/strategy-consulting#main", "name": "Strategy & Consulting", "description": "Digital sovereignty consulting: dependency mapping, risk analysis and a multi-year roadmap.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/strategy-consulting", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Strategy & Consulting", "item": "https://souverainete-digitale.fr/page/strategy-consulting"}]}]}</script>', meta_description='Digital sovereignty consulting: dependency mapping, risk analysis and a multi-year roadmap.' WHERE slug='strategy-consulting' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Stratégie &amp; Conseil</span><h2>Conseil en <span class="sd-gradient-text">souveraineté numérique</span> : de l\'audit à la feuille de route</h2><p class="section-lead">Cartographie de vos dépendances numériques, identification des risques d\'extraterritorialité, inventaire des données sensibles et feuille de route pluriannuelle de souveraineté — pour décider sur des faits, pas sur des intuitions.</p></div>
+<p>Le <strong>conseil en souveraineté numérique</strong> commence toujours par une cartographie honnête : quels services utilisez-vous, qui les opère réellement, quelles données y transitent ? De cet état des lieux découlent une analyse de risque et une feuille de route priorisée, alignée sur vos contraintes réglementaires et budgétaires.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Cartographie des dépendances</h3><p>Inventaire de vos services, hébergeurs et sous-traitants, avec identification des opérateurs soumis au droit étranger.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Analyse de risque</h3><p>Évaluation de l\'exposition au CLOUD Act et des risques de conformité, hiérarchisée par criticité.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Feuille de route souveraineté</h3><p>Trajectoire pluriannuelle, séquencée et chiffrée, du diagnostic à la mise en œuvre.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Classification des données</h3><p>Distinction des données sensibles et réglementées pour cibler l\'effort de souveraineté là où il compte.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Aide au choix</h3><p>Comparatif objectif des offres souveraines (OVHcloud, Outscale, Orange, Bleu) selon vos besoins réels.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Pilotage du programme</h3><p>Revues régulières, indicateurs et amélioration continue de votre dispositif de souveraineté.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — obtenez une première trajectoire de souveraineté adaptée. <a href="/fr/page/diagnostic-souverainete">Démarrer le diagnostic</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/strategie-conseil#main", "name": "Stratégie & Conseil", "description": "Conseil en souveraineté numérique : cartographie des dépendances, analyse de risque et feuille de route pluriannuelle.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/strategie-conseil", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Country", "name": "France"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Stratégie & Conseil", "item": "https://souverainete-digitale.fr/page/strategie-conseil"}]}]}</script>', meta_description='Conseil en souverainet� num�rique : cartographie des d�pendances, analyse de risque et feuille de route pluriannuelle.' WHERE slug='strategie-conseil' AND language_id=@lang_fr;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Training</span><h2>Training in <span class="sd-gradient-text">sovereignty and cybersecurity</span></h2><p class="section-lead">Awareness sessions, workshops and certifications to embed sovereignty and cybersecurity in your teams\' culture — from the boardroom to the end user.</p></div>
+<p><strong>Cybersecurity training</strong> and sovereignty awareness are the most cost-effective link in any protection strategy: most incidents start with human error. Our tailored paths turn awareness into lasting reflexes.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Team awareness</h3><p>Short, concrete sessions on phishing, passwords and everyday reflexes.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Sovereignty workshops</h3><p>Understand the CLOUD Act, GDPR and sovereignty stakes to decide knowingly.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Leadership training</h3><p>NIS2 makes management accountable: we equip leaders for their new obligations.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Certifications</h3><p>Certifying paths for your technical and compliance teams.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Attack simulations</h3><p>Simulated phishing campaigns to measure and improve real vigilance.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Bespoke programmes</h3><p>Tailored to your sector, tools and maturity.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — build a training plan suited to your teams. <a href="/en/page/contact">Talk to an expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/training#main", "name": "Training", "description": "Sovereignty and cybersecurity training: awareness, CLOUD Act/GDPR/NIS2 workshops and certifications.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/training", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Training", "item": "https://souverainete-digitale.fr/page/training"}]}]}</script>', meta_description='Sovereignty and cybersecurity training: awareness, CLOUD Act/GDPR/NIS2 workshops and certifications.' WHERE slug='training' AND language_id=@lang;
+UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Formation</span><h2>Formation à la <span class="sd-gradient-text">souveraineté et à la cybersécurité</span></h2><p class="section-lead">Sessions de sensibilisation, ateliers et certifications pour ancrer la souveraineté et la cybersécurité dans la culture de vos équipes — du dirigeant à l\'utilisateur final.</p></div>
+<p>La <strong>formation à la cybersécurité</strong> et à la souveraineté est le maillon le plus rentable d\'une stratégie de protection : la majorité des incidents trouvent leur origine dans l\'erreur humaine. Nos parcours, adaptés à chaque public, transforment la sensibilisation en réflexes durables.</p>
+<div class="row g-4">
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Sensibilisation des équipes</h3><p>Sessions courtes et concrètes sur le phishing, les mots de passe et les bons réflexes au quotidien.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Ateliers souveraineté</h3><p>Comprendre le CLOUD Act, le RGPD et les enjeux de souveraineté pour décider en connaissance de cause.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Formation des dirigeants</h3><p>NIS2 responsabilise l\'encadrement : nous outillons les dirigeants sur leurs nouvelles obligations.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Certifications</h3><p>Parcours certifiants pour vos équipes techniques et conformité.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Simulations d\'attaque</h3><p>Campagnes de phishing simulé pour mesurer et améliorer la vigilance réelle.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Sur mesure</h3><p>Programmes adaptés à votre secteur, vos outils et votre niveau de maturité.</p></div></div>
+</div>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — bâtissez un plan de formation adapté à vos équipes. <a href="/fr/page/contact">Parler à un expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/formation#main", "name": "Formation", "description": "Formation à la souveraineté et à la cybersécurité : sensibilisation, ateliers CLOUD Act/RGPD/NIS2 et certifications.", "inLanguage": "fr", "url": "https://souverainete-digitale.fr/page/formation", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Country", "name": "France"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Formation", "item": "https://souverainete-digitale.fr/page/formation"}]}]}</script>', meta_description='Formation � la souverainet� et � la cybers�curit� : sensibilisation, ateliers CLOUD Act/RGPD/NIS2 et certifications.' WHERE slug='formation' AND language_id=@lang_fr;
+SET @ex := (SELECT post_id FROM post_content WHERE slug='comparatif-cloud-souverain' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np0 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np0,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np0 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np0,@lang_fr,'Comparatif cloud souverain : OVHcloud, Outscale, Bleu, Orange','comparatif-cloud-souverain','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Comparatif cloud souverain : quel acteur choisir ?</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Comparatif cloud souverain : quel acteur choisir ?</h1><p class="sd-page-hero-lead">Comparatif des clouds souverains français : OVHcloud, Outscale, Bleu, Orange Business. Qualification SecNumCloud, immunité au CLOUD Act et critères de choix.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/comparison-page-cloud-souverain-comparatif-hero.jpg" alt="Comparatif cloud souverain : OVHcloud, Outscale, Bleu, Orange" width="1024" height="576" loading="eager" /><p>Tous les clouds présentés comme « souverains » ne se valent pas. La vraie ligne de partage tient à deux critères objectifs : la qualification <a href="/fr/page/secnumcloud-qualification-anssi">SecNumCloud</a> et l\'<strong>immunité réelle au <a href="/fr/page/cloud-act-france">CLOUD Act</a></strong>, qui dépend de la structure capitalistique et technologique du fournisseur.</p>
+<h2 id="les-criteres-qui-comptent-vraiment">Les critères qui comptent vraiment</h2>
+<p>Avant de comparer des noms, fixez la grille de lecture. Un cloud est d\'autant plus souverain qu\'il répond « oui » à ces questions :</p>
+<ul>
+<li>Est-il <strong>qualifié SecNumCloud</strong> par l\'ANSSI ?</li>
+<li>Sa technologie est-elle <strong>maîtrisée en propre</strong>, ou sous licence d\'un acteur extra-européen ?</li>
+<li>Sa <strong>structure capitalistique</strong> le met-elle hors de portée du droit américain ?</li>
+<li>Garantit-il une <strong>réversibilité</strong> sans verrou propriétaire ?</li>
+<li>Couvre-t-il vos <strong>obligations sectorielles</strong> (<a href="/fr/page/hebergement-donnees-de-sante-hds">HDS</a>, <a href="/fr/page/directive-nis2-conformite">NIS2</a>, <a href="/fr/page/rgpd-hebergement-donnees">RGPD</a>) ?</li>
+</ul>
+<img src="/themes/souverainete-digitale/media/generated/comparison-page-cloud-souverain-comparatif-inline-1.jpg" alt="Comparatif cloud souverain : OVHcloud, Outscale, Bleu, Orange — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="les-principaux-acteurs">Les principaux acteurs</h2>
+<table class="sd-table"><thead><tr><th>Acteur</th><th>Positionnement</th><th>Point de vigilance</th></tr></thead><tbody>
+<tr><td><strong>OVHcloud</strong></td><td>Acteur européen indépendant, offres qualifiées SecNumCloud sur certaines gammes</td><td>Vérifier que la gamme retenue est bien qualifiée</td></tr>
+<tr><td><strong>Outscale (Dassault Systèmes)</strong></td><td>Cloud français qualifié SecNumCloud, technologie maîtrisée</td><td>Catalogue de services plus restreint que les hyperscalers</td></tr>
+<tr><td><strong>Orange Business</strong></td><td>Offres souveraines pour grands comptes et secteur public</td><td>Périmètre souverain à délimiter selon l\'offre</td></tr>
+<tr><td><strong>Bleu</strong></td><td>Coentreprise visant la qualification</td><td>S\'appuie sur des technologies Microsoft : souveraineté juridique débattue</td></tr>
+</tbody></table>
+<img src="/themes/souverainete-digitale/media/generated/comparison-page-cloud-souverain-comparatif-inline-2.jpg" alt="Comparatif cloud souverain : OVHcloud, Outscale, Bleu, Orange — illustration 2" width="1024" height="576" loading="lazy" />
+<h2 id="quel-est-le-meilleur-cloud-souverain">Quel est le meilleur cloud souverain ?</h2>
+<p>Il n\'y a pas de réponse universelle : le bon choix dépend de vos données, de vos obligations et de vos contraintes techniques. La garantie la plus forte vient d\'un acteur <strong>qualifié SecNumCloud sur une technologie 100 % maîtrisée</strong>. Pour un catalogue de services très large, il faut parfois arbitrer entre étendue fonctionnelle et niveau de souveraineté — un arbitrage qui se fait donnée par donnée, pas en bloc.</p>
+<h2 id="ovh-et-bleu-sont-ils-vraiment-souverains">OVH et Bleu sont-ils vraiment souverains ?</h2>
+<p>OVHcloud coche les critères de souveraineté juridique en tant qu\'acteur européen indépendant, à condition de retenir une gamme qualifiée. Bleu vise la qualification SecNumCloud mais sa dépendance technologique américaine nourrit le débat sur sa souveraineté juridique réelle — d\'où l\'importance d\'un examen au cas par cas plutôt que d\'une confiance sur la seule étiquette.</p>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — nous vous aidons à choisir l\'hébergement souverain adapté à vos contraintes réelles. <a href="/fr/page/contact">Parler à un expert</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Quel est le meilleur cloud souverain ?</strong></p>
+<p>Celui qui est qualifié SecNumCloud sur une technologie maîtrisée et adapté à vos données — le choix se fait au cas par cas.</p>
+<p><strong>OVH est-il un cloud souverain ?</strong></p>
+<p>OVHcloud est un acteur européen indépendant proposant des offres qualifiées SecNumCloud sur certaines gammes.</p>
+<p><strong>Bleu est-il vraiment souverain ?</strong></p>
+<p>Bleu vise la qualification SecNumCloud mais s\'appuie sur des technologies Microsoft, ce qui soulève des questions de souveraineté juridique.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#les-criteres-qui-comptent-vraiment">Les critères qui comptent vraiment</a></li><li><a href="#les-principaux-acteurs">Les principaux acteurs</a></li><li><a href="#quel-est-le-meilleur-cloud-souverain">Quel est le meilleur cloud souverain ?</a></li><li><a href="#ovh-et-bleu-sont-ils-vraiment-souverains">OVH et Bleu sont-ils vraiment souverains ?</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/comparatif-cloud-souverain/#main",
+      "name": "Comparatif cloud souverain : OVHcloud, Outscale, Bleu, Orange",
+      "headline": "Comparatif cloud souverain : OVHcloud, Outscale, Bleu, Orange",
+      "description": "Comparatif des clouds souverains français : OVHcloud, Outscale, Bleu, Orange Business. Qualification SecNumCloud, immunité au CLOUD Act et critères de choix.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/comparatif-cloud-souverain/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/comparatif-cloud-souverain/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quel est le meilleur cloud souverain ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Celui qui est qualifié SecNumCloud sur une technologie maîtrisée et adapté à vos données — le choix se fait au cas par cas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "OVH est-il un cloud souverain ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OVHcloud est un acteur européen indépendant proposant des offres qualifiées SecNumCloud sur certaines gammes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bleu est-il vraiment souverain ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bleu vise la qualification SecNumCloud mais s\'appuie sur des technologies Microsoft, ce qui soulève des questions de souveraineté juridique."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Comparatif cloud souverain : OVHcloud, Outscale, Bleu, Orange",
+          "item": "https://souverainete-digitale.fr/comparatif-cloud-souverain/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Comparatif des clouds souverains fran�ais : OVHcloud, Outscale, Bleu, Orange Business. Qualification SecNumCloud, immunit� au CLOUD Act et crit�res de choix.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='cloud-de-confiance' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np1 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np1,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np1 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np1,@lang_fr,'Cloud de confiance : d�finition et diff�rence avec le cloud souverain','cloud-de-confiance','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Cloud de confiance : définition et différence avec le cloud souverain</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Cloud de confiance : définition et différence avec le cloud souverain</h1><p class="sd-page-hero-lead">Le cloud de confiance est le label français reposant sur SecNumCloud. Définition, critères et différence avec le cloud souverain.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/explainer-page-cloud-de-confiance-hero.jpg" alt="Cloud de confiance : définition et différence avec le cloud souverain" width="1024" height="576" loading="eager" /><p>Le <strong>cloud de confiance</strong> est la traduction française la plus exigeante de la souveraineté : un cloud qui combine excellence de la sécurité et immunité aux lois étrangères, attesté par la qualification <a href="/fr/page/secnumcloud-qualification-anssi">SecNumCloud</a> de l\'ANSSI.</p>
+<h2 id="qu-est-ce-qu-un-cloud-de-confiance">Qu\'est-ce qu\'un cloud de confiance ?</h2>
+<p>C\'est un service cloud labellisé par l\'État, garantissant que les données sont protégées au plus haut niveau technique *et* hors d\'atteinte du <a href="/fr/page/cloud-act-france">CLOUD Act</a>. Le label s\'appuie sur un référentiel public et un audit indépendant.</p>
+<img src="/themes/souverainete-digitale/media/generated/explainer-page-cloud-de-confiance-inline-1.jpg" alt="Cloud de confiance : définition et différence avec le cloud souverain — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="cloud-de-confiance-ou-cloud-souverain">Cloud de confiance ou cloud souverain ?</h2>
+<p>Le <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> est le concept général ; le cloud de confiance en est la version certifiée et opposable. Tout cloud de confiance est souverain, mais tout cloud présenté comme « souverain » n\'est pas nécessairement qualifié.</p>
+<img src="/themes/souverainete-digitale/media/generated/explainer-page-cloud-de-confiance-inline-2.jpg" alt="Cloud de confiance : définition et différence avec le cloud souverain — illustration 2" width="1024" height="576" loading="lazy" />
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — déterminez le niveau de confiance dont vos données ont besoin. <a href="/fr/page/diagnostic-souverainete">Démarrer le diagnostic</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Qu\'est-ce qu\'un cloud de confiance ?</strong></p>
+<p>Un cloud labellisé par l\'État français, reposant sur la qualification SecNumCloud, alliant sécurité maximale et immunité aux lois extra-européennes.</p>
+<p><strong>Cloud de confiance ou cloud souverain ?</strong></p>
+<p>Le cloud de confiance est la version certifiée (SecNumCloud) du cloud souverain.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#qu-est-ce-qu-un-cloud-de-confiance">Qu&#x27;est-ce qu&#x27;un cloud de confiance ?</a></li><li><a href="#cloud-de-confiance-ou-cloud-souverain">Cloud de confiance ou cloud souverain ?</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/cloud-de-confiance/#main",
+      "name": "Cloud de confiance : définition et différence avec le cloud souverain",
+      "headline": "Cloud de confiance : définition et différence avec le cloud souverain",
+      "description": "Le cloud de confiance est le label français reposant sur SecNumCloud. Définition, critères et différence avec le cloud souverain.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/cloud-de-confiance/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/cloud-de-confiance/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu\'est-ce qu\'un cloud de confiance ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Un cloud labellisé par l\'État français, reposant sur la qualification SecNumCloud, alliant sécurité maximale et immunité aux lois extra-européennes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Cloud de confiance ou cloud souverain ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le cloud de confiance est la version certifiée (SecNumCloud) du cloud souverain."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cloud de confiance : définition et différence avec le cloud souverain",
+          "item": "https://souverainete-digitale.fr/cloud-de-confiance/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Le cloud de confiance est le label fran�ais reposant sur SecNumCloud. D�finition, crit�res et diff�rence avec le cloud souverain.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='souverainete-numerique-guide' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np2 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np2,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np2 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np2,@lang_fr,'Souverainet� num�rique : d�finition, enjeux et leviers pour les organisations','souverainete-numerique-guide','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Souveraineté numérique : définition, enjeux et leviers</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Souveraineté numérique : définition, enjeux et leviers</h1><p class="sd-page-hero-lead">La souveraineté numérique, c&#x27;est la capacité à maîtriser ses données, ses infrastructures et ses outils. Définition, enjeux et leviers concrets pour votre organisation.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/explainer-page-souverainete-numerique-hero.jpg" alt="Souveraineté numérique : définition, enjeux et leviers pour les organisations" width="1024" height="576" loading="eager" /><p>La <strong>souveraineté numérique</strong> désigne la capacité d\'une organisation — ou d\'un État — à conserver le contrôle de ses données, de ses infrastructures et de ses outils numériques, sans dépendre d\'acteurs ou de législations qui lui échappent. À l\'heure où une part majeure des services cloud utilisés en France relève d\'opérateurs étrangers, la question est passée du débat politique à la décision opérationnelle.</p>
+<h2 id="qu-est-ce-que-la-souverainete-numerique">Qu\'est-ce que la souveraineté numérique ?</h2>
+<p>C\'est la maîtrise effective de trois actifs indissociables :</p>
+<ul>
+<li><strong>Les données</strong> — savoir où elles sont, qui peut y accéder, et sous quel droit elles tombent.</li>
+<li><strong>Les infrastructures</strong> — l\'hébergement, les réseaux, la capacité de calcul sur lesquels repose l\'activité.</li>
+<li><strong>Les logiciels et les compétences</strong> — ne pas dépendre d\'un fournisseur unique impossible à remplacer.</li>
+</ul>
+<p>Perdre cette maîtrise expose à trois risques concrets : l\'accès non autorisé par une puissance étrangère (voir le <a href="/fr/page/cloud-act-france">CLOUD Act</a>), la dépendance économique à un fournisseur en position de force, et la rupture de conformité réglementaire.</p>
+<img src="/themes/souverainete-digitale/media/generated/explainer-page-souverainete-numerique-inline-1.jpg" alt="Souveraineté numérique : définition, enjeux et leviers pour les organisations — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="souverainete-numerique-un-enjeu-d-entreprise-pas-s">Souveraineté numérique : un enjeu d\'entreprise, pas seulement d\'État</h2>
+<p>Le terme évoque souvent la politique industrielle nationale. Mais pour une organisation, l\'enjeu est très concret : continuité d\'activité, protection du patrimoine informationnel, et conformité au <strong>RGPD</strong>, à <strong>NIS2</strong> ou à la certification <strong>HDS</strong> selon le secteur. Une dépendance non maîtrisée, c\'est un risque juridique, un risque de confidentialité et un risque de continuité réunis.</p>
+<p>Pour une administration ou une collectivité, s\'ajoute une exigence de <strong>confiance vis-à-vis des citoyens</strong> : les données publiques ne peuvent être exposées à une juridiction étrangère sans rompre ce lien de confiance.</p>
+<h2 id="souverainete-et-performance-ne-s-opposent-plus">Souveraineté et performance ne s\'opposent plus</h2>
+<p>L\'objection classique — « le souverain coûte plus cher et performe moins » — ne tient plus. Les infrastructures européennes certifiées offrent aujourd\'hui des niveaux de service équivalents, et l\'écart de coût s\'est réduit à quelques points sur les charges optimisées. Le surcoût éventuel doit par ailleurs être mis en regard du risque évité : une non-conformité ou une fuite de données coûte bien davantage.</p>
+<img src="/themes/souverainete-digitale/media/generated/explainer-page-souverainete-numerique-inline-2.jpg" alt="Souveraineté numérique : définition, enjeux et leviers pour les organisations — illustration 2" width="1024" height="576" loading="lazy" />
+<h2 id="les-leviers-concrets-de-la-souverainete-numerique">Les leviers concrets de la souveraineté numérique</h2>
+<ol>
+<li><strong>Cartographier ses dépendances</strong> — identifier les services critiques opérés par des acteurs non souverains, y compris les outils du quotidien.</li>
+<li><strong>Classer ses données</strong> — distinguer ce qui est sensible ou réglementé de ce qui ne l\'est pas, pour cibler l\'effort.</li>
+<li><strong>Migrer vers un <a href="/fr/page/cloud-souverain-guide">cloud souverain</a></strong> — pour les données sensibles et réglementées, via un projet par étapes.</li>
+<li><strong>Maîtriser le chiffrement et les clés</strong> — pour que même l\'hébergeur ne puisse lire les données.</li>
+<li><strong>Se mettre en conformité</strong> — <a href="/fr/page/rgpd-hebergement-donnees">RGPD</a>, <a href="/fr/page/directive-nis2-conformite">NIS2</a>, <a href="/fr/page/secnumcloud-qualification-anssi">SecNumCloud</a> selon le périmètre.</li>
+</ol>
+<p>La première étape, la plus rentable, est toujours le diagnostic : on ne sécurise bien que ce que l\'on a d\'abord cartographié. C\'est aussi celle qui révèle le plus souvent des dépendances que personne n\'avait identifiées.</p>
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — évaluez le niveau de souveraineté de votre organisation et vos priorités d\'action. <a href="/fr/page/diagnostic-souverainete">Démarrer le diagnostic</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Qu\'est-ce que la souveraineté numérique ?</strong></p>
+<p>La capacité à garder le contrôle de ses données, infrastructures et outils numériques, sans dépendance à des acteurs ou lois extra-européens.</p>
+<p><strong>Pourquoi la souveraineté numérique est-elle importante ?</strong></p>
+<p>Parce qu\'elle conditionne la protection des données sensibles, la conformité réglementaire (RGPD, NIS2, HDS) et la continuité d\'activité de l\'organisation.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#qu-est-ce-que-la-souverainete-numerique">Qu&#x27;est-ce que la souveraineté numérique ?</a></li><li><a href="#souverainete-numerique-un-enjeu-d-entreprise-pas-s">Souveraineté numérique : un enjeu d&#x27;entreprise, pas seulement d&#x27;État</a></li><li><a href="#souverainete-et-performance-ne-s-opposent-plus">Souveraineté et performance ne s&#x27;opposent plus</a></li><li><a href="#les-leviers-concrets-de-la-souverainete-numerique">Les leviers concrets de la souveraineté numérique</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/souverainete-numerique/#main",
+      "name": "Souveraineté numérique : définition, enjeux et leviers pour les organisations",
+      "headline": "Souveraineté numérique : définition, enjeux et leviers pour les organisations",
+      "description": "La souveraineté numérique, c\'est la capacité à maîtriser ses données, ses infrastructures et ses outils. Définition, enjeux et leviers concrets pour votre organisation.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/souverainete-numerique/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/souverainete-numerique/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu\'est-ce que la souveraineté numérique ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La capacité à garder le contrôle de ses données, infrastructures et outils numériques, sans dépendance à des acteurs ou lois extra-européens."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pourquoi la souveraineté numérique est-elle importante ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Parce qu\'elle conditionne la protection des données sensibles, la conformité réglementaire (RGPD, NIS2, HDS) et la continuité d\'activité de l\'organisation."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Souveraineté numérique : définition, enjeux et leviers pour les organisations",
+          "item": "https://souverainete-digitale.fr/souverainete-numerique/"
+        }
+      ]
+    }
+  ]
+}</script>','','','La souverainet� num�rique, c\'est la capacit� � ma�triser ses donn�es, ses infrastructures et ses outils. D�finition, enjeux et leviers concrets pour votre organisation.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='cloud-act-france' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np3 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np3,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np3 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np3,@lang_fr,'CLOUD Act : ce que la loi am�ricaine change pour vos donn�es en France','cloud-act-france','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>CLOUD Act : ce que la loi américaine change pour vos données en France</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>CLOUD Act : ce que la loi américaine change pour vos données en France</h1><p class="sd-page-hero-lead">Le CLOUD Act permet aux autorités américaines d&#x27;accéder à vos données, même hébergées en Europe. Comprenez ses effets en France et comment vous en protéger.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/legislation-guide-cloud-act-hero.jpg" alt="CLOUD Act : ce que la loi américaine change pour vos données en France" width="1024" height="576" loading="eager" /><p>Depuis 2018, une loi fédérale américaine — le <strong>CLOUD Act</strong> (*Clarifying Lawful Overseas Use of Data Act*) — autorise les autorités des États-Unis à exiger d\'un fournisseur américain qu\'il communique les données qu\'il détient, <strong>où qu\'elles soient stockées dans le monde</strong>. Y compris dans un datacenter situé en France.</p>
+<p>Pour une entreprise ou une administration française, cela soulève une question concrète : vos données les plus sensibles, parce qu\'elles transitent par un prestataire soumis au droit américain, peuvent-elles vous échapper sans même que vous en soyez informé ? La réponse, dans bien des cas, est oui — et c\'est précisément ce que la plupart des responsables informatiques sous-estiment.</p>
+<h2 id="qu-est-ce-que-le-cloud-act-concretement">Qu\'est-ce que le CLOUD Act, concrètement ?</h2>
+<p>Le CLOUD Act a été adopté en mars 2018 pour clarifier une zone grise du droit américain : jusqu\'où une injonction judiciaire peut-elle contraindre un fournisseur à livrer des données stockées hors du territoire des États-Unis ? La réponse apportée par le texte est sans ambiguïté : la localisation des données est indifférente.</p>
+<p>Le mécanisme repose sur un principe d\'<strong>extraterritorialité</strong>. Ce n\'est pas le lieu de stockage qui compte, mais la <strong>nationalité — ou le rattachement juridique — du prestataire</strong>. Un hébergeur dont la maison mère est américaine, ou une filiale européenne contrôlée par un groupe américain, peut être contraint par un mandat émis aux États-Unis de livrer des données clients, quel que soit le pays où se trouvent physiquement les serveurs.</p>
+<p>Trois éléments sont essentiels à retenir :</p>
+<ul>
+<li><strong>La localisation ne protège pas.</strong> Des données hébergées « en Europe » par un acteur américain restent pleinement dans le champ du CLOUD Act.</li>
+<li><strong>La demande peut être silencieuse.</strong> Une clause de confidentialité (*gag order*) peut interdire au prestataire de vous prévenir qu\'une demande a été reçue et exécutée.</li>
+<li><strong>Le chiffrement aide, mais ne suffit pas</strong> si le prestataire détient lui-même les clés de déchiffrement : il peut alors être contraint de déchiffrer.</li>
+</ul>
+<img src="/themes/souverainete-digitale/media/generated/legislation-guide-cloud-act-inline-1.jpg" alt="CLOUD Act : ce que la loi américaine change pour vos données en France — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="le-cloud-act-s-applique-t-il-vraiment-en-france">Le CLOUD Act s\'applique-t-il vraiment en France ?</h2>
+<p>Oui, sans exception géographique. Aucune frontière ne met une donnée hors de portée dès lors qu\'un opérateur soumis au droit américain intervient quelque part dans la chaîne de traitement. Et cette présence est souvent plus large qu\'on ne l\'imagine : un sous-traitant, un service de messagerie, une brique d\'authentification, un outil de sauvegarde ou de visioconférence peuvent suffire à exposer vos données.</p>
+<p>C\'est précisément ce constat qui a structuré la réponse française. La doctrine <strong>« Cloud au centre »</strong>, applicable à l\'administration, impose désormais que les données sensibles de l\'État soient hébergées sur un cloud interne ou sur une offre commerciale qualifiée. Et la qualification <strong>SecNumCloud</strong> de l\'ANSSI a fait de l\'immunité aux législations extra-européennes un critère central — pas un simple argument marketing.</p>
+<h2 id="cloud-act-et-rgpd-un-conflit-de-lois">CLOUD Act et RGPD : un conflit de lois</h2>
+<p>Le <strong>RGPD</strong> interdit en principe les transferts de données personnelles vers un pays tiers n\'offrant pas une protection équivalente à celle de l\'Union européenne. Or une injonction CLOUD Act demande exactement cela : transmettre des données à une autorité américaine. Les deux textes entrent donc en collision frontale.</p>
+<p>Pour le responsable de traitement, le risque est double et asymétrique :</p>
+<ul>
+<li>d\'un côté, une <strong>sanction de la CNIL</strong> si un transfert non conforme est constaté ;</li>
+<li>de l\'autre, une <strong>contrainte judiciaire américaine</strong> assortie de sanctions si le prestataire refuse d\'obtempérer.</li>
+</ul>
+<p>L\'invalidation du Privacy Shield par la Cour de justice de l\'Union européenne (arrêt « Schrems II ») a confirmé que les garanties contractuelles seules ne suffisent pas à neutraliser ce risque. Tant qu\'un opérateur soumis au droit américain figure dans la chaîne, le conflit demeure latent.</p>
+<p>La seule façon d\'en sortir est donc <strong>structurelle</strong> : retirer de la chaîne tout opérateur soumis à une législation extra-européenne. C\'est la logique d\'un <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> et, plus largement, d\'une stratégie de <a href="/fr/page/souverainete-numerique-guide">souveraineté numérique</a> assumée. Les obligations du <a href="/fr/page/rgpd-hebergement-donnees">RGPD en matière d\'hébergement</a> poussent dans la même direction.</p>
+<img src="/themes/souverainete-digitale/media/generated/legislation-guide-cloud-act-inline-2.jpg" alt="CLOUD Act : ce que la loi américaine change pour vos données en France — illustration 2" width="1024" height="576" loading="lazy" />
+<h2 id="quelles-donnees-sont-les-plus-exposees">Quelles données sont les plus exposées ?</h2>
+<p>Toutes les données n\'appellent pas le même niveau de protection. En pratique, les plus critiques sont :</p>
+<ul>
+<li>les <strong>données personnelles sensibles</strong> (santé, données biométriques, opinions) ;</li>
+<li>les <strong>secrets industriels et la propriété intellectuelle</strong>, cibles d\'un risque d\'intelligence économique ;</li>
+<li>les <strong>données régaliennes et de service public</strong>, soumises à la doctrine de l\'État ;</li>
+<li>les <strong>données soumises à des réglementations sectorielles</strong> (santé via <a href="/fr/page/hebergement-donnees-de-sante-hds">HDS</a>, secteurs critiques via <a href="/fr/page/directive-nis2-conformite">NIS2</a>).</li>
+</ul>
+<p>Pour ces catégories, l\'exposition au CLOUD Act n\'est pas un risque théorique : c\'est une non-conformité potentielle qui peut être qualifiée à tout moment.</p>
+<h2 id="comment-evaluer-votre-exposition">Comment évaluer votre exposition</h2>
+<p>Avant d\'agir, il faut savoir où vous êtes exposé. Cela passe par une cartographie de vos dépendances : quels services utilisez-vous, qui les opère réellement (et non qui affiche un datacenter en France), quelles données y transitent, et lesquelles sont critiques ou réglementées.</p>
+<p>Cette cartographie révèle presque toujours des dépendances insoupçonnées — y compris via des outils du quotidien comme la messagerie, la bureautique collaborative ou la sauvegarde. Un diagnostic structuré permet d\'objectiver le risque, de le hiérarchiser et de séquencer les actions avant d\'engager le moindre budget de migration.</p>
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — identifiez vos dépendances soumises au CLOUD Act et les premières actions prioritaires. <a href="/fr/page/diagnostic-souverainete">Démarrer le diagnostic</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Qu\'est-ce que le CLOUD Act ?</strong></p>
+<p>Une loi américaine de 2018 qui autorise les autorités des États-Unis à réclamer à un prestataire soumis au droit américain les données qu\'il détient, quel que soit le pays de stockage.</p>
+<p><strong>Le CLOUD Act s\'applique-t-il en France ?</strong></p>
+<p>Oui, dès qu\'un opérateur soumis au droit américain intervient dans la chaîne de traitement, même via un datacenter situé en France.</p>
+<p><strong>CLOUD Act et RGPD sont-ils compatibles ?</strong></p>
+<p>Non, ils sont en tension directe : une injonction CLOUD Act peut contraindre à un transfert que le RGPD interdit. Seule une architecture sans opérateur soumis au droit américain lève réellement le conflit.</p>
+<p><strong>Le chiffrement protège-t-il du CLOUD Act ?</strong></p>
+<p>Seulement si vous maîtrisez seul les clés. Si le prestataire détient les clés de déchiffrement, il peut être contraint de les utiliser.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/rgpd-hebergement-donnees">RGPD &amp; hébergement &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#qu-est-ce-que-le-cloud-act-concretement">Qu&#x27;est-ce que le CLOUD Act, concrètement ?</a></li><li><a href="#le-cloud-act-s-applique-t-il-vraiment-en-france">Le CLOUD Act s&#x27;applique-t-il vraiment en France ?</a></li><li><a href="#cloud-act-et-rgpd-un-conflit-de-lois">CLOUD Act et RGPD : un conflit de lois</a></li><li><a href="#quelles-donnees-sont-les-plus-exposees">Quelles données sont les plus exposées ?</a></li><li><a href="#comment-evaluer-votre-exposition">Comment évaluer votre exposition</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/cloud-act-france/#main",
+      "name": "CLOUD Act : ce que la loi américaine change pour vos données en France",
+      "headline": "CLOUD Act : ce que la loi américaine change pour vos données en France",
+      "description": "Le CLOUD Act permet aux autorités américaines d\'accéder à vos données, même hébergées en Europe. Comprenez ses effets en France et comment vous en protéger.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/cloud-act-france/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/cloud-act-france/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu\'est-ce que le CLOUD Act ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Une loi américaine de 2018 qui autorise les autorités des États-Unis à réclamer à un prestataire soumis au droit américain les données qu\'il détient, quel que soit le pays de stockage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Le CLOUD Act s\'applique-t-il en France ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui, dès qu\'un opérateur soumis au droit américain intervient dans la chaîne de traitement, même via un datacenter situé en France."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "CLOUD Act et RGPD sont-ils compatibles ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non, ils sont en tension directe : une injonction CLOUD Act peut contraindre à un transfert que le RGPD interdit. Seule une architecture sans opérateur soumis au droit américain lève réellement le conflit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Le chiffrement protège-t-il du CLOUD Act ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Seulement si vous maîtrisez seul les clés. Si le prestataire détient les clés de déchiffrement, il peut être contraint de les utiliser."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "CLOUD Act : ce que la loi américaine change pour vos données en France",
+          "item": "https://souverainete-digitale.fr/cloud-act-france/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Le CLOUD Act permet aux autorit�s am�ricaines d\'acc�der � vos donn�es, m�me h�berg�es en Europe. Comprenez ses effets en France et comment vous en prot�ger.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='directive-nis2-conformite' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np4 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np4,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np4 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np4,@lang_fr,'Directive NIS2 : qui est concern� et comment se mettre en conformit�','directive-nis2-conformite','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Directive NIS2 : qui est concerné et comment se mettre en conformité</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Directive NIS2 : qui est concerné et comment se mettre en conformité</h1><p class="sd-page-hero-lead">La directive NIS2 étend les obligations de cybersécurité à des milliers d&#x27;entités. Découvrez si vous êtes concerné et les étapes de mise en conformité.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/legislation-guide-nis2-hero.jpg" alt="Directive NIS2 : qui est concerné et comment se mettre en conformité" width="1024" height="576" loading="eager" /><p>La directive européenne <strong>NIS2</strong> élargit considérablement le champ des obligations de cybersécurité. Là où la directive NIS1 visait quelques centaines d\'opérateurs, NIS2 concerne des milliers d\'entités « essentielles » et « importantes » réparties dans 18 secteurs d\'activité.</p>
+<h2 id="qu-est-ce-que-la-directive-nis2">Qu\'est-ce que la directive NIS2 ?</h2>
+<p>NIS2 impose aux entités concernées un socle de mesures structurées autour de la gestion du risque :</p>
+<ul>
+<li><strong>Gouvernance du risque</strong> — analyse, mesures techniques et organisationnelles proportionnées.</li>
+<li><strong>Sécurisation de la chaîne d\'approvisionnement</strong> — y compris les fournisseurs et sous-traitants numériques.</li>
+<li><strong>Notification des incidents</strong> — alerte initiale sous 24 heures, puis rapports de suivi.</li>
+<li><strong>Responsabilisation des dirigeants</strong> — la direction est tenue pour responsable de la conformité.</li>
+</ul>
+<p>Le non-respect expose à des sanctions financières significatives et, fait nouveau, à une responsabilité directe de l\'encadrement.</p>
+<img src="/themes/souverainete-digitale/media/generated/legislation-guide-nis2-inline-1.jpg" alt="Directive NIS2 : qui est concerné et comment se mettre en conformité — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="mon-entreprise-est-elle-concernee-par-nis2">Mon entreprise est-elle concernée par NIS2 ?</h2>
+<p>Sont visées les entités d\'une certaine taille opérant dans des secteurs comme l\'énergie, la santé, les transports, le numérique, l\'eau, les administrations publiques ou l\'agroalimentaire. Deux catégories coexistent : les entités « essentielles » (contrôle plus strict) et « importantes ». Si vous opérez dans l\'un de ces secteurs au-delà d\'un seuil de taille, vous êtes probablement concerné — même si vous ne l\'étiez pas sous NIS1.</p>
+<p>La sécurisation des données et le choix d\'un hébergement maîtrisé — voire d\'un <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> — font partie des réponses naturelles à ces exigences, en cohérence avec le <a href="/fr/page/rgpd-hebergement-donnees">RGPD</a> et la qualification <a href="/fr/page/secnumcloud-qualification-anssi">SecNumCloud</a>.</p>
+<img src="/themes/souverainete-digitale/media/generated/legislation-guide-nis2-inline-2.jpg" alt="Directive NIS2 : qui est concerné et comment se mettre en conformité — illustration 2" width="1024" height="576" loading="lazy" />
+<h2 id="par-o-commencer-sa-mise-en-conformite">Par où commencer sa mise en conformité</h2>
+<p>La démarche est progressive : commencer par déterminer si l\'on est assujetti, puis cartographier son exposition au risque (y compris la chaîne de sous-traitance), combler les écarts techniques et organisationnels, et enfin mettre en place le dispositif de notification d\'incident. Là encore, le point de départ est une cartographie honnête de l\'existant — ce que la conformité NIS2 partage avec toute démarche de souveraineté.</p>
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — vérifiez si NIS2 vous concerne et vos écarts de conformité. <a href="/fr/page/diagnostic-souverainete">Démarrer le diagnostic</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Qu\'est-ce que la directive NIS2 ?</strong></p>
+<p>Une directive européenne renforçant les obligations de cybersécurité (gestion des risques, notification d\'incidents sous 24 h, responsabilité des dirigeants) pour des milliers d\'entités dans 18 secteurs.</p>
+<p><strong>Mon entreprise est-elle concernée par NIS2 ?</strong></p>
+<p>Probablement si vous opérez dans un des secteurs visés au-delà d\'un certain seuil de taille — un diagnostic permet de le confirmer.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#qu-est-ce-que-la-directive-nis2">Qu&#x27;est-ce que la directive NIS2 ?</a></li><li><a href="#mon-entreprise-est-elle-concernee-par-nis2">Mon entreprise est-elle concernée par NIS2 ?</a></li><li><a href="#par-o-commencer-sa-mise-en-conformite">Par où commencer sa mise en conformité</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/directive-nis2-conformite/#main",
+      "name": "Directive NIS2 : qui est concerné et comment se mettre en conformité",
+      "headline": "Directive NIS2 : qui est concerné et comment se mettre en conformité",
+      "description": "La directive NIS2 étend les obligations de cybersécurité à des milliers d\'entités. Découvrez si vous êtes concerné et les étapes de mise en conformité.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/directive-nis2-conformite/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/directive-nis2-conformite/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu\'est-ce que la directive NIS2 ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Une directive européenne renforçant les obligations de cybersécurité (gestion des risques, notification d\'incidents sous 24 h, responsabilité des dirigeants) pour des milliers d\'entités dans 18 secteurs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mon entreprise est-elle concernée par NIS2 ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Probablement si vous opérez dans un des secteurs visés au-delà d\'un certain seuil de taille — un diagnostic permet de le confirmer."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Directive NIS2 : qui est concerné et comment se mettre en conformité",
+          "item": "https://souverainete-digitale.fr/directive-nis2-conformite/"
+        }
+      ]
+    }
+  ]
+}</script>','','','La directive NIS2 �tend les obligations de cybers�curit� � des milliers d\'entit�s. D�couvrez si vous �tes concern� et les �tapes de mise en conformit�.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='rgpd-hebergement-donnees' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np5 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np5,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np5 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np5,@lang_fr,'RGPD et h�bergement : o� stocker vos donn�es en conformit�','rgpd-hebergement-donnees','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>RGPD et hébergement : où stocker vos données en conformité</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>RGPD et hébergement : où stocker vos données en conformité</h1><p class="sd-page-hero-lead">Le RGPD encadre strictement l&#x27;hébergement et le transfert des données personnelles. Où héberger pour être conforme, et pourquoi le cloud américain pose problème.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/legislation-guide-rgpd-hebergement-hero.jpg" alt="RGPD et hébergement : où stocker vos données en conformité" width="1024" height="576" loading="eager" /><p>Le <strong>RGPD</strong> ne se limite pas au consentement et aux mentions légales : il encadre aussi *où* et *comment* sont hébergées les données personnelles. Le choix de l\'hébergeur est donc une décision de conformité à part entière — et l\'une des plus souvent négligées.</p>
+<h2 id="les-obligations-cles-en-matiere-d-hebergement">Les obligations clés en matière d\'hébergement</h2>
+<p>Le règlement impose plusieurs garanties qui pèsent directement sur le choix d\'infrastructure :</p>
+<ul>
+<li>la <strong>sécurité et la confidentialité</strong> des données (chiffrement, contrôle d\'accès, journalisation) ;</li>
+<li>la <strong>limitation des accès</strong> aux seules personnes autorisées ;</li>
+<li>l\'<strong>encadrement strict des transferts hors Union européenne</strong> vers des pays n\'offrant pas un niveau de protection équivalent ;</li>
+<li>la capacité à <strong>démontrer</strong> sa conformité (principe d\'*accountability*).</li>
+</ul>
+<img src="/themes/souverainete-digitale/media/generated/legislation-guide-rgpd-hebergement-inline-1.jpg" alt="RGPD et hébergement : où stocker vos données en conformité — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="peut-on-heberger-des-donnees-rgpd-aux-etats-unis">Peut-on héberger des données RGPD aux États-Unis ?</h2>
+<p>C\'est précisément là que le bât blesse. Un hébergement chez un acteur soumis au droit américain expose les données au <a href="/fr/page/cloud-act-france">CLOUD Act</a>, en tension directe avec le RGPD. L\'invalidation du Privacy Shield (arrêt « Schrems II ») a confirmé que les clauses contractuelles types ne suffisent pas à elles seules à neutraliser ce risque dès lors que le droit du pays tiers permet un accès des autorités.</p>
+<p>Pour les données sensibles, la voie la plus sûre est donc un hébergement européen non soumis à ce risque — c\'est tout l\'intérêt d\'un <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> ou d\'un <a href="/fr/page/cloud-de-confiance">cloud de confiance</a> qualifié.</p>
+<img src="/themes/souverainete-digitale/media/generated/legislation-guide-rgpd-hebergement-inline-2.jpg" alt="RGPD et hébergement : où stocker vos données en conformité — illustration 2" width="1024" height="576" loading="lazy" />
+<h2 id="une-demarche-en-trois-temps">Une démarche en trois temps</h2>
+<p>Concrètement : <strong>classer</strong> vos traitements et données (lesquels sont sensibles ?), <strong>cartographier</strong> vos hébergeurs et sous-traitants pour repérer les expositions au droit extra-européen, puis <strong>remédier</strong> en migrant les données critiques vers un hébergement conforme. Cette logique recoupe celle de la directive <a href="/fr/page/directive-nis2-conformite">NIS2</a> et de la certification <a href="/fr/page/hebergement-donnees-de-sante-hds">HDS</a> pour la santé : un même socle de maîtrise des données.</p>
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — identifiez vos hébergements à risque RGPD. <a href="/fr/page/diagnostic-souverainete">Démarrer le diagnostic</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Où héberger ses données pour être conforme au RGPD ?</strong></p>
+<p>Idéalement chez un hébergeur européen non soumis aux lois extra-européennes, avec chiffrement et clés maîtrisées.</p>
+<p><strong>Peut-on héberger des données RGPD aux États-Unis ?</strong></p>
+<p>C\'est fortement déconseillé pour les données sensibles : le CLOUD Act crée un conflit direct avec les obligations du RGPD, et les clauses contractuelles seules ne suffisent pas.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#les-obligations-cles-en-matiere-d-hebergement">Les obligations clés en matière d&#x27;hébergement</a></li><li><a href="#peut-on-heberger-des-donnees-rgpd-aux-etats-unis">Peut-on héberger des données RGPD aux États-Unis ?</a></li><li><a href="#une-demarche-en-trois-temps">Une démarche en trois temps</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/rgpd-hebergement-donnees/#main",
+      "name": "RGPD et hébergement : où stocker vos données en conformité",
+      "headline": "RGPD et hébergement : où stocker vos données en conformité",
+      "description": "Le RGPD encadre strictement l\'hébergement et le transfert des données personnelles. Où héberger pour être conforme, et pourquoi le cloud américain pose problème.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/rgpd-hebergement-donnees/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/rgpd-hebergement-donnees/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Où héberger ses données pour être conforme au RGPD ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Idéalement chez un hébergeur européen non soumis aux lois extra-européennes, avec chiffrement et clés maîtrisées."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on héberger des données RGPD aux États-Unis ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "C\'est fortement déconseillé pour les données sensibles : le CLOUD Act crée un conflit direct avec les obligations du RGPD, et les clauses contractuelles seules ne suffisent pas."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "RGPD et hébergement : où stocker vos données en conformité",
+          "item": "https://souverainete-digitale.fr/rgpd-hebergement-donnees/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Le RGPD encadre strictement l\'h�bergement et le transfert des donn�es personnelles. O� h�berger pour �tre conforme, et pourquoi le cloud am�ricain pose probl�me.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='secnumcloud-qualification-anssi' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np6 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np6,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np6 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np6,@lang_fr,'SecNumCloud : la qualification ANSSI pour un cloud de confiance','secnumcloud-qualification-anssi','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>SecNumCloud : la qualification ANSSI pour un cloud de confiance</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>SecNumCloud : la qualification ANSSI pour un cloud de confiance</h1><p class="sd-page-hero-lead">SecNumCloud est le visa de sécurité de l&#x27;ANSSI garantissant un cloud immunisé contre les lois extra-européennes. Définition, exigences et démarche de qualification.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/legislation-guide-secnumcloud-hero.jpg" alt="SecNumCloud : la qualification ANSSI pour un cloud de confiance" width="1024" height="576" loading="eager" /><p><strong>SecNumCloud</strong> est le référentiel de qualification édité par l\'<strong>ANSSI</strong> (Agence nationale de la sécurité des systèmes d\'information). Il atteste qu\'un service cloud atteint le plus haut niveau d\'exigence français en matière de sécurité — et, point décisif, qu\'il est <strong>immunisé contre les législations extra-européennes</strong> comme le <a href="/fr/page/cloud-act-france">CLOUD Act</a>.</p>
+<h2 id="qu-est-ce-que-secnumcloud">Qu\'est-ce que SecNumCloud ?</h2>
+<p>C\'est un visa de sécurité officiel délivré par l\'État. Un prestataire qualifié SecNumCloud (référentiel actuel <strong>3.2</strong>) a démontré, audit à l\'appui, qu\'il satisfait plusieurs centaines d\'exigences techniques et organisationnelles. La qualification ne se déclare pas : elle s\'obtient après un audit indépendant et se maintient dans le temps.</p>
+<p>Les exigences couvrent notamment :</p>
+<ul>
+<li>l\'<strong>hébergement et l\'exploitation en Europe</strong>, par des personnels habilités ;</li>
+<li>le <strong>chiffrement</strong> et une gestion rigoureuse des clés ;</li>
+<li>la <strong>réversibilité</strong> et l\'absence de verrou propriétaire ;</li>
+<li>l\'<strong>immunité juridique</strong> : la structure capitalistique ne doit pas permettre l\'ingérence d\'une autorité extra-européenne.</li>
+</ul>
+<img src="/themes/souverainete-digitale/media/generated/legislation-guide-secnumcloud-inline-1.jpg" alt="SecNumCloud : la qualification ANSSI pour un cloud de confiance — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="pourquoi-la-qualification-compte">Pourquoi la qualification compte</h2>
+<p>SecNumCloud est devenu la référence de la doctrine <strong>« Cloud au centre »</strong> de l\'État : pour le <a href="/fr/page/souverainete-numerique-secteur-public">secteur public</a>, héberger des données sensibles chez un prestataire qualifié est désormais la norme attendue. C\'est aussi un critère structurant pour les opérateurs régulés et, plus largement, le socle du label <a href="/fr/page/cloud-de-confiance">cloud de confiance</a>.</p>
+<p>Pour une entreprise, exiger SecNumCloud dans un appel d\'offres est le moyen le plus simple de garantir, en une ligne, à la fois la sécurité et la souveraineté juridique d\'une offre.</p>
+<h2 id="secnumcloud-rgpd-et-nis2-un-faisceau-coherent">SecNumCloud, RGPD et NIS2 : un faisceau cohérent</h2>
+<p>SecNumCloud ne remplace pas le <a href="/fr/page/rgpd-hebergement-donnees">RGPD</a> ni la directive <a href="/fr/page/directive-nis2-conformite">NIS2</a> : il les sert. Un hébergement qualifié facilite la conformité RGPD (pas de transfert hors UE) et fournit une bonne partie des garanties techniques attendues par NIS2. Les trois s\'articulent autour d\'un même objectif : la maîtrise des données.</p>
+<img src="/themes/souverainete-digitale/media/generated/legislation-guide-secnumcloud-inline-2.jpg" alt="SecNumCloud : la qualification ANSSI pour un cloud de confiance — illustration 2" width="1024" height="576" loading="lazy" />
+<h2 id="comment-obtenir-la-qualification-secnumcloud">Comment obtenir la qualification SecNumCloud ?</h2>
+<p>La démarche est exigeante et se déroule en plusieurs temps :</p>
+<ol>
+<li><strong>Analyse d\'écart</strong> par rapport au référentiel 3.2.</li>
+<li><strong>Mise à niveau</strong> technique et organisationnelle.</li>
+<li><strong>Audit</strong> par un prestataire accrédité.</li>
+<li><strong>Délivrance</strong> de la qualification par l\'ANSSI, puis maintien dans le temps.</li>
+</ol>
+<p>Compter en général 8 à 18 mois selon la maturité de départ. Pour une organisation cliente, l\'essentiel est plus simple : vérifier que l\'offre retenue est effectivement qualifiée sur le périmètre concerné.</p>
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — évaluez votre écart à SecNumCloud et les prochaines étapes. <a href="/fr/page/diagnostic-souverainete">Démarrer le diagnostic</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Qu\'est-ce que SecNumCloud ?</strong></p>
+<p>Une qualification de l\'ANSSI attestant qu\'un service cloud atteint le plus haut niveau de sécurité français et est immunisé contre les lois extra-européennes.</p>
+<p><strong>Comment obtenir la qualification SecNumCloud ?</strong></p>
+<p>Par une analyse d\'écart, une mise à niveau, puis un audit accrédité avant délivrance par l\'ANSSI — généralement 8 à 18 mois.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#qu-est-ce-que-secnumcloud">Qu&#x27;est-ce que SecNumCloud ?</a></li><li><a href="#pourquoi-la-qualification-compte">Pourquoi la qualification compte</a></li><li><a href="#secnumcloud-rgpd-et-nis2-un-faisceau-coherent">SecNumCloud, RGPD et NIS2 : un faisceau cohérent</a></li><li><a href="#comment-obtenir-la-qualification-secnumcloud">Comment obtenir la qualification SecNumCloud ?</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/secnumcloud-qualification-anssi/#main",
+      "name": "SecNumCloud : la qualification ANSSI pour un cloud de confiance",
+      "headline": "SecNumCloud : la qualification ANSSI pour un cloud de confiance",
+      "description": "SecNumCloud est le visa de sécurité de l\'ANSSI garantissant un cloud immunisé contre les lois extra-européennes. Définition, exigences et démarche de qualification.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/secnumcloud-qualification-anssi/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/secnumcloud-qualification-anssi/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu\'est-ce que SecNumCloud ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Une qualification de l\'ANSSI attestant qu\'un service cloud atteint le plus haut niveau de sécurité français et est immunisé contre les lois extra-européennes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment obtenir la qualification SecNumCloud ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Par une analyse d\'écart, une mise à niveau, puis un audit accrédité avant délivrance par l\'ANSSI — généralement 8 à 18 mois."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "SecNumCloud : la qualification ANSSI pour un cloud de confiance",
+          "item": "https://souverainete-digitale.fr/secnumcloud-qualification-anssi/"
+        }
+      ]
+    }
+  ]
+}</script>','','','SecNumCloud est le visa de s�curit� de l\'ANSSI garantissant un cloud immunis� contre les lois extra-europ�ennes. D�finition, exigences et d�marche de qualification.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='migration-cloud-souverain-etapes' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np7 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np7,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np7 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np7,@lang_fr,'Migrer vers un cloud souverain : les �tapes cl�s sans interruption','migration-cloud-souverain-etapes','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Migrer vers un cloud souverain : les étapes clés</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Migrer vers un cloud souverain : les étapes clés</h1><p class="sd-page-hero-lead">Comment migrer vers un cloud souverain par étapes, sans coupure de service et avec une réversibilité garantie. Le déroulé d&#x27;un projet de migration maîtrisé.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/process-guide-migration-cloud-souverain-hero.jpg" alt="Migrer vers un cloud souverain : les étapes clés sans interruption" width="1024" height="576" loading="eager" /><p>Une migration vers un <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> n\'a rien d\'un saut dans le vide. Bien conduite, elle se déroule par étapes, sans interruption de service et avec une réversibilité garantie de bout en bout.</p>
+<h2 id="les-etapes-d-une-migration-maitrisee">Les étapes d\'une migration maîtrisée</h2>
+<ol>
+<li><strong>Cartographie</strong> — inventaire des applications, données et dépendances (voir le <a href="/fr/page/diagnostic-souverainete">diagnostic</a>).</li>
+<li><strong>Classification</strong> — identifier les données sensibles ou réglementées (<a href="/fr/page/rgpd-hebergement-donnees">RGPD</a>, HDS, secrets).</li>
+<li><strong>Architecture cible</strong> — choix de l\'hébergement souverain et des modalités de chiffrement.</li>
+<li><strong>Migration par lots</strong> — bascule progressive, charge non critique d\'abord.</li>
+<li><strong>Vérification et réversibilité</strong> — tests, documentation, garanties de sortie sans verrou propriétaire.</li>
+</ol>
+<img src="/themes/souverainete-digitale/media/generated/process-guide-migration-cloud-souverain-inline-1.jpg" alt="Migrer vers un cloud souverain : les étapes clés sans interruption — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="combien-de-temps-prend-une-migration">Combien de temps prend une migration ?</h2>
+<p>De quelques semaines pour un périmètre simple à plusieurs mois pour un système d\'information complexe. Le facteur déterminant n\'est pas la technique mais la classification préalable des données.</p>
+<h2 id="comment-garantir-la-reversibilite">Comment garantir la réversibilité ?</h2>
+<p>En exigeant dès le départ des formats portables, des standards ouverts et des clauses contractuelles de sortie sans frais cachés ni délais de pénalité.</p>
+<img src="/themes/souverainete-digitale/media/generated/process-guide-migration-cloud-souverain-inline-2.jpg" alt="Migrer vers un cloud souverain : les étapes clés sans interruption — illustration 2" width="1024" height="576" loading="lazy" />
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — obtenez une première trajectoire de migration adaptée à votre SI. <a href="/fr/page/diagnostic-souverainete">Démarrer le diagnostic</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Combien de temps prend une migration cloud souverain ?</strong></p>
+<p>De quelques semaines à plusieurs mois selon la complexité ; la classification des données est l\'étape déterminante.</p>
+<p><strong>Comment garantir la réversibilité ?</strong></p>
+<p>Par des formats portables, des standards ouverts et des clauses de sortie claires inscrites au contrat.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#les-etapes-d-une-migration-maitrisee">Les étapes d&#x27;une migration maîtrisée</a></li><li><a href="#combien-de-temps-prend-une-migration">Combien de temps prend une migration ?</a></li><li><a href="#comment-garantir-la-reversibilite">Comment garantir la réversibilité ?</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/migration-cloud-souverain-etapes/#main",
+      "name": "Migrer vers un cloud souverain : les étapes clés sans interruption",
+      "headline": "Migrer vers un cloud souverain : les étapes clés sans interruption",
+      "description": "Comment migrer vers un cloud souverain par étapes, sans coupure de service et avec une réversibilité garantie. Le déroulé d\'un projet de migration maîtrisé.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/migration-cloud-souverain-etapes/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/migration-cloud-souverain-etapes/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Combien de temps prend une migration cloud souverain ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De quelques semaines à plusieurs mois selon la complexité ; la classification des données est l\'étape déterminante."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment garantir la réversibilité ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Par des formats portables, des standards ouverts et des clauses de sortie claires inscrites au contrat."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Migrer vers un cloud souverain : les étapes clés sans interruption",
+          "item": "https://souverainete-digitale.fr/migration-cloud-souverain-etapes/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Comment migrer vers un cloud souverain par �tapes, sans coupure de service et avec une r�versibilit� garantie. Le d�roul� d\'un projet de migration ma�tris�.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='barometre-souverainete-numerique' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np8 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np8,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np8 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np8,@lang_fr,'Barom�tre de la souverainet� num�rique des organisations fran�aises','barometre-souverainete-numerique','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Baromètre de la souveraineté numérique</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Baromètre de la souveraineté numérique</h1><p class="sd-page-hero-lead">Chiffres clés sur la dépendance des entreprises françaises au cloud étranger, l&#x27;exposition au CLOUD Act et l&#x27;adoption du cloud souverain.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/link-magnet-barometre-souverainete-hero.jpg" alt="Baromètre de la souveraineté numérique des organisations françaises" width="1024" height="576" loading="eager" /><p>Un état des lieux chiffré de la dépendance numérique des organisations françaises : recours au cloud étranger, exposition au <a href="/fr/page/cloud-act-france">CLOUD Act</a> et progression du <a href="/fr/page/cloud-souverain-guide">cloud souverain</a>.</p>
+<h2 id="les-grands-enseignements">Les grands enseignements</h2>
+<ul>
+<li>Une part majoritaire des données d\'entreprise transite encore par des fournisseurs soumis au droit américain.</li>
+<li>La conformité (<a href="/fr/page/rgpd-hebergement-donnees">RGPD</a>, <a href="/fr/page/directive-nis2-conformite">NIS2</a>) est le premier moteur de bascule vers le souverain.</li>
+<li>La sensibilisation progresse plus vite que les migrations effectives.</li>
+</ul>
+<img src="/themes/souverainete-digitale/media/generated/link-magnet-barometre-souverainete-inline-1.jpg" alt="Baromètre de la souveraineté numérique des organisations françaises — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="pourquoi-ce-barometre">Pourquoi ce baromètre</h2>
+<p>Parce qu\'on ne pilote bien que ce que l\'on mesure. Ces repères aident dirigeants et DSI à situer leur organisation et à prioriser. Selon votre secteur, <strong>vous pourriez être plus exposé que la moyenne</strong>.</p>
+<img src="/themes/souverainete-digitale/media/generated/link-magnet-barometre-souverainete-inline-2.jpg" alt="Baromètre de la souveraineté numérique des organisations françaises — illustration 2" width="1024" height="576" loading="lazy" />
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — comparez votre situation aux repères du baromètre. <a href="/fr/page/contact">Parler à un expert</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Quelle part des entreprises françaises utilisent un cloud américain ?</strong></p>
+<p>Une majorité, directement ou indirectement via des outils du quotidien — d\'où l\'enjeu d\'une cartographie précise des dépendances.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#les-grands-enseignements">Les grands enseignements</a></li><li><a href="#pourquoi-ce-barometre">Pourquoi ce baromètre</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/barometre-souverainete-numerique/#main",
+      "name": "Baromètre de la souveraineté numérique des organisations françaises",
+      "headline": "Baromètre de la souveraineté numérique des organisations françaises",
+      "description": "Chiffres clés sur la dépendance des entreprises françaises au cloud étranger, l\'exposition au CLOUD Act et l\'adoption du cloud souverain.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/barometre-souverainete-numerique/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/barometre-souverainete-numerique/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quelle part des entreprises françaises utilisent un cloud américain ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Une majorité, directement ou indirectement via des outils du quotidien — d\'où l\'enjeu d\'une cartographie précise des dépendances."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Baromètre de la souveraineté numérique des organisations françaises",
+          "item": "https://souverainete-digitale.fr/barometre-souverainete-numerique/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Chiffres cl�s sur la d�pendance des entreprises fran�aises au cloud �tranger, l\'exposition au CLOUD Act et l\'adoption du cloud souverain.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='cloud-souverain-guide' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np9 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np9,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np9 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np9,@lang_fr,'Cloud souverain : h�berger vos donn�es � l\'abri du droit �tranger','cloud-souverain-guide','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Cloud souverain : héberger vos données à l&#x27;abri du droit étranger</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Cloud souverain : héberger vos données à l\'abri du droit étranger</h1><p class="sd-page-hero-lead">Qu&#x27;est-ce qu&#x27;un cloud souverain ? Définition, différence avec le cloud de confiance, acteurs français et critères pour choisir un hébergement vraiment souverain.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/segment-page-cloud-souverain-hero.jpg" alt="Cloud souverain : héberger vos données à l\'abri du droit étranger" width="1024" height="576" loading="eager" /><p>Un <strong>cloud souverain</strong> est une infrastructure d\'hébergement dont les données, les opérations et la gouvernance échappent à toute juridiction extra-européenne. Concrètement : vos données restent en Europe, sont opérées par une entité non soumise au droit américain, et personne ne peut être contraint de les livrer à une puissance étrangère.</p>
+<p>Pour les entreprises et organisations qui manipulent des données sensibles ou réglementées, ce n\'est plus une préférence — c\'est une condition de conformité et de continuité d\'activité.</p>
+<h2 id="qu-est-ce-qu-un-cloud-souverain">Qu\'est-ce qu\'un cloud souverain ?</h2>
+<p>La souveraineté d\'un cloud ne se résume pas à un drapeau ou à l\'adresse d\'un datacenter. Elle se mesure sur trois plans complémentaires, et un cloud n\'est réellement souverain que s\'il les couvre tous les trois :</p>
+<ul>
+<li><strong>Souveraineté des données</strong> — stockage et traitement exclusivement sur le territoire européen, avec chiffrement et gestion des clés maîtrisée par le client (HSM, KMS).</li>
+<li><strong>Souveraineté opérationnelle</strong> — administration et maintenance assurées par des personnels et des sociétés relevant du droit européen, sans accès distant depuis une juridiction tierce.</li>
+<li><strong>Souveraineté juridique</strong> — immunité face aux lois extraterritoriales comme le <a href="/fr/page/cloud-act-france">CLOUD Act</a>, garantie par la structure capitalistique et contractuelle du fournisseur.</li>
+</ul>
+<p>Un hébergement « en France » qui ne coche pas ces trois cases — par exemple une offre techniquement opérée sous licence d\'un acteur américain — n\'est pas souverain au sens fort.</p>
+<img src="/themes/souverainete-digitale/media/generated/segment-page-cloud-souverain-inline-1.jpg" alt="Cloud souverain : héberger vos données à l\'abri du droit étranger — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="cloud-souverain-ou-cloud-de-confiance-quelle-diffe">Cloud souverain ou cloud de confiance : quelle différence ?</h2>
+<p>Les deux notions sont souvent confondues. Le <strong><a href="/fr/page/cloud-de-confiance">cloud de confiance</a></strong> correspond à un label français reposant sur la qualification <strong>SecNumCloud</strong> de l\'ANSSI : il garantit à la fois un très haut niveau de sécurité technique *et* l\'immunité aux droits extra-européens. Un cloud souverain est le concept plus large ; le cloud de confiance en est la traduction certifiée et opposable la plus exigeante en France. Autrement dit : tout cloud de confiance est souverain, mais tout cloud présenté comme « souverain » n\'est pas nécessairement qualifié.</p>
+<h2 id="pourquoi-la-souverainete-du-cloud-est-devenue-stra">Pourquoi la souveraineté du cloud est devenue stratégique</h2>
+<p>Trois forces convergent. D\'abord la <strong>pression réglementaire</strong> : <a href="/fr/page/rgpd-hebergement-donnees">RGPD</a>, <a href="/fr/page/directive-nis2-conformite">NIS2</a> et, pour la santé, la certification <a href="/fr/page/hebergement-donnees-de-sante-hds">HDS</a> imposent des garanties que seul un hébergement maîtrisé peut offrir durablement. Ensuite le <strong>risque géopolitique</strong> : l\'extraterritorialité du droit américain expose le patrimoine informationnel des entreprises. Enfin la <strong>demande de réversibilité</strong> : les organisations veulent pouvoir changer de fournisseur sans verrou propriétaire.</p>
+<img src="/themes/souverainete-digitale/media/generated/segment-page-cloud-souverain-inline-2.jpg" alt="Cloud souverain : héberger vos données à l\'abri du droit étranger — illustration 2" width="1024" height="576" loading="lazy" />
+<h2 id="les-acteurs-du-cloud-souverain-en-france">Les acteurs du cloud souverain en France</h2>
+<p>Le marché français compte plusieurs offres positionnées sur la souveraineté — OVHcloud, Outscale (Dassault Systèmes), Orange Business, ou encore Bleu. Toutes ne se valent pas selon votre besoin : certaines sont qualifiées SecNumCloud sur des technologies entièrement maîtrisées, d\'autres s\'appuient sur des technologies sous licence américaine, ce qui fragilise la souveraineté juridique. Notre <a href="/fr/page/comparatif-cloud-souverain">comparatif des clouds souverains</a> détaille ces écarts acteur par acteur.</p>
+<h2 id="faut-il-un-cloud-souverain-pour-votre-organisation">Faut-il un cloud souverain pour votre organisation ?</h2>
+<p>Tout dépend de la nature de vos données. Données de santé, données personnelles sensibles, secrets industriels, missions de <a href="/fr/page/souverainete-numerique-secteur-public">service public</a> : dans ces cas, la souveraineté n\'est pas optionnelle. Pour des données moins sensibles, une approche hybride peut suffire — d\'où l\'importance d\'une classification préalable plutôt que d\'une bascule uniforme.</p>
+<p>Le passage au cloud souverain est un projet structurant, mais il se conduit par étapes — sans interruption de service et avec une <a href="/fr/page/migration-cloud-souverain-etapes">réversibilité garantie</a>.</p>
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — nos experts évaluent votre besoin de souveraineté et la trajectoire la plus adaptée. <a href="/fr/page/contact">Parler à un expert</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Qu\'est-ce qu\'un cloud souverain ?</strong></p>
+<p>Une infrastructure dont les données, l\'exploitation et la gouvernance échappent aux juridictions extra-européennes, garantissant que vos données ne peuvent être livrées à une puissance étrangère.</p>
+<p><strong>Quelle différence entre cloud souverain et cloud de confiance ?</strong></p>
+<p>Le cloud de confiance est la version labellisée (qualification SecNumCloud de l\'ANSSI) du cloud souverain en France.</p>
+<p><strong>Quels sont les clouds souverains français ?</strong></p>
+<p>Parmi les principaux : OVHcloud, Outscale, Orange Business et Bleu — avec des niveaux de souveraineté variables détaillés dans notre comparatif.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/comparatif-cloud-souverain">Comparatif des clouds &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-de-confiance">Cloud de confiance &rarr;</a><a class="sd-related-card" href="/fr/page/migration-cloud-souverain-etapes">Migration &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#qu-est-ce-qu-un-cloud-souverain">Qu&#x27;est-ce qu&#x27;un cloud souverain ?</a></li><li><a href="#cloud-souverain-ou-cloud-de-confiance-quelle-diffe">Cloud souverain ou cloud de confiance : quelle différence ?</a></li><li><a href="#pourquoi-la-souverainete-du-cloud-est-devenue-stra">Pourquoi la souveraineté du cloud est devenue stratégique</a></li><li><a href="#les-acteurs-du-cloud-souverain-en-france">Les acteurs du cloud souverain en France</a></li><li><a href="#faut-il-un-cloud-souverain-pour-votre-organisation">Faut-il un cloud souverain pour votre organisation ?</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/cloud-souverain/#main",
+      "name": "Cloud souverain : héberger vos données à l\'abri du droit étranger",
+      "headline": "Cloud souverain : héberger vos données à l\'abri du droit étranger",
+      "description": "Qu\'est-ce qu\'un cloud souverain ? Définition, différence avec le cloud de confiance, acteurs français et critères pour choisir un hébergement vraiment souverain.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/cloud-souverain/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/cloud-souverain/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu\'est-ce qu\'un cloud souverain ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Une infrastructure dont les données, l\'exploitation et la gouvernance échappent aux juridictions extra-européennes, garantissant que vos données ne peuvent être livrées à une puissance étrangère."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quelle différence entre cloud souverain et cloud de confiance ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le cloud de confiance est la version labellisée (qualification SecNumCloud de l\'ANSSI) du cloud souverain en France."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quels sont les clouds souverains français ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Parmi les principaux : OVHcloud, Outscale, Orange Business et Bleu — avec des niveaux de souveraineté variables détaillés dans notre comparatif."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cloud souverain : héberger vos données à l\'abri du droit étranger",
+          "item": "https://souverainete-digitale.fr/cloud-souverain/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Qu\'est-ce qu\'un cloud souverain ? D�finition, diff�rence avec le cloud de confiance, acteurs fran�ais et crit�res pour choisir un h�bergement vraiment souverain.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='hebergement-donnees-de-sante-hds' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np10 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np10,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np10 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np10,@lang_fr,'H�bergement de donn�es de sant� (HDS) : obligations et solutions','hebergement-donnees-de-sante-hds','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Hébergement de données de santé (HDS) : obligations et solutions</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Hébergement de données de santé (HDS) : obligations et solutions</h1><p class="sd-page-hero-lead">L&#x27;hébergement de données de santé exige la certification HDS. Qui est concerné, quelles obligations, et comment choisir un hébergeur conforme et souverain.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/segment-page-hebergement-hds-hero.jpg" alt="Hébergement de données de santé (HDS) : obligations et solutions" width="1024" height="576" loading="eager" /><p>Toute organisation qui héberge des données de santé à caractère personnel pour le compte de tiers doit recourir à un hébergeur <strong>certifié HDS</strong>. Une exigence à la croisée de la santé, du <a href="/fr/page/rgpd-hebergement-donnees">RGPD</a> et de la souveraineté.</p>
+<h2 id="qu-est-ce-que-la-certification-hds">Qu\'est-ce que la certification HDS ?</h2>
+<p>La certification <strong>Hébergeur de Données de Santé</strong> atteste qu\'un prestataire respecte un référentiel strict de sécurité, de confidentialité et de traçabilité pour les données médicales. Elle est délivrée après audit par un organisme accrédité.</p>
+<img src="/themes/souverainete-digitale/media/generated/segment-page-hebergement-hds-inline-1.jpg" alt="Hébergement de données de santé (HDS) : obligations et solutions — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="qui-doit-etre-certifie-hds">Qui doit être certifié HDS ?</h2>
+<p>Établissements de santé, éditeurs de logiciels médicaux, laboratoires, start-up e-santé : dès que des données de santé sont hébergées pour autrui, la certification de l\'hébergeur est obligatoire. Pour ces données particulièrement sensibles, le recours à un <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> immunisé contre le <a href="/fr/page/cloud-act-france">CLOUD Act</a> est vivement recommandé.</p>
+<img src="/themes/souverainete-digitale/media/generated/segment-page-hebergement-hds-inline-2.jpg" alt="Hébergement de données de santé (HDS) : obligations et solutions — illustration 2" width="1024" height="576" loading="lazy" />
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — sécurisez l\'hébergement de vos données de santé en conformité HDS et souveraineté. <a href="/fr/page/contact">Parler à un expert</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Qu\'est-ce que la certification HDS ?</strong></p>
+<p>Une certification française attestant qu\'un hébergeur respecte un référentiel strict pour les données de santé personnelles.</p>
+<p><strong>Qui doit être certifié HDS ?</strong></p>
+<p>Tout acteur hébergeant des données de santé pour le compte de tiers (établissements, éditeurs, e-santé).</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#qu-est-ce-que-la-certification-hds">Qu&#x27;est-ce que la certification HDS ?</a></li><li><a href="#qui-doit-etre-certifie-hds">Qui doit être certifié HDS ?</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/hebergement-donnees-de-sante-hds/#main",
+      "name": "Hébergement de données de santé (HDS) : obligations et solutions",
+      "headline": "Hébergement de données de santé (HDS) : obligations et solutions",
+      "description": "L\'hébergement de données de santé exige la certification HDS. Qui est concerné, quelles obligations, et comment choisir un hébergeur conforme et souverain.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/hebergement-donnees-de-sante-hds/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/hebergement-donnees-de-sante-hds/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qu\'est-ce que la certification HDS ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Une certification française attestant qu\'un hébergeur respecte un référentiel strict pour les données de santé personnelles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qui doit être certifié HDS ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tout acteur hébergeant des données de santé pour le compte de tiers (établissements, éditeurs, e-santé)."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Hébergement de données de santé (HDS) : obligations et solutions",
+          "item": "https://souverainete-digitale.fr/hebergement-donnees-de-sante-hds/"
+        }
+      ]
+    }
+  ]
+}</script>','','','L\'h�bergement de donn�es de sant� exige la certification HDS. Qui est concern�, quelles obligations, et comment choisir un h�bergeur conforme et souverain.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='souverainete-numerique-secteur-public' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np11 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np11,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np11 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np11,@lang_fr,'Souverainet� num�rique du secteur public : cloud et doctrine de l\'�tat','souverainete-numerique-secteur-public','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Souveraineté numérique du secteur public</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Souveraineté numérique du secteur public</h1><p class="sd-page-hero-lead">Administrations et collectivités : la doctrine « Cloud au centre » impose un cloud souverain pour les données sensibles. Obligations et solutions conformes.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/segment-page-secteur-public-hero.jpg" alt="Souveraineté numérique du secteur public : cloud et doctrine de l\'État" width="1024" height="576" loading="eager" /><p>Pour les administrations et collectivités, la souveraineté numérique n\'est pas une option : c\'est une doctrine de l\'État. Les données publiques sensibles doivent être hébergées sur un cloud maîtrisé, à l\'abri des lois étrangères.</p>
+<h2 id="la-doctrine-cloud-au-centre">La doctrine « Cloud au centre »</h2>
+<p>La doctrine impose que les données sensibles de l\'État soient hébergées soit sur un cloud interne, soit sur un cloud commercial qualifié <a href="/fr/page/secnumcloud-qualification-anssi">SecNumCloud</a> — donc immunisé contre le <a href="/fr/page/cloud-act-france">CLOUD Act</a>.</p>
+<img src="/themes/souverainete-digitale/media/generated/segment-page-secteur-public-inline-1.jpg" alt="Souveraineté numérique du secteur public : cloud et doctrine de l\'État — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="quel-cloud-pour-une-administration-publique">Quel cloud pour une administration publique ?</h2>
+<p>Un <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> qualifié, garantissant hébergement européen, exploitation maîtrisée et réversibilité. Les collectivités, soumises aux mêmes enjeux de confiance citoyenne, ont intérêt à s\'aligner sur cette exigence, en cohérence avec <a href="/fr/page/directive-nis2-conformite">NIS2</a>.</p>
+<img src="/themes/souverainete-digitale/media/generated/segment-page-secteur-public-inline-2.jpg" alt="Souveraineté numérique du secteur public : cloud et doctrine de l\'État — illustration 2" width="1024" height="576" loading="lazy" />
+<blockquote class="sd-cta"><strong>Demander une consultation</strong> — accompagnement des administrations et collectivités vers un cloud conforme à la doctrine de l\'État. <a href="/fr/page/contact">Parler à un expert</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Quel cloud pour une administration publique ?</strong></p>
+<p>Un cloud souverain qualifié SecNumCloud, conforme à la doctrine « Cloud au centre ».</p>
+<p><strong>Qu\'est-ce que la doctrine Cloud au centre ?</strong></p>
+<p>La règle imposant que les données sensibles de l\'État soient hébergées sur un cloud interne ou qualifié SecNumCloud.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#la-doctrine-cloud-au-centre">La doctrine « Cloud au centre »</a></li><li><a href="#quel-cloud-pour-une-administration-publique">Quel cloud pour une administration publique ?</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/souverainete-numerique-secteur-public/#main",
+      "name": "Souveraineté numérique du secteur public : cloud et doctrine de l\'État",
+      "headline": "Souveraineté numérique du secteur public : cloud et doctrine de l\'État",
+      "description": "Administrations et collectivités : la doctrine « Cloud au centre » impose un cloud souverain pour les données sensibles. Obligations et solutions conformes.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/souverainete-numerique-secteur-public/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/souverainete-numerique-secteur-public/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quel cloud pour une administration publique ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Un cloud souverain qualifié SecNumCloud, conforme à la doctrine « Cloud au centre »."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu\'est-ce que la doctrine Cloud au centre ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La règle imposant que les données sensibles de l\'État soient hébergées sur un cloud interne ou qualifié SecNumCloud."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Souveraineté numérique du secteur public : cloud et doctrine de l\'État",
+          "item": "https://souverainete-digitale.fr/souverainete-numerique-secteur-public/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Administrations et collectivit�s : la doctrine � Cloud au centre � impose un cloud souverain pour les donn�es sensibles. Obligations et solutions conformes.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='diagnostic-souverainete' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np12 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np12,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np12 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np12,@lang_fr,'Diagnostic de souverainet� num�rique : �valuez vos d�pendances en 2 minutes','diagnostic-souverainete','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Diagnostic de souveraineté numérique</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Diagnostic de souveraineté numérique</h1><p class="sd-page-hero-lead">Évaluez gratuitement le niveau de souveraineté numérique de votre organisation : dépendances cloud, exposition au CLOUD Act et priorités d&#x27;action.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/assessment-tool-diagnostic-souverainete-hero.jpg" alt="Diagnostic de souveraineté numérique : évaluez vos dépendances en 2 minutes" width="1024" height="576" loading="eager" /><p>En quelques questions, identifiez vos <strong>dépendances numériques</strong>, votre exposition aux lois extra-européennes et vos premières priorités d\'action. Cet outil est indicatif : il vous aide à objectiver le risque, sans se substituer à un audit complet.</p>
+<h2 id="ce-que-le-diagnostic-evalue">Ce que le diagnostic évalue</h2>
+<ul>
+<li><strong>Hébergement</strong> — où et par qui sont opérées vos données ?</li>
+<li><strong>Exposition juridique</strong> — êtes-vous concerné par le <a href="/fr/page/cloud-act-france">CLOUD Act</a> ?</li>
+<li><strong>Conformité</strong> — vos obligations (<a href="/fr/page/rgpd-hebergement-donnees">RGPD</a>, <a href="/fr/page/directive-nis2-conformite">NIS2</a>, HDS) sont-elles couvertes ?</li>
+<li><strong>Réversibilité</strong> — pourriez-vous changer de fournisseur sans verrou ?</li>
+</ul>
+<img src="/themes/souverainete-digitale/media/generated/assessment-tool-diagnostic-souverainete-inline-1.jpg" alt="Diagnostic de souveraineté numérique : évaluez vos dépendances en 2 minutes — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="comment-ca-marche">Comment ça marche</h2>
+<p>Vous répondez à une série de questions simples sur vos outils et vos données. À la fin, vous obtenez un niveau de souveraineté indicatif et des recommandations priorisées. Selon vos réponses, <strong>vous pourriez être concerné</strong> par des obligations que vous ne soupçonniez pas.</p>
+<img src="/themes/souverainete-digitale/media/generated/assessment-tool-diagnostic-souverainete-inline-2.jpg" alt="Diagnostic de souveraineté numérique : évaluez vos dépendances en 2 minutes — illustration 2" width="1024" height="576" loading="lazy" />
+<blockquote class="sd-cta"><strong>Faire le diagnostic en 2 minutes</strong> — recevez votre niveau de souveraineté et vos actions prioritaires. <a href="/fr/page/contact">Démarrer le diagnostic</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Comment évaluer sa souveraineté numérique ?</strong></p>
+<p>En cartographiant ses dépendances (hébergement, exposition juridique, conformité, réversibilité) — ce que fait ce diagnostic.</p>
+<p><strong>Comment cartographier ses dépendances numériques ?</strong></p>
+<p>En recensant les services utilisés, leur opérateur réel et les données qui y transitent ; le diagnostic vous guide pas à pas.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#ce-que-le-diagnostic-evalue">Ce que le diagnostic évalue</a></li><li><a href="#comment-ca-marche">Comment ça marche</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/outils/diagnostic-souverainete/#main",
+      "name": "Diagnostic de souveraineté numérique : évaluez vos dépendances en 2 minutes",
+      "headline": "Diagnostic de souveraineté numérique : évaluez vos dépendances en 2 minutes",
+      "description": "Évaluez gratuitement le niveau de souveraineté numérique de votre organisation : dépendances cloud, exposition au CLOUD Act et priorités d\'action.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/outils/diagnostic-souverainete/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/outils/diagnostic-souverainete/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Comment évaluer sa souveraineté numérique ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En cartographiant ses dépendances (hébergement, exposition juridique, conformité, réversibilité) — ce que fait ce diagnostic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment cartographier ses dépendances numériques ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En recensant les services utilisés, leur opérateur réel et les données qui y transitent ; le diagnostic vous guide pas à pas."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Diagnostic de souveraineté numérique : évaluez vos dépendances en 2 minutes",
+          "item": "https://souverainete-digitale.fr/outils/diagnostic-souverainete/"
+        }
+      ]
+    }
+  ]
+}</script>','','','�valuez gratuitement le niveau de souverainet� num�rique de votre organisation : d�pendances cloud, exposition au CLOUD Act et priorit�s d\'action.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='estimateur-cout-migration' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np13 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np13,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np13 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np13,@lang_fr,'Estimateur du co�t d\'une migration vers un cloud souverain','estimateur-cout-migration','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/fr/">Accueil</a><span>/</span><a href="/fr/page/souverainete-numerique-guide">Ressources</a><span>/</span>Estimateur du coût d&#x27;une migration vers un cloud souverain</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressource</span><h1>Estimateur du coût d\'une migration vers un cloud souverain</h1><p class="sd-page-hero-lead">Estimez le budget d&#x27;une migration vers un cloud souverain selon votre volume de données et vos contraintes. Le cloud souverain est-il plus cher ? Réponse ici.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/cost-estimator-cout-migration-cloud-souverain-hero.jpg" alt="Estimateur du coût d\'une migration vers un cloud souverain" width="1024" height="576" loading="eager" /><p>Obtenez une première fourchette budgétaire pour votre projet de migration vers un <a href="/fr/page/cloud-souverain-guide">cloud souverain</a>, selon votre volume de données, vos applications et vos exigences de conformité.</p>
+<h2 id="ce-qui-determine-le-cout">Ce qui détermine le coût</h2>
+<ul>
+<li><strong>Volume et complexité</strong> des données à migrer.</li>
+<li><strong>Niveau de conformité</strong> requis (<a href="/fr/page/secnumcloud-qualification-anssi">SecNumCloud</a>, <a href="/fr/page/hebergement-donnees-de-sante-hds">HDS</a>).</li>
+<li><strong>Refonte applicative</strong> éventuelle pour les applications non portables.</li>
+<li><strong>Accompagnement</strong> (audit, <a href="/fr/page/migration-cloud-souverain-etapes">migration par étapes</a>, réversibilité).</li>
+</ul>
+<img src="/themes/souverainete-digitale/media/generated/cost-estimator-cout-migration-cloud-souverain-inline-1.jpg" alt="Estimateur du coût d\'une migration vers un cloud souverain — illustration 1" width="1024" height="576" loading="lazy" />
+<h2 id="le-cloud-souverain-est-il-plus-cher">Le cloud souverain est-il plus cher ?</h2>
+<p>L\'écart s\'est fortement réduit. Sur des charges optimisées, la différence avec un cloud public américain est aujourd\'hui marginale — et largement compensée par la réduction du risque juridique et de conformité.</p>
+<img src="/themes/souverainete-digitale/media/generated/cost-estimator-cout-migration-cloud-souverain-inline-2.jpg" alt="Estimateur du coût d\'une migration vers un cloud souverain — illustration 2" width="1024" height="576" loading="lazy" />
+<blockquote class="sd-cta"><strong>Estimer mon projet</strong> — recevez une fourchette budgétaire indicative adaptée à votre contexte. <a href="/fr/page/contact">Lancer l\'estimation</a></blockquote>
+<h2 id="questions-frequentes">Questions fréquentes</h2>
+<p><strong>Combien coûte une migration vers un cloud souverain ?</strong></p>
+<p>Cela dépend du volume, de la complexité applicative et du niveau de conformité ; l\'estimateur fournit une première fourchette.</p>
+<p><strong>Le cloud souverain est-il plus cher ?</strong></p>
+<p>L\'écart est désormais marginal sur les charges optimisées, et compensé par la baisse du risque juridique.</p><div class="sd-related"><p class="sd-related-title">À lire aussi</p><div class="sd-related-grid"><a class="sd-related-card" href="/fr/page/cloud-souverain-guide">Cloud souverain &rarr;</a><a class="sd-related-card" href="/fr/page/cloud-act-france">CLOUD Act &rarr;</a><a class="sd-related-card" href="/fr/page/diagnostic-souverainete">Diagnostic de souveraineté &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">Sur cette page</p><ul><li><a href="#ce-qui-determine-le-cout">Ce qui détermine le coût</a></li><li><a href="#le-cloud-souverain-est-il-plus-cher">Le cloud souverain est-il plus cher ?</a></li><li><a href="#questions-frequentes">Questions fréquentes</a></li></ul><div class="sd-toc-cta"><a href="/fr/page/contact" class="sd-btn sd-btn-primary">Demander une consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://souverainete-digitale.fr/outils/estimateur-cout-migration/#main",
+      "name": "Estimateur du coût d\'une migration vers un cloud souverain",
+      "headline": "Estimateur du coût d\'une migration vers un cloud souverain",
+      "description": "Estimez le budget d\'une migration vers un cloud souverain selon votre volume de données et vos contraintes. Le cloud souverain est-il plus cher ? Réponse ici.",
+      "inLanguage": "fr",
+      "url": "https://souverainete-digitale.fr/outils/estimateur-cout-migration/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Souveraineté Numérique",
+        "url": "https://souverainete-digitale.fr"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://souverainete-digitale.fr/outils/estimateur-cout-migration/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Combien coûte une migration vers un cloud souverain ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cela dépend du volume, de la complexité applicative et du niveau de conformité ; l\'estimateur fournit une première fourchette."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Le cloud souverain est-il plus cher ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L\'écart est désormais marginal sur les charges optimisées, et compensé par la baisse du risque juridique."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://souverainete-digitale.fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Estimateur du coût d\'une migration vers un cloud souverain",
+          "item": "https://souverainete-digitale.fr/outils/estimateur-cout-migration/"
+        }
+      ]
+    }
+  ]
+}</script>','','','Estimez le budget d\'une migration vers un cloud souverain selon votre volume de donn�es et vos contraintes. Le cloud souverain est-il plus cher ? R�ponse ici.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='data-sovereignty' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np14 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np14,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np14 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np14,@lang,'Data Sovereignty: Definition, Risks and How to Achieve It','data-sovereignty','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Data Sovereignty: Definition, Risks and How to Achieve It</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Data Sovereignty: Definition, Risks and How to Achieve It</h1><p class="sd-page-hero-lead">Data sovereignty means keeping control of where your data lives, who can access it and under which law. Definition, business risks and practical levers.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/explainer-page-souverainete-numerique-hero.jpg" alt="Data Sovereignty: Definition, Risks and How to Achieve It" width="1024" height="576" loading="eager" /><p><strong>Data sovereignty</strong> is the ability of an organisation to keep full control over its data, infrastructure and digital tools — without depending on providers or laws that fall outside its own jurisdiction. As the majority of cloud services used across Europe are operated by non-European players, this has shifted from a policy debate to an operational decision.</p>
+<h2 id="what-is-data-sovereignty">What is data sovereignty?</h2>
+<p>It is the effective control of three inseparable assets:</p>
+<ul>
+<li><strong>Data</strong> — knowing where it is, who can access it, and which law governs it.</li>
+<li><strong>Infrastructure</strong> — the hosting, networks and compute your activity relies on.</li>
+<li><strong>Software and skills</strong> — never depending on a single provider you cannot replace.</li>
+</ul>
+<p>Losing that control exposes you to three concrete risks: unauthorised access by a foreign authority (see the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a>), economic lock-in to a dominant vendor, and regulatory non-compliance.</p>
+<h2 id="why-data-sovereignty-matters-for-business">Why data sovereignty matters for business</h2>
+<p>For a company, the stakes are concrete: business continuity, protection of the information assets, and compliance with <strong>GDPR</strong>, <strong>NIS2</strong> or sector rules. A poorly controlled dependency is a legal risk, a confidentiality risk and a continuity risk rolled into one.</p>
+<p>Sovereignty no longer means sacrificing performance: certified European infrastructure now offers equivalent service levels, with the cost gap down to a few points on optimised workloads.</p>
+<h2 id="the-practical-levers-of-data-sovereignty">The practical levers of data sovereignty</h2>
+<ol>
+<li><strong>Map your dependencies</strong> — identify critical services run by non-sovereign providers, including everyday tools.</li>
+<li><strong>Classify your data</strong> — separate the sensitive and regulated from the rest, to target effort.</li>
+<li><strong>Migrate to a <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a></strong> for sensitive and regulated data.</li>
+<li><strong>Control encryption and keys</strong> — so even the host cannot read your data.</li>
+<li><strong>Get compliant</strong> — <a href="/en/page/gdpr-data-hosting">GDPR</a>, <a href="/en/page/nis2-directive-compliance">NIS2</a>, SecNumCloud as relevant.</li>
+</ol>
+<p>The first and most cost-effective step is always the assessment: you only secure well what you have first mapped.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — gauge your organisation\'s level of sovereignty and your action priorities. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What is data sovereignty?</strong></p>
+<p>The ability to retain control over your data, infrastructure and digital tools, free from dependence on non-European actors or laws.</p>
+<p><strong>Why is data sovereignty important?</strong></p>
+<p>Because it underpins protection of sensitive data, regulatory compliance (GDPR, NIS2) and business continuity.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-is-data-sovereignty">What is data sovereignty?</a></li><li><a href="#why-data-sovereignty-matters-for-business">Why data sovereignty matters for business</a></li><li><a href="#the-practical-levers-of-data-sovereignty">The practical levers of data sovereignty</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://souverainete-digitale.fr/page/data-sovereignty#main", "name": "Data Sovereignty: Definition, Risks and How to Achieve It", "headline": "Data Sovereignty: Definition, Risks and How to Achieve It", "description": "Data sovereignty means keeping control of where your data lives, who can access it and under which law. Definition, business risks and practical levers.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/data-sovereignty", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/data-sovereignty#faq", "mainEntity": [{"@type": "Question", "name": "What is data sovereignty?", "acceptedAnswer": {"@type": "Answer", "text": "The ability to retain control over your data, infrastructure and digital tools, free from dependence on non-European actors or laws."}}, {"@type": "Question", "name": "Why is data sovereignty important?", "acceptedAnswer": {"@type": "Answer", "text": "Because it underpins protection of sensitive data, regulatory compliance (GDPR, NIS2) and business continuity."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Data Sovereignty: Definition, Risks and How to Achieve It", "item": "https://souverainete-digitale.fr/page/data-sovereignty"}]}]}</script>','','','Data sovereignty means keeping control of where your data lives, who can access it and under which law. Definition, business risks and practical levers.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='digital-sovereignty-barometer' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np15 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np15,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np15 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np15,@lang,'Digital Sovereignty Barometer: Key Statistics for Organisations','digital-sovereignty-barometer','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Digital Sovereignty Barometer: Key Statistics for Organisations</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Digital Sovereignty Barometer: Key Statistics for Organisations</h1><p class="sd-page-hero-lead">Key figures on European organisations&#x27; dependence on foreign cloud, CLOUD Act exposure and sovereign cloud adoption.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/link-magnet-barometre-souverainete-hero.jpg" alt="Digital Sovereignty Barometer: Key Statistics for Organisations" width="1024" height="576" loading="eager" /><p>A data-driven snapshot of European organisations\' digital dependence: use of foreign cloud, exposure to the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a> and the progress of the <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a>.</p>
+<h2 id="key-findings">Key findings</h2>
+<ul>
+<li>A majority of corporate data still flows through providers subject to US law.</li>
+<li>Compliance (<a href="/en/page/gdpr-data-hosting">GDPR</a>, <a href="/en/page/nis2-directive-compliance">NIS2</a>) is the leading driver of the shift to sovereign.</li>
+<li>Awareness is rising faster than actual migrations.</li>
+</ul>
+<h2 id="why-this-barometer">Why this barometer</h2>
+<p>Because you only steer what you measure. These benchmarks help leaders and IT directors locate their organisation and prioritise. Depending on your sector, you may be more exposed than average.</p>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — benchmark your situation against the barometer. <a href="/en/page/contact">Talk to an expert</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What share of organisations use a US cloud?</strong></p>
+<p>A majority, directly or indirectly via everyday tools — hence the need for a precise dependency map.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#key-findings">Key findings</a></li><li><a href="#why-this-barometer">Why this barometer</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://souverainete-digitale.fr/page/digital-sovereignty-barometer#main", "name": "Digital Sovereignty Barometer: Key Statistics for Organisations", "headline": "Digital Sovereignty Barometer: Key Statistics for Organisations", "description": "Key figures on European organisations\' dependence on foreign cloud, CLOUD Act exposure and sovereign cloud adoption.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/digital-sovereignty-barometer", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/digital-sovereignty-barometer#faq", "mainEntity": [{"@type": "Question", "name": "What share of organisations use a US cloud?", "acceptedAnswer": {"@type": "Answer", "text": "A majority, directly or indirectly via everyday tools — hence the need for a precise dependency map."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Digital Sovereignty Barometer: Key Statistics for Organisations", "item": "https://souverainete-digitale.fr/page/digital-sovereignty-barometer"}]}]}</script>','','','Key figures on European organisations\' dependence on foreign cloud, CLOUD Act exposure and sovereign cloud adoption.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='gdpr-data-hosting' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np16 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np16,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np16 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np16,@lang,'GDPR and Hosting: Where to Store Your Data Compliantly','gdpr-data-hosting','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>GDPR and Hosting: Where to Store Your Data Compliantly</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>GDPR and Hosting: Where to Store Your Data Compliantly</h1><p class="sd-page-hero-lead">The GDPR strictly governs where and how personal data is hosted. Where to host to stay compliant, and why US cloud hosting is a problem.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/legislation-guide-rgpd-hebergement-hero.jpg" alt="GDPR and Hosting: Where to Store Your Data Compliantly" width="1024" height="576" loading="eager" /><p>The <strong>GDPR</strong> is not only about consent: it also governs *where* and *how* personal data is hosted. The choice of host is a compliance decision in its own right — and one of the most often overlooked.</p>
+<h2 id="the-key-obligations">The key obligations</h2>
+<p>The regulation requires data security and confidentiality, access limitation, the <strong>strict framing of transfers outside the EU</strong> to countries without equivalent protection, and the ability to demonstrate compliance (accountability).</p>
+<h2 id="can-you-host-gdpr-data-in-the-us">Can you host GDPR data in the US?</h2>
+<p>This is where it breaks down. Hosting with a US-subject provider exposes data to the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a>, in direct tension with the GDPR. *Schrems II* confirmed standard contractual clauses alone are not enough. For sensitive data the safest route is European hosting outside that reach — the point of a <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a> or <a href="/en/page/trusted-cloud">trusted cloud</a>.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — identify your GDPR-risk hosting. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>Where should you host data to comply with GDPR?</strong></p>
+<p>Ideally with a European host not subject to extra-European laws, with encryption and controlled keys.</p>
+<p><strong>Can you host GDPR data in the US?</strong></p>
+<p>Strongly discouraged for sensitive data: the CLOUD Act conflicts directly with GDPR obligations.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#the-key-obligations">The key obligations</a></li><li><a href="#can-you-host-gdpr-data-in-the-us">Can you host GDPR data in the US?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://souverainete-digitale.fr/page/gdpr-data-hosting#main", "name": "GDPR and Hosting: Where to Store Your Data Compliantly", "headline": "GDPR and Hosting: Where to Store Your Data Compliantly", "description": "The GDPR strictly governs where and how personal data is hosted. Where to host to stay compliant, and why US cloud hosting is a problem.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/gdpr-data-hosting", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/gdpr-data-hosting#faq", "mainEntity": [{"@type": "Question", "name": "Where should you host data to comply with GDPR?", "acceptedAnswer": {"@type": "Answer", "text": "Ideally with a European host not subject to extra-European laws, with encryption and controlled keys."}}, {"@type": "Question", "name": "Can you host GDPR data in the US?", "acceptedAnswer": {"@type": "Answer", "text": "Strongly discouraged for sensitive data: the CLOUD Act conflicts directly with GDPR obligations."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "GDPR and Hosting: Where to Store Your Data Compliantly", "item": "https://souverainete-digitale.fr/page/gdpr-data-hosting"}]}]}</script>','','','The GDPR strictly governs where and how personal data is hosted. Where to host to stay compliant, and why US cloud hosting is a problem.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='healthcare-data-hosting' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np17 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np17,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np17 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np17,@lang,'Healthcare Data Hosting (HDS): Obligations and Solutions','healthcare-data-hosting','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Healthcare Data Hosting (HDS): Obligations and Solutions</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Healthcare Data Hosting (HDS): Obligations and Solutions</h1><p class="sd-page-hero-lead">Hosting health data requires HDS certification. Who is concerned, what the obligations are, and how to choose a compliant, sovereign host.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/segment-page-hebergement-hds-hero.jpg" alt="Healthcare Data Hosting (HDS): Obligations and Solutions" width="1024" height="576" loading="eager" /><p>Any organisation hosting personal health data on behalf of others must use an <strong>HDS-certified</strong> host. A requirement at the crossroads of healthcare, <a href="/en/page/gdpr-data-hosting">GDPR</a> and sovereignty.</p>
+<h2 id="what-is-hds-certification">What is HDS certification?</h2>
+<p>HDS (Health Data Host) certification attests that a provider meets a strict framework for security, confidentiality and traceability of medical data, granted after an accredited audit.</p>
+<h2 id="who-must-be-hds-certified">Who must be HDS-certified?</h2>
+<p>Hospitals, medical software vendors, labs, e-health start-ups: whenever health data is hosted for third parties, the host\'s certification is mandatory. For such sensitive data, a <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a> immune to the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a> is strongly recommended.</p>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — secure your health-data hosting with HDS compliance and sovereignty. <a href="/en/page/contact">Talk to an expert</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What is HDS certification?</strong></p>
+<p>A certification attesting a host meets a strict framework for personal health data.</p>
+<p><strong>Who must be HDS-certified?</strong></p>
+<p>Any party hosting health data on behalf of others (hospitals, vendors, e-health).</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-is-hds-certification">What is HDS certification?</a></li><li><a href="#who-must-be-hds-certified">Who must be HDS-certified?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/healthcare-data-hosting#main", "name": "Healthcare Data Hosting (HDS): Obligations and Solutions", "headline": "Healthcare Data Hosting (HDS): Obligations and Solutions", "description": "Hosting health data requires HDS certification. Who is concerned, what the obligations are, and how to choose a compliant, sovereign host.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/healthcare-data-hosting", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/healthcare-data-hosting#faq", "mainEntity": [{"@type": "Question", "name": "What is HDS certification?", "acceptedAnswer": {"@type": "Answer", "text": "A certification attesting a host meets a strict framework for personal health data."}}, {"@type": "Question", "name": "Who must be HDS-certified?", "acceptedAnswer": {"@type": "Answer", "text": "Any party hosting health data on behalf of others (hospitals, vendors, e-health)."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Healthcare Data Hosting (HDS): Obligations and Solutions", "item": "https://souverainete-digitale.fr/page/healthcare-data-hosting"}]}]}</script>','','','Hosting health data requires HDS certification. Who is concerned, what the obligations are, and how to choose a compliant, sovereign host.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='migration-cost-estimator' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np18 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np18,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np18 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np18,@lang,'Sovereign Cloud Migration Cost Estimator','migration-cost-estimator','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Sovereign Cloud Migration Cost Estimator</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Sovereign Cloud Migration Cost Estimator</h1><p class="sd-page-hero-lead">Estimate the budget of a migration to a sovereign cloud based on your data volume and constraints. Is sovereign cloud more expensive? The answer here.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/cost-estimator-cout-migration-cloud-souverain-hero.jpg" alt="Sovereign Cloud Migration Cost Estimator" width="1024" height="576" loading="eager" /><p>Get a first budget range for your migration to a <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a>, based on your data volume, applications and compliance requirements.</p>
+<h2 id="what-drives-the-cost">What drives the cost</h2>
+<ul>
+<li><strong>Volume and complexity</strong> of the data to migrate.</li>
+<li><strong>Compliance level</strong> required (<a href="/en/page/secnumcloud-certification">SecNumCloud</a>, <a href="/en/page/healthcare-data-hosting">healthcare</a>).</li>
+<li><strong>Application refactoring</strong> for non-portable apps.</li>
+<li><strong>Support</strong> (audit, <a href="/en/page/sovereign-cloud-migration">staged migration</a>, reversibility).</li>
+</ul>
+<h2 id="is-sovereign-cloud-more-expensive">Is sovereign cloud more expensive?</h2>
+<p>The gap has narrowed sharply. On optimised workloads the difference with a US public cloud is now marginal — and outweighed by the reduced legal and compliance risk.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — get an indicative budget range for your context. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>How much does a sovereign cloud migration cost?</strong></p>
+<p>It depends on volume, application complexity and compliance level; the estimator gives a first range.</p>
+<p><strong>Is sovereign cloud more expensive?</strong></p>
+<p>The gap is now marginal on optimised workloads, offset by lower legal risk.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-drives-the-cost">What drives the cost</a></li><li><a href="#is-sovereign-cloud-more-expensive">Is sovereign cloud more expensive?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://souverainete-digitale.fr/page/migration-cost-estimator#main", "name": "Sovereign Cloud Migration Cost Estimator", "headline": "Sovereign Cloud Migration Cost Estimator", "description": "Estimate the budget of a migration to a sovereign cloud based on your data volume and constraints. Is sovereign cloud more expensive? The answer here.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/migration-cost-estimator", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "applicationCategory": "BusinessApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "GBP"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/migration-cost-estimator#faq", "mainEntity": [{"@type": "Question", "name": "How much does a sovereign cloud migration cost?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on volume, application complexity and compliance level; the estimator gives a first range."}}, {"@type": "Question", "name": "Is sovereign cloud more expensive?", "acceptedAnswer": {"@type": "Answer", "text": "The gap is now marginal on optimised workloads, offset by lower legal risk."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Sovereign Cloud Migration Cost Estimator", "item": "https://souverainete-digitale.fr/page/migration-cost-estimator"}]}]}</script>','','','Estimate the budget of a migration to a sovereign cloud based on your data volume and constraints. Is sovereign cloud more expensive? The answer here.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='nis2-directive-compliance' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np19 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np19,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np19 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np19,@lang,'NIS2 Directive: Who Is Affected and How to Comply','nis2-directive-compliance','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>NIS2 Directive: Who Is Affected and How to Comply</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>NIS2 Directive: Who Is Affected and How to Comply</h1><p class="sd-page-hero-lead">The NIS2 directive extends cybersecurity obligations to thousands of entities. Find out if you are affected and the steps to compliance.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/legislation-guide-nis2-hero.jpg" alt="NIS2 Directive: Who Is Affected and How to Comply" width="1024" height="576" loading="eager" /><p>The European <strong>NIS2</strong> directive substantially widens cybersecurity obligations. Where NIS1 covered a few hundred operators, NIS2 reaches thousands of "essential" and "important" entities across 18 sectors.</p>
+<h2 id="what-is-the-nis2-directive">What is the NIS2 directive?</h2>
+<p>NIS2 imposes a baseline: risk management, supply-chain security, incident notification within 24 hours, and direct accountability of senior management. Non-compliance carries significant penalties.</p>
+<h2 id="is-my-organisation-affected-by-nis2">Is my organisation affected by NIS2?</h2>
+<p>It targets entities above a size threshold in sectors such as energy, health, transport, digital, water and public administration. Securing data and choosing controlled hosting — even a <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a> — is a natural response, consistent with <a href="/en/page/gdpr-data-hosting">GDPR</a> and <a href="/en/page/secnumcloud-certification">SecNumCloud</a>.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — check whether NIS2 applies to you and your compliance gaps. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What is the NIS2 directive?</strong></p>
+<p>An EU directive strengthening cybersecurity obligations (risk management, 24h incident notification, management accountability) for thousands of entities.</p>
+<p><strong>Is my organisation affected by NIS2?</strong></p>
+<p>Likely, if you operate in one of the 18 targeted sectors above a size threshold — an assessment confirms it.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-is-the-nis2-directive">What is the NIS2 directive?</a></li><li><a href="#is-my-organisation-affected-by-nis2">Is my organisation affected by NIS2?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://souverainete-digitale.fr/page/nis2-directive-compliance#main", "name": "NIS2 Directive: Who Is Affected and How to Comply", "headline": "NIS2 Directive: Who Is Affected and How to Comply", "description": "The NIS2 directive extends cybersecurity obligations to thousands of entities. Find out if you are affected and the steps to compliance.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/nis2-directive-compliance", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/nis2-directive-compliance#faq", "mainEntity": [{"@type": "Question", "name": "What is the NIS2 directive?", "acceptedAnswer": {"@type": "Answer", "text": "An EU directive strengthening cybersecurity obligations (risk management, 24h incident notification, management accountability) for thousands of entities."}}, {"@type": "Question", "name": "Is my organisation affected by NIS2?", "acceptedAnswer": {"@type": "Answer", "text": "Likely, if you operate in one of the 18 targeted sectors above a size threshold — an assessment confirms it."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "NIS2 Directive: Who Is Affected and How to Comply", "item": "https://souverainete-digitale.fr/page/nis2-directive-compliance"}]}]}</script>','','','The NIS2 directive extends cybersecurity obligations to thousands of entities. Find out if you are affected and the steps to compliance.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='public-sector-digital-sovereignty' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np20 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np20,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np20 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np20,@lang,'Public Sector Digital Sovereignty: Cloud and State Doctrine','public-sector-digital-sovereignty','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Public Sector Digital Sovereignty: Cloud and State Doctrine</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Public Sector Digital Sovereignty: Cloud and State Doctrine</h1><p class="sd-page-hero-lead">For government and local authorities, sovereign cloud is doctrine, not an option. Obligations and compliant solutions for sensitive public data.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/segment-page-secteur-public-hero.jpg" alt="Public Sector Digital Sovereignty: Cloud and State Doctrine" width="1024" height="576" loading="eager" /><p>For government bodies and local authorities, digital sovereignty is not optional — it is state doctrine. Sensitive public data must be hosted on a controlled cloud, beyond the reach of foreign law.</p>
+<h2 id="the-cloud-at-the-centre-doctrine">The "Cloud at the centre" doctrine</h2>
+<p>The doctrine requires sensitive state data to be hosted either on an internal cloud or on a commercial cloud <a href="/en/page/secnumcloud-certification">SecNumCloud-qualified</a> — therefore immune to the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a>.</p>
+<h2 id="which-cloud-for-a-public-administration">Which cloud for a public administration?</h2>
+<p>A qualified <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a> guaranteeing European hosting, controlled operation and reversibility. Local authorities, facing the same citizen-trust stakes, should align on the same bar, consistent with <a href="/en/page/nis2-directive-compliance">NIS2</a>.</p>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — supporting public bodies toward a doctrine-compliant cloud. <a href="/en/page/contact">Talk to an expert</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>Which cloud for a public administration?</strong></p>
+<p>A SecNumCloud-qualified sovereign cloud, compliant with the "Cloud at the centre" doctrine.</p>
+<p><strong>What is the Cloud at the centre doctrine?</strong></p>
+<p>The rule that sensitive state data be hosted on an internal or SecNumCloud-qualified cloud.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#the-cloud-at-the-centre-doctrine">The &quot;Cloud at the centre&quot; doctrine</a></li><li><a href="#which-cloud-for-a-public-administration">Which cloud for a public administration?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/public-sector-digital-sovereignty#main", "name": "Public Sector Digital Sovereignty: Cloud and State Doctrine", "headline": "Public Sector Digital Sovereignty: Cloud and State Doctrine", "description": "For government and local authorities, sovereign cloud is doctrine, not an option. Obligations and compliant solutions for sensitive public data.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/public-sector-digital-sovereignty", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/public-sector-digital-sovereignty#faq", "mainEntity": [{"@type": "Question", "name": "Which cloud for a public administration?", "acceptedAnswer": {"@type": "Answer", "text": "A SecNumCloud-qualified sovereign cloud, compliant with the \\"Cloud at the centre\\" doctrine."}}, {"@type": "Question", "name": "What is the Cloud at the centre doctrine?", "acceptedAnswer": {"@type": "Answer", "text": "The rule that sensitive state data be hosted on an internal or SecNumCloud-qualified cloud."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Public Sector Digital Sovereignty: Cloud and State Doctrine", "item": "https://souverainete-digitale.fr/page/public-sector-digital-sovereignty"}]}]}</script>','','','For government and local authorities, sovereign cloud is doctrine, not an option. Obligations and compliant solutions for sensitive public data.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='secnumcloud-certification' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np21 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np21,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np21 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np21,@lang,'SecNumCloud: The ANSSI Qualification for a Trusted Cloud','secnumcloud-certification','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>SecNumCloud: The ANSSI Qualification for a Trusted Cloud</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>SecNumCloud: The ANSSI Qualification for a Trusted Cloud</h1><p class="sd-page-hero-lead">SecNumCloud is the French ANSSI security visa guaranteeing a cloud immune to extra-European laws. Definition, requirements and the path to qualification.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/legislation-guide-secnumcloud-hero.jpg" alt="SecNumCloud: The ANSSI Qualification for a Trusted Cloud" width="1024" height="576" loading="eager" /><p><strong>SecNumCloud</strong> is the qualification framework issued by <strong>ANSSI</strong> (the French national cybersecurity agency). It certifies that a cloud service meets the highest French security bar — and, crucially, that it is <strong>immune to extra-European laws</strong> such as the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a>.</p>
+<h2 id="what-is-secnumcloud">What is SecNumCloud?</h2>
+<p>It is an official security visa. A SecNumCloud-qualified provider (current framework <strong>3.2</strong>) has demonstrated, through audit, hundreds of technical and organisational requirements: European hosting and operation, vetted staff, encryption, reversibility, and an ownership structure that prevents foreign interference.</p>
+<h2 id="why-the-qualification-matters">Why the qualification matters</h2>
+<p>SecNumCloud is the reference for the French state\'s "Cloud at the centre" doctrine and a structuring criterion for the <a href="/en/page/public-sector-digital-sovereignty">public sector</a> and regulated operators. It is also the foundation of the <a href="/en/page/trusted-cloud">trusted cloud</a> label.</p>
+<h2 id="how-to-obtain-secnumcloud-qualification">How to obtain SecNumCloud qualification</h2>
+<p>Gap analysis against the 3.2 framework, technical and organisational upgrades, then an audit by an accredited assessor before ANSSI grants the qualification — typically 8 to 18 months. For a customer, the essential thing is simpler: confirm the chosen offer is actually qualified on the relevant scope.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — gauge your gap to SecNumCloud and the next steps. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What is SecNumCloud?</strong></p>
+<p>An ANSSI qualification certifying a cloud meets the highest French security level and is immune to extra-European laws.</p>
+<p><strong>How do you obtain SecNumCloud qualification?</strong></p>
+<p>Through gap analysis, upgrades and an accredited audit — generally 8 to 18 months.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-is-secnumcloud">What is SecNumCloud?</a></li><li><a href="#why-the-qualification-matters">Why the qualification matters</a></li><li><a href="#how-to-obtain-secnumcloud-qualification">How to obtain SecNumCloud qualification</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://souverainete-digitale.fr/page/secnumcloud-certification#main", "name": "SecNumCloud: The ANSSI Qualification for a Trusted Cloud", "headline": "SecNumCloud: The ANSSI Qualification for a Trusted Cloud", "description": "SecNumCloud is the French ANSSI security visa guaranteeing a cloud immune to extra-European laws. Definition, requirements and the path to qualification.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/secnumcloud-certification", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/secnumcloud-certification#faq", "mainEntity": [{"@type": "Question", "name": "What is SecNumCloud?", "acceptedAnswer": {"@type": "Answer", "text": "An ANSSI qualification certifying a cloud meets the highest French security level and is immune to extra-European laws."}}, {"@type": "Question", "name": "How do you obtain SecNumCloud qualification?", "acceptedAnswer": {"@type": "Answer", "text": "Through gap analysis, upgrades and an accredited audit — generally 8 to 18 months."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "SecNumCloud: The ANSSI Qualification for a Trusted Cloud", "item": "https://souverainete-digitale.fr/page/secnumcloud-certification"}]}]}</script>','','','SecNumCloud is the French ANSSI security visa guaranteeing a cloud immune to extra-European laws. Definition, requirements and the path to qualification.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='sovereign-cloud-comparison' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np22 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np22,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np22 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np22,@lang,'Sovereign Cloud Comparison: AWS, Microsoft, SAP, OVHcloud','sovereign-cloud-comparison','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Sovereign Cloud Comparison: AWS, Microsoft, SAP, OVHcloud</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Sovereign Cloud Comparison: AWS, Microsoft, SAP, OVHcloud</h1><p class="sd-page-hero-lead">Compare sovereign cloud providers: AWS European Sovereign Cloud, Microsoft, SAP, Oracle, OVHcloud. Certification, CLOUD Act immunity and how to choose.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/comparison-page-cloud-souverain-comparatif-hero.jpg" alt="Sovereign Cloud Comparison: AWS, Microsoft, SAP, OVHcloud" width="1024" height="576" loading="eager" /><p>Not every "sovereign cloud" is equal. The real dividing line is two criteria: independent certification, and <strong>genuine immunity to the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a></strong>, which depends on the provider\'s ownership and technology.</p>
+<h2 id="the-criteria-that-actually-matter">The criteria that actually matter</h2>
+<ul>
+<li>Is it <strong>independently certified</strong> (e.g. SecNumCloud, ISO 27001)?</li>
+<li>Is the technology <strong>owned outright</strong>, or licensed from a non-European player?</li>
+<li>Does its <strong>ownership structure</strong> put it beyond US law?</li>
+<li>Does it guarantee <strong>reversibility</strong> with no proprietary lock-in?</li>
+<li>Does it cover your <strong>sector obligations</strong> (<a href="/en/page/healthcare-data-hosting">healthcare</a>, <a href="/en/page/nis2-directive-compliance">NIS2</a>, <a href="/en/page/gdpr-data-hosting">GDPR</a>)?</li>
+</ul>
+<h2 id="the-main-providers">The main providers</h2>
+<table class="sd-table"><thead><tr><th>Provider</th><th>Positioning</th><th>Watch-out</th></tr></thead><tbody>
+<tr><td><strong>OVHcloud</strong></td><td>Independent European player, SecNumCloud-qualified on some ranges</td><td>Confirm the chosen range is qualified</td></tr>
+<tr><td><strong>AWS European Sovereign Cloud</strong></td><td>EU-operated AWS region</td><td>US parent — legal sovereignty debated</td></tr>
+<tr><td><strong>Microsoft / SAP sovereign cloud</strong></td><td>Sovereign offers on their stacks</td><td>Technology under US licence</td></tr>
+<tr><td><strong>Oracle / Google sovereign</strong></td><td>EU sovereign regions</td><td>Scope of sovereignty varies by offer</td></tr>
+</tbody></table>
+<h2 id="which-is-the-best-sovereign-cloud">Which is the best sovereign cloud?</h2>
+<p>There is no universal answer: the right choice depends on your data, obligations and technical constraints. The strongest guarantee comes from a provider <strong>certified on fully owned technology</strong>. For a very broad service catalogue you sometimes trade breadth against the level of sovereignty — decided data by data, not in one block.</p>
+<h2 id="is-aws-european-sovereign-cloud-really-sovereign">Is AWS European Sovereign Cloud really sovereign?</h2>
+<p>It is operated in the EU, but the US parent keeps the question of legal sovereignty open. The same applies to Microsoft and SAP offers built on US-licensed technology — hence the need for a case-by-case review rather than trust in the label alone.</p>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — we help you choose sovereign hosting that fits your real constraints. <a href="/en/page/contact">Talk to an expert</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>Which is the best sovereign cloud?</strong></p>
+<p>The one certified on owned technology and matched to your data — chosen case by case.</p>
+<p><strong>Is AWS European Sovereign Cloud sovereign?</strong></p>
+<p>It is EU-operated, but its US parent leaves legal-sovereignty questions open.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#the-criteria-that-actually-matter">The criteria that actually matter</a></li><li><a href="#the-main-providers">The main providers</a></li><li><a href="#which-is-the-best-sovereign-cloud">Which is the best sovereign cloud?</a></li><li><a href="#is-aws-european-sovereign-cloud-really-sovereign">Is AWS European Sovereign Cloud really sovereign?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://souverainete-digitale.fr/page/sovereign-cloud-comparison#main", "name": "Sovereign Cloud Comparison: AWS, Microsoft, SAP, OVHcloud", "headline": "Sovereign Cloud Comparison: AWS, Microsoft, SAP, OVHcloud", "description": "Compare sovereign cloud providers: AWS European Sovereign Cloud, Microsoft, SAP, Oracle, OVHcloud. Certification, CLOUD Act immunity and how to choose.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/sovereign-cloud-comparison", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/sovereign-cloud-comparison#faq", "mainEntity": [{"@type": "Question", "name": "Which is the best sovereign cloud?", "acceptedAnswer": {"@type": "Answer", "text": "The one certified on owned technology and matched to your data — chosen case by case."}}, {"@type": "Question", "name": "Is AWS European Sovereign Cloud sovereign?", "acceptedAnswer": {"@type": "Answer", "text": "It is EU-operated, but its US parent leaves legal-sovereignty questions open."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Sovereign Cloud Comparison: AWS, Microsoft, SAP, OVHcloud", "item": "https://souverainete-digitale.fr/page/sovereign-cloud-comparison"}]}]}</script>','','','Compare sovereign cloud providers: AWS European Sovereign Cloud, Microsoft, SAP, Oracle, OVHcloud. Certification, CLOUD Act immunity and how to choose.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='sovereign-cloud-guide' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np23 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np23,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np23 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np23,@lang,'Sovereign Cloud: Hosting Your Data Beyond Foreign Law','sovereign-cloud-guide','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Sovereign Cloud: Hosting Your Data Beyond Foreign Law</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Sovereign Cloud: Hosting Your Data Beyond Foreign Law</h1><p class="sd-page-hero-lead">What is a sovereign cloud? Definition, the difference with a trusted cloud, the main providers and the criteria for hosting that is genuinely sovereign.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/segment-page-cloud-souverain-hero.jpg" alt="Sovereign Cloud: Hosting Your Data Beyond Foreign Law" width="1024" height="576" loading="eager" /><p>A <strong>sovereign cloud</strong> is a hosting infrastructure whose data, operations and governance fall outside any extra-European jurisdiction. In practice: your data stays in Europe, is operated by an entity not subject to US law, and no one can be compelled to hand it to a foreign power.</p>
+<p>For organisations handling sensitive or regulated data, this is no longer a preference — it is a condition of compliance and continuity.</p>
+<h2 id="what-is-a-sovereign-cloud">What is a sovereign cloud?</h2>
+<p>Sovereignty is not about a flag or a data-centre address. It is measured on three planes, and a cloud is only truly sovereign if it covers all three:</p>
+<ul>
+<li><strong>Data sovereignty</strong> — storage and processing solely in Europe, with customer-controlled keys (HSM/KMS).</li>
+<li><strong>Operational sovereignty</strong> — administration by staff and companies under European law, with no remote access from a third jurisdiction.</li>
+<li><strong>Legal sovereignty</strong> — immunity to extraterritorial laws like the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a>, guaranteed by the provider\'s ownership and contracts.</li>
+</ul>
+<p>Hosting "in Europe" that fails any of these — for example an offer technically operated under a US licence — is not sovereign in the strong sense.</p>
+<h2 id="sovereign-cloud-vs-trusted-cloud">Sovereign cloud vs trusted cloud</h2>
+<p>The <a href="/en/page/trusted-cloud">trusted cloud</a> is the certified, most demanding expression of sovereignty (in France, the SecNumCloud-qualified label). A sovereign cloud is the broader concept. Every trusted cloud is sovereign; not every "sovereign" offer is qualified.</p>
+<h2 id="the-main-sovereign-cloud-providers">The main sovereign cloud providers</h2>
+<p>The market includes OVHcloud and the hyperscalers\' sovereign offers — AWS European Sovereign Cloud, Microsoft, SAP, Google, Oracle. They are not equivalent: some are certified on fully controlled technology, others rely on US-licensed stacks that weaken legal sovereignty. Our <a href="/en/page/sovereign-cloud-comparison">sovereign cloud comparison</a> breaks this down provider by provider.</p>
+<h2 id="do-you-need-a-sovereign-cloud">Do you need a sovereign cloud?</h2>
+<p>It depends on your data. Health data (<a href="/en/page/healthcare-data-hosting">healthcare hosting</a>), sensitive personal data, trade secrets, <a href="/en/page/public-sector-digital-sovereignty">public-sector</a> missions: here sovereignty is not optional. The move is a structured project, run <a href="/en/page/sovereign-cloud-migration">in stages</a> with guaranteed reversibility.</p>
+<blockquote class="sd-cta"><strong>Request a consultation</strong> — our experts assess your sovereignty needs and the right migration path. <a href="/en/page/contact">Talk to an expert</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What is a sovereign cloud?</strong></p>
+<p>An infrastructure whose data, operation and governance fall outside extra-European jurisdictions, so your data cannot be handed to a foreign power.</p>
+<p><strong>What is the difference between sovereign cloud and trusted cloud?</strong></p>
+<p>A trusted cloud is the certified (e.g. SecNumCloud) version of a sovereign cloud.</p>
+<p><strong>Who are the sovereign cloud providers?</strong></p>
+<p>OVHcloud and the hyperscalers\' sovereign offers (AWS, Microsoft, SAP, Google, Oracle) — with varying real sovereignty, detailed in our comparison.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-is-a-sovereign-cloud">What is a sovereign cloud?</a></li><li><a href="#sovereign-cloud-vs-trusted-cloud">Sovereign cloud vs trusted cloud</a></li><li><a href="#the-main-sovereign-cloud-providers">The main sovereign cloud providers</a></li><li><a href="#do-you-need-a-sovereign-cloud">Do you need a sovereign cloud?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://souverainete-digitale.fr/page/sovereign-cloud-guide#main", "name": "Sovereign Cloud: Hosting Your Data Beyond Foreign Law", "headline": "Sovereign Cloud: Hosting Your Data Beyond Foreign Law", "description": "What is a sovereign cloud? Definition, the difference with a trusted cloud, the main providers and the criteria for hosting that is genuinely sovereign.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/sovereign-cloud-guide", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "provider": {"@type": "Organization", "name": "Souveraineté Numérique"}, "areaServed": {"@type": "Place", "name": "Europe"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/sovereign-cloud-guide#faq", "mainEntity": [{"@type": "Question", "name": "What is a sovereign cloud?", "acceptedAnswer": {"@type": "Answer", "text": "An infrastructure whose data, operation and governance fall outside extra-European jurisdictions, so your data cannot be handed to a foreign power."}}, {"@type": "Question", "name": "What is the difference between sovereign cloud and trusted cloud?", "acceptedAnswer": {"@type": "Answer", "text": "A trusted cloud is the certified (e.g. SecNumCloud) version of a sovereign cloud."}}, {"@type": "Question", "name": "Who are the sovereign cloud providers?", "acceptedAnswer": {"@type": "Answer", "text": "OVHcloud and the hyperscalers\' sovereign offers (AWS, Microsoft, SAP, Google, Oracle) — with varying real sovereignty, detailed in our comparison."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Sovereign Cloud: Hosting Your Data Beyond Foreign Law", "item": "https://souverainete-digitale.fr/page/sovereign-cloud-guide"}]}]}</script>','','','What is a sovereign cloud? Definition, the difference with a trusted cloud, the main providers and the criteria for hosting that is genuinely sovereign.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='sovereign-cloud-migration' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np24 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np24,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np24 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np24,@lang,'Sovereign Cloud Migration: Key Steps Without Downtime','sovereign-cloud-migration','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Sovereign Cloud Migration: Key Steps Without Downtime</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Sovereign Cloud Migration: Key Steps Without Downtime</h1><p class="sd-page-hero-lead">How to migrate to a sovereign cloud in stages, without service interruption and with guaranteed reversibility. A controlled migration project, explained.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/process-guide-migration-cloud-souverain-hero.jpg" alt="Sovereign Cloud Migration: Key Steps Without Downtime" width="1024" height="576" loading="eager" /><p>Migrating to a <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a> is no leap in the dark. Done well, it runs in stages, without service interruption and with end-to-end reversibility.</p>
+<h2 id="the-steps-of-a-controlled-migration">The steps of a controlled migration</h2>
+<ol>
+<li><strong>Mapping</strong> — inventory of applications, data and dependencies.</li>
+<li><strong>Classification</strong> — identify sensitive or regulated data (<a href="/en/page/gdpr-data-hosting">GDPR</a>, health, secrets).</li>
+<li><strong>Target architecture</strong> — choice of sovereign hosting and encryption.</li>
+<li><strong>Migration by batches</strong> — progressive cut-over, non-critical loads first.</li>
+<li><strong>Verification and reversibility</strong> — tests, documentation, lock-in-free exit guarantees.</li>
+</ol>
+<h2 id="how-long-does-a-migration-take">How long does a migration take?</h2>
+<p>From a few weeks for a simple scope to several months for a complex estate. The deciding factor is not technology but the upfront classification of data.</p>
+<h2 id="how-is-reversibility-guaranteed">How is reversibility guaranteed?</h2>
+<p>By requiring portable formats, open standards and clear exit clauses from the outset — no hidden fees, no penalty delays.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — get a first migration path suited to your IT estate. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>How long does a sovereign cloud migration take?</strong></p>
+<p>From weeks to months depending on complexity; data classification is the deciding step.</p>
+<p><strong>How is reversibility guaranteed?</strong></p>
+<p>Through portable formats, open standards and clear contractual exit clauses.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#the-steps-of-a-controlled-migration">The steps of a controlled migration</a></li><li><a href="#how-long-does-a-migration-take">How long does a migration take?</a></li><li><a href="#how-is-reversibility-guaranteed">How is reversibility guaranteed?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "HowTo", "@id": "https://souverainete-digitale.fr/page/sovereign-cloud-migration#main", "name": "Sovereign Cloud Migration: Key Steps Without Downtime", "headline": "Sovereign Cloud Migration: Key Steps Without Downtime", "description": "How to migrate to a sovereign cloud in stages, without service interruption and with guaranteed reversibility. A controlled migration project, explained.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/sovereign-cloud-migration", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/sovereign-cloud-migration#faq", "mainEntity": [{"@type": "Question", "name": "How long does a sovereign cloud migration take?", "acceptedAnswer": {"@type": "Answer", "text": "From weeks to months depending on complexity; data classification is the deciding step."}}, {"@type": "Question", "name": "How is reversibility guaranteed?", "acceptedAnswer": {"@type": "Answer", "text": "Through portable formats, open standards and clear contractual exit clauses."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Sovereign Cloud Migration: Key Steps Without Downtime", "item": "https://souverainete-digitale.fr/page/sovereign-cloud-migration"}]}]}</script>','','','How to migrate to a sovereign cloud in stages, without service interruption and with guaranteed reversibility. A controlled migration project, explained.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='sovereignty-assessment' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np25 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np25,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np25 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np25,@lang,'Digital Sovereignty Assessment: Map Your Dependencies in 2 Minutes','sovereignty-assessment','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Digital Sovereignty Assessment: Map Your Dependencies in 2 Minutes</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Digital Sovereignty Assessment: Map Your Dependencies in 2 Minutes</h1><p class="sd-page-hero-lead">Assess your organisation&#x27;s level of digital sovereignty for free: cloud dependencies, CLOUD Act exposure and action priorities.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/assessment-tool-diagnostic-souverainete-hero.jpg" alt="Digital Sovereignty Assessment: Map Your Dependencies in 2 Minutes" width="1024" height="576" loading="eager" /><p>In a few questions, identify your <strong>digital dependencies</strong>, your exposure to extra-European laws and your first priorities. This tool is indicative: it helps objectify the risk, without replacing a full audit.</p>
+<h2 id="what-the-assessment-evaluates">What the assessment evaluates</h2>
+<ul>
+<li><strong>Hosting</strong> — where and by whom your data is operated.</li>
+<li><strong>Legal exposure</strong> — are you concerned by the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a>?</li>
+<li><strong>Compliance</strong> — are your obligations (<a href="/en/page/gdpr-data-hosting">GDPR</a>, <a href="/en/page/nis2-directive-compliance">NIS2</a>) covered?</li>
+<li><strong>Reversibility</strong> — could you change provider without lock-in?</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p>You answer simple questions about your tools and data. At the end you get an indicative sovereignty level and prioritised recommendations. Depending on your answers, you might be subject to obligations you did not suspect.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — get your sovereignty level and priority actions. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>How do you assess digital sovereignty?</strong></p>
+<p>By mapping dependencies (hosting, legal exposure, compliance, reversibility) — what this assessment does.</p>
+<p><strong>How do you map digital dependencies?</strong></p>
+<p>By listing services used, their real operator and the data flowing through them; the assessment guides you step by step.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-the-assessment-evaluates">What the assessment evaluates</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://souverainete-digitale.fr/page/sovereignty-assessment#main", "name": "Digital Sovereignty Assessment: Map Your Dependencies in 2 Minutes", "headline": "Digital Sovereignty Assessment: Map Your Dependencies in 2 Minutes", "description": "Assess your organisation\'s level of digital sovereignty for free: cloud dependencies, CLOUD Act exposure and action priorities.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/sovereignty-assessment", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}, "applicationCategory": "BusinessApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "GBP"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/sovereignty-assessment#faq", "mainEntity": [{"@type": "Question", "name": "How do you assess digital sovereignty?", "acceptedAnswer": {"@type": "Answer", "text": "By mapping dependencies (hosting, legal exposure, compliance, reversibility) — what this assessment does."}}, {"@type": "Question", "name": "How do you map digital dependencies?", "acceptedAnswer": {"@type": "Answer", "text": "By listing services used, their real operator and the data flowing through them; the assessment guides you step by step."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Digital Sovereignty Assessment: Map Your Dependencies in 2 Minutes", "item": "https://souverainete-digitale.fr/page/sovereignty-assessment"}]}]}</script>','','','Assess your organisation\'s level of digital sovereignty for free: cloud dependencies, CLOUD Act exposure and action priorities.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='trusted-cloud' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np26 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np26,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np26 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np26,@lang,'Trusted Cloud: Definition and Difference with Sovereign Cloud','trusted-cloud','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>Trusted Cloud: Definition and Difference with Sovereign Cloud</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>Trusted Cloud: Definition and Difference with Sovereign Cloud</h1><p class="sd-page-hero-lead">A trusted cloud is the certified expression of sovereignty, built on SecNumCloud. Definition, criteria and the difference with a sovereign cloud.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/explainer-page-cloud-de-confiance-hero.jpg" alt="Trusted Cloud: Definition and Difference with Sovereign Cloud" width="1024" height="576" loading="eager" /><p>A <strong>trusted cloud</strong> is the most demanding certified expression of sovereignty: a cloud combining top-tier security with immunity to foreign law, attested by <a href="/en/page/secnumcloud-certification">SecNumCloud</a> qualification.</p>
+<h2 id="what-is-a-trusted-cloud">What is a trusted cloud?</h2>
+<p>It is a state-recognised cloud service guaranteeing data is protected at the highest technical level *and* beyond the reach of the <a href="/en/page/us-cloud-act-explained">US CLOUD Act</a>, based on a public framework and an independent audit.</p>
+<h2 id="trusted-cloud-or-sovereign-cloud">Trusted cloud or sovereign cloud?</h2>
+<p>A <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a> is the general concept; a trusted cloud is its certified, enforceable version. Every trusted cloud is sovereign, but not every "sovereign" offer is qualified.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — determine the level of trust your data needs. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What is a trusted cloud?</strong></p>
+<p>A state-recognised cloud, built on SecNumCloud, combining maximum security with immunity to extra-European laws.</p>
+<p><strong>Trusted cloud or sovereign cloud?</strong></p>
+<p>A trusted cloud is the certified (SecNumCloud) version of a sovereign cloud.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-is-a-trusted-cloud">What is a trusted cloud?</a></li><li><a href="#trusted-cloud-or-sovereign-cloud">Trusted cloud or sovereign cloud?</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://souverainete-digitale.fr/page/trusted-cloud#main", "name": "Trusted Cloud: Definition and Difference with Sovereign Cloud", "headline": "Trusted Cloud: Definition and Difference with Sovereign Cloud", "description": "A trusted cloud is the certified expression of sovereignty, built on SecNumCloud. Definition, criteria and the difference with a sovereign cloud.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/trusted-cloud", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/trusted-cloud#faq", "mainEntity": [{"@type": "Question", "name": "What is a trusted cloud?", "acceptedAnswer": {"@type": "Answer", "text": "A state-recognised cloud, built on SecNumCloud, combining maximum security with immunity to extra-European laws."}}, {"@type": "Question", "name": "Trusted cloud or sovereign cloud?", "acceptedAnswer": {"@type": "Answer", "text": "A trusted cloud is the certified (SecNumCloud) version of a sovereign cloud."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "Trusted Cloud: Definition and Difference with Sovereign Cloud", "item": "https://souverainete-digitale.fr/page/trusted-cloud"}]}]}</script>','','','A trusted cloud is the certified expression of sovereignty, built on SecNumCloud. Definition, criteria and the difference with a sovereign cloud.');
+SET @ex := (SELECT post_id FROM post_content WHERE slug='us-cloud-act-explained' AND language_id=@lang LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/page.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @np27 := IFNULL(@ex, LAST_INSERT_ID());
+INSERT INTO post_to_site (post_id,site_id) SELECT @np27,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@np27 AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES (@np27,@lang,'The US CLOUD Act: What It Means for Your Data in Europe','us-cloud-act-explained','<section class="sd-page-hero"><div class="container"><nav class="sd-breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/page/data-sovereignty">Resources</a><span>/</span>The US CLOUD Act: What It Means for Your Data in Europe</nav><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Resource</span><h1>The US CLOUD Act: What It Means for Your Data in Europe</h1><p class="sd-page-hero-lead">The US CLOUD Act lets American authorities access your data even when hosted in Europe. Understand its reach, its conflict with GDPR, and how to protect yourself.</p></div></section><div class="sd-article-wrap"><div class="container"><div class="sd-article-grid"><article class="sd-article"><img src="/themes/souverainete-digitale/media/generated/legislation-guide-cloud-act-hero.jpg" alt="The US CLOUD Act: What It Means for Your Data in Europe" width="1024" height="576" loading="eager" /><p>Since 2018, a US federal law — the <strong>CLOUD Act</strong> (*Clarifying Lawful Overseas Use of Data Act*) — allows United States authorities to compel an American provider to hand over the data it holds, <strong>wherever in the world it is stored</strong>. Including in a data centre located in Europe.</p>
+<p>For a European business or public body, this raises a concrete question: can your most sensitive data, because it passes through a provider subject to US law, be taken from you without your knowledge? In many cases, the answer is yes.</p>
+<h2 id="what-is-the-cloud-act-concretely">What is the CLOUD Act, concretely?</h2>
+<p>The CLOUD Act rests on a principle of <strong>extraterritoriality</strong>. What matters is not where the data is stored, but the <strong>nationality — or legal attachment — of the provider</strong>. A host whose parent company is American, or a European subsidiary controlled by a US group, can be compelled by a US warrant to disclose customer data.</p>
+<p>Three points are essential:</p>
+<ul>
+<li><strong>Location does not protect you.</strong> Data hosted "in Europe" by an American operator remains within the CLOUD Act\'s reach.</li>
+<li><strong>The request can be silent.</strong> A gag order can forbid the provider from telling you.</li>
+<li><strong>Encryption helps but is not enough</strong> if the provider also holds the decryption keys.</li>
+</ul>
+<h2 id="does-the-cloud-act-really-apply-in-europe">Does the CLOUD Act really apply in Europe?</h2>
+<p>Yes. No border puts data out of reach once an operator subject to US law sits anywhere in the processing chain — and that presence is often wider than assumed: a sub-processor, a mail service, an authentication layer, a backup tool.</p>
+<h2 id="cloud-act-vs-gdpr-a-conflict-of-laws">CLOUD Act vs GDPR: a conflict of laws</h2>
+<p>The <strong>GDPR</strong> in principle forbids transfers of personal data to a third country without equivalent protection. A CLOUD Act order demands exactly that. The two collide head-on, and the *Schrems II* ruling confirmed that contractual clauses alone do not neutralise the risk. The only structural way out is to remove every US-subject operator from the chain — the logic of a <a href="/en/page/sovereign-cloud-guide">sovereign cloud</a>.</p>
+<h2 id="how-to-assess-your-exposure">How to assess your exposure</h2>
+<p>Map your dependencies: which services you use, who really operates them, what data flows through them, and which is critical or regulated (<a href="/en/page/gdpr-data-hosting">GDPR</a>, health, trade secrets). A structured assessment objectifies the risk before any migration budget.</p>
+<blockquote class="sd-cta"><strong>Take the 2-minute assessment</strong> — identify your CLOUD Act-exposed dependencies and the first priority actions. <a href="/en/page/contact">Request a consultation</a></blockquote>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What is the US CLOUD Act?</strong></p>
+<p>A 2018 US law allowing American authorities to require a US-subject provider to disclose the data it holds, regardless of the storage country.</p>
+<p><strong>Does the CLOUD Act apply in Europe?</strong></p>
+<p>Yes, as soon as a US-subject operator is in the processing chain, even via a European data centre.</p>
+<p><strong>Are the CLOUD Act and GDPR compatible?</strong></p>
+<p>No — they are in direct tension. Only an architecture without any US-subject operator truly resolves the conflict.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-is-the-cloud-act-concretely">What is the CLOUD Act, concretely?</a></li><li><a href="#does-the-cloud-act-really-apply-in-europe">Does the CLOUD Act really apply in Europe?</a></li><li><a href="#cloud-act-vs-gdpr-a-conflict-of-laws">CLOUD Act vs GDPR: a conflict of laws</a></li><li><a href="#how-to-assess-your-exposure">How to assess your exposure</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://souverainete-digitale.fr/page/us-cloud-act-explained#main", "name": "The US CLOUD Act: What It Means for Your Data in Europe", "headline": "The US CLOUD Act: What It Means for Your Data in Europe", "description": "The US CLOUD Act lets American authorities access your data even when hosted in Europe. Understand its reach, its conflict with GDPR, and how to protect yourself.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/us-cloud-act-explained", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/us-cloud-act-explained#faq", "mainEntity": [{"@type": "Question", "name": "What is the US CLOUD Act?", "acceptedAnswer": {"@type": "Answer", "text": "A 2018 US law allowing American authorities to require a US-subject provider to disclose the data it holds, regardless of the storage country."}}, {"@type": "Question", "name": "Does the CLOUD Act apply in Europe?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as soon as a US-subject operator is in the processing chain, even via a European data centre."}}, {"@type": "Question", "name": "Are the CLOUD Act and GDPR compatible?", "acceptedAnswer": {"@type": "Answer", "text": "No — they are in direct tension. Only an architecture without any US-subject operator truly resolves the conflict."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "The US CLOUD Act: What It Means for Your Data in Europe", "item": "https://souverainete-digitale.fr/page/us-cloud-act-explained"}]}]}</script>','','','The US CLOUD Act lets American authorities access your data even when hosted in Europe. Understand its reach, its conflict with GDPR, and how to protect yourself.');
+-- Homepage <title>/meta come from site.settings JSON (description.<langId>). Idempotent.
+UPDATE site SET settings = JSON_SET(settings,
+  '$.description."1".title', 'Digital Sovereignty — Sovereign Cloud & Data Protection for Europe',
+  '$.description."1"."meta-description"', 'SecNumCloud-certified sovereign cloud, beyond the US CLOUD Act. Sovereignty audit, data protection, cybersecurity and GDPR/NIS2 compliance.',
+  '$.description."2".title', 'Souveraineté Numérique — Cloud souverain & protection des données',
+  '$.description."2"."meta-description"', 'Cloud souverain certifié SecNumCloud, à l''abri du CLOUD Act. Audit de souveraineté, protection des données et conformité RGPD/NIS2.'
+) WHERE site_id = 1 AND JSON_VALID(settings);

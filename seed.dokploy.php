@@ -21,7 +21,10 @@ $root      = '/var/www/html';
 // the full-page HTML cache (public/page-cache) so stale pre-fix renders clear.
 // v5 makes the French page rows delete-then-insert so they overwrite leftover
 // Romanian demo rows that occupied the French language_id on existing prod DBs.
-$marker    = $root . '/storage/.seed-souverainete-applied-v5';
+// v6 adds the 14 FR + 14 EN styled resource pages (page-hero + TOC + sidebar +
+// JSON-LD), rewrites the 6 service pages + services/about/method in both
+// languages, and sets the EN/FR homepage <title>/meta in site.settings JSON.
+$marker    = $root . '/storage/.seed-souverainete-applied-v6';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }
