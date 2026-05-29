@@ -157,26 +157,27 @@ img { max-width: 100%; height: auto; }
   width: 24px;
 }
 
-/* Dropdown toggle caret — a clean chevron that signals the sub-menu and
-   rotates up when the menu is open. Replaces Bootstrap's default border caret. */
+/* Dropdown toggle caret — a clean down chevron (v) that signals the sub-menu
+   and flips up (^) when the menu is open. Replaces Bootstrap's border caret. */
 .sd-nav .nav-link.dropdown-toggle::after {
   content: "";
   display: inline-block;
   width: 0.5em;
   height: 0.5em;
   margin-left: 0.4em;
-  margin-bottom: 0.12em;
+  margin-bottom: 0.18em;
   border: 0;
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   transform: rotate(45deg);
-  transition: transform 0.2s ease;
+  transform-origin: center;
+  transition: transform 0.2s ease, margin-bottom 0.2s ease;
   vertical-align: middle;
 }
 
 .sd-nav .nav-link.dropdown-toggle.show::after {
   transform: rotate(-135deg);
-  margin-bottom: -0.06em;
+  margin-bottom: -0.04em;
 }
 
 .sd-nav .dropdown-menu {
