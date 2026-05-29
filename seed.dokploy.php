@@ -19,7 +19,9 @@ $root      = '/var/www/html';
 // a redeploy re-runs the seed on existing persistent volumes. v3 adds the French
 // language + page translations and the SEO blog posts. v4 additionally flushes
 // the full-page HTML cache (public/page-cache) so stale pre-fix renders clear.
-$marker    = $root . '/storage/.seed-souverainete-applied-v4';
+// v5 makes the French page rows delete-then-insert so they overwrite leftover
+// Romanian demo rows that occupied the French language_id on existing prod DBs.
+$marker    = $root . '/storage/.seed-souverainete-applied-v5';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }
