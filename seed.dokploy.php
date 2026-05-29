@@ -15,7 +15,10 @@
  */
 
 $root      = '/var/www/html';
-$marker    = $root . '/storage/.seed-souverainete-applied-v2';
+// Marker version: bump whenever seed.dokploy.sql gains new idempotent content so
+// a redeploy re-runs the seed on existing persistent volumes. v3 adds the French
+// language + page translations and the SEO blog posts.
+$marker    = $root . '/storage/.seed-souverainete-applied-v3';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }

@@ -8,6 +8,22 @@
 !seed.dokploy.php
 !seed.dokploy.sql
 
+# Site config (per-language homepage template) — overlaid so /fr/ uses index.fr.html.
+!config
+config/*
+!config/sites.php
+
+# Content controller carrying the language-suffixed-template fallback that
+# localizes sub-page / post chrome (content/<name>.<lang>.html).
+!app
+app/*
+!app/controller
+app/controller/*
+!app/controller/index.php
+!app/controller/content
+app/controller/content/*
+!app/controller/content/post.php
+
 # Custom plugin sources + browser-served assets (Dockerfile.dokploy COPYs these).
 !plugins
 !plugins/lead-platform-connector

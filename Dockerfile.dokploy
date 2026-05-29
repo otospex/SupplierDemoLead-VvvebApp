@@ -25,6 +25,20 @@ COPY public/themes/landing \
 COPY public/themes/souverainete-digitale \
      /opt/lpc-overlay/public/themes/souverainete-digitale
 
+# 1a. Site config (per-language homepage template: index.html / index.fr.html)
+#     and the content controller carrying the language-suffixed-template fallback
+#     used to localize sub-page/post chrome (content/<name>.<lang>.html). These
+#     live in the webroot overlay so they re-apply on every redeploy; without
+#     them the persistent volume keeps stale copies and /fr/ serves English.
+COPY config/sites.php \
+     /opt/lpc-overlay/config/sites.php
+
+COPY app/controller/index.php \
+     /opt/lpc-overlay/app/controller/index.php
+
+COPY app/controller/content/post.php \
+     /opt/lpc-overlay/app/controller/content/post.php
+
 # 1b. One-time DB seed scripts. Staged OUTSIDE /opt/lpc-overlay so the
 #     `cp -a /opt/lpc-overlay/.` webroot overlay does NOT copy them into the
 #     public tree (keeps seed.dokploy.sql from ever being web-served).

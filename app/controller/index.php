@@ -35,7 +35,13 @@ class Index extends Base {
 
 		if (isset($site['template']) && is_array($site['template'])) {
 			$lang = $this->global['language_id'];
-			if (isset($site['template'][$lang])) {
+			$slug = $this->global['language'] ?? '';
+			//Resolve the per-language homepage template. Prefer the language slug
+			//(e.g. 'fr') so the mapping survives differing language_id values
+			//across databases; fall back to language_id, then to index 0.
+			if ($slug && isset($site['template'][$slug])) {
+				$template = $site['template'][$slug];
+			} elseif (isset($site['template'][$lang])) {
 				$template = $site['template'][$lang];
 			} else {
 				$template = $site['template'][0] ?? false;
