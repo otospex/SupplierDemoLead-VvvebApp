@@ -77,10 +77,30 @@ Four native mechanisms, all already present in the codebase:
 
 ### Increment 3 — French sub-pages
 - Append French `post_content` rows (language_id = French) for all 10 pages to `seed.dokploy.sql`,
-  using the existing idempotent `@exists`/`@pid` pattern with a `@lang_fr` variable; translated
-  `name`, `slug`, `content`, `meta_*`.
+  using an idempotent `@pid`/`@fr_done` pattern keyed on the English slug, with a `@lang_fr`
+  variable; translated `name`, `slug`, `content`, `meta_*`. Replaces the leftover Romanian
+  `language_id=2` demo rows (deleted).
 - Insert the same rows into the local DB for testing.
 - Ensure nav `href`s in `index.fr.html` use French slugs (`/fr/page/cloud-souverain`, etc.).
+
+#### Sub-page chrome localization (added during implementation)
+Sub-pages render inside the static `content/page.html` / `content/contact.html` templates, whose
+nav/footer/head are injected at render from `index.html` via `data-v-save-global`. That reference
+is a compile-time literal, so French sub-pages otherwise show English chrome. Resolution:
+- Create French sub-page templates `content/page.fr.html` and `content/contact.fr.html` whose
+  three `data-v-save-global` references point to `index.fr.html` (French chrome) and whose static
+  text is translated.
+- `post.template` is a single column shared across languages, so a general fallback was added in
+  `app/controller/content/post.php`: when the active language slug differs from the default, prefer
+  a language-suffixed template (`content/<name>.<slug>.html`) if it exists on disk; otherwise use
+  the base template. Keyed on the language **slug** (`fr`), not the locale code (`fr_FR`).
+
+## Outcome
+All 15 URLs (EN + FR homepages and 10 sub-pages each) return 200. Switcher renders on both
+languages, hides when only one is active, links EN↔FR. French side fully translated in body and
+chrome. English side unchanged. Note: the switcher's cross-language link for content pages uses
+Vvveb's id-based fallback URL (`/fr/page/p-18`), which resolves correctly; primary nav uses clean
+French slugs.
 
 ## Risks / notes
 - Verify `/fr/` (homepage) and `/fr/page/{fr-slug}` routing resolve correctly (routes exist in
