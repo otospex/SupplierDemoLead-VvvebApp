@@ -153,3 +153,158 @@ CONCAT(
 '', '',
 'Our proven 4-step method and the recognized certifications (SecNumCloud, ISO 27001, HDS, GDPR, NIS2, SOC 2) behind our sovereign solutions.'
 WHERE @exists = 0;
+
+-- =====================================================================
+-- 6) Dedicated, SEO-friendly service pages — one per Solutions item.
+--    Each gets its own descriptive slug (/page/sovereign-cloud, etc.),
+--    expanded keyword-rich content, an H1 (post name), meta_description
+--    and meta_keywords. All are real DB pages on the content/page.html
+--    template, so they are fully editable in the admin live editor.
+--
+--    id-agnostic + idempotent: a page is created only when its slug does
+--    not already exist, so re-running never duplicates or clobbers edits.
+-- =====================================================================
+
+-- 6.1) Sovereign Cloud --------------------------------------------------
+SET @exists := (SELECT COUNT(*) FROM post_content WHERE slug = 'sovereign-cloud');
+SET @pid := (SELECT IFNULL(MAX(post_id),0) + 1 FROM post);
+INSERT INTO post (post_id, admin_id, status, image, comment_status, password, parent, sort_order, type, template, comment_count, views, created_at, updated_at)
+SELECT @pid, 1, 'publish', '', 'open', '', 0, 0, 'page', 'content/page.html', 0, 0, NOW(), NOW() WHERE @exists = 0;
+INSERT INTO post_to_site (post_id, site_id) SELECT @pid, 1 WHERE @exists = 0;
+INSERT INTO post_content (post_id, language_id, name, slug, content, excerpt, meta_keywords, meta_description)
+SELECT @pid, @lang, 'Sovereign Cloud', 'sovereign-cloud', CONCAT(
+'<div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Sovereign Cloud</span><h2>European cloud hosting, <span class="sd-gradient-text">immune to extraterritorial law</span></h2><p class="section-lead">Migrate and run your workloads on certified European infrastructure (SecNumCloud, ISO 27001, HDS). Keep full control over where your data lives, who can access it, and how it is operated &mdash; with no exposure to the US CLOUD Act or other foreign jurisdictions.</p></div>',
+'<div class="row g-4">',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Certified EU infrastructure</h3><p>Data centres operated in the European Union under SecNumCloud 3.2 and ISO 27001, with contractual guarantees against extraterritorial access.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Seamless migration</h3><p>Lift-and-shift or re-platform your VMs, containers and databases with zero-downtime cutover plans and full rollback safety.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Guaranteed reversibility</h3><p>Open standards and portable formats mean you can leave at any time &mdash; no proprietary lock-in, no hidden egress traps.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Elastic &amp; performant</h3><p>Auto-scaling compute, sovereign object storage and managed Kubernetes that match hyperscaler performance without the jurisdiction risk.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>99.99% SLA</h3><p>Multi-zone resilience, automated backups and 24/7 monitoring from European teams, backed by a contractual uptime commitment.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Transparent pricing</h3><p>Predictable, euro-denominated billing with no surprise egress fees &mdash; budget your sovereign cloud with confidence.</p></div></div>',
+'</div>',
+'<div class="sd-section-header" style="margin-top:3rem;"><p class="section-lead">Public sector, healthcare, finance and defence organisations across 14 European countries trust our sovereign cloud to host their most sensitive workloads. Ready to assess your migration?</p><a href="/page/contact" class="sd-btn sd-btn-primary">Talk to a sovereign cloud expert <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>'
+),
+'Sovereign European cloud hosting with SecNumCloud and ISO 27001 certification, full reversibility and protection from extraterritorial law.',
+'sovereign cloud, european cloud, secnumcloud, gdpr cloud hosting, data sovereignty, cloud souverain, iso 27001 cloud',
+'Sovereign cloud hosting on certified European infrastructure (SecNumCloud, ISO 27001). Full control of your data, protection from extraterritorial law, and guaranteed reversibility.'
+WHERE @exists = 0;
+
+-- 6.2) Data Protection --------------------------------------------------
+SET @exists := (SELECT COUNT(*) FROM post_content WHERE slug = 'data-protection');
+SET @pid := (SELECT IFNULL(MAX(post_id),0) + 1 FROM post);
+INSERT INTO post (post_id, admin_id, status, image, comment_status, password, parent, sort_order, type, template, comment_count, views, created_at, updated_at)
+SELECT @pid, 1, 'publish', '', 'open', '', 0, 0, 'page', 'content/page.html', 0, 0, NOW(), NOW() WHERE @exists = 0;
+INSERT INTO post_to_site (post_id, site_id) SELECT @pid, 1 WHERE @exists = 0;
+INSERT INTO post_content (post_id, language_id, name, slug, content, excerpt, meta_keywords, meta_description)
+SELECT @pid, @lang, 'Data Protection', 'data-protection', CONCAT(
+'<div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Data Protection</span><h2>Encryption, key sovereignty and <span class="sd-gradient-text">GDPR by design</span></h2><p class="section-lead">Protect personal and strategic data end to end with sovereign encryption, hardware key management and retention policies built for GDPR. Your keys, your control &mdash; even your cloud provider cannot read your data.</p></div>',
+'<div class="row g-4">',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>End-to-end encryption</h3><p>Data encrypted in transit and at rest with strong, audited ciphers &mdash; protecting you against breaches and unauthorised access.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Sovereign key management</h3><p>Hold and rotate your own keys with HSM and KMS hosted in Europe. Bring-your-own-key and hold-your-own-key supported.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>GDPR-ready retention</h3><p>Automated retention, minimisation and right-to-erasure workflows that keep you compliant without manual effort.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Data classification</h3><p>Discover, tag and govern sensitive data across your estate so the right controls follow the data automatically.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Backup &amp; recovery</h3><p>Immutable, geo-redundant backups in Europe with tested restore procedures and ransomware-resistant snapshots.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Access governance</h3><p>Least-privilege access, full audit trails and just-in-time elevation to prove who touched what, and when.</p></div></div>',
+'</div>',
+'<div class="sd-section-header" style="margin-top:3rem;"><p class="section-lead">Make GDPR a competitive advantage instead of a burden. Let us assess your data-protection posture and close the gaps.</p><a href="/page/contact" class="sd-btn sd-btn-primary">Request a data protection review <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>'
+),
+'Sovereign data protection: end-to-end encryption, European key management (HSM/KMS) and GDPR-compliant retention and access governance.',
+'data protection, gdpr compliance, encryption, key management, hsm, kms, data sovereignty, rgpd',
+'End-to-end encryption, sovereign key management (HSM/KMS) and GDPR-compliant retention. Protect personal and strategic data with keys you control, hosted in Europe.'
+WHERE @exists = 0;
+
+-- 6.3) Cybersecurity & SOC ---------------------------------------------
+SET @exists := (SELECT COUNT(*) FROM post_content WHERE slug = 'cybersecurity-soc');
+SET @pid := (SELECT IFNULL(MAX(post_id),0) + 1 FROM post);
+INSERT INTO post (post_id, admin_id, status, image, comment_status, password, parent, sort_order, type, template, comment_count, views, created_at, updated_at)
+SELECT @pid, 1, 'publish', '', 'open', '', 0, 0, 'page', 'content/page.html', 0, 0, NOW(), NOW() WHERE @exists = 0;
+INSERT INTO post_to_site (post_id, site_id) SELECT @pid, 1 WHERE @exists = 0;
+INSERT INTO post_content (post_id, language_id, name, slug, content, excerpt, meta_keywords, meta_description)
+SELECT @pid, @lang, 'Cybersecurity & SOC', 'cybersecurity-soc', CONCAT(
+'<div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Cybersecurity &amp; SOC</span><h2>24/7 threat detection from a <span class="sd-gradient-text">sovereign SOC</span></h2><p class="section-lead">A managed European Security Operations Centre that watches your critical workloads around the clock. Detect, investigate and respond to threats faster &mdash; with analysts, tooling and data all kept in Europe.</p></div>',
+'<div class="row g-4">',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Managed SOC 24/7</h3><p>European analysts monitor your environment day and night, triaging alerts and escalating real incidents within minutes.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Threat detection &amp; response</h3><p>SIEM, EDR and threat intelligence combined into managed detection and response (MDR) tuned to your risk profile.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Penetration testing</h3><p>Offensive security engagements and red-team exercises that find weaknesses before attackers do.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Incident response</h3><p>A rehearsed playbook and on-call experts to contain, eradicate and recover from incidents with minimal impact.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Vulnerability management</h3><p>Continuous scanning, prioritisation and remediation tracking across your applications and infrastructure.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>NIS2 readiness</h3><p>Controls, reporting and governance aligned to the NIS2 directive for essential and important entities.</p></div></div>',
+'</div>',
+'<div class="sd-section-header" style="margin-top:3rem;"><p class="section-lead">Attackers do not keep office hours &mdash; neither do we. See how a sovereign SOC strengthens your defence.</p><a href="/page/contact" class="sd-btn sd-btn-primary">Book a SOC consultation <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>'
+),
+'Managed sovereign SOC with 24/7 threat detection, MDR, penetration testing, incident response and NIS2-aligned cybersecurity.',
+'cybersecurity, managed soc, mdr, threat detection, penetration testing, incident response, nis2, soc souverain',
+'24/7 managed sovereign SOC: threat detection and response, penetration testing, incident response and NIS2 readiness for your critical European workloads.'
+WHERE @exists = 0;
+
+-- 6.4) Compliance & Audit ----------------------------------------------
+SET @exists := (SELECT COUNT(*) FROM post_content WHERE slug = 'compliance-audit');
+SET @pid := (SELECT IFNULL(MAX(post_id),0) + 1 FROM post);
+INSERT INTO post (post_id, admin_id, status, image, comment_status, password, parent, sort_order, type, template, comment_count, views, created_at, updated_at)
+SELECT @pid, 1, 'publish', '', 'open', '', 0, 0, 'page', 'content/page.html', 0, 0, NOW(), NOW() WHERE @exists = 0;
+INSERT INTO post_to_site (post_id, site_id) SELECT @pid, 1 WHERE @exists = 0;
+INSERT INTO post_content (post_id, language_id, name, slug, content, excerpt, meta_keywords, meta_description)
+SELECT @pid, @lang, 'Compliance & Audit', 'compliance-audit', CONCAT(
+'<div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Compliance &amp; Audit</span><h2>Pass every audit, across <span class="sd-gradient-text">every framework</span></h2><p class="section-lead">From SecNumCloud and ISO 27001 to HDS, GDPR and NIS2, we guide you through readiness, evidence collection and certification &mdash; turning compliance from a recurring scramble into a repeatable, audit-ready process.</p></div>',
+'<div class="row g-4">',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>SecNumCloud</h3><p>ANSSI 3.2 readiness and qualification support for the highest French and European cloud-trust standard.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>ISO 27001</h3><p>Build and certify an information security management system that auditors and customers trust.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>HDS</h3><p>Health Data Hosting certification for organisations handling sensitive patient and medical data.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>GDPR audit</h3><p>Gap analysis, records of processing and DPIA support to demonstrate accountability under the GDPR.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>NIS2 directive</h3><p>Map obligations, close gaps and prepare the governance and reporting NIS2 requires.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Continuous compliance</h3><p>Automated evidence collection and control monitoring so you stay audit-ready all year round.</p></div></div>',
+'</div>',
+'<div class="sd-section-header" style="margin-top:3rem;"><p class="section-lead">Stop dreading audit season. Let our accredited experts make compliance a continuous, low-effort discipline.</p><a href="/page/contact" class="sd-btn sd-btn-primary">Schedule a compliance assessment <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>'
+),
+'Compliance and audit support for SecNumCloud, ISO 27001, HDS, GDPR and NIS2 — readiness, evidence and continuous compliance.',
+'compliance, audit, secnumcloud, iso 27001, hds, gdpr, nis2, conformite, certification',
+'Audit-readiness and certification support across SecNumCloud, ISO 27001, HDS, GDPR and NIS2. Turn compliance into a repeatable, continuous process.'
+WHERE @exists = 0;
+
+-- 6.5) Strategy & Consulting -------------------------------------------
+SET @exists := (SELECT COUNT(*) FROM post_content WHERE slug = 'strategy-consulting');
+SET @pid := (SELECT IFNULL(MAX(post_id),0) + 1 FROM post);
+INSERT INTO post (post_id, admin_id, status, image, comment_status, password, parent, sort_order, type, template, comment_count, views, created_at, updated_at)
+SELECT @pid, 1, 'publish', '', 'open', '', 0, 0, 'page', 'content/page.html', 0, 0, NOW(), NOW() WHERE @exists = 0;
+INSERT INTO post_to_site (post_id, site_id) SELECT @pid, 1 WHERE @exists = 0;
+INSERT INTO post_content (post_id, language_id, name, slug, content, excerpt, meta_keywords, meta_description)
+SELECT @pid, @lang, 'Strategy & Consulting', 'strategy-consulting', CONCAT(
+'<div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Strategy &amp; Consulting</span><h2>A pragmatic <span class="sd-gradient-text">sovereignty roadmap</span> for your CIO</h2><p class="section-lead">We map your digital dependencies, quantify the risk of foreign lock-in, and build a multi-year roadmap that balances sovereignty, cost and performance &mdash; aligned to your industry, your budget and your existing tooling.</p></div>',
+'<div class="row g-4">',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Dependency mapping</h3><p>A clear picture of which vendors, data flows and workloads expose you to extraterritorial risk.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Risk analysis</h3><p>Quantified assessment of lock-in, regulatory and continuity risk, prioritised by business impact.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Sovereignty roadmap</h3><p>A realistic multi-year plan with milestones, budgets and quick wins your board can get behind.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Vendor &amp; tool review</h3><p>Independent evaluation of sovereign alternatives that fit your stack, without ripping everything out.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Business case &amp; TCO</h3><p>A defensible cost and value model so sovereignty investments are easy to justify and fund.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Change &amp; governance</h3><p>Operating model, governance and KPIs to keep sovereignty on track long after the project ends.</p></div></div>',
+'</div>',
+'<div class="sd-section-header" style="margin-top:3rem;"><p class="section-lead">Sovereignty is a journey, not a switch. Start with a clear, costed roadmap built around your reality.</p><a href="/page/contact" class="sd-btn sd-btn-primary">Plan your sovereignty roadmap <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>'
+),
+'Digital sovereignty strategy and consulting: dependency mapping, risk analysis and a pragmatic multi-year roadmap for your CIO.',
+'digital sovereignty strategy, it consulting, dependency mapping, risk analysis, cloud exit strategy, cio roadmap',
+'Digital sovereignty consulting: dependency mapping, risk analysis and a pragmatic multi-year roadmap aligned to your industry, budget and existing tooling.'
+WHERE @exists = 0;
+
+-- 6.6) Training ---------------------------------------------------------
+SET @exists := (SELECT COUNT(*) FROM post_content WHERE slug = 'training');
+SET @pid := (SELECT IFNULL(MAX(post_id),0) + 1 FROM post);
+INSERT INTO post (post_id, admin_id, status, image, comment_status, password, parent, sort_order, type, template, comment_count, views, created_at, updated_at)
+SELECT @pid, 1, 'publish', '', 'open', '', 0, 0, 'page', 'content/page.html', 0, 0, NOW(), NOW() WHERE @exists = 0;
+INSERT INTO post_to_site (post_id, site_id) SELECT @pid, 1 WHERE @exists = 0;
+INSERT INTO post_content (post_id, language_id, name, slug, content, excerpt, meta_keywords, meta_description)
+SELECT @pid, @lang, 'Training', 'training', CONCAT(
+'<div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Training</span><h2>Anchor sovereignty in your <span class="sd-gradient-text">culture and skills</span></h2><p class="section-lead">Technology alone does not make an organisation sovereign &mdash; people do. Our awareness sessions, hands-on workshops and certification paths give your teams the skills and reflexes to protect data and stay independent.</p></div>',
+'<div class="row g-4">',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Security awareness</h3><p>Engaging sessions that turn every employee into a first line of defence against phishing and data leaks.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Hands-on workshops</h3><p>Practical, role-based workshops for IT, DevOps and data teams on sovereign tools and secure practices.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Certification paths</h3><p>Structured tracks toward recognised security and cloud certifications for your technical staff.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Executive briefings</h3><p>Board-level sessions on sovereignty risk, regulation and strategy in clear, non-technical language.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Tailored curricula</h3><p>Programmes built around your stack, your maturity and your industry &mdash; delivered on-site or remotely.</p></div></div>',
+'<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Ongoing enablement</h3><p>Refreshers, simulations and measurable progress so new habits stick long after the training day.</p></div></div>',
+'</div>',
+'<div class="sd-section-header" style="margin-top:3rem;"><p class="section-lead">Build a sovereignty-aware culture that lasts. Let us design a training programme for your teams.</p><a href="/page/contact" class="sd-btn sd-btn-primary">Design a training programme <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>'
+),
+'Digital sovereignty and cybersecurity training: awareness sessions, hands-on workshops, certification paths and executive briefings.',
+'cybersecurity training, security awareness, sovereignty training, certifications, workshops, formation cybersecurite',
+'Sovereignty and cybersecurity training: awareness sessions, hands-on workshops, certification paths and executive briefings tailored to your teams.'
+WHERE @exists = 0;

@@ -23,6 +23,7 @@ storage/lead-platform-connector.key
 # One-time DB seed marker (written into the persistent volume at runtime;
 # must never be committed or it will make the seeder skip on a fresh deploy)
 storage/.seed-souverainete-applied
+storage/.seed-souverainete-applied-v2
 
 # vtpl backup files (created during editor development)
 system/vtpl/*.bak

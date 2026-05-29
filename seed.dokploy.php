@@ -15,7 +15,7 @@
  */
 
 $root      = '/var/www/html';
-$marker    = $root . '/storage/.seed-souverainete-applied';
+$marker    = $root . '/storage/.seed-souverainete-applied-v2';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }
