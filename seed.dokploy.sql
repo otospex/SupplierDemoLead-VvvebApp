@@ -2187,9 +2187,19 @@ REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_ke
 <p><strong>Are the CLOUD Act and GDPR compatible?</strong></p>
 <p>No — they are in direct tension. Only an architecture without any US-subject operator truly resolves the conflict.</p><div class="sd-related"><p class="sd-related-title">Related reading</p><div class="sd-related-grid"><a class="sd-related-card" href="/en/page/sovereign-cloud-guide">Sovereign cloud &rarr;</a><a class="sd-related-card" href="/en/page/us-cloud-act-explained">US CLOUD Act &rarr;</a><a class="sd-related-card" href="/en/page/sovereignty-assessment">Sovereignty assessment &rarr;</a></div></div></article><aside class="sd-toc"><div class="sd-toc-inner"><p class="sd-toc-title">On this page</p><ul><li><a href="#what-is-the-cloud-act-concretely">What is the CLOUD Act, concretely?</a></li><li><a href="#does-the-cloud-act-really-apply-in-europe">Does the CLOUD Act really apply in Europe?</a></li><li><a href="#cloud-act-vs-gdpr-a-conflict-of-laws">CLOUD Act vs GDPR: a conflict of laws</a></li><li><a href="#how-to-assess-your-exposure">How to assess your exposure</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul><div class="sd-toc-cta"><a href="/en/page/contact" class="sd-btn sd-btn-primary">Request a consultation</a></div></div></aside></div></div></div><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://souverainete-digitale.fr/page/us-cloud-act-explained#main", "name": "The US CLOUD Act: What It Means for Your Data in Europe", "headline": "The US CLOUD Act: What It Means for Your Data in Europe", "description": "The US CLOUD Act lets American authorities access your data even when hosted in Europe. Understand its reach, its conflict with GDPR, and how to protect yourself.", "inLanguage": "en", "url": "https://souverainete-digitale.fr/page/us-cloud-act-explained", "publisher": {"@type": "Organization", "name": "Souveraineté Numérique", "url": "https://souverainete-digitale.fr"}}, {"@type": "FAQPage", "@id": "https://souverainete-digitale.fr/page/us-cloud-act-explained#faq", "mainEntity": [{"@type": "Question", "name": "What is the US CLOUD Act?", "acceptedAnswer": {"@type": "Answer", "text": "A 2018 US law allowing American authorities to require a US-subject provider to disclose the data it holds, regardless of the storage country."}}, {"@type": "Question", "name": "Does the CLOUD Act apply in Europe?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as soon as a US-subject operator is in the processing chain, even via a European data centre."}}, {"@type": "Question", "name": "Are the CLOUD Act and GDPR compatible?", "acceptedAnswer": {"@type": "Answer", "text": "No — they are in direct tension. Only an architecture without any US-subject operator truly resolves the conflict."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://souverainete-digitale.fr/"}, {"@type": "ListItem", "position": 2, "name": "The US CLOUD Act: What It Means for Your Data in Europe", "item": "https://souverainete-digitale.fr/page/us-cloud-act-explained"}]}]}</script>','','','The US CLOUD Act lets American authorities access your data even when hosted in Europe. Understand its reach, its conflict with GDPR, and how to protect yourself.');
 -- Homepage <title>/meta come from site.settings JSON (description.<langId>). Idempotent.
-UPDATE site SET settings = JSON_SET(settings,
-  '$.description."1".title', 'Digital Sovereignty — Sovereign Cloud & Data Protection for Europe',
-  '$.description."1"."meta-description"', 'SecNumCloud-certified sovereign cloud, beyond the US CLOUD Act. Sovereignty audit, data protection, cybersecurity and GDPR/NIS2 compliance.',
-  '$.description."2".title', 'Souveraineté Numérique — Cloud souverain & protection des données',
-  '$.description."2"."meta-description"', 'Cloud souverain certifié SecNumCloud, à l''abri du CLOUD Act. Audit de souveraineté, protection des données et conformité RGPD/NIS2.'
-) WHERE site_id = 1 AND JSON_VALID(settings);
+-- Use JSON_MERGE_PATCH so it CREATES the per-language objects when missing
+-- (prod often only has description."1"; JSON_SET cannot build a missing nested
+-- intermediate, which left the FR homepage <title> empty on the first v6 deploy).
+UPDATE site SET settings = JSON_MERGE_PATCH(
+  IF(JSON_VALID(settings), settings, '{}'),
+  JSON_OBJECT('description', JSON_OBJECT(
+    '1', JSON_OBJECT(
+      'title', 'Digital Sovereignty — Sovereign Cloud & Data Protection for Europe',
+      'meta-description', 'SecNumCloud-certified sovereign cloud, beyond the US CLOUD Act. Sovereignty audit, data protection, cybersecurity and GDPR/NIS2 compliance.'
+    ),
+    '2', JSON_OBJECT(
+      'title', 'Souveraineté Numérique — Cloud souverain & protection des données',
+      'meta-description', 'Cloud souverain certifié SecNumCloud, à l''abri du CLOUD Act. Audit de souveraineté, protection des données et conformité RGPD/NIS2.'
+    )
+  ))
+) WHERE site_id = 1;

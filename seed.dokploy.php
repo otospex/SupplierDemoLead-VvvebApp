@@ -24,7 +24,7 @@ $root      = '/var/www/html';
 // v6 adds the 14 FR + 14 EN styled resource pages (page-hero + TOC + sidebar +
 // JSON-LD), rewrites the 6 service pages + services/about/method in both
 // languages, and sets the EN/FR homepage <title>/meta in site.settings JSON.
-$marker    = $root . '/storage/.seed-souverainete-applied-v6';
+$marker    = $root . '/storage/.seed-souverainete-applied-v7';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }
