@@ -146,6 +146,15 @@ img { max-width: 100%; height: auto; }
   width: 24px;
 }
 
+.sd-nav .nav-link.active {
+  color: var(--sd-primary);
+  font-weight: 600;
+}
+
+.sd-nav .nav-link.active::after {
+  width: 24px;
+}
+
 .sd-nav .dropdown-menu {
   border: 1px solid var(--sd-line);
   border-radius: var(--sd-radius);
