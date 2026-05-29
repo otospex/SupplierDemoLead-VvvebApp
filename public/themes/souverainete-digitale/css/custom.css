@@ -1322,6 +1322,14 @@ img { max-width: 100%; height: auto; }
 
 .sd-footer-bottom a { color: #94A3B8; margin-right: 1.25rem; }
 
+/* ============== LANGUAGE SWITCHER ============== */
+/* Hide the switcher when only one language is active (single [data-v-language] item) */
+.sd-lang-switch:not(:has(.dropdown-menu [data-v-language] ~ [data-v-language])) {
+  display: none !important;
+}
+.sd-lang-switch .dropdown-toggle::after { vertical-align: middle; }
+.sd-lang-switch .dropdown-item.active { font-weight: 600; }
+
 /* ============== UTILITIES ============== */
 .sd-divider {
   height: 1px;

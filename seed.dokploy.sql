@@ -15,6 +15,17 @@ SET @lang := (SELECT language_id FROM language
 SET @lang := IFNULL(@lang, 1);
 
 -- ---------------------------------------------------------------------
+-- 0) Ensure the French language exists and is active (drives the EN/FR
+--    navbar switcher and /fr/ routing). Idempotent: only inserted if a
+--    French row is not already present.
+-- ---------------------------------------------------------------------
+SET @fr_exists := (SELECT COUNT(*) FROM language WHERE slug = 'fr' OR code LIKE 'fr%');
+INSERT INTO language (name, code, locale, slug, rtl, sort_order, status, `default`)
+  SELECT 'Français', 'fr_FR', 'fr-fr', 'fr', 0, 2, 1, 0 WHERE @fr_exists = 0;
+SET @lang_fr := (SELECT language_id FROM language
+                 WHERE slug = 'fr' OR code LIKE 'fr%' ORDER BY language_id LIMIT 1);
+
+-- ---------------------------------------------------------------------
 -- 1) Repoint existing pages/posts to templates that exist in this theme.
 --    Matched by slug (pages) and by type (blog posts).
 -- ---------------------------------------------------------------------
