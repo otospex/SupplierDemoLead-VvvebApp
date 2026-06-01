@@ -24,7 +24,11 @@ $root      = '/var/www/html';
 // v6 adds the 14 FR + 14 EN styled resource pages (page-hero + TOC + sidebar +
 // JSON-LD), rewrites the 6 service pages + services/about/method in both
 // languages, and sets the EN/FR homepage <title>/meta in site.settings JSON.
-$marker    = $root . '/storage/.seed-souverainete-applied-v7';
+// v7 fixes the FR homepage title (JSON_MERGE_PATCH creates description."2" when
+// prod only had the EN entry, which JSON_SET could not).
+// v8 seeds the 5 footer pages (accessibility, careers, cookies, partners, press)
+// in EN + FR so the footer links resolve in both languages on prod.
+$marker    = $root . '/storage/.seed-souverainete-applied-v8';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }
