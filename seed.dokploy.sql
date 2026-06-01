@@ -2205,6 +2205,24 @@ UPDATE site SET settings = JSON_MERGE_PATCH(
 ) WHERE site_id = 1;
 
 -- =====================================================================
+-- v9: make French the FRONTEND DEFAULT language.
+-- The frontend default is read from site.settings.language (NOT the
+-- Languages 'default' flag). Set it to the installed French language so
+-- '/' serves French and English moves under '/en/'. Resolved dynamically
+-- so it works whatever language_id French has on a given DB. Idempotent.
+-- (The seeder also clears the app.site.* cache so this takes effect.)
+-- =====================================================================
+SET @fr_id := (SELECT language_id FROM language WHERE slug = 'fr' OR code LIKE 'fr%' ORDER BY language_id LIMIT 1);
+SET @fr_slug := (SELECT slug FROM language WHERE language_id = @fr_id);
+UPDATE site
+  SET settings = JSON_SET(
+    IF(JSON_VALID(settings), settings, '{}'),
+    '$.language', @fr_slug,
+    '$.language_id', @fr_id
+  )
+  WHERE site_id = 1 AND @fr_id IS NOT NULL;
+
+-- =====================================================================
 -- v8: 5 footer pages (accessibility, careers, cookies, partners, press)
 --     EN content reused + FR translations. Slug-keyed, idempotent.
 -- =====================================================================

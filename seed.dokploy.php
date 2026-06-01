@@ -28,7 +28,10 @@ $root      = '/var/www/html';
 // prod only had the EN entry, which JSON_SET could not).
 // v8 seeds the 5 footer pages (accessibility, careers, cookies, partners, press)
 // in EN + FR so the footer links resolve in both languages on prod.
-$marker    = $root . '/storage/.seed-souverainete-applied-v8';
+// v9 sets the frontend default language to French (site.settings.language='fr')
+// and clears the app.site.* / site.* caches (which the old flush glob missed),
+// so / serves French and the switcher treats French as the prefix-free default.
+$marker    = $root . '/storage/.seed-souverainete-applied-v9';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }
@@ -111,7 +114,7 @@ foreach ([
     $root . '/storage/compiled-templates',
 ] as $dir) {
     if (is_dir($dir)) {
-        foreach (glob($dir . '/{url.*,component.posts.*,posts.archives.*,*.tpl,admin.template-list-*}', GLOB_BRACE) ?: [] as $f) {
+        foreach (glob($dir . '/{url.*,component.posts.*,posts.archives.*,*.tpl,admin.template-list-*,app.site.*,site.*,app.languages,app.currency}', GLOB_BRACE) ?: [] as $f) {
             @unlink($f);
         }
     }
