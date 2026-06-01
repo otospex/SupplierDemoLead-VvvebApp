@@ -42,12 +42,17 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  /* Mobile: kill the horizontal scroll. The negative gutters on Bootstrap
+     `.row` (g-5 → -24px) overrun the 12px container padding by ~12px. We must
+     clamp on BOTH html and body — overflow-x:hidden on body alone leaves the
+     <html> element scrollable on iOS Safari. Applies to all pages, not only
+     .home, so content pages (body.page) are covered too. */
+  overflow-x: hidden;
 }
 
 body.home {
   font-size: 16px;
   line-height: 1.65;
-  overflow-x: hidden;
 }
 
 img { max-width: 100%; height: auto; }
