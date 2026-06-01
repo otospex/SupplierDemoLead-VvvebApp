@@ -22,11 +22,29 @@ prefix for `default_language_id` and adds the prefix for the other language, so 
 flip is driven by which language is the configured default.
 
 ## Decision
-- Approach: set `'language' => 'fr'` in `config/sites.php` (the value `base.php` reads).
+- **Correction (verified):** the default is NOT read from `config/sites.php`. It comes
+  from `siteSettings()` → the `site.settings` JSON `language` key (admin Settings →
+  General/Web). `base.php:233` reads `$site = siteSettings()` then
+  `$languages[$site['language'] ?? 'en']`. Setting `site.settings.language = 'fr'` (and
+  `language_id`) + busting the `site.{id}` cache flips `/` to French. (The admin
+  Languages → default toggle sets `language.default`, which the frontend ignores.)
 - URL behaviour: flip accepted — French prefix-free (`/`, `/page/...`), English at
-  `/en/...`. Existing `/fr/...` URLs are no longer the canonical French ones.
-- Rollout: **config-first**, then verify which hardcoded theme links actually break
-  before editing theme files (avoid over-editing).
+  `/en/...`. Existing `/fr/...` URLs still resolve (redundant prefix) but are no longer
+  the canonical French ones.
+- Production default: set the site language to French in admin Settings (admin-managed);
+  code handles the URL prefixes.
+- FR links: cleaned to prefix-free.
+
+## Phase 1 results (verified locally)
+With `site.settings.language='fr'`:
+- `/` → French homepage ✓; switcher active=fr, links English→`/en/`, French→`/` ✓
+- `/en/` → English homepage renders ✓ BUT its nav/footer links are hardcoded `/page/...`
+  (no prefix) → now resolve in French context (BROKEN).
+- `/page/{slug}` → French; `/en/page/{slug}` → English ✓.
+- FR homepage `/fr/page/...` links still resolve to French (redundant, harmless).
+
+→ Phase 2 must rewrite link prefixes: EN templates `/page → /en/page`, `/ → /en/`,
+`/blog → /en/blog`; FR templates `/fr/... → prefix-free`.
 
 ## Implementation — Phase 1 (config only)
 1. Add `'language' => 'fr'` to the site config in `config/sites.php`.
