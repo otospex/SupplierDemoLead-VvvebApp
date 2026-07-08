@@ -23,7 +23,10 @@
  return [
  	1 => [
  		'contact-form' => [
- 			'status' => 'active',
- 		],
+			'status' => 'active',
+		],
+		'lead-platform-connector' => [
+			'status' => 'active',
+		],
  	],
  ];

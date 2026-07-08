@@ -245,6 +245,9 @@ class Submit {
 		// translates source field names → platform field names server-side.
 		// (The plugin's field_map is only used by the editor to auto-generate the form.)
 		$payload = $fields;
+		if (empty($payload['name']) && ! empty($payload['full_name'])) {
+			$payload['name'] = $payload['full_name'];
+		}
 		$payload['campaign'] = (string) $endpoint['campaign'];
 
 		if ($source !== '' && empty($payload['source_page'])) {
@@ -320,6 +323,11 @@ class Submit {
 		if ($http === 429) {
 			$this->logSubmission($logRow);
 			$this->json(429, ['ok' => false, 'message' => 'The lead platform is rate-limiting us. Please retry shortly.']);
+		}
+
+		if ($http >= 400 && $http < 500) {
+			$this->logSubmission($logRow);
+			$this->json(502, ['ok' => false, 'message' => 'Lead platform rejected this request. Please contact us directly.']);
 		}
 
 		// 5xx / network: persist for retry, treat as soft success so user is not blocked.
