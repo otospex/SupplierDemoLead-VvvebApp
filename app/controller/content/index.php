@@ -26,5 +26,14 @@ use Vvveb\Controller\Base;
 
 class Index extends Base {
 	function index() {
+		$language = $this->global['language'] ?? '';
+
+		if ($language) {
+			$template = "content/index.{$language}.html";
+
+			if (is_file($this->view->getTemplatePath() . $template)) {
+				$this->view->template($template);
+			}
+		}
 	}
 }

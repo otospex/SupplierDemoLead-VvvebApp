@@ -6,6 +6,7 @@
     'host' => '*.*.*',
     'path' => '',
     'theme' => 'souverainete-digitale',
+    'language' => 'fr',
     // Per-language homepage template (see app/controller/index.php). Keyed by
     // language SLUG so it works regardless of language_id across databases.
     // Index 0 is the default fallback; numeric keys kept for back-compat.

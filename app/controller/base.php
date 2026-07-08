@@ -71,11 +71,11 @@ class Base {
 		} else {
 			//don't set user session language for default language homepage
 			if (! isset($this->request->get['module']) || $this->request->get['module'] != 'index/index') {
-				$language    = $this->session->get('language') ?? $default_language;
-				$language_id = $this->session->get('language_id') ?? $default_language_id;
-				$locale      = $this->session->get('locale') ?? $default_locale;
-				$code        = $this->session->get('code') ?? $default_code;
-				$rtl         = $this->session->get('rtl') ?? false;
+				$language    = $default_language;
+				$language_id = $default_language_id;
+				$locale      = $default_locale;
+				$code        = $default_code;
+				$rtl         = $default_rtl;
 			}
 		}
 
@@ -198,7 +198,7 @@ class Base {
 			}
 		}
 
-		$site = siteSettings();
+		$site = siteSettings() + $siteData;
 
 		list($site) = Event::trigger(__CLASS__, __FUNCTION__, $site);
 
