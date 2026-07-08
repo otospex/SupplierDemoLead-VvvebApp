@@ -138,8 +138,7 @@ class Post extends Base {
 						//chrome (nav/footer pulled via data-v-save-global) is localized.
 						//Use the language slug (fr), not the code (fr_FR), to match files.
 						$languageSlug = $this->global['language'] ?? '';
-						$defaultSlug  = $this->global['default_language'] ?? '';
-						if ($languageSlug && $languageSlug != $defaultSlug) {
+						if ($languageSlug) {
 							$localized = preg_replace('/\.html$/', ".{$languageSlug}.html", $template);
 							if ($localized != $template &&
 								is_file($this->view->getTemplatePath() . $localized)) {
