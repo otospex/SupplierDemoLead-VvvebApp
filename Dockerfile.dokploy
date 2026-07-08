@@ -36,6 +36,12 @@ COPY config/sites.php \
 COPY app/controller/index.php \
      /opt/lpc-overlay/app/controller/index.php
 
+COPY app/controller/base.php \
+     /opt/lpc-overlay/app/controller/base.php
+
+COPY app/controller/content/index.php \
+     /opt/lpc-overlay/app/controller/content/index.php
+
 COPY app/controller/content/post.php \
      /opt/lpc-overlay/app/controller/content/post.php
 
