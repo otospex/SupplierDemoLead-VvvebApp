@@ -70,6 +70,17 @@ if [ -d /opt/lpc-overlay ]; then
     # invisible in the admin until this cache is busted.
     rm -f /var/www/html/storage/cache/vvveb.themes_list_* \
           /var/www/html/storage/cache/vvveb.plugins_list_* 2>/dev/null || true
+
+    # Bust frontend render caches on every deploy. The public/page-cache and
+    # compiled templates live on the persistent volume, so route/template fixes
+    # can otherwise stay masked by stale HTML after a successful redeploy.
+    rm -rf /var/www/html/public/page-cache/* \
+           /var/www/html/public/assets-cache/* \
+           /var/www/html/storage/compiled-templates/app_* \
+           /var/www/html/storage/cache/app.site.* \
+           /var/www/html/storage/cache/site.* \
+           /var/www/html/storage/cache/app.languages \
+           /var/www/html/storage/cache/routes.app 2>/dev/null || true
 fi
 
 # One-time DB seed for the souverainete-digitale multi-page content (pages,
