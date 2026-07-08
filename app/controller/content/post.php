@@ -140,7 +140,6 @@ class Post extends Base {
 							$this->request->get['language'] ?? '',
 							$this->global['language'] ?? '',
 							$languageContent['code'] ?? '',
-							$this->global['default_language'] ?? '',
 						];
 
 						foreach ($languageCandidates as $candidate) {
