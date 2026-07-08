@@ -133,16 +133,30 @@ class Post extends Base {
 					if (isset($languageContent['template']) && $languageContent['template']) {
 						$template = $languageContent['template'];
 
-						//if browsing a non-default language, prefer a language-suffixed
-						//template (e.g. content/page.fr.html) when it exists, so page
-						//chrome (nav/footer pulled via data-v-save-global) is localized.
-						//Use the language slug (fr), not the code (fr_FR), to match files.
-						$languageSlug = $this->global['language'] ?? '';
-						if ($languageSlug) {
+						// Prefer a language-suffixed template (e.g.
+						// content/page.fr.html) when it exists, so page chrome
+						// (nav/footer pulled via data-v-save-global) is localized.
+						$languageCandidates = [
+							$this->request->get['language'] ?? '',
+							$this->global['language'] ?? '',
+							$languageContent['code'] ?? '',
+							$this->global['default_language'] ?? '',
+						];
+
+						foreach ($languageCandidates as $candidate) {
+							if ($candidate) {
+								$languageCandidates[] = strtolower(substr(str_replace('_', '-', $candidate), 0, 2));
+							}
+						}
+
+						foreach (array_unique(array_filter($languageCandidates)) as $languageSlug) {
 							$localized = preg_replace('/\.html$/', ".{$languageSlug}.html", $template);
+
 							if ($localized != $template &&
 								is_file($this->view->getTemplatePath() . $localized)) {
 								$template = $localized;
+
+								break;
 							}
 						}
 
