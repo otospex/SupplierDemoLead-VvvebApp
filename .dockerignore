@@ -19,9 +19,11 @@ config/*
 app/*
 !app/controller
 app/controller/*
+!app/controller/base.php
 !app/controller/index.php
 !app/controller/content
 app/controller/content/*
+!app/controller/content/index.php
 !app/controller/content/post.php
 
 # Custom plugin sources + browser-served assets (Dockerfile.dokploy COPYs these).
