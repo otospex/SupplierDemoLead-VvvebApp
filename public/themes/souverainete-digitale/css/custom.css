@@ -1362,7 +1362,7 @@ img { max-width: 100%; height: auto; }
     radial-gradient(50% 100% at 0% 100%, rgba(124,58,237,.18), transparent 60%);
   pointer-events: none;
 }
-.sd-page-hero > .container { position: relative; z-index: 1; }
+.sd-page-hero > .container { position: relative; z-index: 1; max-width: 1200px; }
 .sd-breadcrumb {
   font-size: .82rem; color: rgba(255,255,255,.65);
   display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem;
@@ -1375,9 +1375,47 @@ img { max-width: 100%; height: auto; }
 .sd-page-hero h1 {
   font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.02em;
   margin: .75rem 0 0; max-width: 22ch; line-height: 1.12;
+  color: #fff !important;
+}
+.sd-page-hero h1,
+.sd-page-hero h2,
+.sd-page-hero h3 {
+  color: #fff !important;
 }
 .sd-page-hero .sd-page-hero-lead {
   color: rgba(255,255,255,.78); font-size: 1.08rem; margin-top: 1rem; max-width: 60ch;
+}
+
+/* Regular CMS pages do not carry the generated article hero/grid wrapper.
+   Keep them constrained like the homepage while article-builder pages remain
+   full-width through their own .sd-page-hero and .sd-article-wrap sections. */
+body.page #site-content > .post-content:not(:has(> .sd-page-hero)) {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem) 5rem;
+}
+
+body.page #site-content > .post-content:not(:has(> .sd-page-hero)) > .sd-section {
+  padding: 5rem 0 0;
+  background: transparent;
+}
+
+body.page #site-content > .post-content:not(:has(> .sd-page-hero)) .sd-section-header {
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+body.page #site-content > .post-content:not(:has(> .sd-page-hero)) .sd-section-header h2 {
+  max-width: 14ch;
+  margin-inline: auto;
+  font-size: clamp(2.1rem, 5.2vw, 4rem);
+}
+
+body.page #site-content > .post-content:not(:has(> .sd-page-hero)) > .sd-section > p,
+body.page #site-content > .post-content:not(:has(> .sd-page-hero)) > p {
+  max-width: 78ch;
+  margin-inline: auto;
+  line-height: 1.75;
 }
 
 /* Article + sidebar grid */
@@ -1442,6 +1480,8 @@ img { max-width: 100%; height: auto; }
 .sd-toc a:hover { color: var(--sd-primary); }
 .sd-toc-cta { margin-top: 1rem; }
 .sd-toc-cta .sd-btn { width: 100%; justify-content: center; }
+.sd-toc-cta .sd-btn-primary { color: #fff; }
+.sd-toc-cta .sd-btn-primary:hover { color: #fff; }
 
 /* Related links */
 .sd-related { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 1px solid var(--sd-line); }

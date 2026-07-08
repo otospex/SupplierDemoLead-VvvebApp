@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+:root {
+  --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-paper: oklch(98% 0.008 250);
+  --color-paper-2: oklch(95.5% 0.014 250);
+  --color-paper-3: oklch(91.5% 0.022 250);
+  --color-ink: oklch(20% 0.05 252);
+  --color-ink-soft: oklch(39% 0.052 252);
+  --color-muted: oklch(51% 0.04 252);
+  --color-rule: oklch(84% 0.025 252);
+  --color-rule-strong: oklch(72% 0.04 252);
+  --color-accent: oklch(51% 0.19 258);
+  --color-accent-ink: oklch(98% 0.008 250);
+  --color-accent-strong: oklch(44% 0.18 258);
+  --color-accent-soft: oklch(92% 0.055 258);
+  --color-accent-wash: oklch(96.5% 0.025 258);
+  --color-success: oklch(55% 0.12 158);
+  --color-danger: oklch(55% 0.16 28);
+  --color-nav: oklch(99% 0.006 250 / 0.94);
+  --color-panel: oklch(99% 0.006 250);
+  --color-panel-raised: oklch(100% 0 0);
+  --color-footer: oklch(18% 0.055 252);
+  --color-footer-muted: oklch(75% 0.035 252);
+  --color-focus: oklch(61% 0.16 258);
+  --color-shadow: oklch(22% 0.05 252 / 0.14);
+  --color-shadow-soft: oklch(22% 0.05 252 / 0.08);
+
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-card: 0.5rem;
+  --rule-hair: 1px;
+  --shadow-panel: 0 1.25rem 3rem var(--color-shadow-soft);
+  --shadow-lift: 0 1rem 2rem var(--color-shadow);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --sd-primary: var(--color-accent);
+  --sd-primary-dark: var(--color-accent-strong);
+  --sd-secondary: var(--color-ink);
+  --sd-purple: var(--color-accent);
+  --sd-bg: var(--color-paper);
+  --sd-bg-soft: var(--color-paper-2);
+  --sd-text: var(--color-ink);
+  --sd-muted: var(--color-muted);
+  --sd-border: var(--color-rule);
+  --sd-success: var(--color-success);
+  --sd-danger: var(--color-danger);
+}

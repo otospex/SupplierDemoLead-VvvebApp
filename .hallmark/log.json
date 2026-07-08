@@ -1,0 +1,14 @@
+[
+  {
+    "date": "2026-07-08",
+    "scope": "public/themes/souverainete-digitale",
+    "brief": "Digital Sovereignty B2B lead site redesign using existing docs and theme content",
+    "macrostructure": "Split Studio",
+    "genre": "modern-minimal",
+    "theme": "Cobalt",
+    "nav": "N11 Mega-menu",
+    "footer": "Ft5 Statement",
+    "tone": "technical",
+    "notes": "Additive stylesheet and token pass only; existing Vvveb templates, content, routes, and language switcher preserved."
+  }
+]
