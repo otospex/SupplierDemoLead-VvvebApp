@@ -52,7 +52,7 @@ rg -n '\b(TBD|TODO|FIXME|placeholder)\b' CONTEXT.md docs/superpowers/specs/2026-
 
 Expected: no output and exit code 1.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add CONTEXT.md docs/superpowers/specs/2026-08-27-independant-digital-growth-system-design.md
@@ -71,11 +71,11 @@ git commit -m "docs: define independent digital growth strategy"
 - Consumes: a file or directory path supplied on the command line.
 - Produces: one `path:line [RULE] message` record per launch-blocking claim and exit code `1` when blockers exist; exit code `0` when none exist.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `scripts/tests/editorial-audit-test.php` with temporary clean and risky fixtures. The risky fixture contains `La confiance de plus de 250 organisations`, `ACMECORP`, `impact carbone plus bas que tout le monde`, and `certifié SecNumCloud` without a source marker. Assert that the audit returns non-zero and emits `FABRICATED_PROOF`, `PLACEHOLDER_BRAND`, `CARBON_SUPERLATIVE`, and `UNSCOPED_CERTIFICATION`. Assert that the clean fixture returns zero.
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run:
 
@@ -85,7 +85,7 @@ php scripts/tests/editorial-audit-test.php
 
 Expected: FAIL because `scripts/editorial-audit.php` does not exist.
 
-- [ ] **Step 3: Implement the audit**
+- [x] **Step 3: Implement the audit**
 
 Create a PHP CLI script that recursively scans `.html`, `.sql`, and `.md` files while excluding `.git`, `vendor`, generated backups, and the audit fixtures. Implement these rule identifiers:
 
@@ -101,7 +101,7 @@ $rules = [
 
 Allow an individual line to carry `editorial-audit: allow RULE evidence=<URL-or-register-id>` only when a matching non-empty evidence value is present. The exception remains visible in output under `--report-allowances`.
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run:
 
@@ -111,7 +111,7 @@ php scripts/tests/editorial-audit-test.php
 
 Expected: `editorial-audit tests: PASS`.
 
-- [ ] **Step 5: Create the claim register**
+- [x] **Step 5: Create the claim register**
 
 Create the CSV header and no fabricated rows:
 
@@ -121,7 +121,7 @@ claim_id,status,claim,scope,source_url,source_owner,checked_on,next_review,edito
 
 Allowed statuses are `proposed`, `verified`, `qualified`, `expired`, and `rejected`.
 
-- [ ] **Step 6: Document the checks**
+- [x] **Step 6: Document the checks**
 
 Add a project-specific section to `README.md` explaining:
 
@@ -132,7 +132,7 @@ php scripts/tests/editorial-audit-test.php
 
 State that audit success does not replace manual review.
 
-- [ ] **Step 7: Run the audit against the current site**
+- [x] **Step 7: Run the audit against the current site**
 
 Run:
 

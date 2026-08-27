@@ -10,6 +10,19 @@
   <a href="https://twitter.com/vvvebcms">Twitter</a> 
 </p>
 
+## Indépendant Digital editorial checks
+
+This repository contains the French-first Indépendant Digital site. Publishable copy is subject to an editorial claim audit in addition to manual review.
+
+Run the automated checks from the repository root:
+
+```bash
+php scripts/editorial-audit.php public/themes/souverainete-digitale seed.dokploy.sql
+php scripts/tests/editorial-audit-test.php
+```
+
+The audit blocks known forms of unsupported customer proof, demo customer brands, carbon superlatives, unscoped certification claims, and absolute guarantees concerning extraterritorial law. A passing audit is a guardrail, not publication approval. Every page still requires the manual review and source checks defined in `docs/superpowers/specs/2026-08-27-independant-digital-growth-system-design.md`.
+
 ### [Live Demo](https://demo.vvveb.com) / [Admin Demo](https://demo.vvveb.com/admin) / [Page Builder Demo](https://demo.vvveb.com/admin/?module=/editor/editor&template=index.html&url=/)
 
 [![](https://www.vvveb.com/img/dark-theme.webp)](https://www.vvveb.com/img/dark-theme.png)
@@ -128,4 +141,3 @@ If you like the project you can support it with a [PayPal donation](https://payp
 ## License
 
 GNU Affero General Public License Version 3 (AGPLv3) or any later version
-
