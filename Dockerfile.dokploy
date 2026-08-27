@@ -10,7 +10,11 @@
 # the upstream init.sh with a version that runs upstream bootstrap first, copies
 # our overlays on top, and then starts supervisord (php-fpm + nginx).
 
-FROM vvveb/vvvebcms:latest
+FROM vvveb/vvvebcms@sha256:ba2fff03f58b5914c81c9eb9924e1ab8e095f788244c2d4fb563c288ff096b8a
+
+# The production stack uses MySQL. The upstream runtime ships mysqli for the
+# CMS but not the PDO driver required by the scheduler and approval CLIs.
+RUN docker-php-ext-install pdo_mysql
 
 # 1. Stage our overlays in a neutral path that upstream init.sh's existence check ignores.
 COPY plugins/lead-platform-connector \
@@ -62,8 +66,14 @@ COPY app/sql/sqlite/post.sql \
 # Editorially gated scheduled publisher. These scripts live outside public/.
 COPY scripts/lib/scheduled-publisher.php \
      /opt/lpc-overlay/scripts/lib/scheduled-publisher.php
+COPY scripts/lib/cache-invalidator.php \
+     /opt/lpc-overlay/scripts/lib/cache-invalidator.php
 COPY scripts/publish-scheduled-content.php \
      /opt/lpc-overlay/scripts/publish-scheduled-content.php
+COPY scripts/approve-scheduled-content.php \
+     /opt/lpc-overlay/scripts/approve-scheduled-content.php
+COPY scripts/migrate-lead-schema.php \
+     /opt/lpc-overlay/scripts/migrate-lead-schema.php
 
 # 1b. One-time DB seed scripts. Staged OUTSIDE /opt/lpc-overlay so the
 #     `cp -a /opt/lpc-overlay/.` webroot overlay does NOT copy them into the

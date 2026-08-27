@@ -88,22 +88,31 @@ class Submit {
 		$file = $dir . '/' . hash('sha256', $key);
 		$now  = time();
 
+		$handle = @fopen($file, 'c+');
+		if (! $handle || ! flock($handle, LOCK_EX)) return false;
 		$entries = [];
-		if (is_file($file)) {
-			$raw = @file_get_contents($file);
-			$decoded = $raw ? json_decode($raw, true) : [];
-			if (is_array($decoded)) {
-				foreach ($decoded as $ts) {
-					if (($now - (int) $ts) < $windowSec) $entries[] = (int) $ts;
-				}
+		rewind($handle);
+		$raw = stream_get_contents($handle);
+		$decoded = $raw ? json_decode($raw, true) : [];
+		if (is_array($decoded)) {
+			foreach ($decoded as $ts) {
+				if (($now - (int) $ts) < $windowSec) $entries[] = (int) $ts;
 			}
 		}
 
 		if (count($entries) >= $limit) {
+			flock($handle, LOCK_UN);
+			fclose($handle);
 			return false;
 		}
 		$entries[] = $now;
-		@file_put_contents($file, json_encode($entries), LOCK_EX);
+		rewind($handle);
+		ftruncate($handle, 0);
+		$written = fwrite($handle, (string) json_encode($entries));
+		fflush($handle);
+		flock($handle, LOCK_UN);
+		fclose($handle);
+		if ($written === false) return false;
 		return true;
 	}
 
@@ -151,9 +160,9 @@ class Submit {
 		return $out;
 	}
 
-	private function logSubmission(array $row): void {
+	private function logSubmission(array $row): bool {
 		try {
-			Repo::exec(
+			$result = Repo::exec(
 				'INSERT INTO lead_submission
 				 (endpoint_slug, status, platform_lead_id, http_status, phone_hash, email_hash,
 				  provider_slug, consent_text_version, consent_at, payload, payload_enc, response, error,
@@ -164,8 +173,9 @@ class Submit {
 				  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
 				$row
 			);
+			return $result !== false;
 		} catch (\Throwable $e) {
-			// Logging must never break the user-facing response.
+			return false;
 		}
 	}
 
@@ -181,7 +191,7 @@ class Submit {
 	function token() {
 		$slug = isset($_GET['slug']) ? trim((string) $_GET['slug']) : '';
 		if ($slug === '' || ! preg_match('/^[a-z0-9_-]{2,64}$/i', $slug)) {
-			$this->json(400, ['ok' => false, 'message' => 'Invalid slug']);
+			$this->json(400, ['ok' => false, 'message' => 'Identifiant de formulaire invalide.']);
 		}
 
 		$endpoint = $this->fetchEndpoint($slug);
@@ -205,7 +215,7 @@ class Submit {
 		$req = json_decode($raw ?: '', true);
 
 		if (! is_array($req)) {
-			$this->json(400, ['ok' => false, 'message' => 'Invalid JSON']);
+			$this->json(400, ['ok' => false, 'message' => 'Requête invalide.']);
 		}
 
 		$slug = isset($req['endpoint']) ? trim((string) $req['endpoint']) : '';
@@ -247,7 +257,7 @@ class Submit {
 		}
 		$fields = $privacy['fields'];
 
-		$consent = ProviderConsent::validate($fields, ['aifel']);
+		$consent = ProviderConsent::validate($fields, ['aifel' => 'provider-intro-v1']);
 		if (! $consent['ok']) {
 			$this->json(422, ['ok' => false, 'message' => $consent['message']]);
 		}
@@ -266,6 +276,12 @@ class Submit {
 		$deliveryMode = DeliveryMode::resolve($endpoint);
 		if ($deliveryMode === DeliveryMode::MISCONFIGURED) {
 			$this->json(500, ['ok' => false, 'message' => 'Le formulaire est temporairement indisponible.']);
+		}
+		// Named introductions stay in the confirmed local outbox for human
+		// qualification and auditable routing. They are never forwarded directly
+		// from a public form, even after a generic platform is configured.
+		if ($consentAudit && $deliveryMode === DeliveryMode::FORWARD) {
+			$deliveryMode = DeliveryMode::QUEUE;
 		}
 
 		// Forward form fields verbatim. The platform's campaign-level field_schema.mappings
@@ -351,7 +367,9 @@ class Submit {
 			}
 			$logRow['status'] = 'pending';
 			$logRow['att'] = 0;
-			$this->logSubmission($logRow);
+			if (! $this->logSubmission($logRow)) {
+				$this->json(503, ['ok' => false, 'message' => 'La demande n’a pas pu être enregistrée. Merci de réessayer.']);
+			}
 			$this->json(200, ['ok' => true, 'queued' => true]);
 		}
 
@@ -372,17 +390,17 @@ class Submit {
 
 		if ($http === 422) {
 			$this->logSubmission($logRow);
-			$this->json(422, ['ok' => false, 'message' => $serverMsg ?: 'Please check the form fields and try again.']);
+			$this->json(422, ['ok' => false, 'message' => $serverMsg ?: 'Vérifiez les champs du formulaire puis réessayez.']);
 		}
 
 		if ($http === 429) {
 			$this->logSubmission($logRow);
-			$this->json(429, ['ok' => false, 'message' => 'The lead platform is rate-limiting us. Please retry shortly.']);
+			$this->json(429, ['ok' => false, 'message' => 'Le service de traitement est temporairement saturé. Réessayez dans un instant.']);
 		}
 
 		if ($http >= 400 && $http < 500) {
 			$this->logSubmission($logRow);
-			$this->json(502, ['ok' => false, 'message' => 'Lead platform rejected this request. Please contact us directly.']);
+			$this->json(502, ['ok' => false, 'message' => 'Le service de traitement a refusé la demande. Contactez-nous directement.']);
 		}
 
 		// 5xx / network: persist for retry, treat as soft success so user is not blocked.
@@ -390,9 +408,11 @@ class Submit {
 		try {
 			$logRow['payload_enc'] = Crypto::encrypt((string) json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 		} catch (\Throwable $e) {
-			$logRow['error'] = trim((string) ($logRow['error'] ?? '') . ' Encrypted retry payload unavailable.');
+			$this->json(503, ['ok' => false, 'message' => 'La demande n’a pas pu être mise en attente. Merci de réessayer.']);
 		}
-		$this->logSubmission($logRow);
+		if (! $this->logSubmission($logRow)) {
+			$this->json(503, ['ok' => false, 'message' => 'La demande n’a pas pu être enregistrée. Merci de réessayer.']);
+		}
 		$this->json(200, ['ok' => true, 'queued' => true]);
 	}
 }

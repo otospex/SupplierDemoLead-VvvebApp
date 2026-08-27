@@ -9,7 +9,8 @@ use Throwable;
 
 final class ScheduledPublisher {
 
-	public function __construct(private PDO $pdo) {
+	/** @param null|callable(list<int>):void $afterPublish */
+	public function __construct(private PDO $pdo, private $afterPublish = null) {
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 
@@ -59,6 +60,9 @@ final class ScheduledPublisher {
 			}
 
 			$this->pdo->commit();
+			if ($published && is_callable($this->afterPublish)) {
+				($this->afterPublish)($published);
+			}
 
 			return $published;
 		} catch (Throwable $error) {

@@ -46,7 +46,10 @@ scripts/*
 !scripts/lib
 scripts/lib/*
 !scripts/lib/scheduled-publisher.php
+!scripts/lib/cache-invalidator.php
 !scripts/publish-scheduled-content.php
+!scripts/approve-scheduled-content.php
+!scripts/migrate-lead-schema.php
 
 # Custom plugin sources + browser-served assets (Dockerfile.dokploy COPYs these).
 !plugins

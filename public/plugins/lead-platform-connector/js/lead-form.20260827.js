@@ -67,6 +67,8 @@
 	function attach(form, cfg) {
 		if (!form || form.__lpcBound) return;
 		form.__lpcBound = true;
+		const initialButton = form.querySelector('button[type=submit], input[type=submit]');
+		if (initialButton) initialButton.disabled = true;
 
 		// The form may carry novalidate from the editor; on the live page we
 		// want native HTML5 validation on `required` inputs.
@@ -74,6 +76,10 @@
 
 		form.addEventListener('submit', function (ev) {
 			ev.preventDefault();
+			if (!cfg.ready || !cfg.csrf || !cfg.submitUrl) {
+				showAlert(form, 'error', 'Le formulaire est temporairement indisponible. Rechargez la page puis réessayez.');
+				return;
+			}
 
 			if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
 				if (typeof form.reportValidity === 'function') form.reportValidity();
@@ -164,17 +170,20 @@
 		forms.forEach(function (form) {
 			const slug = form.getAttribute('data-v-endpoint');
 			if (!slug) return;
+			const cfg = { endpoint: slug, csrf: '', submitUrl: '', renderTs: Date.now(), ready: false };
+			attach(form, cfg);
 			fetchToken(slug).then(function (tok) {
 				if (!tok) {
 					console.warn('[LPC] could not acquire token for slug', slug);
+					showAlert(form, 'error', 'Le formulaire est temporairement indisponible. Rechargez la page puis réessayez.');
 					return;
 				}
-				attach(form, {
-					endpoint:  slug,
-					csrf:      tok.csrf,
-					submitUrl: tok.submitUrl,
-					renderTs:  tok.renderTs,
-				});
+				cfg.csrf = tok.csrf;
+				cfg.submitUrl = tok.submitUrl;
+				cfg.renderTs = tok.renderTs;
+				cfg.ready = true;
+				const button = form.querySelector('button[type=submit], input[type=submit]');
+				if (button) button.disabled = false;
 			});
 		});
 	}

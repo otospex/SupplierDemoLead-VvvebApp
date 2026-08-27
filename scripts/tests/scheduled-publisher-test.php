@@ -7,7 +7,9 @@ if (! is_file($library)) {
 }
 
 require_once $library;
+require_once dirname(__DIR__) . '/lib/cache-invalidator.php';
 
+use IndependantDigital\Publishing\CacheInvalidator;
 use IndependantDigital\Publishing\ScheduledPublisher;
 
 $pdo = new PDO('sqlite::memory:');
@@ -34,12 +36,17 @@ $insertMeta->execute([3, 'independant_digital', 'editorial_ready', '1']);
 $insertMeta->execute([4, 'independant_digital', 'editorial_ready', '1']);
 $insertMeta->execute([5, 'unrelated', 'editorial_ready', '1']);
 
-$publisher = new ScheduledPublisher($pdo);
+$invalidated = [];
+$publisher = new ScheduledPublisher($pdo, function (array $ids) use (&$invalidated): void { $invalidated = $ids; });
 $published = $publisher->publishDue(new DateTimeImmutable('2026-08-27 12:00:00', new DateTimeZone('UTC')));
 
 $failures = 0;
 if ($published !== [1]) {
     fwrite(STDERR, 'FAIL: only the due and editorially approved post may publish; got ' . json_encode($published) . "\n");
+    $failures++;
+}
+if ($invalidated !== [1]) {
+    fwrite(STDERR, "FAIL: published content did not trigger cache invalidation.\n");
     $failures++;
 }
 
@@ -79,11 +86,12 @@ if (substr_count($seed, "'independant_digital','editorial_ready','0'") < 3) {
 $dockerfile = (string) file_get_contents($root . '/Dockerfile.dokploy');
 $dockerignore = (string) file_get_contents($root . '/.dockerignore');
 $init = (string) file_get_contents($root . '/init.dokploy.sh');
+$approval = (string) file_get_contents($root . '/scripts/approve-scheduled-content.php');
 if (! str_contains($dockerfile, 'publish-scheduled-content.php') || ! str_contains($dockerfile, 'scheduled-publisher.php')) {
     fwrite(STDERR, "FAIL: production image does not include the scheduled publisher.\n");
     $failures++;
 }
-foreach (['!app/sql/mysqli/post.sql', '!app/sql/pgsql/post.sql', '!app/sql/sqlite/post.sql', '!scripts/lib/scheduled-publisher.php', '!scripts/publish-scheduled-content.php'] as $buildInput) {
+foreach (['!app/sql/mysqli/post.sql', '!app/sql/pgsql/post.sql', '!app/sql/sqlite/post.sql', '!scripts/lib/scheduled-publisher.php', '!scripts/lib/cache-invalidator.php', '!scripts/publish-scheduled-content.php', '!scripts/approve-scheduled-content.php', '!scripts/migrate-lead-schema.php'] as $buildInput) {
     if (! str_contains($dockerignore, $buildInput)) {
         fwrite(STDERR, "FAIL: Docker build context excludes required scheduler input $buildInput.\n");
         $failures++;
@@ -93,6 +101,33 @@ if (! str_contains($init, 'publish-scheduled-content.php')) {
     fwrite(STDERR, "FAIL: production startup does not run the scheduled publisher.\n");
     $failures++;
 }
+$publisherCli = (string) file_get_contents($root . '/scripts/publish-scheduled-content.php');
+if (! str_contains($publisherCli, '.scheduled-publisher-cache-dirty')) {
+    fwrite(STDERR, "FAIL: failed cache invalidation is not retried on the next publisher run.\n");
+    $failures++;
+}
+foreach (['editorial_ready', 'editorial_reviewer', 'editorial_approved_at'] as $auditField) {
+    if (! str_contains($approval, $auditField)) {
+        fwrite(STDERR, "FAIL: approval command does not record $auditField.\n");
+        $failures++;
+    }
+}
+
+$cacheRoot = sys_get_temp_dir() . '/independant-digital-cache-' . bin2hex(random_bytes(4));
+@mkdir($cacheRoot . '/public/page-cache', 0777, true);
+@mkdir($cacheRoot . '/storage/compiled-templates', 0777, true);
+file_put_contents($cacheRoot . '/public/page-cache/page.html', 'stale');
+file_put_contents($cacheRoot . '/storage/compiled-templates/app_1_page.html', 'stale');
+CacheInvalidator::clear($cacheRoot);
+if (is_file($cacheRoot . '/public/page-cache/page.html') || is_file($cacheRoot . '/storage/compiled-templates/app_1_page.html')) {
+    fwrite(STDERR, "FAIL: frontend cache files remain after scheduled publication.\n");
+    $failures++;
+}
+@rmdir($cacheRoot . '/public/page-cache');
+@rmdir($cacheRoot . '/public');
+@rmdir($cacheRoot . '/storage/compiled-templates');
+@rmdir($cacheRoot . '/storage');
+@rmdir($cacheRoot);
 
 if ($failures > 0) {
     fwrite(STDERR, "scheduled-publisher tests: FAIL ($failures issue(s))\n");

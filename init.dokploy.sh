@@ -19,10 +19,12 @@ if [ ! -f /var/www/html/public/index.php ]; then
     export DIR_ADMIN=${DIR_VVVEB}'/admin'
     export DIR_DIGITAL_ASSETS=${DIR_STORAGE}'/digital_assets'
     export DIR_IMAGE_CACHE=${DIR_PUBLIC}'/image-cache'
-    export DOWNLOAD_URL=${DOWNLOAD_URL:='https://www.vvveb.com/download.php'}
+    DOWNLOAD_URL='https://github.com/givanz/Vvveb/releases/download/1.0.8.6/latest.zip'
+    DOWNLOAD_SHA256='7100be7f5a08d5ccc4a9d90980e492e76f503f2a98eb98746a5c322e47b02704'
 
     echo "[init] Bootstrapping Vvveb from ${DOWNLOAD_URL}…"
-    curl -Lo /tmp/vvveb.zip ${DOWNLOAD_URL}
+    curl --fail --location --silent --show-error -o /tmp/vvveb.zip "${DOWNLOAD_URL}"
+    echo "${DOWNLOAD_SHA256}  /tmp/vvveb.zip" | sha256sum -c -
     unzip -o /tmp/vvveb.zip -d ${DIR_VVVEB}
     rm -rf /tmp/vvveb.zip
 
@@ -91,6 +93,19 @@ fi
 if [ -f /opt/seed/seed.dokploy.php ]; then
     echo "[init] Scheduling one-time DB seed (background)…"
     ( php /opt/seed/seed.dokploy.php || true ) &
+fi
+
+# Upgrade existing lead queues as well as fresh installs. Database startup can
+# lag behind the web container, so retry without blocking nginx/php-fpm.
+if [ -f /var/www/html/scripts/migrate-lead-schema.php ]; then
+    (
+        attempt=1
+        while [ "$attempt" -le 12 ]; do
+            php /var/www/html/scripts/migrate-lead-schema.php && break
+            attempt=$((attempt + 1))
+            sleep 5
+        done
+    ) &
 fi
 
 # Publish only due posts carrying independant_digital/editorial_ready=1.

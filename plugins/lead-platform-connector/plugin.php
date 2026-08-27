@@ -119,29 +119,20 @@ class LeadPlatformConnectorPlugin {
 	}
 
 	/**
-	 * Run install if our tables are missing. Cached via filesystem flag so we
-	 * don't hit the DB on every admin request.
+	 * Run the current schema migration once per version. The versioned marker
+	 * intentionally changes when migrations change, including on existing sites.
 	 */
 	function ensureInstalled() {
 		// Use a flag file so we don't hit the DB on every admin request.
 		// Delete it (or drop the tables) to re-trigger install.
-		$flag = DIR_ROOT . 'storage/cache/lpc-installed';
+		$flag = DIR_ROOT . 'storage/cache/lpc-schema-v2';
 		if (is_file($flag)) {
 			return;
 		}
 
 		try {
-			$exists = $this->leadEndpointTableExists();
-
-			if (! $exists) {
-				$this->install();
-				// Re-check: only set the flag if install actually succeeded.
-				// If install silently failed (perms, DB not ready), leave the
-				// flag absent so we retry on the next admin request.
-				$exists = $this->leadEndpointTableExists();
-			}
-
-			if ($exists) {
+			$this->install();
+			if ($this->schemaReady()) {
 				@touch($flag);
 			}
 		} catch (\Throwable $e) {
@@ -149,21 +140,15 @@ class LeadPlatformConnectorPlugin {
 		}
 	}
 
-	private function leadEndpointTableExists(): bool {
+	private function schemaReady(): bool {
 		$db = Db::getInstance();
-		$stmt = $db->execute('SHOW TABLES LIKE :name', ['name' => 'lead_endpoint']);
-		if (! $stmt) {
-			return false;
-		}
-		if (method_exists($stmt, 'get_result')) {
-			$res = $stmt->get_result();
-			return (bool) ($res && $res->num_rows > 0);
-		}
-		$rows = $db->fetchAll($stmt);
-		return is_array($rows) && count($rows) > 0;
+		$endpoint = $db->execute('SELECT slug FROM lead_endpoint WHERE 1 = 0');
+		$submission = $db->execute('SELECT provider_slug, consent_text_version, consent_at, payload_enc FROM lead_submission WHERE 1 = 0');
+		return $endpoint !== false && $submission !== false;
 	}
 
 	function app() {
+		$this->ensureInstalled();
 		// Inject <script src=".../lead-form.js"> into every visitor-facing page
 		// via output buffering. We can't rely on the vtpl-based template that
 		// used to live in app/template/lead-form.tpl because vtpl doesn't

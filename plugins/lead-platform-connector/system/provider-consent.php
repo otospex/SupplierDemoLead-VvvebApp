@@ -15,7 +15,7 @@ class ProviderConsent {
 		'consent_timestamp',
 	];
 
-	public static function validate(array $fields, array $allowedProviders): array {
+	public static function validate(array $fields, array $allowedProviders, ?\DateTimeImmutable $receivedAt = null): array {
 		$requested = $fields['provider_introduction_requested'] ?? null;
 		$hasProviderData = false;
 
@@ -35,29 +35,22 @@ class ProviderConsent {
 		}
 
 		$provider = strtolower(trim((string) ($fields['provider_slug'] ?? '')));
-		$allowed = array_map(function ($slug) {
-			return strtolower(trim((string) $slug));
-		}, $allowedProviders);
+		$allowed = [];
+		foreach ($allowedProviders as $slug => $version) {
+			$allowed[strtolower(trim((string) $slug))] = trim((string) $version);
+		}
 
-		if ($provider === '' || ! in_array($provider, $allowed, true)) {
+		if ($provider === '' || ! array_key_exists($provider, $allowed)) {
 			return self::error('Le fournisseur demandé n’est pas autorisé.');
 		}
 
 		$version = trim((string) ($fields['consent_text_version'] ?? ''));
-		if ($version === '' || ! preg_match('/^[a-z0-9][a-z0-9._-]{2,63}$/i', $version)) {
+		if ($version === '' || ! hash_equals($allowed[$provider], $version)) {
 			return self::error('La version du consentement est manquante ou invalide.');
 		}
 
-		$timestamp = trim((string) ($fields['consent_timestamp'] ?? ''));
-		try {
-			$date = new \DateTimeImmutable($timestamp);
-		} catch (\Throwable $e) {
-			return self::error('La date du consentement est invalide.');
-		}
-
-		if ($timestamp === '' || strpos($timestamp, 'T') === false) {
-			return self::error('La date du consentement est invalide.');
-		}
+		$date = ($receivedAt ?? new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
+			->setTimezone(new \DateTimeZone('UTC'));
 
 		return [
 			'ok' => true,
@@ -65,7 +58,7 @@ class ProviderConsent {
 			'audit' => [
 				'provider_slug' => $provider,
 				'consent_text_version' => $version,
-				'consent_at' => $date->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s'),
+				'consent_at' => $date->format('Y-m-d H:i:s'),
 			],
 		];
 	}

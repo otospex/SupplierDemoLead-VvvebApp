@@ -574,7 +574,7 @@ Commit as `fix: clear launch editorial and identity blockers`.
 - Consumes: Tasks 1–11.
 - Produces: reproducible evidence for the exact launch-ready boundary and any external configuration still required.
 
-- [ ] **Step 1: Run all automated checks**
+- [x] **Step 1: Run all automated checks**
 
 ```bash
 php scripts/tests/editorial-audit-test.php
@@ -593,15 +593,15 @@ php -l seed.dokploy.php
 
 Expected: every command passes.
 
-- [ ] **Step 2: Run route and form checks**
+- [x] **Step 2: Run route and form checks**
 
 With the Docker stack running, verify `/`, methodology, transparency, contact, diagnostic, blog, and one resource page return 200. Verify `/en/` returns 200 with `noindex,follow`. Submit a general diagnostic without provider consent and verify no `provider_slug` is sent. Submit an AIFEL test introduction with explicit consent and verify the consent audit fields.
 
-- [ ] **Step 3: Complete manual QA**
+- [x] **Step 3: Complete manual QA**
 
 Use `docs/editorial/manual-publication-checklist.md` on the homepage, methodology, transparency, and diagnostic. Record failures as issues; do not mark launch-ready while any launch gate is open.
 
-- [ ] **Step 4: Review the diff**
+- [x] **Step 4: Review the diff**
 
 ```bash
 git status --short
