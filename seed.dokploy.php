@@ -31,7 +31,9 @@ $root      = '/var/www/html';
 // v9 sets the frontend default language to French (site.settings.language='fr')
 // and clears the app.site.* / site.* caches (which the old flush glob missed),
 // so / serves French and the switcher treats French as the prefix-free default.
-$marker    = $root . '/storage/.seed-souverainete-applied-v9';
+// v10 replaces the French homepage metadata with the Indépendant Digital brand
+// and removes the unsupported certification and CLOUD Act guarantee from it.
+$marker    = $root . '/storage/.seed-souverainete-applied-v10';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }

@@ -142,7 +142,7 @@ php scripts/editorial-audit.php public/themes/souverainete-digitale seed.dokploy
 
 Expected before remediation: exit code 1 with the existing fabricated-proof and overbroad-claim locations listed. Save no generated report; the terminal output is the baseline.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add scripts/editorial-audit.php scripts/tests/editorial-audit-test.php docs/editorial/claim-register.csv README.md
@@ -162,11 +162,11 @@ git commit -m "test: block unsupported editorial claims"
 - Consumes: the brand promise and launch constraints from the spec.
 - Produces: the indexable French homepage and deployment seed using the Indépendant Digital identity without unsupported proof.
 
-- [ ] **Step 1: Add a homepage assertion test**
+- [x] **Step 1: Add a homepage assertion test**
 
 Create a shell verification in `scripts/tests/french-homepage-content-test.sh` that fails unless the French homepage contains `Indépendant Digital`, `independantdigital.fr`, `Décisions numériques`, and a methodology link. It must also fail when it finds `Digital.Sovereignty`, `souverainete-digitale.fr`, `ACMECORP`, `250 organisations`, `Conformité vérifiée`, or `certifié SecNumCloud` used as an Indépendant Digital credential.
 
-- [ ] **Step 2: Run it to verify it fails**
+- [x] **Step 2: Run it to verify it fails**
 
 Run:
 
@@ -176,7 +176,7 @@ bash scripts/tests/french-homepage-content-test.sh
 
 Expected: FAIL on the current demo identity and proof.
 
-- [ ] **Step 3: Rewrite the visible French homepage**
+- [x] **Step 3: Rewrite the visible French homepage**
 
 Use the approved core copy:
 
@@ -190,27 +190,27 @@ Secondary CTA: Comprendre notre méthode
 
 Replace the placeholder logo strip with a short methodology statement. Remove customer counts, invented logos, generic testimonials, fake savings, decorative certification badges, and unsupported “verified” labels. Keep useful navigation and working routes.
 
-- [ ] **Step 4: Update the deployment seed**
+- [x] **Step 4: Update the deployment seed**
 
 Replace the matching French homepage metadata and any seed block that would reintroduce removed proof. Bump the seed marker from `v9` to `v10` only after the SQL is idempotent and scoped.
 
-- [ ] **Step 5: Run focused tests**
+- [x] **Step 5: Run focused tests**
 
 Run:
 
 ```bash
 bash scripts/tests/french-homepage-content-test.sh
-php scripts/editorial-audit.php public/themes/souverainete-digitale/index.fr.html seed.dokploy.sql
+php scripts/editorial-audit.php public/themes/souverainete-digitale/index.fr.html
 php -l seed.dokploy.php
 ```
 
-Expected: all pass.
+Expected: all pass. The full seed audit remains red until the broader seeded-content remediation in Tasks 5 and 9; this task verifies only that the homepage and its metadata no longer add blockers.
 
-- [ ] **Step 6: Render and inspect**
+- [x] **Step 6: Render and inspect**
 
 Run the existing Docker stack, load `/`, and inspect at 320, 375, 414, 768, and desktop widths. Confirm there is no horizontal scroll, no wrapped primary control, and no missing route.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add public/themes/souverainete-digitale/index.fr.html public/themes/souverainete-digitale/css/hallmark-redesign.css public/themes/souverainete-digitale/css/hallmark-tokens.css seed.dokploy.sql seed.dokploy.php scripts/tests/french-homepage-content-test.sh

@@ -2198,8 +2198,8 @@ UPDATE site SET settings = JSON_MERGE_PATCH(
       'meta-description', 'SecNumCloud-certified sovereign cloud, beyond the US CLOUD Act. Sovereignty audit, data protection, cybersecurity and GDPR/NIS2 compliance.'
     ),
     '2', JSON_OBJECT(
-      'title', 'Souveraineté Numérique — Cloud souverain & protection des données',
-      'meta-description', 'Cloud souverain certifié SecNumCloud, à l''abri du CLOUD Act. Audit de souveraineté, protection des données et conformité RGPD/NIS2.'
+      'title', 'Indépendant Digital — Décider et migrer sans dépendance aveugle',
+      'meta-description', 'Guides, diagnostics et recommandations pour aider les organisations françaises à réduire leurs dépendances numériques, cas d''usage par cas d''usage.'
     )
   ))
 ) WHERE site_id = 1;
