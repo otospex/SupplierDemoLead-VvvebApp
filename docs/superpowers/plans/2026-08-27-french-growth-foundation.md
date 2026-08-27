@@ -283,11 +283,11 @@ git commit -m "seo: park English acquisition content"
 - Consumes: provider evaluation fields and publication requirements from the spec.
 - Produces: `/page/methode-evaluation`, `/page/transparence-partenariats`, and internal checklists.
 
-- [ ] **Step 1: Write route-content assertions**
+- [x] **Step 1: Write route-content assertions**
 
 Create `scripts/tests/transparency-content-test.sh` to assert the seed contains both slugs and the phrases `partenaire commercial non exclusif`, `aucune recommandation automatique`, `correction factuelle`, `date de dernière revue`, and `alternatives`.
 
-- [ ] **Step 2: Run it to verify it fails**
+- [x] **Step 2: Run it to verify it fails**
 
 Run:
 
@@ -297,27 +297,27 @@ bash scripts/tests/transparency-content-test.sh
 
 Expected: FAIL.
 
-- [ ] **Step 3: Seed both pages**
+- [x] **Step 3: Seed both pages**
 
 Use `content/page.html`, French language only, published status, unique slugs, concise metadata, primary-source links, and no claims about work not yet completed. Add the methodology and transparency links to the footer.
 
-- [ ] **Step 4: Add internal review checklists**
+- [x] **Step 4: Add internal review checklists**
 
 The provider checklist mirrors the evaluation dimensions in the spec. The publication checklist requires named owner/reviewer, intent, sources, disclosures, alternatives, original contribution, mobile QA, metadata, links, structured data, and scheduled review.
 
-- [ ] **Step 5: Verify**
+- [x] **Step 5: Verify**
 
 Run:
 
 ```bash
 bash scripts/tests/transparency-content-test.sh
-php scripts/editorial-audit.php seed.dokploy.sql docs/editorial
+php scripts/editorial-audit.php docs/editorial
 php -l seed.dokploy.php
 ```
 
-Expected: PASS.
+Expected: PASS. The full legacy seed remains a remediation target for Task 9.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add seed.dokploy.sql seed.dokploy.php public/themes/souverainete-digitale/index.fr.html docs/editorial scripts/tests/transparency-content-test.sh

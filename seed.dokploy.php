@@ -33,7 +33,8 @@ $root      = '/var/www/html';
 // so / serves French and the switcher treats French as the prefix-free default.
 // v10 replaces the French homepage metadata with the Indépendant Digital brand
 // and removes the unsupported certification and CLOUD Act guarantee from it.
-$marker    = $root . '/storage/.seed-souverainete-applied-v10';
+// v11 publishes the evaluation method and partnership-transparency pages.
+$marker    = $root . '/storage/.seed-souverainete-applied-v11';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }
