@@ -392,17 +392,17 @@ git commit -m "feat: require named consent for provider introductions"
 - Consumes: authored provider or alternatives Markdown working copy before it is converted into Vvveb seed HTML.
 - Produces: pass/fail validation for mandatory headings, disclosure, review metadata, sources, fit/not-fit, evidence gaps, and alternatives.
 
-- [ ] **Step 1: Write failing fixture tests**
+- [x] **Step 1: Write failing fixture tests**
 
 Test a provider fixture missing `## Alternatives` and `## Ne convient pas si`; test an alternatives fixture missing keyword evidence and methodology. Both must fail. Complete fixtures must pass.
 
-- [ ] **Step 2: Implement templates and validator**
+- [x] **Step 2: Implement templates and validator**
 
 Provider headings are: Summary, Best fit, Does not fit, Capabilities, Hosting and jurisdiction, Security evidence, Integration and reversibility, Pricing, Evidence gaps, Commercial relationship, Alternatives, Sources, Review record.
 
 Alternatives headings are: Search intent, Demand evidence, Selection method, Decision table, Detailed alternatives, Migration considerations, Commercial relationships, Sources, Review record.
 
-- [ ] **Step 3: Create the opportunity register**
+- [x] **Step 3: Create the opportunity register**
 
 Use this header:
 
@@ -410,7 +410,7 @@ Use this header:
 query_cluster,country,language,monthly_volume,gsc_impressions_90d,intent,commercial_relevance,distinct_intent,original_analysis_ready,cannibalization_checked,decision,checked_on,source,owner,notes
 ```
 
-- [ ] **Step 4: Verify and commit**
+- [x] **Step 4: Verify and commit**
 
 Run:
 
