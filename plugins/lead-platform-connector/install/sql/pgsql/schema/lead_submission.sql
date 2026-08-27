@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS lead_submission (
   "consent_text_version" varchar(64) DEFAULT NULL,
   "consent_at" timestamp(0) DEFAULT NULL,
   "payload" text DEFAULT NULL,
+  "payload_enc" text DEFAULT NULL,
   "response" text DEFAULT NULL,
   "error" text DEFAULT NULL,
   "client_ip" varchar(45) DEFAULT NULL,

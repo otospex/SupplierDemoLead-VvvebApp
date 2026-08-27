@@ -5,7 +5,9 @@ namespace Vvveb\Plugins\LeadPlatformConnector\Controller;
 use Vvveb\System\Core\Request;
 use Vvveb\Plugins\LeadPlatformConnector\System\Crypto;
 use Vvveb\Plugins\LeadPlatformConnector\System\CsrfToken;
+use Vvveb\Plugins\LeadPlatformConnector\System\DeliveryMode;
 use Vvveb\Plugins\LeadPlatformConnector\System\LeadClient;
+use Vvveb\Plugins\LeadPlatformConnector\System\PrivacyAcknowledgement;
 use Vvveb\Plugins\LeadPlatformConnector\System\ProviderConsent;
 use Vvveb\Plugins\LeadPlatformConnector\System\Repo;
 
@@ -154,11 +156,11 @@ class Submit {
 			Repo::exec(
 				'INSERT INTO lead_submission
 				 (endpoint_slug, status, platform_lead_id, http_status, phone_hash, email_hash,
-				  provider_slug, consent_text_version, consent_at, payload, response, error,
+				  provider_slug, consent_text_version, consent_at, payload, payload_enc, response, error,
 				  client_ip, user_agent, source_page, attempts, created_at, updated_at)
 				 VALUES
 				 (:slug, :status, :pid, :http, :phash, :ehash, :provider, :consent_version,
-				  :consent_at, :payload, :response, :error, :ip, :ua, :sp, :att,
+				  :consent_at, :payload, :payload_enc, :response, :error, :ip, :ua, :sp, :att,
 				  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
 				$row
 			);
@@ -239,6 +241,12 @@ class Submit {
 			$this->json(429, ['ok' => false, 'message' => 'Too many requests']);
 		}
 
+		$privacy = PrivacyAcknowledgement::validate($fields);
+		if (! $privacy['ok']) {
+			$this->json(422, ['ok' => false, 'message' => $privacy['message']]);
+		}
+		$fields = $privacy['fields'];
+
 		$consent = ProviderConsent::validate($fields, ['aifel']);
 		if (! $consent['ok']) {
 			$this->json(422, ['ok' => false, 'message' => $consent['message']]);
@@ -255,9 +263,8 @@ class Submit {
 			}
 		}
 
-		try {
-			$apiKey = Crypto::decrypt((string) $endpoint['api_key_enc']);
-		} catch (\Throwable $e) {
+		$deliveryMode = DeliveryMode::resolve($endpoint);
+		if ($deliveryMode === DeliveryMode::MISCONFIGURED) {
 			$this->json(500, ['ok' => false, 'message' => 'Endpoint misconfigured']);
 		}
 
@@ -280,7 +287,16 @@ class Submit {
 		// Drop empty values to keep the request tidy.
 		$payload = array_filter($payload, function ($v) { return $v !== null && $v !== ''; });
 
-		$result = LeadClient::send((string) $endpoint['platform_url'], $apiKey, $payload, 8);
+		if ($deliveryMode === DeliveryMode::FORWARD) {
+			try {
+				$apiKey = Crypto::decrypt((string) $endpoint['api_key_enc']);
+			} catch (\Throwable $e) {
+				$this->json(500, ['ok' => false, 'message' => 'Endpoint misconfigured']);
+			}
+			$result = LeadClient::send((string) $endpoint['platform_url'], $apiKey, $payload, 8);
+		} else {
+			$result = ['ok' => false, 'http' => null, 'error' => null, 'raw' => null];
+		}
 
 		// Best-effort PII detection for hashing in audit log.
 		$phoneVal = null; $emailVal = null;
@@ -318,6 +334,7 @@ class Submit {
 			'consent_version' => $consentAudit['consent_text_version'] ?? null,
 			'consent_at' => $consentAudit['consent_at'] ?? null,
 			'payload'  => json_encode($payloadForLog),
+			'payload_enc' => null,
 			'response' => isset($result['raw']) ? mb_substr((string) $result['raw'], 0, 4000) : null,
 			'error'    => $result['error'] ?? null,
 			'ip'       => $ip,
@@ -325,6 +342,18 @@ class Submit {
 			'sp'       => mb_substr($source, 0, 255),
 			'att'      => 1,
 		];
+
+		if ($deliveryMode === DeliveryMode::QUEUE) {
+			try {
+				$logRow['payload_enc'] = Crypto::encrypt((string) json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+			} catch (\Throwable $e) {
+				$this->json(500, ['ok' => false, 'message' => 'Secure lead queue unavailable']);
+			}
+			$logRow['status'] = 'pending';
+			$logRow['att'] = 0;
+			$this->logSubmission($logRow);
+			$this->json(200, ['ok' => true, 'queued' => true]);
+		}
 
 		if ($result['ok']) {
 			$this->logSubmission($logRow);
@@ -358,6 +387,11 @@ class Submit {
 
 		// 5xx / network: persist for retry, treat as soft success so user is not blocked.
 		$logRow['status'] = 'pending';
+		try {
+			$logRow['payload_enc'] = Crypto::encrypt((string) json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+		} catch (\Throwable $e) {
+			$logRow['error'] = trim((string) ($logRow['error'] ?? '') . ' Encrypted retry payload unavailable.');
+		}
 		$this->logSubmission($logRow);
 		$this->json(200, ['ok' => true, 'queued' => true]);
 	}

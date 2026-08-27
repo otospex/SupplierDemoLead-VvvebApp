@@ -24,6 +24,12 @@ provider is forwarded only when the form sends `provider_introduction_requested=
 an allowlisted `provider_slug`, a versioned consent sentence, and a timestamp.
 Newsletter consent and endpoint names never imply provider consent.
 
+An active endpoint with both `platform_url` and `api_key_enc` blank runs in
+local queue mode. The full delivery payload is encrypted separately in
+`payload_enc`; the ordinary audit payload remains stripped of phone and e-mail.
+Filling both endpoint values later switches the same forms to forwarding mode.
+A partially configured endpoint fails closed.
+
 ## What's included
 
 | File | Purpose |
@@ -85,6 +91,7 @@ Unmapped fields whose key isn't a known top-level field are auto-collected into 
 - Per-IP file-based rate limiting per endpoint (default 30/min, configurable).
 - Honeypot field + minimum-time-to-submit gate (default 1500 ms).
 - Phone/email hashed in audit log; raw payload excludes them.
+- Pending delivery payload encrypted at rest in a separate queue column.
 - Named introductions store only provider, consent version and consent time in
   dedicated audit columns; the raw consent sentence is not duplicated.
 - Soft success on platform 5xx/network — submission persisted as `pending` for retry; visitor isn't blocked.

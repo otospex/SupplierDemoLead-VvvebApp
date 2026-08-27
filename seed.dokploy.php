@@ -35,7 +35,7 @@ $root      = '/var/www/html';
 // and removes the unsupported certification and CLOUD Act guarantee from it.
 // v11 publishes the evaluation method and partnership-transparency pages.
 // v12 migrates named-provider consent audit fields for existing lead tables.
-$marker    = $root . '/storage/.seed-souverainete-applied-v12';
+$marker    = $root . '/storage/.seed-souverainete-applied-v13';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }

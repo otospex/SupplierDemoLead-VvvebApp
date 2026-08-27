@@ -472,13 +472,107 @@ git add docs/providers/aifel
 git commit -m "docs: establish AIFEL evidence and qualification gate"
 ```
 
-### Task 9: Full foundation verification
+### Task 9: Build the French launch content and local lead queue
+
+**Files:**
+- Modify: `seed.dokploy.sql`
+- Modify: `seed.dokploy.php`
+- Modify: `public/themes/souverainete-digitale/index.fr.html`
+- Modify: `public/themes/souverainete-digitale/content/contact.fr.html`
+- Modify: `plugins/lead-platform-connector/app/controller/submit.php`
+- Create: `plugins/lead-platform-connector/system/delivery-mode.php`
+- Create: `plugins/lead-platform-connector/tests/delivery-mode-test.php`
+- Create: `scripts/tests/launch-content-test.php`
+
+**Interfaces:**
+- Consumes: French positioning, editorial rules and lead payload contract.
+- Produces: useful live pages, a diagnostic/contact journey and locally queued submissions that can be wired to the external distribution API without changing the forms.
+
+- [x] **Step 1: Write failing launch-content and delivery-mode tests**
+
+Assert that the seed contains live methodology, transparency, diagnostic, contact, about, independence hub, Microsoft 365 exit guide and collaboration-selection guide pages. Assert that each live form uses the launch endpoint and carries a privacy acknowledgement. Assert that a blank platform URL selects local queue mode.
+
+- [x] **Step 2: Implement local queue mode**
+
+Allow an active endpoint with an empty platform URL/API key to validate and store the submission as `pending` without external transmission. Preserve the same audit and response contract used when the distribution API is configured later.
+
+- [x] **Step 3: Seed and link the live launch set**
+
+Rewrite the diagnostic, contact and about content; publish the two decision guides; seed the queue-only endpoint; and make the French navigation expose only working, reviewed routes.
+
+- [x] **Step 4: Verify and commit**
+
+Run launch, consent, transparency and editorial checks, then commit as `feat: build French launch journey and lead queue`.
+
+### Task 10: Add gated scheduled publishing
+
+**Files:**
+- Create: `scripts/lib/scheduled-publisher.php`
+- Create: `scripts/publish-scheduled-content.php`
+- Create: `scripts/tests/scheduled-publisher-test.php`
+- Modify: `app/sql/mysqli/post.sql`
+- Modify: `app/sql/pgsql/post.sql`
+- Modify: `app/sql/sqlite/post.sql`
+- Modify: `seed.dokploy.sql`
+- Modify: `docs/editorial/keyword-opportunity-register.csv`
+
+**Interfaces:**
+- Consumes: posts with `status=scheduled`, a due `created_at`, and `post_meta.editorial_ready=1`.
+- Produces: atomic publication of eligible posts; held drafts and future posts remain inaccessible.
+
+- [ ] **Step 1: Write the failing scheduler test**
+
+Use an in-memory SQLite database to prove that only due, editorially approved records publish.
+
+- [ ] **Step 2: Implement the publisher and route status guard**
+
+Add a CLI publisher suitable for a Dokploy cron job. Ensure direct page lookups respect `status=publish` so scheduled content cannot leak by slug.
+
+- [ ] **Step 3: Seed the content calendar**
+
+Add complete French working drafts for Teams alternatives, a French Zoom alternative and French collaborative suites. Keep `editorial_ready=0` until keyword demand and manual QA are recorded.
+
+- [ ] **Step 4: Verify and commit**
+
+Run scheduler tests and verify held routes return 404 in the seeded stack.
+
+### Task 11: Remove unsafe legacy proof and finish technical launch policy
+
+**Files:**
+- Modify: `seed.dokploy.sql`
+- Modify: `public/themes/souverainete-digitale/index.html`
+- Modify: `public/themes/souverainete-digitale/generated/*.fr.html`
+- Modify: `public/themes/souverainete-digitale/content/*.fr.html`
+- Create: `docs/launch/open-items.md`
+- Create: `scripts/tests/launch-policy-test.sh`
+
+**Interfaces:**
+- Consumes: the editorial baseline and live/scheduled content decisions.
+- Produces: zero unsupported-claim blockers, no placeholder identities, correct indexation and an explicit list of external legal/credential inputs still required.
+
+- [ ] **Step 1: Write launch-policy assertions**
+
+Test the final domain, French metadata, parked English policy, absence of demo identities and absence of publishable forms pointing at development endpoints.
+
+- [ ] **Step 2: Remediate legacy content**
+
+Remove fabricated proof, narrow legal/security statements and retire content that cannot be sourced. Do not publish invented legal entity, hosting or contact details.
+
+- [ ] **Step 3: Clear the editorial audit**
+
+Run the audit over theme, seed, editorial and provider documentation until it returns zero blockers.
+
+- [ ] **Step 4: Commit**
+
+Commit as `fix: clear launch editorial and identity blockers`.
+
+### Task 12: Full launch verification
 
 **Files:** none.
 
 **Interfaces:**
-- Consumes: Tasks 1–8.
-- Produces: evidence that the foundation is ready for the separate homepage, diagnostic, AIFEL publication, and acquisition implementation plans.
+- Consumes: Tasks 1–11.
+- Produces: reproducible evidence for the exact launch-ready boundary and any external configuration still required.
 
 - [ ] **Step 1: Run all automated checks**
 
@@ -489,6 +583,10 @@ bash scripts/tests/language-policy-test.sh
 bash scripts/tests/transparency-content-test.sh
 php plugins/lead-platform-connector/tests/consent-test.php
 php scripts/tests/content-contract-test.php
+php plugins/lead-platform-connector/tests/delivery-mode-test.php
+php scripts/tests/launch-content-test.php
+php scripts/tests/scheduled-publisher-test.php
+bash scripts/tests/launch-policy-test.sh
 php scripts/editorial-audit.php public/themes/souverainete-digitale seed.dokploy.sql docs/editorial docs/providers
 php -l seed.dokploy.php
 ```

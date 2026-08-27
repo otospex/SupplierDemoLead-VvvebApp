@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `lead_submission` (
   `consent_text_version` TEXT DEFAULT NULL,
   `consent_at` datetime DEFAULT NULL,
   `payload` TEXT DEFAULT NULL,
+  `payload_enc` TEXT DEFAULT NULL,
   `response` TEXT DEFAULT NULL,
   `error` TEXT DEFAULT NULL,
   `client_ip` TEXT DEFAULT NULL,
