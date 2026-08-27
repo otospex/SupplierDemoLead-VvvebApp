@@ -8,7 +8,15 @@ if (! defined('V_VERSION')) {
 
 class Crypto {
 
-	private static function key(): string {
+	/**
+	 * The per-installation secret every plugin HMAC/cipher key derives from.
+	 *
+	 * Vvveb defines neither SECRET nor AUTH_KEY, so in practice this is the
+	 * random key file generated once under storage/ (git-ignored, 0600). It is
+	 * shared with CsrfToken so the lead-form token cannot fall back to a
+	 * hard-coded string that anyone reading the public repo could reproduce.
+	 */
+	public static function secret(): string {
 		$secret = defined('SECRET') ? SECRET : (defined('AUTH_KEY') ? AUTH_KEY : '');
 
 		if (! $secret) {
@@ -25,7 +33,15 @@ class Crypto {
 			$secret = (string) @file_get_contents($file);
 		}
 
-		return hash('sha256', $secret, true);
+		if ($secret === '') {
+			throw new \RuntimeException('Lead Platform Connector secret unavailable: storage/ is not writable');
+		}
+
+		return $secret;
+	}
+
+	private static function key(): string {
+		return hash('sha256', self::secret(), true);
 	}
 
 	public static function encrypt(string $plaintext): string {

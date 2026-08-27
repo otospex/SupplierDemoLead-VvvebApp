@@ -30,6 +30,6 @@
  	'cache' => [
  		'driver'  => 'file',
  	],
- 	'cronkey' => 'oqTSet93cWukC74PBmP9x8XCuYWbw6Nk',
- 	'key'     => 'I0JedM5c2tOVAZ6qYgkJAyjTcANAlkLW'
+ 	'cronkey' => 'B2oEGTCQHMN0RQWJptBCpdd87HbVY33X',
+ 	'key'     => 'PN5Aoxi26WnHNAvrNsvGbTObcjv0k6MM'
  ];

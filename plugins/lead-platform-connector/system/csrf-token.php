@@ -11,8 +11,10 @@ class CsrfToken {
 	const TTL = 1800; // 30 min
 
 	private static function secret(): string {
-		$secret = defined('SECRET') ? SECRET : (defined('AUTH_KEY') ? AUTH_KEY : 'lead-connector-fallback');
-		return hash('sha256', 'lpc-csrf|' . $secret, true);
+		// Same per-installation secret as the API-key cipher (random key file
+		// under storage/). Never a literal fallback: this repo is public, so a
+		// hard-coded value would let anyone mint valid form tokens.
+		return hash('sha256', 'lpc-csrf|' . Crypto::secret(), true);
 	}
 
 	public static function issue(string $endpointSlug): string {
