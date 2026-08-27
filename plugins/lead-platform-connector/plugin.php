@@ -178,9 +178,9 @@ class LeadPlatformConnectorPlugin {
 			if (! is_string($html) || $html === '') return $html;
 			// Only inject when a Lead Form is present on the page.
 			if (strpos($html, 'data-v-endpoint=') === false) return $html;
-			if (strpos($html, 'plugins/lead-platform-connector/js/lead-form.js') !== false) return $html;
+			if (strpos($html, 'plugins/lead-platform-connector/js/lead-form.20260827.js') !== false) return $html;
 
-			$src = (defined('PUBLIC_PATH') ? PUBLIC_PATH : '/') . 'plugins/lead-platform-connector/js/lead-form.js';
+			$src = (defined('PUBLIC_PATH') ? PUBLIC_PATH : '/') . 'plugins/lead-platform-connector/js/lead-form.20260827.js';
 			$tag = '<script src="' . htmlspecialchars($src, ENT_QUOTES) . '" defer></script>';
 
 			// Inject before </body> if present, otherwise append.

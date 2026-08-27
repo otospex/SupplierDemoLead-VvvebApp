@@ -82,21 +82,21 @@
 
 			const hp = form.querySelector('[name="' + HONEYPOT + '"]');
 			if (hp && hp.value) {
-				showAlert(form, 'success', 'Thanks — your request was received.');
+				showAlert(form, 'success', 'Merci — votre demande a bien été reçue.');
 				return;
 			}
 
 			const elapsed = Date.now() - cfg.renderTs;
 			if (cfg.renderTs && elapsed < MIN_TIMEMS) {
-				showAlert(form, 'error', 'One moment — the form just loaded. Please try again.');
+				showAlert(form, 'error', 'Le formulaire vient de charger. Merci de réessayer dans un instant.');
 				return;
 			}
 
 			const btn = form.querySelector('button[type=submit], input[type=submit]');
 			if (btn) {
 				btn.disabled = true;
-				btn.dataset.origLabel = btn.textContent || btn.value || 'Submit';
-				if ('textContent' in btn) btn.textContent = 'Sending…';
+				btn.dataset.origLabel = btn.textContent || btn.value || 'Envoyer';
+				if ('textContent' in btn) btn.textContent = 'Envoi…';
 			}
 
 			const fields = serialize(form, HONEYPOT);
@@ -119,16 +119,16 @@
 			.then(function (res) {
 				if (btn) {
 					btn.disabled = false;
-					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Submit';
+					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Envoyer';
 				}
 
 				if (res.body && res.body.ok) {
-					showAlert(form, 'success', 'Thanks — your request was received.');
+					showAlert(form, 'success', 'Merci — votre demande a bien été reçue.');
 					form.reset();
 					// Refresh token after a successful submit (single-use semantics in practice).
 					fetchToken(cfg.endpoint).then(function (next) { if (next) cfg.csrf = next.csrf; cfg.renderTs = next ? next.renderTs : cfg.renderTs; });
 				} else {
-					const msg = (res.body && res.body.message) ? res.body.message : 'Sorry, something went wrong. Please try again.';
+					const msg = (res.body && res.body.message) ? res.body.message : 'Une erreur est survenue. Merci de réessayer.';
 					showAlert(form, 'error', msg);
 					if (res.http === 419) {
 						// Token expired — refresh it.
@@ -139,9 +139,9 @@
 			.catch(function () {
 				if (btn) {
 					btn.disabled = false;
-					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Submit';
+					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Envoyer';
 				}
-				showAlert(form, 'error', 'Network error. Please try again.');
+				showAlert(form, 'error', 'Erreur réseau. Merci de réessayer.');
 			});
 		});
 	}

@@ -29,7 +29,7 @@
 @leadform|after = <?php
 	if (! isset($GLOBALS['_lpc_runtime_emitted'])) {
 		$GLOBALS['_lpc_runtime_emitted'] = true;
-		$src = (defined('PUBLIC_PATH') ? PUBLIC_PATH : '/') . 'plugins/lead-platform-connector/js/lead-form.js';
+		$src = (defined('PUBLIC_PATH') ? PUBLIC_PATH : '/') . 'plugins/lead-platform-connector/js/lead-form.20260827.js';
 		echo '<script src="' . htmlspecialchars($src, ENT_QUOTES) . '" defer></script>';
 	}
 ?>

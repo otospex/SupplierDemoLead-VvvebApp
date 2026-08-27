@@ -12,6 +12,7 @@
 !config
 config/*
 !config/sites.php
+!config/plugins.php
 
 # Content controller carrying the language-suffixed-template fallback that
 # localizes sub-page / post chrome (content/<name>.<lang>.html).
@@ -25,6 +26,27 @@ app/controller/*
 app/controller/content/*
 !app/controller/content/index.php
 !app/controller/content/post.php
+
+# Frontend post-status guards copied by Dockerfile.dokploy.
+!app/sql
+app/sql/*
+!app/sql/mysqli
+app/sql/mysqli/*
+!app/sql/mysqli/post.sql
+!app/sql/pgsql
+app/sql/pgsql/*
+!app/sql/pgsql/post.sql
+!app/sql/sqlite
+app/sql/sqlite/*
+!app/sql/sqlite/post.sql
+
+# Gated content scheduler copied outside the public document root.
+!scripts
+scripts/*
+!scripts/lib
+scripts/lib/*
+!scripts/lib/scheduled-publisher.php
+!scripts/publish-scheduled-content.php
 
 # Custom plugin sources + browser-served assets (Dockerfile.dokploy COPYs these).
 !plugins

@@ -77,10 +77,17 @@ if (substr_count($seed, "'independant_digital','editorial_ready','0'") < 3) {
 }
 
 $dockerfile = (string) file_get_contents($root . '/Dockerfile.dokploy');
+$dockerignore = (string) file_get_contents($root . '/.dockerignore');
 $init = (string) file_get_contents($root . '/init.dokploy.sh');
 if (! str_contains($dockerfile, 'publish-scheduled-content.php') || ! str_contains($dockerfile, 'scheduled-publisher.php')) {
     fwrite(STDERR, "FAIL: production image does not include the scheduled publisher.\n");
     $failures++;
+}
+foreach (['!app/sql/mysqli/post.sql', '!app/sql/pgsql/post.sql', '!app/sql/sqlite/post.sql', '!scripts/lib/scheduled-publisher.php', '!scripts/publish-scheduled-content.php'] as $buildInput) {
+    if (! str_contains($dockerignore, $buildInput)) {
+        fwrite(STDERR, "FAIL: Docker build context excludes required scheduler input $buildInput.\n");
+        $failures++;
+    }
 }
 if (! str_contains($init, 'publish-scheduled-content.php')) {
     fwrite(STDERR, "FAIL: production startup does not run the scheduled publisher.\n");

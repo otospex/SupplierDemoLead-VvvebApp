@@ -496,7 +496,7 @@ UPDATE post_content SET content='<section class="sd-section"><div class="sd-sect
 
 <section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Notre expertise</span><h2>Un savoir-faire <span class="sd-gradient-text">juridique et technique</span></h2></div>
 <div class="row g-4">
-<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Cloud souverain</h3><p>Conception et migration vers des infrastructures certifiées SecNumCloud, dont l'exposition au CLOUD Act doit être évaluée, avec réversibilité garantie.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Cloud souverain</h3><p>Conception et migration vers des infrastructures certifiées SecNumCloud, dont l\'exposition au CLOUD Act doit être évaluée, avec réversibilité garantie.</p></div></div>
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Protection des données</h3><p>Chiffrement de bout en bout, gestion souveraine des clés (HSM/KMS) et conformité RGPD by design.</p></div></div>
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Cybersécurité &amp; SOC</h3><p>Détection des menaces 24/7, réponse à incident et tests d\'intrusion, alignés sur NIS2.</p></div></div>
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Conformité &amp; audit</h3><p>RGPD, SecNumCloud, ISO 27001, HDS, NIS2 — préparés et vérifiés par des auditeurs accrédités.</p></div></div>
@@ -514,7 +514,7 @@ UPDATE post_content SET content='<section class="sd-section"><div class="sd-sect
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3>Performance</h3><p>La souveraineté sans sacrifier le niveau de service : c\'est aujourd\'hui possible, nous le démontrons.</p></div></div>
 </div></section>
 
-<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Notre couverture</span><h2>Une présence <span class="sd-gradient-text">strictement européenne</span></h2><p class="section-lead">Les lieux d'exploitation et les qualifications sont vérifiés pour chaque service et chaque périmètre.</p></div>
+<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Notre couverture</span><h2>Une présence <span class="sd-gradient-text">strictement européenne</span></h2><p class="section-lead">Les lieux d\'exploitation et les qualifications sont vérifiés pour chaque service et chaque périmètre.</p></div>
 <p>Cette implantation européenne n\'est pas un détail : c\'est la condition même de la souveraineté. Hébergement, exploitation et gouvernance restent dans le périmètre du droit européen, à l\'écart des juridictions extraterritoriales. Pour comprendre les fondements de cette approche, consultez nos ressources sur le <a href="/fr/page/cloud-act-france">CLOUD Act</a>, le <a href="/fr/page/cloud-souverain-guide">cloud souverain</a> et la <a href="/fr/page/souverainete-numerique-guide">souveraineté numérique</a>.</p>
 <blockquote class="sd-cta"><strong>Parlons de votre projet</strong> — réponse personnalisée sous 24h ouvrées, sans engagement, données traitées en Europe. <a href="/fr/page/contact">Nous contacter</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AboutPage", "@id": "https://independantdigital.fr/page/a-propos#main", "name": "À propos", "description": "Experts indépendants en souveraineté numérique : cloud souverain, protection des données, cybersécurité et conformité RGPD/NIS2/SecNumCloud, pour entreprises et secteur public en Europe.", "inLanguage": "fr", "url": "https://independantdigital.fr/page/a-propos", "publisher": {"@type": "Organization", "name": "Indépendant Digital", "url": "https://independantdigital.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://independantdigital.fr/"}, {"@type": "ListItem", "position": 2, "name": "À propos", "item": "https://independantdigital.fr/page/a-propos"}]}]}</script>', meta_description='Experts ind�pendants en souverainet� num�rique : cloud souverain, protection des donn�es, cybers�curit� et conformit� RGPD/NIS2/SecNumCloud, pour entreprises et secteur public en Europe.' WHERE slug='a-propos' AND language_id=@lang_fr;
 UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Our solutions</span><h2>A complete approach to <span class="sd-gradient-text">digital sovereignty</span></h2><p class="section-lead">From initial assessment to operational rollout, our experts cover the full lifecycle of your digital sovereignty strategy: sovereign cloud, data protection, cybersecurity, compliance, consulting and training.</p></div>
@@ -530,7 +530,7 @@ UPDATE post_content SET content='<section class="sd-section"><div class="sd-sect
 <blockquote class="sd-cta"><strong>Request a consultation</strong> — find the right combination of solutions for your organisation. <a href="/en/page/contact">Talk to an expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "@id": "https://independantdigital.fr/page/services#main", "name": "Services", "description": "A complete approach to digital sovereignty: sovereign cloud, data protection, cybersecurity, compliance, consulting and training.", "inLanguage": "en", "url": "https://independantdigital.fr/page/services", "publisher": {"@type": "Organization", "name": "Indépendant Digital", "url": "https://independantdigital.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://independantdigital.fr/"}, {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://independantdigital.fr/page/services"}]}]}</script>', meta_description='A complete approach to digital sovereignty: sovereign cloud, data protection, cybersecurity, compliance, consulting and training.' WHERE slug='services' AND language_id=@lang;
 UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Nos solutions</span><h2>Une approche complète de la <span class="sd-gradient-text">souveraineté numérique</span></h2><p class="section-lead">De l\'évaluation initiale au déploiement opérationnel, nos experts couvrent tout le cycle de vie de votre stratégie de souveraineté numérique : cloud souverain, protection des données, cybersécurité, conformité, conseil et formation.</p></div>
 <div class="row g-4">
-<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/cloud-souverain">Cloud souverain</a></h3><p>Migration et hébergement sur une infrastructure dont le statut SecNumCloud et l'exposition juridique doivent être vérifiés.</p></div></div>
+<div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/cloud-souverain">Cloud souverain</a></h3><p>Migration et hébergement sur une infrastructure dont le statut SecNumCloud et l\'exposition juridique doivent être vérifiés.</p></div></div>
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/protection-donnees">Protection des données</a></h3><p>Chiffrement de bout en bout, gestion souveraine des clés (HSM/KMS) et conservation conforme au RGPD.</p></div></div>
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/cybersecurite-soc">Cybersécurité &amp; SOC</a></h3><p>Détection des menaces 24/7, SOC souverain managé et tests d\'intrusion sur vos charges critiques.</p></div></div>
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/conformite-audit">Conformité &amp; Audit</a></h3><p>Audit RGPD, qualification SecNumCloud, ISO 27001, HDS et conformité NIS2.</p></div></div>
@@ -559,7 +559,7 @@ UPDATE post_content SET content='<section class="sd-section"><div class="sd-sect
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3><a href="/fr/page/directive-nis2-conformite">NIS2</a></h3><p>Mise en conformité à la directive européenne sur la cybersécurité.</p></div></div>
 <div class="col-md-6 col-lg-4"><div class="sd-card"><h3>SOC 2</h3><p>Contrôles de sécurité, disponibilité et confidentialité audités selon le référentiel SOC 2.</p></div></div>
 </div>
-<p>Notre méthode vérifie le périmètre des qualifications, les lieux d'exploitation, le chiffrement annoncé et les conditions de réversibilité. Pour comprendre les fondements réglementaires, consultez nos guides sur le <a href="/fr/page/cloud-act-france">CLOUD Act</a> et le <a href="/fr/page/cloud-de-confiance">cloud de confiance</a>.</p>
+<p>Notre méthode vérifie le périmètre des qualifications, les lieux d\'exploitation, le chiffrement annoncé et les conditions de réversibilité. Pour comprendre les fondements réglementaires, consultez nos guides sur le <a href="/fr/page/cloud-act-france">CLOUD Act</a> et le <a href="/fr/page/cloud-de-confiance">cloud de confiance</a>.</p>
 <blockquote class="sd-cta"><strong>Demander une consultation</strong> — vérifions ensemble quelles certifications votre activité requiert. <a href="/fr/page/contact">Parler à un expert</a></blockquote></section><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AboutPage", "@id": "https://independantdigital.fr/page/certifications#main", "name": "Méthode & Certifications", "description": "Des standards reconnus et audités : SecNumCloud, ISO 27001, HDS, RGPD, NIS2, SOC 2. La souveraineté se prouve.", "inLanguage": "fr", "url": "https://independantdigital.fr/page/certifications", "publisher": {"@type": "Organization", "name": "Indépendant Digital", "url": "https://independantdigital.fr"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://independantdigital.fr/"}, {"@type": "ListItem", "position": 2, "name": "Méthode & Certifications", "item": "https://independantdigital.fr/page/certifications"}]}]}</script>', meta_description='Des standards reconnus et audit�s : SecNumCloud, ISO 27001, HDS, RGPD, NIS2, SOC 2. La souverainet� se prouve.' WHERE slug='certifications' AND language_id=@lang_fr;
 UPDATE post_content SET content='<section class="sd-section"><div class="sd-section-header"><span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Sovereign Cloud</span><h2><span class="sd-gradient-text">Sovereign cloud hosting</span>, beyond the reach of foreign law</h2><p class="section-lead">Migrate and run your workloads on certified European infrastructure (SecNumCloud, ISO 27001, HDS), with full control over where your data lives, who accesses it and how it is operated — with no exposure to the US CLOUD Act or any other foreign jurisdiction.</p></div>
 <p>A <strong>sovereign cloud</strong> is defined not by a data-centre address but by three inseparable guarantees: <strong>data sovereignty</strong> (storage and processing in Europe, customer-controlled keys via HSM/KMS), <strong>operational sovereignty</strong> (operated by staff under European law) and <strong>legal sovereignty</strong> (immunity to the CLOUD Act). We help you choose and run hosting that genuinely meets all three.</p>
@@ -2388,6 +2388,50 @@ PREPARE lpc_stmt FROM @lpc_sql; EXECUTE lpc_stmt; DEALLOCATE PREPARE lpc_stmt;
 -- =====================================================================
 SET NAMES utf8mb4;
 SET @lang_fr := (SELECT language_id FROM language WHERE slug='fr' OR code LIKE 'fr%' ORDER BY language_id LIMIT 1); SET @lang_fr:=IFNULL(@lang_fr,2);
+
+CREATE TABLE IF NOT EXISTS `lead_endpoint` (
+  `lead_endpoint_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `slug` varchar(64) NOT NULL,
+  `label` varchar(128) NOT NULL DEFAULT '',
+  `platform_url` varchar(255) NOT NULL DEFAULT '',
+  `api_key_enc` text NOT NULL,
+  `campaign` varchar(128) NOT NULL DEFAULT '',
+  `field_map` text DEFAULT NULL,
+  `allowed_origins` text DEFAULT NULL,
+  `rate_limit` INT NOT NULL DEFAULT 30,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`lead_endpoint_id`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `active_slug` (`active`,`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `lead_submission` (
+  `lead_submission_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `endpoint_slug` varchar(64) NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
+  `platform_lead_id` varchar(64) DEFAULT NULL,
+  `http_status` INT DEFAULT NULL,
+  `phone_hash` varchar(64) DEFAULT NULL,
+  `email_hash` varchar(64) DEFAULT NULL,
+  `provider_slug` varchar(64) DEFAULT NULL,
+  `consent_text_version` varchar(64) DEFAULT NULL,
+  `consent_at` datetime DEFAULT NULL,
+  `payload` text DEFAULT NULL,
+  `payload_enc` longtext DEFAULT NULL,
+  `response` text DEFAULT NULL,
+  `error` text DEFAULT NULL,
+  `client_ip` varchar(45) DEFAULT NULL,
+  `user_agent` varchar(255) DEFAULT NULL,
+  `source_page` varchar(255) DEFAULT NULL,
+  `attempts` tinyint(3) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`lead_submission_id`),
+  KEY `status_date` (`status`,`created_at`,`lead_submission_id`),
+  KEY `endpoint_date` (`endpoint_slug`,`created_at`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 -- The blank URL/key pair deliberately selects local encrypted queue mode.
 -- A later connector configuration may fill both values without changing the

@@ -33,6 +33,12 @@ COPY public/themes/souverainete-digitale \
 COPY config/sites.php \
      /opt/lpc-overlay/config/sites.php
 
+# Keep the connector active after the upstream bootstrap or a volume-backed
+# redeploy. The seed creates its storage; this configuration enables its
+# runtime hooks and administration screens.
+COPY config/plugins.php \
+     /opt/lpc-overlay/config/plugins.php
+
 COPY app/controller/index.php \
      /opt/lpc-overlay/app/controller/index.php
 

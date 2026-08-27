@@ -34,7 +34,7 @@ A partially configured endpoint fails closed.
 
 | File | Purpose |
 |---|---|
-| `plugin.php` | Plugin bootstrap. Registers admin menu, editor component asset, install hook, and a `View::render` listener that injects `lead-form.js` on pages containing the block. |
+| `plugin.php` | Plugin bootstrap. Registers admin menu, editor component asset, install hook, and a `View::render` listener that injects the versioned lead-form runtime on pages containing the block. |
 | `install.php` + `install/sql/{pgsql,mysqli,sqlite}/schema/*.sql` | Creates `lead_endpoint` (config) and `lead_submission` (audit log) tables. |
 | `system/Crypto.php` | AES-256-GCM encryption for stored API keys; key derived from `SECRET`/`AUTH_KEY` constants or a generated `storage/lead-platform-connector.key`. |
 | `system/CsrfToken.php` | HMAC-signed token bound to endpoint slug + 30 min TTL. |
@@ -43,7 +43,7 @@ A partially configured endpoint fails closed.
 | `app/template/lead-form.tpl` | PHP-included template that injects the CSRF token + render timestamp into the form's data attributes. |
 | `app/controller/submit.php` | Public proxy endpoint. Verifies CSRF/origin/rate, applies field map, calls platform, logs result. |
 | `public/editor/components.js` | Registers the **"Lead Form (Platform)"** block in the Vvveb editor's component panel under "Plugins". |
-| `public/js/lead-form.js` | Runtime: AJAX submit, honeypot check, time-gate, success redirect. |
+| `public/js/lead-form.20260827.js` | Versioned runtime: AJAX submit, honeypot check, time-gate, success feedback. |
 | `admin/controller/endpoints.php` + `admin/template/endpoints.tpl` | CRUD for endpoints (slug, platform URL, API key, campaign, field map, allowed origins, rate limit). |
 | `admin/controller/submissions.php` + `admin/template/submissions.tpl` | Read-only audit log. |
 

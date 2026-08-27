@@ -186,7 +186,7 @@ class Submit {
 
 		$endpoint = $this->fetchEndpoint($slug);
 		if (! $endpoint) {
-			$this->json(404, ['ok' => false, 'message' => 'Unknown endpoint']);
+			$this->json(404, ['ok' => false, 'message' => 'Formulaire inconnu.']);
 		}
 
 		// Same-origin headers; harmless on direct page-load fetches.
@@ -216,29 +216,29 @@ class Submit {
 		$referer = isset($req['referrer']) ? (string) $req['referrer'] : '';
 
 		if ($slug === '' || $csrf === '') {
-			$this->json(400, ['ok' => false, 'message' => 'Missing endpoint or token']);
+			$this->json(400, ['ok' => false, 'message' => 'Formulaire ou jeton manquant.']);
 		}
 
 		if (! CsrfToken::verify($csrf, $slug)) {
-			$this->json(419, ['ok' => false, 'message' => 'Token expired, please reload the page']);
+			$this->json(419, ['ok' => false, 'message' => 'Le formulaire a expiré. Rechargez la page puis réessayez.']);
 		}
 
 		$endpoint = $this->fetchEndpoint($slug);
 		if (! $endpoint) {
-			$this->json(404, ['ok' => false, 'message' => 'Unknown endpoint']);
+			$this->json(404, ['ok' => false, 'message' => 'Formulaire inconnu.']);
 		}
 
 		$origin  = $_SERVER['HTTP_ORIGIN']  ?? '';
 		$header_referer = $_SERVER['HTTP_REFERER'] ?? '';
 		if (! $this->originAllowed($endpoint['allowed_origins'] ?? null, $origin, $header_referer)) {
-			$this->json(403, ['ok' => false, 'message' => 'Origin not allowed']);
+			$this->json(403, ['ok' => false, 'message' => 'Origine non autorisée.']);
 		}
 
 		$ip       = $this->clientIp();
 		$rlKey    = $slug . '|' . $ip;
 		$rlLimit  = (int) ($endpoint['rate_limit'] ?? 30);
 		if ($rlLimit > 0 && ! $this->rateLimit($rlKey, $rlLimit, 60)) {
-			$this->json(429, ['ok' => false, 'message' => 'Too many requests']);
+			$this->json(429, ['ok' => false, 'message' => 'Trop de demandes. Merci de réessayer plus tard.']);
 		}
 
 		$privacy = PrivacyAcknowledgement::validate($fields);
@@ -265,7 +265,7 @@ class Submit {
 
 		$deliveryMode = DeliveryMode::resolve($endpoint);
 		if ($deliveryMode === DeliveryMode::MISCONFIGURED) {
-			$this->json(500, ['ok' => false, 'message' => 'Endpoint misconfigured']);
+			$this->json(500, ['ok' => false, 'message' => 'Le formulaire est temporairement indisponible.']);
 		}
 
 		// Forward form fields verbatim. The platform's campaign-level field_schema.mappings
@@ -291,7 +291,7 @@ class Submit {
 			try {
 				$apiKey = Crypto::decrypt((string) $endpoint['api_key_enc']);
 			} catch (\Throwable $e) {
-				$this->json(500, ['ok' => false, 'message' => 'Endpoint misconfigured']);
+				$this->json(500, ['ok' => false, 'message' => 'Le formulaire est temporairement indisponible.']);
 			}
 			$result = LeadClient::send((string) $endpoint['platform_url'], $apiKey, $payload, 8);
 		} else {
@@ -347,7 +347,7 @@ class Submit {
 			try {
 				$logRow['payload_enc'] = Crypto::encrypt((string) json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 			} catch (\Throwable $e) {
-				$this->json(500, ['ok' => false, 'message' => 'Secure lead queue unavailable']);
+				$this->json(500, ['ok' => false, 'message' => 'La file sécurisée est temporairement indisponible.']);
 			}
 			$logRow['status'] = 'pending';
 			$logRow['att'] = 0;

@@ -10,9 +10,20 @@ fail() {
 }
 
 grep -q 'https://independantdigital.fr/' public/themes/souverainete-digitale/index.fr.html || fail 'French homepage does not declare the launch domain.'
+grep -q 'Host(`independantdigital.fr`,`www.independantdigital.fr`)' docker-compose.dokploy.yaml || fail 'Dokploy router does not target the launch domain.'
+if grep -q 'independance\.otospex\.dev' docker-compose.dokploy.yaml; then
+  fail 'Dokploy still routes the development hostname.'
+fi
+grep -q 'COPY config/plugins.php' Dockerfile.dokploy || fail 'Production image does not overlay the active plugin configuration.'
+grep -q '!config/plugins.php' .dockerignore || fail 'Docker build context excludes the active plugin configuration.'
+grep -A2 -q "'lead-platform-connector' => \[" config/plugins.php || fail 'Lead connector is missing from production configuration.'
+grep -A2 "'lead-platform-connector' => \[" config/plugins.php | grep -q "'status' => 'active'" || fail 'Lead connector is not active in production configuration.'
 grep -q '<meta name="robots" content="noindex,follow">' public/themes/souverainete-digitale/index.html || fail 'Parked English homepage is indexable.'
 grep -q "type='post' AND status='publish'" seed.dokploy.sql || fail 'Unreviewed legacy posts are not retired at launch.'
 grep -q "slug NOT IN ('contact','a-propos','methode-evaluation'" seed.dokploy.sql || fail 'The reviewed-page allowlist is missing from the launch seed.'
+if rg -n 'href="/page/(cloud-souverain-guide|protection-donnees|conformite-audit|cybersecurite-soc|strategie-conseil|formation)"' public/themes/souverainete-digitale/index.fr.html >/dev/null; then
+  fail 'French homepage links to routes retired by the launch allowlist.'
+fi
 
 if rg -n 'souverainete-digitale\.fr|Digital\.Sovereignty|independance-otospex-dev|admin@admin\.com|contact@admin\.com' \
   public/themes/souverainete-digitale seed.dokploy.sql >/dev/null; then
