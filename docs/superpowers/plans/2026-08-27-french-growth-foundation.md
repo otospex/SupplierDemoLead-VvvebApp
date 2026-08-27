@@ -235,11 +235,11 @@ git commit -m "feat: establish credible French homepage"
 - Consumes: existing `/en/` routes and source content.
 - Produces: accessible but non-indexable English routes and a French interface with no language switcher.
 
-- [ ] **Step 1: Add language-policy assertions**
+- [x] **Step 1: Add language-policy assertions**
 
 Create `scripts/tests/language-policy-test.sh`. Assert every English template contains `<meta name="robots" content="noindex,follow">`, every French template lacks that tag, and French templates contain no `data-v-component-language` block.
 
-- [ ] **Step 2: Run it to verify it fails**
+- [x] **Step 2: Run it to verify it fails**
 
 Run:
 
@@ -249,11 +249,11 @@ bash scripts/tests/language-policy-test.sh
 
 Expected: FAIL.
 
-- [ ] **Step 3: Apply the language policy**
+- [x] **Step 3: Apply the language policy**
 
 Add the robots meta tag to English templates. Remove the switcher block from French shared chrome without deleting English templates or database rows. Ensure sitemap generation does not advertise English acquisition pages; if the CMS feed cannot filter by language safely, add `X-Robots-Tag: noindex, follow` for `/en/` routes at the web-server layer as a second guard.
 
-- [ ] **Step 4: Verify**
+- [x] **Step 4: Verify**
 
 Run:
 
@@ -263,7 +263,7 @@ bash scripts/tests/language-policy-test.sh
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add public/themes/souverainete-digitale scripts/tests/language-policy-test.sh
