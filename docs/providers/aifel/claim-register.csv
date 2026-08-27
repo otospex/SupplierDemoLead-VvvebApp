@@ -1,0 +1,7 @@
+claim_id,status,claim,scope,source_url,source_owner,checked_on,next_review,editorial_owner,notes
+AIFEL-001,proposed,Plateforme française de visioconférence et collaboration,AIFEL offre publique,https://aifel.eu/,AIFEL,2026-08-27,2026-09-30,Indépendant Digital,Déclaration fournisseur; société et chaîne contractuelle à vérifier
+AIFEL-002,proposed,Hébergement annoncé en France,Modules et environnements non précisés,https://aifel.eu/,AIFEL,2026-08-27,2026-09-30,Indépendant Digital,Hébergeur sous-traitants sauvegardes et support à documenter
+AIFEL-003,proposed,Interface de travail immersive avec carte visuelle,Expérience produit,https://aifel.eu/,AIFEL,2026-08-27,2026-09-30,Indépendant Digital,Démonstration et test utilisateur requis
+AIFEL-004,proposed,Chiffrement annoncé pour la visioconférence,Périmètre et gestion des clés inconnus,https://aifel.eu/,AIFEL,2026-08-27,2026-09-30,Indépendant Digital,Architecture par module demandée
+AIFEL-005,rejected,Leadership environnemental comparatif,Comparaison marché,,,2026-08-27,2026-09-30,Indépendant Digital,Aucune étude comparative exploitable reçue
+AIFEL-006,rejected,Conformité réglementaire totale,Plateforme complète,https://aifel.eu/,AIFEL,2026-08-27,2026-09-30,Indépendant Digital,Une conclusion de conformité dépend du traitement et du client

@@ -439,23 +439,23 @@ git commit -m "feat: define provider and alternatives content contract"
 - Consumes: source documents and product evidence supplied by AIFEL.
 - Produces: an editorial go/no-go decision and a routing specification. It does not publish a provider page until the gate is passed.
 
-- [ ] **Step 1: Create the evidence request**
+- [x] **Step 1: Create the evidence request**
 
 Request ownership, hosting, subprocessors, DPA, qualifications, encryption by module, identity and integration, export, SLA, continuity, accessibility, price bands, product demonstration, security testing summary, and permission for every logo or case claim.
 
-- [ ] **Step 2: Create the review document**
+- [x] **Step 2: Create the review document**
 
 Record the defensible category, best-fit and poor-fit scenarios, verified capabilities, open questions, comparative claims prohibited pending evidence, and editorial decision.
 
-- [ ] **Step 3: Create the AIFEL claim register**
+- [x] **Step 3: Create the AIFEL claim register**
 
 Use the same columns as the global claim register and leave unsupported claims in `proposed` or `rejected`, never `verified`.
 
-- [ ] **Step 4: Create the lead qualification contract**
+- [x] **Step 4: Create the lead qualification contract**
 
 Require secure collaboration or videoconferencing as the central use case, French operation as a material requirement, approximate scope, relevant decision role, timing, current tools, and explicit named consent.
 
-- [ ] **Step 5: Run the editorial audit and commit**
+- [x] **Step 5: Run the editorial audit and commit**
 
 Run:
 
