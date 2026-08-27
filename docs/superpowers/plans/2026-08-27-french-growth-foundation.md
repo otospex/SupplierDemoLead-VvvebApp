@@ -550,19 +550,19 @@ Run scheduler tests and verify held routes return 404 in the seeded stack.
 - Consumes: the editorial baseline and live/scheduled content decisions.
 - Produces: zero unsupported-claim blockers, no placeholder identities, correct indexation and an explicit list of external legal/credential inputs still required.
 
-- [ ] **Step 1: Write launch-policy assertions**
+- [x] **Step 1: Write launch-policy assertions**
 
 Test the final domain, French metadata, parked English policy, absence of demo identities and absence of publishable forms pointing at development endpoints.
 
-- [ ] **Step 2: Remediate legacy content**
+- [x] **Step 2: Remediate legacy content**
 
 Remove fabricated proof, narrow legal/security statements and retire content that cannot be sourced. Do not publish invented legal entity, hosting or contact details.
 
-- [ ] **Step 3: Clear the editorial audit**
+- [x] **Step 3: Clear the editorial audit**
 
 Run the audit over theme, seed, editorial and provider documentation until it returns zero blockers.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 Commit as `fix: clear launch editorial and identity blockers`.
 

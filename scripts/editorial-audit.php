@@ -21,7 +21,7 @@ $rules = [
         'message' => 'Comparative carbon claims require a scoped comparative lifecycle assessment.',
     ],
     'UNSCOPED_CERTIFICATION' => [
-        'pattern' => '/(?:nous|notre|nos|indépendant digital).{0,80}(?:certifi(?:é|ée|és|ées)|SecNumCloud|HDS|ISO\s*27001)/iu',
+        'pattern' => '/\b(?:nous|notre|nos|indépendant digital)\b.{0,80}(?:certifi(?:é|ée|és|ées)|SecNumCloud|HDS|ISO\s*27001)/iu',
         'message' => 'A certification claim must name the holder, service scope, status, source, and date.',
     ],
     'ABSOLUTE_EXTRATERRITORIAL' => [

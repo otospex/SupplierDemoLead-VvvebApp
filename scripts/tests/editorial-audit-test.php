@@ -19,6 +19,7 @@ if (! mkdir($fixtureDir, 0700, true) && ! is_dir($fixtureDir)) {
 $clean = <<<'HTML'
 <h1>Indépendant Digital</h1>
 <p>AIFEL indique que son service est hébergé en France. Cette affirmation reste à vérifier dans le cadre de notre revue fournisseur.</p>
+<p>Faire le diagnostic en 2 minutes pour évaluer un écart à SecNumCloud.</p>
 HTML;
 
 $risky = <<<'HTML'

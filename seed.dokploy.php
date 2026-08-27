@@ -37,7 +37,8 @@ $root      = '/var/www/html';
 // v12 migrates named-provider consent audit fields for existing lead tables.
 // v13 adds the reviewed French launch set and encrypted local lead intake.
 // v14 adds editorially gated scheduled acquisition drafts.
-$marker    = $root . '/storage/.seed-souverainete-applied-v14';
+// v15 retires unreviewed legacy pages/posts and clears demo-era claims.
+$marker    = $root . '/storage/.seed-souverainete-applied-v15';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }
