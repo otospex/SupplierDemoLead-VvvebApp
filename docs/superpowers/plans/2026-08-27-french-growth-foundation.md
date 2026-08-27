@@ -339,11 +339,11 @@ git commit -m "feat: publish evaluation and partnership methodology"
 - Consumes: `provider_introduction_requested`, `provider_slug`, `consent_text_version`, and `consent_timestamp` only from an explicit provider-introduction form.
 - Produces: validated provider-introduction fields forwarded to the lead platform and a non-PII audit record of consent version, provider, and time.
 
-- [ ] **Step 1: Write failing consent tests**
+- [x] **Step 1: Write failing consent tests**
 
 Test that a general diagnostic can submit without a provider. Test that an AIFEL introduction is rejected unless `provider_introduction_requested` is exactly `1`, `provider_slug` is `aifel`, and consent version and timestamp are present. Test that the controller never infers provider consent from newsletter consent or endpoint slug.
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run:
 
@@ -353,15 +353,15 @@ php plugins/lead-platform-connector/tests/consent-test.php
 
 Expected: FAIL because the consent validator does not exist.
 
-- [ ] **Step 3: Add a focused validator**
+- [x] **Step 3: Add a focused validator**
 
 Extract validation into a small pure function or class used by the controller. General diagnostics remain valid without provider fields. Named introductions require all four fields and an allowed provider slug configured server-side.
 
-- [ ] **Step 4: Store the audit fields**
+- [x] **Step 4: Store the audit fields**
 
 Add nullable `provider_slug`, `consent_text_version`, and `consent_at` columns. Do not store the raw consent sentence or duplicate contact PII in the audit table.
 
-- [ ] **Step 5: Verify**
+- [x] **Step 5: Verify**
 
 Run:
 
@@ -372,7 +372,7 @@ php -l plugins/lead-platform-connector/app/controller/submit.php
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add plugins/lead-platform-connector

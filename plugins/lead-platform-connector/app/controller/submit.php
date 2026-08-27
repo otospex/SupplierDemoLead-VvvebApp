@@ -6,6 +6,7 @@ use Vvveb\System\Core\Request;
 use Vvveb\Plugins\LeadPlatformConnector\System\Crypto;
 use Vvveb\Plugins\LeadPlatformConnector\System\CsrfToken;
 use Vvveb\Plugins\LeadPlatformConnector\System\LeadClient;
+use Vvveb\Plugins\LeadPlatformConnector\System\ProviderConsent;
 use Vvveb\Plugins\LeadPlatformConnector\System\Repo;
 
 if (! defined('V_VERSION')) {
@@ -153,9 +154,12 @@ class Submit {
 			Repo::exec(
 				'INSERT INTO lead_submission
 				 (endpoint_slug, status, platform_lead_id, http_status, phone_hash, email_hash,
-				  payload, response, error, client_ip, user_agent, source_page, attempts, created_at, updated_at)
+				  provider_slug, consent_text_version, consent_at, payload, response, error,
+				  client_ip, user_agent, source_page, attempts, created_at, updated_at)
 				 VALUES
-				 (:slug, :status, :pid, :http, :phash, :ehash, :payload, :response, :error, :ip, :ua, :sp, :att, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
+				 (:slug, :status, :pid, :http, :phash, :ehash, :provider, :consent_version,
+				  :consent_at, :payload, :response, :error, :ip, :ua, :sp, :att,
+				  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
 				$row
 			);
 		} catch (\Throwable $e) {
@@ -235,6 +239,22 @@ class Submit {
 			$this->json(429, ['ok' => false, 'message' => 'Too many requests']);
 		}
 
+		$consent = ProviderConsent::validate($fields, ['aifel']);
+		if (! $consent['ok']) {
+			$this->json(422, ['ok' => false, 'message' => $consent['message']]);
+		}
+		$consentAudit = $consent['audit'];
+		if ($consentAudit) {
+			$fields['provider_introduction_requested'] = '1';
+			$fields['provider_slug'] = $consentAudit['provider_slug'];
+			$fields['consent_text_version'] = $consentAudit['consent_text_version'];
+			$fields['consent_timestamp'] = str_replace(' ', 'T', $consentAudit['consent_at']) . 'Z';
+		} else {
+			foreach (['provider_introduction_requested', 'provider_slug', 'consent_text_version', 'consent_timestamp'] as $field) {
+				unset($fields[$field]);
+			}
+		}
+
 		try {
 			$apiKey = Crypto::decrypt((string) $endpoint['api_key_enc']);
 		} catch (\Throwable $e) {
@@ -283,6 +303,9 @@ class Submit {
 				unset($payloadForLog[$k]);
 			}
 		}
+		foreach (['provider_introduction_requested', 'provider_slug', 'consent_text_version', 'consent_timestamp'] as $field) {
+			unset($payloadForLog[$field]);
+		}
 
 		$logRow = [
 			'slug'     => $slug,
@@ -291,6 +314,9 @@ class Submit {
 			'http'     => $result['http'] ?? null,
 			'phash'    => $phoneVal ? hash('sha256', $phoneVal) : null,
 			'ehash'    => $emailVal ? hash('sha256', strtolower($emailVal)) : null,
+			'provider' => $consentAudit['provider_slug'] ?? null,
+			'consent_version' => $consentAudit['consent_text_version'] ?? null,
+			'consent_at' => $consentAudit['consent_at'] ?? null,
 			'payload'  => json_encode($payloadForLog),
 			'response' => isset($result['raw']) ? mb_substr((string) $result['raw'], 0, 4000) : null,
 			'error'    => $result['error'] ?? null,

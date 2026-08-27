@@ -53,6 +53,14 @@
 			if (key === honeypotName) return;
 			out[key] = value;
 		});
+		if (out.provider_introduction_requested === '1') {
+			out.consent_timestamp = new Date().toISOString();
+		} else {
+			delete out.provider_introduction_requested;
+			delete out.provider_slug;
+			delete out.consent_text_version;
+			delete out.consent_timestamp;
+		}
 		return out;
 	}
 

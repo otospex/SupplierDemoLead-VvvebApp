@@ -2374,3 +2374,17 @@ REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_ke
 'Comment Indépendant Digital finance ses contenus, déclare ses partenaires et sépare le diagnostic indépendant des introductions commerciales.',
 'transparence partenariat numérique, recommandation fournisseur, rémunération mise en relation',
 'Notre politique de transparence : partenariats non exclusifs, critères publics, correction factuelle et consentement avant toute introduction.');
+
+-- Existing lead connector installs need the consent audit columns too. The
+-- plugin schema creates them on a fresh install; these guarded ALTERs migrate
+-- a persistent MySQL volume without failing when a column already exists.
+SET @lpc_table := (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='lead_submission');
+SET @lpc_col := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='lead_submission' AND column_name='provider_slug');
+SET @lpc_sql := IF(@lpc_table=1 AND @lpc_col=0, 'ALTER TABLE lead_submission ADD COLUMN provider_slug varchar(64) DEFAULT NULL AFTER email_hash', 'SELECT 1');
+PREPARE lpc_stmt FROM @lpc_sql; EXECUTE lpc_stmt; DEALLOCATE PREPARE lpc_stmt;
+SET @lpc_col := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='lead_submission' AND column_name='consent_text_version');
+SET @lpc_sql := IF(@lpc_table=1 AND @lpc_col=0, 'ALTER TABLE lead_submission ADD COLUMN consent_text_version varchar(64) DEFAULT NULL AFTER provider_slug', 'SELECT 1');
+PREPARE lpc_stmt FROM @lpc_sql; EXECUTE lpc_stmt; DEALLOCATE PREPARE lpc_stmt;
+SET @lpc_col := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='lead_submission' AND column_name='consent_at');
+SET @lpc_sql := IF(@lpc_table=1 AND @lpc_col=0, 'ALTER TABLE lead_submission ADD COLUMN consent_at datetime DEFAULT NULL AFTER consent_text_version', 'SELECT 1');
+PREPARE lpc_stmt FROM @lpc_sql; EXECUTE lpc_stmt; DEALLOCATE PREPARE lpc_stmt;

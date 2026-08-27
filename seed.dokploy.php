@@ -34,7 +34,8 @@ $root      = '/var/www/html';
 // v10 replaces the French homepage metadata with the Indépendant Digital brand
 // and removes the unsupported certification and CLOUD Act guarantee from it.
 // v11 publishes the evaluation method and partnership-transparency pages.
-$marker    = $root . '/storage/.seed-souverainete-applied-v11';
+// v12 migrates named-provider consent audit fields for existing lead tables.
+$marker    = $root . '/storage/.seed-souverainete-applied-v12';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }

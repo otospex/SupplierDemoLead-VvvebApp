@@ -19,6 +19,11 @@ Vvveb plugin that lets pages built with the visual editor send form submissions 
 
 The browser **never** sees the API key. It only sees a per-page CSRF token bound to an endpoint slug.
 
+General diagnostic forms and named provider introductions are separate. A
+provider is forwarded only when the form sends `provider_introduction_requested=1`,
+an allowlisted `provider_slug`, a versioned consent sentence, and a timestamp.
+Newsletter consent and endpoint names never imply provider consent.
+
 ## What's included
 
 | File | Purpose |
@@ -80,6 +85,8 @@ Unmapped fields whose key isn't a known top-level field are auto-collected into 
 - Per-IP file-based rate limiting per endpoint (default 30/min, configurable).
 - Honeypot field + minimum-time-to-submit gate (default 1500 ms).
 - Phone/email hashed in audit log; raw payload excludes them.
+- Named introductions store only provider, consent version and consent time in
+  dedicated audit columns; the raw consent sentence is not duplicated.
 - Soft success on platform 5xx/network — submission persisted as `pending` for retry; visitor isn't blocked.
 
 ## Installing / activating
