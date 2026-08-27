@@ -520,19 +520,19 @@ Run launch, consent, transparency and editorial checks, then commit as `feat: bu
 - Consumes: posts with `status=scheduled`, a due `created_at`, and `post_meta.editorial_ready=1`.
 - Produces: atomic publication of eligible posts; held drafts and future posts remain inaccessible.
 
-- [ ] **Step 1: Write the failing scheduler test**
+- [x] **Step 1: Write the failing scheduler test**
 
 Use an in-memory SQLite database to prove that only due, editorially approved records publish.
 
-- [ ] **Step 2: Implement the publisher and route status guard**
+- [x] **Step 2: Implement the publisher and route status guard**
 
 Add a CLI publisher suitable for a Dokploy cron job. Ensure direct page lookups respect `status=publish` so scheduled content cannot leak by slug.
 
-- [ ] **Step 3: Seed the content calendar**
+- [x] **Step 3: Seed the content calendar**
 
 Add complete French working drafts for Teams alternatives, a French Zoom alternative and French collaborative suites. Keep `editorial_ready=0` until keyword demand and manual QA are recorded.
 
-- [ ] **Step 4: Verify and commit**
+- [x] **Step 4: Verify and commit**
 
 Run scheduler tests and verify held routes return 404 in the seeded stack.
 

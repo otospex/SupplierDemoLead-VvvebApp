@@ -93,4 +93,17 @@ if [ -f /opt/seed/seed.dokploy.php ]; then
     ( php /opt/seed/seed.dokploy.php || true ) &
 fi
 
+# Publish only due posts carrying independant_digital/editorial_ready=1.
+# The loop replaces an external cron dependency and stays quiet when no post is
+# eligible. A failed run is retried without blocking nginx/php-fpm startup.
+if [ -f /var/www/html/scripts/publish-scheduled-content.php ]; then
+    echo "[init] Starting gated scheduled publisher…"
+    (
+        while :; do
+            SCHEDULED_PUBLISHER_QUIET=1 php /var/www/html/scripts/publish-scheduled-content.php || true
+            sleep "${SCHEDULED_PUBLISH_INTERVAL_SECONDS:-60}"
+        done
+    ) &
+fi
+
 exec /usr/bin/supervisord -c /etc/supervisord.conf

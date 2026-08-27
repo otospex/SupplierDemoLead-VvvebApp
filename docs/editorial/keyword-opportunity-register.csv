@@ -1,1 +1,4 @@
 query_cluster,country,language,monthly_volume,gsc_impressions_90d,intent,commercial_relevance,distinct_intent,original_analysis_ready,cannibalization_checked,decision,checked_on,source,owner,notes
+alternatives microsoft teams,FR,fr,,,comparison,high,unknown,no,no,hold,2026-08-27,pending keyword source,Indépendant Digital,"Draft scheduled for 2026-09-15; publish only after French demand evidence, overlap review and manual QA."
+alternative zoom française,FR,fr,,,comparison,high,unknown,no,no,hold,2026-08-27,pending keyword source,Indépendant Digital,"Draft scheduled for 2026-09-29; verify product evidence and query intent before approval."
+suite collaborative française,FR,fr,,,category comparison,high,unknown,no,no,hold,2026-08-27,pending keyword source,Indépendant Digital,"Draft scheduled for 2026-10-13; requires a reproducible comparison table and cannibalization check."

@@ -45,6 +45,20 @@ COPY app/controller/content/index.php \
 COPY app/controller/content/post.php \
      /opt/lpc-overlay/app/controller/content/post.php
 
+# Frontend route guards for scheduled/draft posts.
+COPY app/sql/mysqli/post.sql \
+     /opt/lpc-overlay/app/sql/mysqli/post.sql
+COPY app/sql/pgsql/post.sql \
+     /opt/lpc-overlay/app/sql/pgsql/post.sql
+COPY app/sql/sqlite/post.sql \
+     /opt/lpc-overlay/app/sql/sqlite/post.sql
+
+# Editorially gated scheduled publisher. These scripts live outside public/.
+COPY scripts/lib/scheduled-publisher.php \
+     /opt/lpc-overlay/scripts/lib/scheduled-publisher.php
+COPY scripts/publish-scheduled-content.php \
+     /opt/lpc-overlay/scripts/publish-scheduled-content.php
+
 # 1b. One-time DB seed scripts. Staged OUTSIDE /opt/lpc-overlay so the
 #     `cp -a /opt/lpc-overlay/.` webroot overlay does NOT copy them into the
 #     public tree (keeps seed.dokploy.sql from ever being web-served).
