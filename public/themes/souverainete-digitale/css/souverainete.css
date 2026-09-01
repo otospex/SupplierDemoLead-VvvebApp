@@ -1,4 +1,4 @@
-/* Hallmark · macrostructure: Map / Diagram · genre: modern-minimal · theme: Cobalt · nav: project header · footer: Ft5 Statement · enrichment: E5 Tier-B hand-built SVG · audience: French DSI/RSSI/public leaders · use: diagnostic · tone: technical · pre-emit critique: P5 H5 E5 S5 R5 V5 */
+/* Hallmark · macrostructure: Workbench · genre: modern-minimal · theme: Cobalt · nav: project header · footer: Ft5 Statement · enrichment: E5 Tier-B hand-built SVG (reused) · audience: French DSI/RSSI/public leaders · use: diagnostic + directory · tone: technical · pre-emit critique: P5 H4 E4 S4 R5 V4 */
 @import url("hallmark-tokens.css?v=20260901-sv1");
 
 /* ==========================================================================
@@ -11,9 +11,11 @@
    purpose — that is the cascade order the two files had when they were loaded
    back to back, so the redesign keeps winning on colour, radius and spacing.
 
-   No brand value is written here. Every colour, radius, shadow, easing and
-   spacing step resolves through a token declared in hallmark-tokens.css, so
-   this file stays portable to another brand by swapping the token sheet.
+   No brand value is written here for colour, radius, shadow or easing — each
+   resolves through a token declared in hallmark-tokens.css, so this file
+   stays portable to another brand by swapping the token sheet. Spacing is
+   only partially tokenized: some rules use the --space-* scale, but many
+   component rules still carry raw rem literals.
    ========================================================================== */
 
 /* ==========================================================================
