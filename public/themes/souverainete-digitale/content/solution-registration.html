@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr-fr"><head data-v-save-global="index.fr.html,head">
+<!-- This page must stay out of the index, so its head is NOT pulled from
+     index.fr.html via data-v-save-global: that copy replaces the whole <head>
+     element and would drop the robots meta below. -->
+<html lang="fr-fr"><head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
 

@@ -271,7 +271,11 @@ final class SolutionPresenter {
 				. ' est évalué selon la même méthode que les autres solutions.</p>';
 		}
 
-		$html .= '<footer class="sd-solution-review"><p>Revue par ' . self::e($solution['reviewer'] ?? 'Indépendant Digital') . ' le ' . $reviewed . '.</p>'
+		// A fiche created from the registration queue has no reviewer and no
+		// review date until an editor sets them, and the sentence has to stay
+		// grammatical (and truthful) in that state.
+		$reviewer = trim((string) ($solution['reviewer'] ?? '')) ?: 'Indépendant Digital';
+		$html .= '<footer class="sd-solution-review"><p>Revue par ' . self::e($reviewer) . ($reviewed === '' ? '' : ' le ' . $reviewed) . '.</p>'
 			. '<a href="' . self::e(self::url('contact_url')) . '">Signaler une erreur</a></footer></article>';
 
 		// Same scheme-validated URL as the visible link; omitted when there is none,

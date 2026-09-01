@@ -59,7 +59,10 @@ class Solutions extends ComponentBase {
 		$filters['site_id'] = $siteId;
 		$context = [];
 		foreach (['categorie', 'alternative_a'] as $filter) {
-			if (empty($filters[$filter])) {
+			// A multi-term filter is an array (guide embeds pass a JSON array);
+			// there is no single term whose name and intro could head the page,
+			// so only a scalar filter looks one up.
+			if (empty($filters[$filter]) || ! is_scalar($filters[$filter])) {
 				continue;
 			}
 			$taxonomy = $config['taxonomies'][$filter];

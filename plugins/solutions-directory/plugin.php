@@ -11,12 +11,14 @@ Version: 0.1.0
 
 use Vvveb\System\Event;
 use Vvveb\Plugins\SolutionsDirectory\Install;
+use Vvveb\Plugins\SolutionsDirectory\System\ContentEmbed;
 use Vvveb\Plugins\SolutionsDirectory\System\QueueIntegration;
 
 if (! defined('V_VERSION')) {
 	die('Invalid request!');
 }
 
+require_once __DIR__ . '/system/content-embed.php';
 require_once __DIR__ . '/system/queue-integration.php';
 
 #[\AllowDynamicProperties]
@@ -65,11 +67,42 @@ class SolutionsDirectoryPlugin {
 
 				return [$results];
 			});
+
+			$this->renderContentEmbeds();
 		}
 
 		if (APP === 'admin') {
 			$this->adminHooks();
 		}
+	}
+
+	/**
+	 * Renders directory blocks that guide pages store in their body copy.
+	 *
+	 * Vvveb instantiates components only from theme template files, so a block
+	 * written into post_content is never rendered and its fallback ("no
+	 * published solution matches") would be shown even when solutions do match.
+	 * The rewrite happens on the post component's results, before the page
+	 * cache captures anything, so a cached page carries the rendered block.
+	 * Blocks vtpl already rendered carry data-sd-rendered and are skipped.
+	 */
+	private function renderContentEmbeds(): void {
+		Event::on('Vvveb\Component\Post', 'results', __CLASS__, function ($results) {
+			if (! is_array($results) || empty($results['content']) || ! is_string($results['content'])) {
+				return [$results];
+			}
+
+			$results['content'] = ContentEmbed::render($results['content'], static function (array $options): string {
+				require_once __DIR__ . '/component/solutions.php';
+
+				$component = new \Vvveb\Plugins\SolutionsDirectory\Component\Solutions($options);
+				$rendered  = $component->results();
+
+				return (string) ($rendered['html'] ?? '');
+			});
+
+			return [$results];
+		});
 	}
 
 	private function adminHooks(): void {
