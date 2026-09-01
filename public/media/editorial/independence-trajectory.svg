@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" role="img" aria-labelledby="title desc">
+  <title>Trajectoire d’indépendance numérique progressive</title>
+  <desc>Un système centralisé et verrouillé évolue par une phase de coexistence vers un socle modulaire, maîtrisé et réversible.</desc>
+  <style>
+    :root {
+      --art-ink: #04172C;
+      --art-accent: #0055A5;
+      --art-signal: #EE4137;
+      --art-paper: #F8FBFE;
+      --art-paper-soft: #EBF3FA;
+      --art-paper-muted: #EAF0F5;
+      --art-paper-blue: #EAF3FB;
+      --art-panel: #FFFFFF;
+      --art-rule: #D6E4F0;
+      --art-rule-strong: #AFC8DC;
+    }
+  </style>
+  <defs>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--art-accent)"/>
+    </marker>
+    <marker id="arrow-navy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--art-ink)"/>
+    </marker>
+  </defs>
+
+  <rect x="1" y="1" width="1198" height="478" rx="18" fill="var(--art-paper)" stroke="var(--art-rule)" stroke-width="2"/>
+  <path d="M120 390 H1080" stroke="var(--art-rule)" stroke-width="2"/>
+  <path d="M155 390 H1045" stroke="var(--art-accent)" stroke-width="3" marker-end="url(#arrow-blue)"/>
+
+  <g aria-label="Système dépendant">
+    <rect x="86" y="66" width="284" height="266" rx="14" fill="var(--art-paper-soft)" stroke="var(--art-rule-strong)" stroke-width="2"/>
+    <rect x="178" y="125" width="100" height="144" rx="10" fill="var(--art-ink)"/>
+    <path d="M208 125 V107 A20 20 0 0 1 248 107 V125" fill="none" stroke="var(--art-signal)" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="228" cy="187" r="13" fill="var(--art-panel)"/>
+    <path d="M228 199 V222" stroke="var(--art-panel)" stroke-width="8" stroke-linecap="round"/>
+    <g fill="var(--art-panel)" stroke="var(--art-rule-strong)" stroke-width="2">
+      <rect x="105" y="92" width="49" height="34" rx="6"/>
+      <rect x="104" y="161" width="50" height="34" rx="6"/>
+      <rect x="104" y="230" width="50" height="34" rx="6"/>
+      <rect x="302" y="92" width="49" height="34" rx="6"/>
+      <rect x="302" y="161" width="49" height="34" rx="6"/>
+      <rect x="302" y="230" width="49" height="34" rx="6"/>
+    </g>
+    <g stroke="var(--art-signal)" stroke-width="3" fill="none">
+      <path d="M154 109 H178"/>
+      <path d="M154 178 H178"/>
+      <path d="M154 247 H178"/>
+      <path d="M278 109 H302"/>
+      <path d="M278 178 H302"/>
+      <path d="M278 247 H302"/>
+    </g>
+  </g>
+
+  <g aria-label="Coexistence maîtrisée">
+    <rect x="445" y="66" width="310" height="266" rx="14" fill="var(--art-panel)" stroke="var(--art-rule-strong)" stroke-width="2" stroke-dasharray="8 8"/>
+    <rect x="486" y="104" width="92" height="190" rx="10" fill="var(--art-paper-muted)" stroke="var(--art-rule-strong)" stroke-width="2"/>
+    <rect x="622" y="104" width="92" height="190" rx="10" fill="var(--art-paper-blue)" stroke="var(--art-accent)" stroke-width="2"/>
+    <g fill="var(--art-ink)">
+      <circle cx="532" cy="144" r="12"/>
+      <circle cx="532" cy="199" r="12"/>
+      <circle cx="532" cy="254" r="12"/>
+    </g>
+    <g fill="var(--art-accent)">
+      <circle cx="668" cy="144" r="12"/>
+      <circle cx="668" cy="199" r="12"/>
+      <circle cx="668" cy="254" r="12"/>
+    </g>
+    <g stroke="var(--art-accent)" stroke-width="3" fill="none" marker-end="url(#arrow-blue)">
+      <path d="M548 144 H650"/>
+      <path d="M548 199 H650"/>
+      <path d="M548 254 H650"/>
+    </g>
+    <path d="M600 89 V309" stroke="var(--art-signal)" stroke-width="3" stroke-dasharray="5 7"/>
+  </g>
+
+  <g aria-label="Socle réversible">
+    <path d="M855 110 H1087 V288 H855 Z" fill="var(--art-paper-soft)" stroke="var(--art-rule-strong)" stroke-width="2"/>
+    <g fill="var(--art-panel)" stroke="var(--art-accent)" stroke-width="2">
+      <rect x="824" y="76" width="104" height="70" rx="10"/>
+      <rect x="974" y="76" width="104" height="70" rx="10"/>
+      <rect x="824" y="252" width="104" height="70" rx="10"/>
+      <rect x="974" y="252" width="104" height="70" rx="10"/>
+      <rect x="899" y="163" width="104" height="70" rx="10"/>
+    </g>
+    <g fill="var(--art-accent)">
+      <circle cx="876" cy="111" r="13"/>
+      <circle cx="1026" cy="111" r="13"/>
+      <circle cx="876" cy="287" r="13"/>
+      <circle cx="1026" cy="287" r="13"/>
+      <circle cx="951" cy="198" r="13"/>
+    </g>
+    <g stroke="var(--art-ink)" stroke-width="3" fill="none" marker-end="url(#arrow-navy)">
+      <path d="M928 111 H968"/>
+      <path d="M951 146 V157"/>
+      <path d="M951 239 V249"/>
+      <path d="M928 287 H968"/>
+    </g>
+    <path d="M1080 198 H1125" stroke="var(--art-accent)" stroke-width="3" marker-end="url(#arrow-blue)"/>
+  </g>
+
+  <g fill="var(--art-ink)">
+    <circle cx="155" cy="390" r="8"/>
+    <circle cx="600" cy="390" r="8"/>
+    <circle cx="1045" cy="390" r="8"/>
+  </g>
+</svg>

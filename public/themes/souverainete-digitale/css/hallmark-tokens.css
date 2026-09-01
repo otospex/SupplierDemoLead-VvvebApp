@@ -5,25 +5,29 @@
   --font-body: "IBM Plex Sans", ui-sans-serif, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
+  --color-brand-navy: oklch(20.18% 0.0495 252.01);
+  --color-brand-blue: oklch(45.44% 0.1467 254.41);
+  --color-brand-coral: oklch(63.08% 0.211 28.17);
   --color-paper: oklch(98% 0.008 250);
   --color-paper-2: oklch(95.5% 0.014 250);
   --color-paper-3: oklch(91.5% 0.022 250);
-  --color-ink: oklch(20% 0.05 252);
+  --color-ink: var(--color-brand-navy);
   --color-ink-soft: oklch(39% 0.052 252);
   --color-muted: oklch(51% 0.04 252);
   --color-rule: oklch(84% 0.025 252);
   --color-rule-strong: oklch(72% 0.04 252);
-  --color-accent: oklch(51% 0.19 258);
+  --color-accent: var(--color-brand-blue);
   --color-accent-ink: oklch(98% 0.008 250);
-  --color-accent-strong: oklch(44% 0.18 258);
+  --color-accent-strong: oklch(39% 0.128 254.41);
   --color-accent-soft: oklch(92% 0.055 258);
   --color-accent-wash: oklch(96.5% 0.025 258);
+  --color-signal: var(--color-brand-coral);
   --color-success: oklch(55% 0.12 158);
   --color-danger: oklch(55% 0.16 28);
   --color-nav: oklch(99% 0.006 250 / 0.94);
   --color-panel: oklch(99% 0.006 250);
   --color-panel-raised: oklch(100% 0 0);
-  --color-footer: oklch(18% 0.055 252);
+  --color-footer: var(--color-brand-navy);
   --color-footer-muted: oklch(75% 0.035 252);
   --color-focus: oklch(61% 0.16 258);
   --color-shadow: oklch(22% 0.05 252 / 0.14);
@@ -38,6 +42,8 @@
   --space-2xl: 3rem;
   --space-3xl: 4rem;
   --space-4xl: 6rem;
+  --space-page-hero-start: 4rem;
+  --space-page-hero-end: 5.5rem;
 
   --radius-xs: 0.25rem;
   --radius-sm: 0.375rem;
@@ -52,13 +58,30 @@
 
   --sd-primary: var(--color-accent);
   --sd-primary-dark: var(--color-accent-strong);
+  --sd-primary-light: var(--color-accent-wash);
+  --sd-accent: var(--color-accent);
+  --sd-accent-dark: var(--color-accent-strong);
   --sd-secondary: var(--color-ink);
   --sd-purple: var(--color-accent);
+  --sd-orange: var(--color-accent);
+  --sd-ink: var(--color-ink);
+  --sd-ink-soft: var(--color-ink-soft);
   --sd-bg: var(--color-paper);
   --sd-bg-soft: var(--color-paper-2);
+  --sd-bg-dark: var(--color-footer);
   --sd-text: var(--color-ink);
   --sd-muted: var(--color-muted);
+  --sd-muted-light: var(--color-footer-muted);
+  --sd-line: var(--color-rule);
+  --sd-line-soft: var(--color-paper-3);
   --sd-border: var(--color-rule);
   --sd-success: var(--color-success);
   --sd-danger: var(--color-danger);
+  --sd-radius-sm: var(--radius-sm);
+  --sd-radius: var(--radius-card);
+  --sd-radius-lg: var(--radius-lg);
+  --sd-shadow-sm: 0 0.25rem 0.75rem var(--color-shadow-soft);
+  --sd-shadow: var(--shadow-panel);
+  --sd-shadow-lg: var(--shadow-lift);
+  --sd-shadow-glow: var(--shadow-lift);
 }
