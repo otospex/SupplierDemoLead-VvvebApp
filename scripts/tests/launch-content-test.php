@@ -14,7 +14,7 @@ function requirePattern(string $pattern, string $subject, string $message): void
     }
 }
 
-foreach ([
+$launchSlugs = [
     'methode-evaluation',
     'transparence-partenariats',
     'diagnostic-souverainete',
@@ -24,8 +24,60 @@ foreach ([
     'sortir-microsoft-365',
     'choisir-visioconference-collaboration',
     'confidentialite',
-] as $slug) {
+];
+foreach ($launchSlugs as $slug) {
     requirePattern("/'" . preg_quote($slug, '/') . "'/u", $seed, "launch seed is missing $slug.");
+}
+
+// Published French pages must not carry invented metrics or unscoped availability
+// claims. Scan statement by statement so English rows and SVG gradient stops
+// (stop-offset="100%") are not mistaken for copy.
+function sqlStatements(string $sql): array {
+    $out = [];
+    $start = 0;
+    $inQuote = false;
+    $len = strlen($sql);
+    for ($i = 0; $i < $len; $i++) {
+        $c = $sql[$i];
+        if ($inQuote) {
+            if ($c === '\\') { $i++; continue; }
+            if ($c === "'") {
+                if ($i + 1 < $len && $sql[$i + 1] === "'") { $i++; continue; }
+                $inQuote = false;
+            }
+            continue;
+        }
+        if ($c === "'") { $inQuote = true; continue; }
+        if ($c === ';') { $out[] = substr($sql, $start, $i - $start + 1); $start = $i + 1; }
+    }
+    if ($start < $len) { $out[] = substr($sql, $start); }
+    return $out;
+}
+
+$unsupportedClaims = [
+    '/\d+\+/u' => 'an invented customer or project count',
+    '/99\.9/u' => 'an invented availability figure',
+    '/\bSLA\b/u' => 'an unsupported service-level claim',
+    '#24/7#u' => 'an unsupported round-the-clock claim',
+];
+foreach (sqlStatements($seed) as $statement) {
+    if (! str_contains($statement, '@lang_fr')) {
+        continue;
+    }
+    $slugsInStatement = array_values(array_filter(
+        $launchSlugs,
+        static fn (string $slug): bool => str_contains($statement, "'" . $slug . "'")
+    ));
+    if ($slugsInStatement === []) {
+        continue;
+    }
+    foreach ($unsupportedClaims as $pattern => $label) {
+        if (preg_match($pattern, $statement)) {
+            $where = implode('/', $slugsInStatement);
+            fwrite(STDERR, "FAIL: published French row ($where) carries $label.\n");
+            $failures++;
+        }
+    }
 }
 
 requirePattern('/independant-digital-intake/u', $seed, 'queue-only lead endpoint is missing from the seed.');
