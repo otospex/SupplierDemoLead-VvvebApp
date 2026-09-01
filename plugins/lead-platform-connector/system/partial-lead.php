@@ -146,6 +146,59 @@ final class PartialLead {
 		return $merged;
 	}
 
+	/**
+	 * Row-selection predicate for the flush job: a row is aged out once it is
+	 * still resumable (stage < FINAL_STAGE) and was created at least TTL_HOURS
+	 * ago — the same 24h window the resume token itself lives on, so a row
+	 * only ever becomes flushable once its token could no longer be valid
+	 * anyway. Pure: no clock reads, no DB — the caller supplies "now".
+	 */
+	public static function isFlushable(array $row, string $now): bool {
+		$stage = (int) ($row['stage'] ?? self::FINAL_STAGE);
+		if ($stage >= self::FINAL_STAGE) {
+			return false;
+		}
+
+		$createdAt = self::parseUtc((string) ($row['created_at'] ?? ''));
+		if (! $createdAt instanceof \DateTimeImmutable) {
+			return false;
+		}
+
+		$nowDt = self::parseUtc($now);
+		if (! $nowDt instanceof \DateTimeImmutable) {
+			return false;
+		}
+
+		$threshold = $nowDt->modify('-' . self::TTL_HOURS . ' hours');
+
+		return $createdAt->getTimestamp() <= $threshold->getTimestamp();
+	}
+
+	/**
+	 * Drop the privacy acknowledgement from a payload that is about to be
+	 * delivered — either to the platform or into the local confirmed queue.
+	 * The acknowledgement is a resumability aid (see merge()); once a row is
+	 * settling for good it has no further purpose and must not leave the
+	 * server. Shared by submit.php's stage-3 path and the flush job so the
+	 * rule lives in exactly one place.
+	 */
+	public static function stripAcknowledgement(array $payload): array {
+		unset($payload['privacy_acknowledgement']);
+
+		return $payload;
+	}
+
+	private static function parseUtc(string $value): ?\DateTimeImmutable {
+		$value = trim($value);
+		if ($value === '') {
+			return null;
+		}
+
+		$parsed = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $value, new \DateTimeZone('UTC'));
+
+		return $parsed instanceof \DateTimeImmutable ? $parsed : null;
+	}
+
 	/** Nothing the visitor actually filled in: null, blank string, empty list. */
 	private static function isBlank($value): bool {
 		if ($value === null) {

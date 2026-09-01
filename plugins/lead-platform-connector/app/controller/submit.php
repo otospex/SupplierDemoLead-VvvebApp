@@ -684,8 +684,7 @@ class Submit {
 		// next step has nothing else to restore it from — store the delivery
 		// shape on a row that can still come back and the next attempt would
 		// be rejected for a missing acknowledgement.
-		$deliverPayload = $this->buildPayload($merged, $endpoint, $source, $utm);
-		unset($deliverPayload['privacy_acknowledgement']);
+		$deliverPayload = PartialLead::stripAcknowledgement($this->buildPayload($merged, $endpoint, $source, $utm));
 		$resumePayload  = $deliverPayload;
 		$resumePayload['privacy_acknowledgement'] = '1';
 
