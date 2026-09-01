@@ -87,11 +87,14 @@ requirePattern('/data-v-endpoint="independant-digital-intake"/u', $homepage, 'ho
 requirePattern('/name="privacy_acknowledgement"/u', $homepage, 'homepage form is missing privacy acknowledgement.');
 requirePattern('/data-v-endpoint="independant-digital-intake"/u', $contact, 'contact form is not connected to the launch endpoint.');
 requirePattern('/name="privacy_acknowledgement"/u', $contact, 'contact form is missing privacy acknowledgement.');
-requirePattern('#/plugins/lead-platform-connector/js/lead-form\.\d+\.js#u', $homepage, 'homepage does not load the versioned form runtime directly.');
-requirePattern('#/plugins/lead-platform-connector/js/lead-form\.\d+\.js#u', $contact, 'contact page does not load the versioned form runtime directly.');
+// Either versioned runtime satisfies this: lead-form is the one-shot form,
+// diagnostic-form is the three-step superset that the intake placements load.
+$formRuntimeLink = '#/plugins/lead-platform-connector/js/(?:lead|diagnostic)-form\.\d+\.js#u';
+requirePattern($formRuntimeLink, $homepage, 'homepage does not load the versioned form runtime directly.');
+requirePattern($formRuntimeLink, $contact, 'contact page does not load the versioned form runtime directly.');
 
 $pageTemplate = (string) file_get_contents($root . '/public/themes/souverainete-digitale/content/page.fr.html');
-requirePattern('#/plugins/lead-platform-connector/js/lead-form\.\d+\.js#u', $pageTemplate, 'French page template does not load the versioned form runtime for seeded diagnostic forms.');
+requirePattern($formRuntimeLink, $pageTemplate, 'French page template does not load the versioned form runtime for seeded diagnostic forms.');
 
 $runtime = (string) file_get_contents($root . '/plugins/lead-platform-connector/public/js/lead-form.20260827.js');
 $publicRuntime = (string) file_get_contents($root . '/public/plugins/lead-platform-connector/js/lead-form.20260827.js');
@@ -105,6 +108,26 @@ if (str_contains($runtime, 'Thanks — your request was received.')) {
 }
 if ($runtime !== $publicRuntime) {
     fwrite(STDERR, "FAIL: browser-served form runtime is not synchronized with the plugin source.\n");
+    $failures++;
+}
+
+// The diagnostic stepper ships the same way: plugin source plus a byte-identical
+// copy under public/, which is what the browser actually fetches.
+$stepper = (string) file_get_contents($root . '/plugins/lead-platform-connector/public/js/diagnostic-form.20260901.js');
+$publicStepper = (string) file_get_contents($root . '/public/plugins/lead-platform-connector/js/diagnostic-form.20260901.js');
+if ($stepper === '' || $publicStepper === '') {
+    fwrite(STDERR, "FAIL: diagnostic stepper runtime is missing from the plugin or from public/.\n");
+    $failures++;
+} elseif ($stepper !== $publicStepper) {
+    fwrite(STDERR, "FAIL: browser-served diagnostic stepper is not synchronized with the plugin source.\n");
+    $failures++;
+}
+requirePattern('/Merci[^\n]+diagnostic est enregistré/u', $stepper, 'diagnostic completion copy is not localized in French.');
+requirePattern('/cfg\.ready/', $stepper, 'diagnostic stepper does not fail closed while acquiring its token.');
+// A resume token is a bearer credential for one lead row: it must never be
+// written into a durable store the next visitor could read.
+if (preg_match('/localStorage/', $stepper)) {
+    fwrite(STDERR, "FAIL: diagnostic stepper persists the resume token beyond the session.\n");
     $failures++;
 }
 requirePattern('/lead-form\.\d+\.js/', $pluginBootstrap, 'plugin runtime asset is not cache-busted.');

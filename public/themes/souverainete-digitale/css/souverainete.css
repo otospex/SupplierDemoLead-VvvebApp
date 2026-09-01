@@ -732,6 +732,120 @@ img {
   font-size: 0.85rem;
 }
 
+/* ---------- Diagnostic stepper ----------
+   One form, three <fieldset data-v-stage> steps. Only the active step is
+   without `hidden`; diagnostic-form.js also marks the inactive ones
+   `disabled`, which keeps them out of FormData and out of native constraint
+   validation. Nothing here depends on JS having run: with scripting off the
+   first step is the visible one and the others stay collapsed. */
+.sd-step-lead {
+  margin-bottom: var(--space-lg);
+  color: var(--color-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.sd-step-progress {
+  margin: 0 0 var(--space-lg);
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sd-step {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  /* A fieldset defaults to min-width: min-content, which lets a long option
+     label push the card wider than the viewport. */
+  min-width: 0;
+}
+
+.sd-step[hidden] {
+  display: none;
+}
+
+.sd-step-legend {
+  float: none;
+  width: auto;
+  margin-bottom: var(--space-md);
+  padding: 0;
+  color: var(--color-ink);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.sd-step-group {
+  margin-top: var(--space-lg);
+}
+
+.sd-step-group-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.sd-check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+  gap: 0.3rem 1rem;
+}
+
+.sd-check {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.sd-check .form-check-label {
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.sd-consent-block {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  border: var(--rule-hair) solid var(--color-rule-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-wash);
+}
+
+.sd-consent-block[hidden] {
+  display: none;
+}
+
+.sd-consent-title {
+  margin: 0 0 0.35rem;
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.sd-consent-text {
+  margin: 0 0 0.6rem;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.sd-step-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xl);
+}
+
+/* Overrides the full-width .sd-form-card .sd-btn-primary rule so « Retour »
+   and « Continuer » can share one row, and still stack under ~26rem. */
+.sd-step-actions .sd-btn {
+  flex: 1 1 11rem;
+  width: auto;
+}
+
 /* ---------- CTA banner ---------- */
 .sd-cta-banner {
   position: relative;
@@ -2513,4 +2627,4 @@ section[id] .sd-ai-band h2 {
     font-size: 1.1rem;
   }
 }
-/* content-hash: f07f4201 */
+/* content-hash: fa592419 */

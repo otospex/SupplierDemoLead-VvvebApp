@@ -58,6 +58,25 @@ foreach (['name="email"', 'name="full_name"', 'name="company"', 'name="job_title
 }
 if (preg_match('/name="phone"[^>]*required/', $home)) $fail('phone must not be required');
 
+// The homepage carries step 1 of the three-step diagnostic and nothing else:
+// steps 2 and 3 live on /page/diagnostic-souverainete, which the stage-1
+// success handler redirects to with a resume token.
+if (!preg_match('/<fieldset[^>]*data-v-stage="1"/', $home))
+    $fail('homepage intake must declare its step-1 fieldset with data-v-stage="1"');
+foreach (['2', '3'] as $laterStage) {
+    if (str_contains($home, 'data-v-stage="' . $laterStage . '"'))
+        $fail("homepage must not render diagnostic step $laterStage");
+}
+if (!str_contains($home, 'data-v-stage-redirect="/page/diagnostic-souverainete"'))
+    $fail('homepage step 1 must hand the visitor to /page/diagnostic-souverainete after saving');
+// Every step-1 field must sit inside the step-1 fieldset, or a partial save
+// would post fields the visitor never saw.
+if (preg_match('/<fieldset[^>]*data-v-stage="1"[^>]*>(.*?)<\/fieldset>/s', $home, $sm)) {
+    foreach (['name="email"', 'name="full_name"', 'name="company"', 'name="job_title"', 'name="privacy_acknowledgement"'] as $f) {
+        if (!str_contains($sm[1], $f)) $fail("step-1 field outside the data-v-stage=\"1\" fieldset: $f");
+    }
+}
+
 // CSS discipline + still-valid checks carried over from the retired ui-polish-test.php.
 // Guarded on file existence: souverainete.css is created in a later task, and when it's
 // missing the "must link souverainete.css" assertions above already fail — this block

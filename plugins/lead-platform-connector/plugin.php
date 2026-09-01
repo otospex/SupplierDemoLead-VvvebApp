@@ -163,7 +163,10 @@ class LeadPlatformConnectorPlugin {
 			if (! is_string($html) || $html === '') return $html;
 			// Only inject when a Lead Form is present on the page.
 			if (strpos($html, 'data-v-endpoint=') === false) return $html;
-			if (strpos($html, 'plugins/lead-platform-connector/js/lead-form.20260827.js') !== false) return $html;
+			// A template may already load a versioned runtime of its own — the
+			// one-shot lead-form, or the diagnostic stepper superset. Injecting
+			// a second runtime would bind the same forms twice.
+			if (preg_match('#plugins/lead-platform-connector/js/(?:lead|diagnostic)-form\.\d+\.js#', $html)) return $html;
 
 			$src = (defined('PUBLIC_PATH') ? PUBLIC_PATH : '/') . 'plugins/lead-platform-connector/js/lead-form.20260827.js';
 			$tag = '<script src="' . htmlspecialchars($src, ENT_QUOTES) . '" defer></script>';
