@@ -42,7 +42,17 @@ foreach ($targets as $file) {
 	$html = (string) file_get_contents($file);
 	foreach ($patterns as $pattern => $replacement) {
 		$count = 0;
-		$html = (string) preg_replace($pattern, $replacement, $html, 1, $count);
+		// preg_replace_callback (not preg_replace) so that a literal "$" or
+		// "\" in future chrome markup can never be misread as a backreference.
+		$html = (string) preg_replace_callback(
+			$pattern,
+			static function () use ($replacement): string {
+				return $replacement;
+			},
+			$html,
+			1,
+			$count
+		);
 		if ($count !== 1) {
 			fwrite(STDERR, "Could not replace chrome block in {$file}: {$pattern}\n");
 			exit(1);

@@ -15,6 +15,15 @@ if (substr_count($home, 'souverainete.css') !== 1) $fail('homepage must link sou
 if (str_contains($home, 'custom.css')) $fail('homepage must not link custom.css');
 if (str_contains($home, 'hallmark-redesign.css')) $fail('homepage must not link hallmark-redesign.css');
 
+// Stylesheet order: the Bootstrap CDN link must load before souverainete.css so
+// theme rules can override framework defaults with equal specificity.
+$bootstrapCssPos = strpos($home, 'bootstrap@5.3.2/dist/css/bootstrap.min.css');
+$themeCssPos = strpos($home, 'id="theme-css"');
+if ($bootstrapCssPos === false) $fail('bootstrap CDN stylesheet link missing');
+if ($themeCssPos === false) $fail('theme-css (souverainete.css) link missing');
+if ($bootstrapCssPos !== false && $themeCssPos !== false && $bootstrapCssPos > $themeCssPos)
+    $fail('Bootstrap CDN stylesheet must appear before the souverainete.css link');
+
 // Banned patterns
 foreach (['sd-gradient-text', 'sd-stats', 'sd-cert-card', 'sd-step-icon', 'sd-decision-rule', 'sd-announce',
           'sd-quote-stars', 'sd-quote-avatar', 'sd-quote-mark'] as $cls) {
@@ -76,6 +85,24 @@ if (is_file($cssPath)) {
         if ($btnMinHeightPx < 44) $fail('.sd-btn min-height must be at least 44px (touch target minimum)');
     } else {
         $fail('.sd-btn min-height rule missing');
+    }
+
+    // Cache-buster freshness: souverainete.css carries a trailing content-hash
+    // marker (sha1 of the file with the marker line itself excluded, first 8
+    // hex chars). If the file changed and the marker wasn't refreshed, this
+    // catches it -- and is a standing reminder that every edit to this file
+    // must also bump the "?v=" cache-buster on all 19 linking templates (see
+    // README.md).
+    $markerPattern = '/\/\* content-hash: ([0-9a-f]{8}) \*\/\s*$/';
+    if (!preg_match($markerPattern, $css, $hm)) {
+        $fail('souverainete.css missing trailing "/* content-hash: XXXXXXXX */" marker');
+    } else {
+        $storedHash = $hm[1];
+        $withoutMarker = preg_replace($markerPattern, '', $css);
+        $actualHash = substr(sha1($withoutMarker), 0, 8);
+        if ($actualHash !== $storedHash) {
+            $fail("souverainete.css content-hash marker is stale (marker=$storedHash, actual=$actualHash) -- update the marker and bump every linking template's ?v= after editing this file");
+        }
     }
 }
 
