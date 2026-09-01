@@ -14,6 +14,15 @@ $targets = [
 	$root . '/public/themes/souverainete-digitale/content/page.fr.html',
 	$root . '/public/themes/souverainete-digitale/content/post.fr.html',
 	$root . '/public/themes/souverainete-digitale/content/contact.fr.html',
+	// The directory templates are French-only: their base-language siblings are
+	// byte-identical copies (they exist so Vvveb's base-language lookup resolves),
+	// so both spellings are synced from the same source and stay identical.
+	$root . '/public/themes/souverainete-digitale/content/annuaire.fr.html',
+	$root . '/public/themes/souverainete-digitale/content/annuaire.html',
+	$root . '/public/themes/souverainete-digitale/content/solution.fr.html',
+	$root . '/public/themes/souverainete-digitale/content/solution.html',
+	$root . '/public/themes/souverainete-digitale/content/solution-registration.fr.html',
+	$root . '/public/themes/souverainete-digitale/content/solution-registration.html',
 ];
 
 $sourceHtml = file_get_contents($source);

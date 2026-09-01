@@ -50,7 +50,20 @@ if (!str_contains($homeText, $rule)) $fail('partner rule sentence missing');
 
 // Nav contract
 if (!str_contains($homeText, '>Annuaire<')) $fail('nav must contain Annuaire');
+if (!str_contains($homeText, '>Blog<')) $fail('nav must contain Blog');
 if (preg_match('/nav-link[^>]*>Accueil</', $homeText)) $fail('nav must not contain Accueil');
+
+// The solutions section carries the live directory component, not a hand-written
+// list: without the component attribute the block can only ever show its
+// fallback copy, which would claim the directory is empty.
+if (preg_match('/id="solutions".*?<\/section>/s', $home, $sec)) {
+    if (!str_contains($sec[0], 'data-v-component-plugin-solutions-directory-solutions'))
+        $fail('#solutions must render the solutions-directory component');
+    if (!str_contains($sec[0], 'data-v-limit="6"'))
+        $fail('#solutions must cap the homepage teaser at 6 solutions');
+} else {
+    $fail('#solutions section missing');
+}
 
 // Step-1 intake fields present, phone not required
 foreach (['name="email"', 'name="full_name"', 'name="company"', 'name="job_title"', 'name="privacy_acknowledgement"'] as $f) {

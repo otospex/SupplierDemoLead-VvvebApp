@@ -2628,7 +2628,7 @@ INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_orde
 SET @id_annuaire := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='page',template='content/annuaire.html',updated_at=NOW() WHERE post_id=@id_annuaire;
 INSERT INTO post_to_site (post_id,site_id) SELECT @id_annuaire,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_annuaire AND site_id=1);
 REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
-(@id_annuaire,@lang_fr,'Annuaire des solutions souveraines','annuaire','<section class="sd-directory-hero"><div class="container"><span class="sd-eyebrow">Solutions documentées</span><h1>Annuaire des solutions souveraines</h1><p>Les fiches sont relues avant publication et classées par date de revue, puis par nom. Une relation commerciale ne modifie jamais cet ordre.</p></div></section>','Des solutions numériques classées par besoin, avec faits déclarés, état de vérification et date de revue.','annuaire solutions souveraines, alternatives numériques','Annuaire relu de solutions numériques pour les organisations françaises, avec preuves, limites, alternatives et date de revue.');
+(@id_annuaire,@lang_fr,'Annuaire des solutions souveraines','annuaire','<section class="sd-page-hero sd-directory-hero"><div class="container"><span class="sd-eyebrow">Solutions documentées</span><h1>Annuaire des solutions souveraines</h1><p>Les fiches sont relues avant publication et classées par date de revue, puis par nom. Une relation commerciale ne modifie jamais cet ordre.</p></div></section>','Des solutions numériques classées par besoin, avec faits déclarés, état de vérification et date de revue.','annuaire solutions souveraines, alternatives numériques','Annuaire relu de solutions numériques pour les organisations françaises, avec preuves, limites, alternatives et date de revue.');
 
 -- Public registration page; its dedicated template supplies noindex and the
 -- connector-backed form. It remains outside the sitemap by policy.
@@ -2659,8 +2659,8 @@ PREPARE sd_endpoint_stmt FROM @sd_endpoint_sql; EXECUTE sd_endpoint_stmt; DEALLO
 -- Multi-value component options must be JSON arrays: Vvveb's component parser
 -- json_decodes any attribute value that contains a comma, so a bare
 -- "a,b,c" list would resolve to NULL and silently drop the filter.
-SET @sd_embed_visio := '<section class="sd-solutions-embed"><div class="container"><h2>Solutions référencées pour ce cas d&rsquo;usage</h2><div data-v-component-plugin-solutions-directory-solutions="guide" data-v-alternative_a=''["google-meet","microsoft-teams","zoom"]'' data-v-limit="6"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></div></section>';
-SET @sd_embed_m365 := '<section class="sd-solutions-embed"><div class="container"><h2>Solutions référencées pour ce cas d&rsquo;usage</h2><div data-v-component-plugin-solutions-directory-solutions="guide" data-v-alternative_a="microsoft-365" data-v-limit="6"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></div></section>';
+SET @sd_embed_visio := '<section class="sd-solutions-embed"><div class="container"><h2>Solutions référencées pour ce cas d&rsquo;usage</h2><div data-v-component-plugin-solutions-directory-solutions="guide" data-v-alternative_a=''["google-meet","microsoft-teams","zoom"]'' data-v-limit="6" data-v-embed="1"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></div></section>';
+SET @sd_embed_m365 := '<section class="sd-solutions-embed"><div class="container"><h2>Solutions référencées pour ce cas d&rsquo;usage</h2><div data-v-component-plugin-solutions-directory-solutions="guide" data-v-alternative_a="microsoft-365" data-v-limit="6" data-v-embed="1"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></div></section>';
 
 UPDATE post_content SET content = CONCAT(content, @sd_embed_visio)
 WHERE slug = 'choisir-visioconference-collaboration' AND language_id = @lang_fr
@@ -2669,3 +2669,13 @@ WHERE slug = 'choisir-visioconference-collaboration' AND language_id = @lang_fr
 UPDATE post_content SET content = CONCAT(content, @sd_embed_m365)
 WHERE slug = 'sortir-microsoft-365' AND language_id = @lang_fr
   AND content NOT LIKE '%sd-solutions-embed%';
+
+-- An embedded block is a compact listing inside a page that already has its own
+-- <h1>: `data-v-embed` drops the term header and the filter form the standalone
+-- directory needs. Blocks appended by an earlier seed run predate the flag, so
+-- they are patched in place; the LIKE guard keeps the statement idempotent.
+UPDATE post_content SET content = REPLACE(content, 'data-v-limit="6">', 'data-v-limit="6" data-v-embed="1">')
+WHERE slug IN ('choisir-visioconference-collaboration', 'sortir-microsoft-365')
+  AND language_id = @lang_fr
+  AND content LIKE '%sd-solutions-embed%'
+  AND content NOT LIKE '%data-v-embed%';

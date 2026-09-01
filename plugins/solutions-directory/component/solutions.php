@@ -20,6 +20,7 @@ class Solutions extends ComponentBase {
 		'alternative_a' => 'url',
 		'limit'         => 12,
 		'mode'          => 'listing',
+		'embed'         => '',
 		'slug'          => 'url',
 		'language_id'   => null,
 		'site_id'       => null,
@@ -57,8 +58,12 @@ class Solutions extends ComponentBase {
 		]);
 		$filters['language_id'] = $languageId;
 		$filters['site_id'] = $siteId;
+		// An embedded block (a guide page, the homepage teaser) is a compact
+		// listing inside a page that already has its own <h1> and its own
+		// heading structure: no term header, no filter form.
+		$embed = ! in_array((string) ($this->options['embed'] ?? ''), ['', '0', 'false'], true);
 		$context = [];
-		foreach (['categorie', 'alternative_a'] as $filter) {
+		foreach ($embed ? [] : ['categorie', 'alternative_a'] as $filter) {
 			// A multi-term filter is an array (guide embeds pass a JSON array);
 			// there is no single term whose name and intro could head the page,
 			// so only a scalar filter looks one up.
@@ -72,10 +77,12 @@ class Solutions extends ComponentBase {
 			}
 			break;
 		}
-		$context['show_filters'] = true;
-		$context['category_terms'] = $repository->terms($config['taxonomies']['categorie'], $languageId, $siteId);
-		$context['selected_kind'] = $filters['kind'] ?? '';
-		$context['selected_categorie'] = $filters['categorie'] ?? '';
+		$context['show_filters'] = ! $embed;
+		if (! $embed) {
+			$context['category_terms'] = $repository->terms($config['taxonomies']['categorie'], $languageId, $siteId);
+			$context['selected_kind'] = $filters['kind'] ?? '';
+			$context['selected_categorie'] = $filters['categorie'] ?? '';
+		}
 
 		$rows = $repository->published($filters, (int) ($this->options['limit'] ?? 12));
 
