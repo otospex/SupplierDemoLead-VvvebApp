@@ -141,6 +141,53 @@
 		return /^[0-9a-f]{64}$/.test(raw) ? raw : '';
 	}
 
+	/**
+	 * Drop `?lead=` from the address bar without navigating.
+	 *
+	 * A token that is dead (410) or spent (stage 3 settled) must not survive in
+	 * the URL: a reload would re-adopt it, resume at step 2 and announce
+	 * « Coordonnées enregistrées » for a row that can no longer be written.
+	 * Only the parameter is removed; the path and the #etape-N fragment are
+	 * left alone.
+	 */
+	function stripLeadParam() {
+		try {
+			if (!window.history || typeof window.history.replaceState !== 'function') return;
+			const url = new URL(window.location.href);
+			if (!url.searchParams.has('lead')) return;
+			url.searchParams.delete('lead');
+			window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+		} catch (e) { /* older browser — the 410 path still works, it just re-asks */ }
+	}
+
+	/** Forget a token everywhere it is held: config, session storage, URL. */
+	function invalidateToken(cfg) {
+		cfg.leadToken = '';
+		cfg.stage1Signature = null;
+		writeToken(cfg.endpoint, '');
+		stripLeadParam();
+	}
+
+	/**
+	 * A stable fingerprint of the step-1 answers.
+	 *
+	 * Step 1 is the only step that can be revisited with « Retour » after it has
+	 * already been written to the server. Comparing this against the value the
+	 * live token stands for tells the difference between "nothing changed, just
+	 * move forward" and "the visitor corrected something, merge it into the row".
+	 */
+	function stepOneSignature(form) {
+		const step = form.querySelector('[data-v-stage="1"]');
+		if (!step) return '';
+		return Array.prototype.slice.call(step.querySelectorAll('input, select, textarea'))
+			.filter(function (el) { return el.name && el.type !== 'hidden'; })
+			.map(function (el) {
+				const value = (el.type === 'checkbox' || el.type === 'radio') ? (el.checked ? '1' : '') : el.value;
+				return el.name + '=' + value;
+			})
+			.join('&');
+	}
+
 	function setStageVisible(step, active) {
 		step.el.hidden = !active;
 		// `disabled` keeps the inactive steps out of FormData and out of native
@@ -263,10 +310,34 @@
 				return;
 			}
 
-			const elapsed = Date.now() - cfg.renderTs;
-			if (cfg.renderTs && elapsed < MIN_TIMEMS) {
-				showAlert(form, 'error', COPY.tooFast);
-				return;
+			const staged = steps.length > 0;
+
+			// Which stage does this POST claim? Decided before the timing guard,
+			// because a request that carries a resume token is by definition the
+			// continuation of a session that already cleared that guard.
+			let postStage = state.stage;
+			if (staged && state.stage === 1 && cfg.leadToken) {
+				if (stepOneSignature(form) === cfg.stage1Signature) {
+					// « Retour » then « Continuer » with nothing edited. Posting
+					// stage 1 again would insert a SECOND row and orphan the one
+					// the live token points at, so make no request at all.
+					onStageSuccess(state, cfg, {});
+					return;
+				}
+				// The visitor corrected a step-1 answer. Stage 2 is the update
+				// branch, so the correction merges into the row we already own
+				// instead of starting a new one; the controller's monotonic
+				// stage rule leaves a further-advanced row where it is.
+				postStage = 2;
+			}
+			const carriesToken = staged && postStage > 1 && !!cfg.leadToken;
+
+			if (!carriesToken) {
+				const elapsed = Date.now() - cfg.renderTs;
+				if (cfg.renderTs && elapsed < MIN_TIMEMS) {
+					showAlert(form, 'error', COPY.tooFast);
+					return;
+				}
 			}
 
 			const btn = form.querySelector('[data-v-stage]:not([hidden]) button[type=submit]')
@@ -277,7 +348,6 @@
 				if ('textContent' in btn) btn.textContent = 'Envoi…';
 			}
 
-			const staged = steps.length > 0;
 			const fields = serialize(form, HONEYPOT);
 			const payload = {
 				endpoint:    cfg.endpoint,
@@ -288,8 +358,8 @@
 				referrer:    document.referrer || '',
 			};
 			if (staged) {
-				payload.stage = state.stage;
-				if (state.stage > 1) payload.lead_token = cfg.leadToken || '';
+				payload.stage = postStage;
+				if (postStage > 1) payload.lead_token = cfg.leadToken || '';
 			}
 
 			fetch(cfg.submitUrl, {
@@ -314,11 +384,11 @@
 				const msg = (res.body && res.body.message) ? res.body.message : COPY.generic;
 				showAlert(form, 'error', msg);
 				if (res.http === 410) {
-					// The resume session is gone. Drop the dead token and send
-					// the visitor back to step 1 rather than looping on a POST
-					// that can never succeed.
-					cfg.leadToken = '';
-					writeToken(cfg.endpoint, '');
+					// The resume session is gone. Drop the dead token — config,
+					// session storage AND the ?lead= parameter, or a reload
+					// would resurrect it — and send the visitor back to step 1
+					// rather than looping on a POST that can never succeed.
+					invalidateToken(cfg);
 					if (staged) activate(state, 1, true);
 				}
 				if (res.http === 419) {
@@ -351,8 +421,15 @@
 		function onStageSuccess(theState, theCfg, body) {
 			const theForm = theState.form;
 			if (theState.stage === 1) {
-				theCfg.leadToken = (body && body.lead_token) ? String(body.lead_token) : '';
-				writeToken(theCfg.endpoint, theCfg.leadToken);
+				// Only a stage-1 INSERT hands back a token. A corrected step 1
+				// posts stage 2 and answers {ok:true}, and the "nothing changed"
+				// short-circuit posts nothing at all — in both cases the token
+				// we already hold is the right one and must not be wiped.
+				if (body && body.lead_token) {
+					theCfg.leadToken = String(body.lead_token);
+					writeToken(theCfg.endpoint, theCfg.leadToken);
+				}
+				theCfg.stage1Signature = stepOneSignature(theForm);
 				const redirect = theForm.getAttribute('data-v-stage-redirect');
 				if (redirect) {
 					// This placement renders step 1 only (the homepage). Hand
@@ -381,8 +458,7 @@
 				detail: { form: theForm, message: COPY.complete }
 			});
 			theForm.dispatchEvent(successEvent);
-			theCfg.leadToken = '';
-			writeToken(theCfg.endpoint, '');
+			invalidateToken(theCfg);
 			theState.steps.forEach(function (step) { setStageVisible(step, false); });
 			const progress = theForm.querySelector('[data-v-stepper-progress]');
 			if (progress) progress.textContent = 'Diagnostic transmis.';
@@ -396,8 +472,13 @@
 			if (!next) return;
 			cfg.csrf = next.csrf;
 			cfg.submitUrl = next.submitUrl;
-			// Keep the original render timestamp: the anti-bot delay is about
-			// how long the visitor has had the form, not about this refresh.
+			// The minimum-time guard is re-armed with the new token, exactly as
+			// the one-shot runtime does after a successful submit: a form that
+			// has just been reset for a fresh entry gets a fresh clock. Staged
+			// posts are unaffected — they carry a resume token, which is
+			// stronger proof of a real prior round trip than elapsed time, and
+			// the submit handler exempts them from the guard.
+			cfg.renderTs = next.renderTs;
 		});
 	}
 
@@ -419,7 +500,7 @@
 		forms.forEach(function (form) {
 			const slug = form.getAttribute('data-v-endpoint');
 			if (!slug) return;
-			const cfg = { endpoint: slug, csrf: '', submitUrl: '', renderTs: Date.now(), ready: false, leadToken: '' };
+			const cfg = { endpoint: slug, csrf: '', submitUrl: '', renderTs: Date.now(), ready: false, leadToken: '', stage1Signature: null };
 			attach(form, cfg);
 			fetchToken(slug).then(function (tok) {
 				if (!tok) {

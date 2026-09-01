@@ -46,17 +46,24 @@ php scripts/tests/homepage-contract-test.php
 ```
 
 which fails the build if the marker is stale, or if the homepage's or any of
-the four `content/*.fr.html` templates' `?v=` doesn't match the recomputed
-hash. (It does not check the 14 `generated/*.fr.html` pages; keep those in
-step by hand and verify with a `grep -rl 'souverainete.css?v=' generated/`
-sweep after any bump.) Browsers and any CDN/edge cache in front of the site
-key on the full URL including the query string, so a CSS edit with no
+these four templates' `?v=` doesn't match the recomputed hash:
+`content/index.fr.html`, `content/page.fr.html`, `content/post.fr.html`,
+`content/contact.fr.html`. It does **not** check the other 20 linking files
+(the six directory templates `content/annuaire{,.fr}.html`,
+`content/solution{,.fr}.html`, `content/solution-registration{,.fr}.html`, and
+the 14 `generated/*.fr.html` pages); keep those in step by hand and verify the
+whole set — 25 files today — with
+`grep -rho 'souverainete.css?v=[a-z0-9]*' public/ | sort | uniq -c`
+after any bump: one line, one hash, or you have stragglers.
+
+Browsers and any CDN/edge cache in front of the site key on the full URL including the query string, so a CSS edit with no
 matching version bump serves stale styles to any visitor who already cached
 the old file.
 
 This is not theoretical — it has shipped twice: commit `6d2a132` ("fix: bump
 theme stylesheet version and correct diagnostic heading order") had to bump a
-hand-picked `sv1` to `sv2` across all 19 templates after a CSS change shipped
+hand-picked `sv1` to `sv2` across all 19 templates of the day after a CSS
+change shipped
 without the corresponding bump, following the stylesheet consolidation in
 `7d4b49e`; a later fix-wave commit made the same mistake again by adding CSS
 changes and a content-hash marker but leaving every template's `?v=` on the
