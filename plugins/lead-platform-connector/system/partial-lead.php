@@ -108,16 +108,30 @@ final class PartialLead {
 	/**
 	 * Fold a later step's fields into what the earlier steps already stored.
 	 *
-	 * New values win, untouched keys survive. Two exceptions carry legal
-	 * weight: the privacy acknowledgement, once given, cannot be revoked by a
-	 * later payload that omits or negates it; and named-introduction consent
-	 * data is dropped the moment the merged result stops asking for one, so a
-	 * stale provider slug can never outlive the consent that justified it.
+	 * New values win, untouched keys survive — but a blank new value never
+	 * overwrites something an earlier step actually filled in. Two further
+	 * exceptions carry legal weight: the privacy acknowledgement, once given,
+	 * cannot be revoked by a later payload that omits or negates it; and
+	 * named-introduction consent data is dropped the moment the merged result
+	 * stops asking for one, so a stale provider slug can never outlive the
+	 * consent that justified it.
 	 */
 	public static function merge(array $existingFields, array $newFields): array {
 		$acknowledged = ($existingFields['privacy_acknowledgement'] ?? null) === '1';
 
-		$merged = array_merge($existingFields, $newFields);
+		$merged = $existingFields;
+
+		foreach ($newFields as $key => $value) {
+			// A later step that submits an empty field must not erase what an
+			// earlier step saved — a re-posted step 1 with a blank company
+			// would otherwise wipe the company and the lead with it. Blanks
+			// only fill keys that are absent or already blank.
+			if (self::isBlank($value) && array_key_exists($key, $merged) && ! self::isBlank($merged[$key])) {
+				continue;
+			}
+
+			$merged[$key] = $value;
+		}
 
 		if ($acknowledged) {
 			$merged['privacy_acknowledgement'] = '1';
@@ -130,6 +144,21 @@ final class PartialLead {
 		}
 
 		return $merged;
+	}
+
+	/** Nothing the visitor actually filled in: null, blank string, empty list. */
+	private static function isBlank($value): bool {
+		if ($value === null) {
+			return true;
+		}
+		if (is_string($value)) {
+			return trim($value) === '';
+		}
+		if (is_array($value)) {
+			return $value === [];
+		}
+
+		return false;
 	}
 
 	private static function isExpired($expiresAt): bool {

@@ -183,6 +183,47 @@ expectTrue(! array_key_exists('provider_slug', $providerStripped), 'provider_slu
 expectTrue(! array_key_exists('consent_text_version', $providerStripped), 'consent_text_version must be stripped once introduction is no longer requested.');
 expectTrue(! array_key_exists('consent_timestamp', $providerStripped), 'consent_timestamp must be stripped once introduction is no longer requested.');
 
+// --- merge(): a blank later value never erases an earlier answer -----------
+
+$blankKept = PartialLead::merge(
+    ['email' => 'dsi@example.fr', 'company' => 'Mairie de Test'],
+    ['email' => '', 'company' => '   ']
+);
+expectTrue(($blankKept['email'] ?? null) === 'dsi@example.fr', 'an empty string must not overwrite an existing value.');
+expectTrue(($blankKept['company'] ?? null) === 'Mairie de Test', 'a whitespace-only string must not overwrite an existing value.');
+
+$nullKept = PartialLead::merge(
+    ['full_name' => 'Camille Duval'],
+    ['full_name' => null]
+);
+expectTrue(($nullKept['full_name'] ?? null) === 'Camille Duval', 'a null must not overwrite an existing value.');
+
+$emptyListKept = PartialLead::merge(
+    ['constraints' => ['NIS2']],
+    ['constraints' => []]
+);
+expectTrue(($emptyListKept['constraints'] ?? null) === ['NIS2'], 'an empty list must not overwrite an existing selection.');
+
+$nonEmptyStillWins = PartialLead::merge(
+    ['email' => 'old@example.fr', 'constraints' => ['NIS2']],
+    ['email' => 'new@example.fr', 'constraints' => ['HDS']]
+);
+expectTrue(($nonEmptyStillWins['email'] ?? null) === 'new@example.fr', 'a non-empty new value must still win over an existing one.');
+expectTrue(($nonEmptyStillWins['constraints'] ?? null) === ['HDS'], 'a non-empty new list must still win over an existing one.');
+
+$blankFillsGap = PartialLead::merge(
+    ['email' => 'dsi@example.fr'],
+    ['message' => '']
+);
+expectTrue(array_key_exists('message', $blankFillsGap), 'a blank value must still be accepted for a key that did not exist.');
+expectTrue(($blankFillsGap['message'] ?? null) === '', 'a blank value stored for a new key must stay blank.');
+
+$blankOverBlank = PartialLead::merge(
+    ['budget' => ''],
+    ['budget' => 'Non défini']
+);
+expectTrue(($blankOverBlank['budget'] ?? null) === 'Non défini', 'a real value must replace a previously blank one.');
+
 $providerNeverRequested = PartialLead::merge(
     ['email' => 'dsi@example.fr'],
     ['provider_slug' => 'aifel']

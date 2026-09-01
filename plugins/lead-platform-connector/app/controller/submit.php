@@ -215,6 +215,7 @@ class Submit {
 		try {
 			return Repo::one(
 				'SELECT lead_submission_id, endpoint_slug, stage, status, payload_enc, source_page,
+				        provider_slug, consent_text_version, consent_at,
 				        lead_token_hash, lead_token_expires_at, created_at
 				 FROM lead_submission
 				 WHERE lead_token_hash = :hash AND endpoint_slug = :slug AND stage < :final
@@ -284,6 +285,20 @@ class Submit {
 
 		// Drop empty values to keep the request tidy.
 		return array_filter($payload, function ($v) { return $v !== null && $v !== ''; });
+	}
+
+	/**
+	 * Stamp a row as a finished diagnostic: stage 3, and the resume token
+	 * burned so a captured token cannot rewrite a settled lead. Called only
+	 * once delivery has actually settled — sent, queued locally, or a known
+	 * duplicate.
+	 */
+	private function finalizeStage(array $logRow): array {
+		$logRow['stage']         = PartialLead::FINAL_STAGE;
+		$logRow['token_hash']    = null;
+		$logRow['token_expires'] = null;
+
+		return $logRow;
 	}
 
 	/** A log row with every column the INSERT binds, ready to be overridden. */
@@ -393,12 +408,6 @@ class Submit {
 		}
 		if (array_key_exists('lead_token', $req)) {
 			$stageRequest['lead_token'] = $req['lead_token'];
-		}
-
-		$stageNumber = (isset($stageRequest['stage']) && is_scalar($stageRequest['stage']))
-			? (int) $stageRequest['stage'] : 0;
-		if (($stageNumber === 2 || $stageNumber === 3) && ! isset($stageRequest['lead_token'])) {
-			$this->json(400, ['ok' => false, 'message' => PartialLead::MISSING_TOKEN_MESSAGE]);
 		}
 
 		$staged = PartialLead::validate($stageRequest, function (string $hash) use ($slug) {
@@ -606,17 +615,22 @@ class Submit {
 	 * to an external platform.
 	 */
 	private function stageUpdate(array $endpoint, array $row, int $stage, array $fields, array $utm, string $source, string $ip): void {
-		$stored    = [];
+		// Fail closed. Without the earlier answers there is nothing to merge
+		// into, and starting from an empty base would quietly drop them.
+		$stored    = null;
 		$storedEnc = (string) ($row['payload_enc'] ?? '');
 		if ($storedEnc !== '') {
 			try {
 				$decoded = json_decode(Crypto::decrypt($storedEnc), true);
+				if (is_array($decoded)) {
+					$stored = $decoded;
+				}
 			} catch (\Throwable $e) {
-				$this->json(500, ['ok' => false, 'message' => 'La file sécurisée est temporairement indisponible.']);
+				$stored = null;
 			}
-			if (is_array($decoded)) {
-				$stored = $decoded;
-			}
+		}
+		if ($stored === null) {
+			$this->json(500, ['ok' => false, 'message' => 'Le formulaire est temporairement indisponible.']);
 		}
 
 		$merged = PartialLead::merge($stored, $fields);
@@ -637,6 +651,16 @@ class Submit {
 			$consentAudit = $consent['audit'];
 		}
 
+		// A consent already on file keeps its original date: re-posting the
+		// same provider and the same version at a later step re-affirms it, it
+		// does not re-date it. Withdrawal still clears the columns below.
+		$priorConsentAt = trim((string) ($row['consent_at'] ?? ''));
+		if ($consentAudit && $priorConsentAt !== ''
+			&& strtolower(trim((string) ($row['provider_slug'] ?? ''))) === $consentAudit['provider_slug']
+			&& hash_equals(trim((string) ($row['consent_text_version'] ?? '')), $consentAudit['consent_text_version'])) {
+			$consentAudit['consent_at'] = $priorConsentAt;
+		}
+
 		if ($consentAudit) {
 			$merged['provider_introduction_requested'] = '1';
 			$merged['provider_slug'] = $consentAudit['provider_slug'];
@@ -648,20 +672,32 @@ class Submit {
 			}
 		}
 
-		$isFinal = ($stage >= PartialLead::FINAL_STAGE);
-		$payload = $this->buildPayload($merged, $endpoint, $source, $utm);
+		// The stage a client asks for may only move forward, never past the
+		// last one: the queue's "incomplete" flag has to stay trustworthy.
+		$storedStage    = (int) ($row['stage'] ?? PartialLead::FIRST_STAGE);
+		$effectiveStage = min(PartialLead::FINAL_STAGE, max($storedStage, $stage));
+		$isFinal        = ($effectiveStage >= PartialLead::FINAL_STAGE);
 
-		if ($isFinal) {
-			unset($payload['privacy_acknowledgement']);
-		} else {
-			$payload['privacy_acknowledgement'] = '1';
-		}
+		// Two shapes of the same answers. What would be delivered has the
+		// acknowledgement stripped, exactly like the full path; what is stored
+		// while the row is still resumable keeps it, because merge() at the
+		// next step has nothing else to restore it from — store the delivery
+		// shape on a row that can still come back and the next attempt would
+		// be rejected for a missing acknowledgement.
+		$deliverPayload = $this->buildPayload($merged, $endpoint, $source, $utm);
+		unset($deliverPayload['privacy_acknowledgement']);
+		$resumePayload  = $deliverPayload;
+		$resumePayload['privacy_acknowledgement'] = '1';
+
+		$payload = $isFinal ? $deliverPayload : $resumePayload;
 
 		[$phoneVal, $emailVal] = $this->detectPii($payload);
 
-		$logRow                    = $this->newLogRow((string) ($row['endpoint_slug'] ?? ''), $source, $ip);
+		$logRow = $this->newLogRow((string) ($row['endpoint_slug'] ?? ''), $source, $ip);
+		// The UPDATE rewrites neither the endpoint nor the stage-1 client
+		// identity, so those entries would never be bound.
+		unset($logRow['slug'], $logRow['ip'], $logRow['ua']);
 		$logRow['id']              = (int) $row['lead_submission_id'];
-		$logRow['stage']           = $stage;
 		$logRow['phash']           = $phoneVal ? hash('sha256', $phoneVal) : null;
 		$logRow['ehash']           = $emailVal ? hash('sha256', strtolower($emailVal)) : null;
 		$logRow['provider']        = $consentAudit['provider_slug'] ?? null;
@@ -671,16 +707,25 @@ class Submit {
 		$logRow['sp']              = $source !== ''
 			? mb_substr($source, 0, 255)
 			: (isset($row['source_page']) ? (string) $row['source_page'] : null);
-		// The token stays live until the diagnostic is complete; clearing it at
-		// stage 3 keeps a captured token from rewriting a finished lead.
-		$logRow['token_hash']    = $isFinal ? null : ($row['lead_token_hash'] ?? null);
-		$logRow['token_expires'] = $isFinal ? null : ($row['lead_token_expires_at'] ?? null);
+		// Until delivery actually settles the lead the row keeps its previous
+		// stage and its live token, so a visitor told to retry really can.
+		// finalizeStage() below stamps stage 3 and burns the token, and only
+		// the branches that did settle the lead call it.
+		$logRow['stage']         = $isFinal ? $storedStage : $effectiveStage;
+		$logRow['token_hash']    = $row['lead_token_hash'] ?? null;
+		$logRow['token_expires'] = $row['lead_token_expires_at'] ?? null;
 
-		try {
-			$logRow['payload_enc'] = Crypto::encrypt((string) json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-		} catch (\Throwable $e) {
-			$this->json(500, ['ok' => false, 'message' => 'La file sécurisée est temporairement indisponible.']);
-		}
+		$encrypt = function (array $toStore) {
+			try {
+				return Crypto::encrypt((string) json_encode($toStore, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+			} catch (\Throwable $e) {
+				$this->json(500, ['ok' => false, 'message' => 'La file sécurisée est temporairement indisponible.']);
+			}
+		};
+
+		// Resumable by default: only the branches that settle the lead below
+		// swap in the delivery shape or drop the copy altogether.
+		$logRow['payload_enc'] = $encrypt($resumePayload);
 
 		if (! $isFinal) {
 			$logRow['status'] = 'pending';
@@ -720,8 +765,12 @@ class Submit {
 		$logRow['att']      = 1;
 
 		if ($deliveryMode === DeliveryMode::QUEUE) {
-			$logRow['status'] = 'pending';
-			$logRow['att']    = 0;
+			// Held locally on purpose — the diagnostic itself is complete, so
+			// the stored copy takes the delivery shape.
+			$logRow                = $this->finalizeStage($logRow);
+			$logRow['payload_enc'] = $encrypt($deliverPayload);
+			$logRow['status']      = 'pending';
+			$logRow['att']         = 0;
 			if (! $this->updateSubmission($logRow)) {
 				$this->json(503, ['ok' => false, 'message' => 'La demande n’a pas pu être enregistrée. Merci de réessayer.']);
 			}
@@ -730,6 +779,7 @@ class Submit {
 
 		if ($result['ok']) {
 			// Delivered: the encrypted copy has no further purpose.
+			$logRow                = $this->finalizeStage($logRow);
 			$logRow['payload_enc'] = null;
 			$this->updateSubmission($logRow);
 			$this->json(200, ['ok' => true]);
@@ -739,15 +789,17 @@ class Submit {
 		$serverMsg = is_array($result['data'] ?? null) ? ($result['data']['error'] ?? null) : null;
 
 		if ($http === 409) {
+			$logRow                = $this->finalizeStage($logRow);
 			$logRow['status']      = 'duplicate';
 			$logRow['payload_enc'] = null;
 			$this->updateSubmission($logRow);
 			$this->json(200, ['ok' => true, 'duplicate' => true]);
 		}
 
-		// Every remaining branch keeps the encrypted payload: unlike a one-shot
-		// submission, this row already held the visitor's answers and we
-		// promised not to lose them.
+		// Every remaining branch keeps the encrypted payload, the previous
+		// stage and the live token: unlike a one-shot submission this row
+		// already held the visitor's answers, and « réessayez » has to be true
+		// — a retry must still find its session.
 		if ($http === 422) {
 			$this->updateSubmission($logRow);
 			$this->json(422, ['ok' => false, 'message' => $serverMsg ?: 'Vérifiez les champs du formulaire puis réessayez.']);
@@ -763,7 +815,9 @@ class Submit {
 			$this->json(502, ['ok' => false, 'message' => 'Le service de traitement a refusé la demande. Contactez-nous directement.']);
 		}
 
-		// 5xx / network: keep it pending for retry, soft success for the visitor.
+		// 5xx / network: keep it pending for retry, soft success for the
+		// visitor. The lead never reached the platform, so the row stays
+		// resumable and the flush job will finalise it after 24 h.
 		$logRow['status'] = 'pending';
 		if (! $this->updateSubmission($logRow)) {
 			$this->json(503, ['ok' => false, 'message' => 'La demande n’a pas pu être enregistrée. Merci de réessayer.']);
