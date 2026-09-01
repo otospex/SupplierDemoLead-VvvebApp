@@ -32,16 +32,38 @@ Every French template that links `souverainete.css` pins it with a `?v=...`
 query string (19 templates as of this writing: `index.fr.html`, the 4
 `content/*.fr.html` templates, and the 14 `generated/*.fr.html` pages).
 
-**Any change to `souverainete.css` must bump that `?v=` value in all 19 linking
-templates in the same commit.** Browsers and any CDN/edge cache in front of the
-site key on the full URL including the query string, so a CSS edit with no
-version bump can serve stale styles to visitors who already cached the old file.
+**The `?v=` is the first 8 characters of `souverainete.css`'s own content
+hash** — the same value as the `/* content-hash: XXXXXXXX */` marker
+maintained at the end of the file (sha1 of the file with that marker line
+excluded, first 8 hex chars). It is derived from content, not a hand-picked
+date or version string, precisely so a forgotten bump becomes impossible to
+ship silently: whenever you edit `souverainete.css`, recompute the hash,
+update the trailing marker to match, and update every linking template's
+`?v=` to the same value — then run:
 
-This is not theoretical: commit `6d2a132` ("fix: bump theme stylesheet version
-and correct diagnostic heading order") had to bump `sv1` to `sv2` across all 19
-templates after a CSS change shipped without the corresponding bump, following
-the stylesheet consolidation in `7d4b49e`. Treat a missing bump as a shipped bug,
-not a nitpick.
+```
+php scripts/tests/homepage-contract-test.php
+```
+
+which fails the build if the marker is stale, or if the homepage's or any of
+the four `content/*.fr.html` templates' `?v=` doesn't match the recomputed
+hash. (It does not check the 14 `generated/*.fr.html` pages; keep those in
+step by hand and verify with a `grep -rl 'souverainete.css?v=' generated/`
+sweep after any bump.) Browsers and any CDN/edge cache in front of the site
+key on the full URL including the query string, so a CSS edit with no
+matching version bump serves stale styles to any visitor who already cached
+the old file.
+
+This is not theoretical — it has shipped twice: commit `6d2a132` ("fix: bump
+theme stylesheet version and correct diagnostic heading order") had to bump a
+hand-picked `sv1` to `sv2` across all 19 templates after a CSS change shipped
+without the corresponding bump, following the stylesheet consolidation in
+`7d4b49e`; a later fix-wave commit made the same mistake again by adding CSS
+changes and a content-hash marker but leaving every template's `?v=` on the
+stale `sv2` string. The content-hash-derived scheme above and the
+strengthened `homepage-contract-test.php` assertions exist specifically to
+make that class of bug fail CI instead of shipping. Treat a missing or
+mismatched bump as a shipped bug, not a nitpick.
 
 ## Chrome sync (nav + footer)
 

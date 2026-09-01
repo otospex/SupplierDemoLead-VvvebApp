@@ -58,18 +58,16 @@ foreach (['name="email"', 'name="full_name"', 'name="company"', 'name="job_title
 }
 if (preg_match('/name="phone"[^>]*required/', $home)) $fail('phone must not be required');
 
-// French templates use the single stylesheet
-foreach (['content/index.fr.html', 'content/page.fr.html', 'content/post.fr.html', 'content/contact.fr.html'] as $t) {
-    $tpl = file_get_contents("$theme/$t");
-    if (substr_count($tpl, 'souverainete.css') !== 1) $fail("$t must link souverainete.css exactly once");
-    if (str_contains($tpl, 'custom.css') || str_contains($tpl, 'hallmark-redesign.css')) $fail("$t links a retired stylesheet");
-}
-
 // CSS discipline + still-valid checks carried over from the retired ui-polish-test.php.
 // Guarded on file existence: souverainete.css is created in a later task, and when it's
 // missing the "must link souverainete.css" assertions above already fail — this block
 // just avoids PHP warnings and redundant noise on that red run.
+//
+// Also computes $cssContentHash here (before the ?v= checks below) so the
+// cache-buster equality checks against index.fr.html and the four
+// content/*.fr.html templates can reuse the same recomputed value.
 $cssPath = "$theme/css/souverainete.css";
+$cssContentHash = null;
 if (is_file($cssPath)) {
     $css = file_get_contents($cssPath);
 
@@ -87,22 +85,51 @@ if (is_file($cssPath)) {
         $fail('.sd-btn min-height rule missing');
     }
 
-    // Cache-buster freshness: souverainete.css carries a trailing content-hash
-    // marker (sha1 of the file with the marker line itself excluded, first 8
-    // hex chars). If the file changed and the marker wasn't refreshed, this
-    // catches it -- and is a standing reminder that every edit to this file
-    // must also bump the "?v=" cache-buster on all 19 linking templates (see
-    // README.md).
+    // Cache-buster freshness, part 1: souverainete.css carries a trailing
+    // content-hash marker (sha1 of the file with the marker line itself
+    // excluded, first 8 hex chars). If the file changed and the marker
+    // wasn't refreshed, this catches it.
     $markerPattern = '/\/\* content-hash: ([0-9a-f]{8}) \*\/\s*$/';
     if (!preg_match($markerPattern, $css, $hm)) {
         $fail('souverainete.css missing trailing "/* content-hash: XXXXXXXX */" marker');
     } else {
         $storedHash = $hm[1];
         $withoutMarker = preg_replace($markerPattern, '', $css);
-        $actualHash = substr(sha1($withoutMarker), 0, 8);
-        if ($actualHash !== $storedHash) {
-            $fail("souverainete.css content-hash marker is stale (marker=$storedHash, actual=$actualHash) -- update the marker and bump every linking template's ?v= after editing this file");
+        $cssContentHash = substr(sha1($withoutMarker), 0, 8);
+        if ($cssContentHash !== $storedHash) {
+            $fail("souverainete.css content-hash marker is stale (marker=$storedHash, actual=$cssContentHash) -- update the marker and every template's ?v= after editing this file");
         }
+    }
+}
+
+// Cache-buster freshness, part 2: the "?v=" on every souverainete.css link
+// (homepage + the four content templates) must equal the content-hash
+// computed above -- the cache-buster IS the content hash, not a hand-picked
+// date/version string, so a CSS edit with no matching ?v= bump fails the
+// build instead of silently serving stale CSS to any browser with the old
+// version cached (see README.md's version-bump rule).
+$extractCssVersion = static function (string $html): ?string {
+    if (preg_match('/souverainete\.css\?v=([^"\']+)/', $html, $vm)) return $vm[1];
+    return null;
+};
+if ($cssContentHash !== null) {
+    $homeVersion = $extractCssVersion($home);
+    if ($homeVersion === null) $fail('could not extract ?v= from homepage souverainete.css link');
+    elseif ($homeVersion !== $cssContentHash)
+        $fail("homepage souverainete.css ?v=$homeVersion does not match content hash $cssContentHash -- update the ?v= (and the trailing content-hash marker) together");
+}
+
+// French templates use the single stylesheet, and (if the CSS hash is known)
+// carry the exact same ?v= as the homepage.
+foreach (['content/index.fr.html', 'content/page.fr.html', 'content/post.fr.html', 'content/contact.fr.html'] as $t) {
+    $tpl = file_get_contents("$theme/$t");
+    if (substr_count($tpl, 'souverainete.css') !== 1) $fail("$t must link souverainete.css exactly once");
+    if (str_contains($tpl, 'custom.css') || str_contains($tpl, 'hallmark-redesign.css')) $fail("$t links a retired stylesheet");
+    if ($cssContentHash !== null) {
+        $tplVersion = $extractCssVersion($tpl);
+        if ($tplVersion === null) $fail("could not extract ?v= from $t souverainete.css link");
+        elseif ($tplVersion !== $cssContentHash)
+            $fail("$t souverainete.css ?v=$tplVersion does not match content hash $cssContentHash -- update the ?v= (and the trailing content-hash marker) together");
     }
 }
 
