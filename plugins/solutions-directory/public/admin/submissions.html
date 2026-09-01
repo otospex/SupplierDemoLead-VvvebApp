@@ -65,6 +65,7 @@
 										<th>Source</th>
 										<th>IP</th>
 										<th>Attempts</th>
+										<th>Stage</th>
 										<!-- solutions-directory addition -->
 										<th>Action</th>
 									</tr>
@@ -87,6 +88,10 @@
 										<td class="small text-truncate" style="max-width:240px;"><span data-v-lead_submission-source_page></span></td>
 										<td class="small"><span data-v-lead_submission-client_ip></span></td>
 										<td><span data-v-lead_submission-attempts>0</span></td>
+										<td class="small text-nowrap">
+											<span data-v-lead_submission-stage>3</span>
+											<span class="badge bg-secondary ms-1" data-v-if="lead_submission.stage < 3">Diagnostic incomplet</span>
+										</td>
 										<!-- solutions-directory addition: posts through #sd-draft-form (CSRF in the body, never in the URL).
 											 The label sits in a span so the listing innerText rule cannot overwrite it. -->
 										<td><button type="submit" form="sd-draft-form" name="lead_submission_id" class="btn btn-sm btn-primary" data-v-if="lead_submission.solution_action_url" data-v-lead_submission-lead_submission_id><span>Créer une fiche brouillon</span></button></td>

@@ -93,6 +93,17 @@ foreach ([2, 3] as $stage) {
     expectTrue(($update['row'] ?? null) === $storedRow, "stage $stage must return the row found via findByHash.");
 }
 
+// --- validate(): 400 on stage 2/3 with no lead_token key --------------------
+
+foreach ([2, 3] as $stage) {
+    $missingToken = PartialLead::validate([
+        'stage' => $stage,
+    ], neverCalled());
+
+    expectTrue(($missingToken['ok'] ?? null) === false, "stage $stage without a lead_token key must not validate ok.");
+    expectTrue(($missingToken['http'] ?? null) === 400, "stage $stage without a lead_token key must report http 400.");
+}
+
 // --- validate(): 410 on unknown hash ----------------------------------------
 
 $unknown = PartialLead::validate([
