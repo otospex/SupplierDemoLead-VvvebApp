@@ -23,6 +23,8 @@ require_seed_text 'aucune recommandation automatique' 'automatic recommendations
 require_seed_text 'correction factuelle' 'provider factual-correction policy is missing.'
 require_seed_text 'date de dernière revue' 'content review date is missing.'
 require_seed_text 'alternatives' 'alternatives policy is missing.'
+require_seed_text 'référencement dans l.{0,8}annuaire est gratuit' 'free, unranked directory listing is not disclosed on the transparency page.'
+require_seed_text 'participer au financement ou à la subvention d.{0,8}un projet accompagné' 'partner project financing is not disclosed on the transparency page.'
 
 if (( failures > 0 )); then
     printf 'transparency-content tests: FAIL (%d issue(s))\n' "$failures" >&2
