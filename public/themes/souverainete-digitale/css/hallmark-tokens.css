@@ -23,12 +23,15 @@
   --color-accent-wash: oklch(96.5% 0.025 258);
   --color-signal: var(--color-brand-coral);
   --color-success: oklch(55% 0.12 158);
+  --color-success-wash: oklch(94% 0.045 158);
   --color-danger: oklch(55% 0.16 28);
   --color-nav: oklch(99% 0.006 250 / 0.94);
   --color-panel: oklch(99% 0.006 250);
   --color-panel-raised: oklch(100% 0 0);
   --color-footer: var(--color-brand-navy);
   --color-footer-muted: oklch(75% 0.035 252);
+  --color-on-dark-faint: oklch(58% 0.03 252);
+  --color-rule-on-dark: oklch(34% 0.04 252);
   --color-focus: oklch(61% 0.16 258);
   --color-shadow: oklch(22% 0.05 252 / 0.14);
   --color-shadow-soft: oklch(22% 0.05 252 / 0.08);
