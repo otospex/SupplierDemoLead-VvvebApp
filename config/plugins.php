@@ -28,5 +28,8 @@
 		'lead-platform-connector' => [
 			'status' => 'active',
 		],
- 	],
+		'solutions-directory' => [
+			'status' => 'active',
+		],
+	],
  ];

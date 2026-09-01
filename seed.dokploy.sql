@@ -2546,3 +2546,126 @@ WHERE type='page' AND status='publish' AND post_id IN (
   WHERE language_id=@lang_fr
     AND slug NOT IN ('contact','a-propos','methode-evaluation','transparence-partenariats','diagnostic-souverainete','independance-numerique','sortir-microsoft-365','choisir-visioconference-collaboration','confidentialite')
 );
+
+-- === solutions-directory (spec 2026-09-01) ===
+SET NAMES utf8mb4;
+SET @lang_fr := (SELECT language_id FROM language WHERE slug='fr' OR code LIKE 'fr%' ORDER BY language_id LIMIT 1); SET @lang_fr:=IFNULL(@lang_fr,2);
+
+-- Both directory taxonomies belong to the solution post type. Their public
+-- slugs, not numeric IDs, are the portable identifiers used by routes.
+SET @sd_tax_category := (SELECT t.taxonomy_id FROM taxonomy t JOIN taxonomy_content tc ON tc.taxonomy_id=t.taxonomy_id WHERE t.post_type='solution' AND tc.slug='categorie' LIMIT 1);
+INSERT INTO taxonomy (name,post_type,type,site_id) SELECT 'Catégories','solution','categories',1 WHERE @sd_tax_category IS NULL;
+SET @sd_tax_category := IFNULL(@sd_tax_category,LAST_INSERT_ID());
+INSERT INTO taxonomy_content (taxonomy_id,language_id,name,slug,content) VALUES (@sd_tax_category,@lang_fr,'Catégories','categorie','Catégories de besoins couvertes par les solutions publiées.') ON DUPLICATE KEY UPDATE slug=VALUES(slug),name=taxonomy_content.name,content=taxonomy_content.content;
+
+SET @sd_tax_alternative := (SELECT t.taxonomy_id FROM taxonomy t JOIN taxonomy_content tc ON tc.taxonomy_id=t.taxonomy_id WHERE t.post_type='solution' AND tc.slug='alternative-a' LIMIT 1);
+INSERT INTO taxonomy (name,post_type,type,site_id) SELECT 'Alternative à','solution','categories',1 WHERE @sd_tax_alternative IS NULL;
+SET @sd_tax_alternative := IFNULL(@sd_tax_alternative,LAST_INSERT_ID());
+INSERT INTO taxonomy_content (taxonomy_id,language_id,name,slug,content) VALUES (@sd_tax_alternative,@lang_fr,'Alternative à','alternative-a','Produits connus que les solutions publiées déclarent remplacer ou compléter pour un cas d&rsquo;usage défini.') ON DUPLICATE KEY UPDATE slug=VALUES(slug),name=taxonomy_content.name,content=taxonomy_content.content;
+
+DROP TEMPORARY TABLE IF EXISTS sd_solution_terms;
+CREATE TEMPORARY TABLE sd_solution_terms (taxonomy_slug varchar(32) NOT NULL,sort_order int NOT NULL,name varchar(191) NOT NULL,slug varchar(191) NOT NULL,intro text NOT NULL,PRIMARY KEY (taxonomy_slug,slug));
+INSERT INTO sd_solution_terms (taxonomy_slug,sort_order,name,slug,intro) VALUES
+('categorie',1,'Visioconférence','visioconference','Solutions pour organiser des réunions audio ou vidéo et des échanges à distance.'),
+('categorie',2,'Messagerie','messagerie','Solutions pour les échanges de courrier électronique et leur administration.'),
+('categorie',3,'Bureautique','bureautique','Solutions pour créer, modifier et partager des documents de travail.'),
+('categorie',4,'Fichiers et partage','fichiers-et-partage','Solutions pour stocker, synchroniser et partager des fichiers.'),
+('categorie',5,'Identité et accès','identite-et-acces','Solutions pour administrer les identités, les authentifications et les droits d&rsquo;accès.'),
+('categorie',6,'Hébergement et cloud','hebergement-et-cloud','Services d&rsquo;hébergement, d&rsquo;infrastructure et de cloud pour des charges de travail professionnelles.'),
+('categorie',7,'Sauvegarde','sauvegarde','Solutions pour copier, conserver et restaurer des données.'),
+('categorie',8,'Cybersécurité','cybersecurite','Solutions et services destinés à prévenir, détecter ou traiter des incidents de sécurité.'),
+('categorie',9,'IA et agents','ia-et-agents','Solutions d&rsquo;intelligence artificielle et d&rsquo;agents logiciels pour des usages professionnels définis.'),
+('categorie',10,'Accompagnement et migration','accompagnement-et-migration','Services de cadrage, d&rsquo;intégration et de migration pour faire évoluer un système numérique.'),
+('alternative-a',1,'Microsoft 365','microsoft-365','Solutions déclarées comme alternatives à Microsoft 365 pour un cas d&rsquo;usage défini. <a href="/page/sortir-microsoft-365">Consulter le guide de sortie de Microsoft 365</a>.'),
+('alternative-a',2,'Microsoft Teams','microsoft-teams','Solutions déclarées comme alternatives à Microsoft Teams pour un cas d&rsquo;usage défini. <a href="/page/choisir-visioconference-collaboration">Consulter le guide visioconférence et collaboration</a>.'),
+('alternative-a',3,'Google Workspace','google-workspace','Solutions déclarées comme alternatives à Google Workspace pour un cas d&rsquo;usage défini.'),
+('alternative-a',4,'Google Meet','google-meet','Solutions déclarées comme alternatives à Google Meet pour un cas d&rsquo;usage défini. <a href="/page/choisir-visioconference-collaboration">Consulter le guide visioconférence et collaboration</a>.'),
+('alternative-a',5,'Zoom','zoom','Solutions déclarées comme alternatives à Zoom pour un cas d&rsquo;usage défini. <a href="/page/choisir-visioconference-collaboration">Consulter le guide visioconférence et collaboration</a>.'),
+('alternative-a',6,'Slack','slack','Solutions déclarées comme alternatives à Slack pour un cas d&rsquo;usage défini.'),
+('alternative-a',7,'Dropbox','dropbox','Solutions déclarées comme alternatives à Dropbox pour un cas d&rsquo;usage défini.'),
+('alternative-a',8,'OneDrive','onedrive','Solutions déclarées comme alternatives à OneDrive pour un cas d&rsquo;usage défini.'),
+('alternative-a',9,'SharePoint','sharepoint','Solutions déclarées comme alternatives à SharePoint pour un cas d&rsquo;usage défini.'),
+('alternative-a',10,'AWS','aws','Solutions déclarées comme alternatives à AWS pour un cas d&rsquo;usage défini.'),
+('alternative-a',11,'Microsoft Azure','microsoft-azure','Solutions déclarées comme alternatives à Microsoft Azure pour un cas d&rsquo;usage défini.'),
+('alternative-a',12,'Google Cloud','google-cloud','Solutions déclarées comme alternatives à Google Cloud pour un cas d&rsquo;usage défini.'),
+('alternative-a',13,'ChatGPT / OpenAI','chatgpt-openai','Solutions déclarées comme alternatives à ChatGPT ou aux services OpenAI pour un cas d&rsquo;usage défini.'),
+('alternative-a',14,'Salesforce','salesforce','Solutions déclarées comme alternatives à Salesforce pour un cas d&rsquo;usage défini.'),
+('alternative-a',15,'Notion','notion','Solutions déclarées comme alternatives à Notion pour un cas d&rsquo;usage défini.');
+
+INSERT INTO taxonomy_item (taxonomy_id,image,template,parent_id,item_id,sort_order,status)
+SELECT IF(st.taxonomy_slug='categorie',@sd_tax_category,@sd_tax_alternative),'',CONCAT('__solutions-directory:',st.taxonomy_slug,':',st.slug),0,NULL,st.sort_order,1
+FROM sd_solution_terms st
+WHERE NOT EXISTS (
+  SELECT 1 FROM taxonomy_item ti
+  JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr
+  WHERE ti.taxonomy_id=IF(st.taxonomy_slug='categorie',@sd_tax_category,@sd_tax_alternative) AND tic.slug=st.slug
+);
+
+INSERT INTO taxonomy_item_content (taxonomy_item_id,language_id,name,slug,content,meta_title,meta_description,meta_keywords)
+SELECT ti.taxonomy_item_id,@lang_fr,st.name,st.slug,st.intro,'','',''
+FROM sd_solution_terms st
+JOIN taxonomy_item ti ON ti.taxonomy_id=IF(st.taxonomy_slug='categorie',@sd_tax_category,@sd_tax_alternative) AND ti.template=CONCAT('__solutions-directory:',st.taxonomy_slug,':',st.slug)
+LEFT JOIN taxonomy_item_content existing ON existing.taxonomy_item_id=ti.taxonomy_item_id AND existing.language_id=@lang_fr
+WHERE existing.taxonomy_item_id IS NULL;
+
+UPDATE taxonomy_item ti
+JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr
+JOIN sd_solution_terms st ON st.slug=tic.slug AND ti.taxonomy_id=IF(st.taxonomy_slug='categorie',@sd_tax_category,@sd_tax_alternative)
+SET ti.template=''
+WHERE ti.template=CONCAT('__solutions-directory:',st.taxonomy_slug,':',st.slug);
+
+INSERT INTO taxonomy_to_site (taxonomy_item_id,site_id)
+SELECT ti.taxonomy_item_id,1 FROM sd_solution_terms st
+JOIN taxonomy_item ti ON ti.taxonomy_id=IF(st.taxonomy_slug='categorie',@sd_tax_category,@sd_tax_alternative)
+JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr AND tic.slug=st.slug
+LEFT JOIN taxonomy_to_site t2s ON t2s.taxonomy_item_id=ti.taxonomy_item_id AND t2s.site_id=1
+WHERE t2s.taxonomy_item_id IS NULL;
+DROP TEMPORARY TABLE sd_solution_terms;
+
+-- Published directory index.
+SET @ex := (SELECT post_id FROM post_content WHERE slug='annuaire' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/annuaire.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @id_annuaire := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='page',template='content/annuaire.html',updated_at=NOW() WHERE post_id=@id_annuaire;
+INSERT INTO post_to_site (post_id,site_id) SELECT @id_annuaire,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_annuaire AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
+(@id_annuaire,@lang_fr,'Annuaire des solutions souveraines','annuaire','<section class="sd-directory-hero"><div class="container"><span class="sd-eyebrow">Solutions documentées</span><h1>Annuaire des solutions souveraines</h1><p>Les fiches sont relues avant publication et classées par date de revue, puis par nom. Une relation commerciale ne modifie jamais cet ordre.</p></div></section>','Des solutions numériques classées par besoin, avec faits déclarés, état de vérification et date de revue.','annuaire solutions souveraines, alternatives numériques','Annuaire relu de solutions numériques pour les organisations françaises, avec preuves, limites, alternatives et date de revue.');
+
+-- Public registration page; its dedicated template supplies noindex and the
+-- connector-backed form. It remains outside the sitemap by policy.
+SET @ex := (SELECT post_id FROM post_content WHERE slug='referencer-une-solution' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'page','content/solution-registration.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @id_solution_registration := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='page',template='content/solution-registration.html',updated_at=NOW() WHERE post_id=@id_solution_registration;
+INSERT INTO post_to_site (post_id,site_id) SELECT @id_solution_registration,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_solution_registration AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
+(@id_solution_registration,@lang_fr,'Référencer une solution','referencer-une-solution','','Proposer gratuitement une solution à la revue humaine avant publication.','','Proposer une solution à l’annuaire Indépendant Digital : référencement gratuit, affirmations vérifiables et revue humaine avant publication.');
+
+-- Queue-only endpoint. Blank credentials are enforced on every seed run so
+-- solution registrations can never be forwarded to a provider platform.
+SET @sd_endpoint_table := (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='lead_endpoint');
+SET @sd_endpoint_sql := IF(@sd_endpoint_table=1,
+'INSERT INTO lead_endpoint (slug,label,platform_url,api_key_enc,campaign,field_map,allowed_origins,rate_limit,active,created_at,updated_at) VALUES (''solution-registration'',''Référencement de solutions'','''','''',''solution-registration'',NULL,NULL,10,1,NOW(),NOW()) ON DUPLICATE KEY UPDATE label=VALUES(label),platform_url='''',api_key_enc='''',campaign=VALUES(campaign),field_map=NULL,allowed_origins=NULL,rate_limit=VALUES(rate_limit),active=1,updated_at=NOW()',
+'SELECT 1');
+PREPARE sd_endpoint_stmt FROM @sd_endpoint_sql; EXECUTE sd_endpoint_stmt; DEALLOCATE PREPARE sd_endpoint_stmt;
+
+-- Guide pages embed the directory block for their use case (spec 2026-09-01
+-- §7 and §8). Components bind inside stored page content exactly like the
+-- diagnostic lead form does, so the block is appended to the French body of the
+-- two guides seeded earlier in this file.
+--
+-- Targeted CONCAT updates, never REPLACE INTO: those page rows carry copy owned
+-- by the launch section above and must not be rewritten from here. The
+-- `sd-solutions-embed` marker makes each update idempotent across seed runs.
+--
+-- Multi-value component options must be JSON arrays: Vvveb's component parser
+-- json_decodes any attribute value that contains a comma, so a bare
+-- "a,b,c" list would resolve to NULL and silently drop the filter.
+SET @sd_embed_visio := '<section class="sd-solutions-embed"><div class="container"><h2>Solutions référencées pour ce cas d&rsquo;usage</h2><div data-v-component-plugin-solutions-directory-solutions="guide" data-v-alternative_a=''["google-meet","microsoft-teams","zoom"]'' data-v-limit="6"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></div></section>';
+SET @sd_embed_m365 := '<section class="sd-solutions-embed"><div class="container"><h2>Solutions référencées pour ce cas d&rsquo;usage</h2><div data-v-component-plugin-solutions-directory-solutions="guide" data-v-alternative_a="microsoft-365" data-v-limit="6"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></div></section>';
+
+UPDATE post_content SET content = CONCAT(content, @sd_embed_visio)
+WHERE slug = 'choisir-visioconference-collaboration' AND language_id = @lang_fr
+  AND content NOT LIKE '%sd-solutions-embed%';
+
+UPDATE post_content SET content = CONCAT(content, @sd_embed_m365)
+WHERE slug = 'sortir-microsoft-365' AND language_id = @lang_fr
+  AND content NOT LIKE '%sd-solutions-embed%';

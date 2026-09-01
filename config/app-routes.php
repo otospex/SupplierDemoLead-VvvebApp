@@ -27,6 +27,14 @@ return [
 	//homepage
 	'/'           => ['module' => 'index/index'],
 
+	//Reviewed solutions directory. Keep these before generic /{slug} routes.
+	'/annuaire/referencer-une-solution' => ['module' => 'content/page/index', 'slug' => 'referencer-une-solution'],
+	'/annuaire/categorie/{categorie}' => ['module' => 'plugins/solutions-directory/directory/index'],
+	'/annuaire/alternative-a/{alternative_a}' => ['module' => 'plugins/solutions-directory/directory/index'],
+	'/annuaire' => ['module' => 'content/page/index', 'slug' => 'annuaire'],
+	'/solution/{slug}' => ['module' => 'content/post/index', 'type' => 'solution', 'edit' => '?module=content/post&slug={slug}&type=solution'],
+	'/feed/solutions.xml' => ['module' => 'plugins/solutions-directory/sitemap/index'],
+
 	//pagination for blog posts when home has blog posts
 	'/p/#page#'  => ['module' => 'index/index'],
 

@@ -48,11 +48,19 @@
 
 	function serialize(form, honeypotName) {
 		const fd = new FormData(form);
-		const out = {};
+		let out = {};
 		fd.forEach(function (value, key) {
 			if (key === honeypotName) return;
 			out[key] = value;
 		});
+		// Additive extension point for endpoint-specific field shapes (for
+		// example repeated checkbox names). The connector remains generic.
+		const fieldsEvent = new CustomEvent('lead-platform-connector:fields', {
+			bubbles: true,
+			detail: { form: form, fields: out }
+		});
+		form.dispatchEvent(fieldsEvent);
+		out = fieldsEvent.detail.fields || out;
 		if (out.provider_introduction_requested === '1') {
 			out.consent_timestamp = new Date().toISOString();
 		} else {
@@ -129,7 +137,12 @@
 				}
 
 				if (res.body && res.body.ok) {
-					showAlert(form, 'success', 'Merci — votre demande a bien été reçue.');
+					const successEvent = new CustomEvent('lead-platform-connector:success', {
+						bubbles: true,
+						detail: { form: form, message: 'Merci — votre demande a bien été reçue.' }
+					});
+					form.dispatchEvent(successEvent);
+					showAlert(form, 'success', successEvent.detail.message);
 					form.reset();
 					// Refresh token after a successful submit (single-use semantics in practice).
 					fetchToken(cfg.endpoint).then(function (next) { if (next) cfg.csrf = next.csrf; cfg.renderTs = next ? next.renderTs : cfg.renderTs; });
