@@ -2401,9 +2401,15 @@ section[id] p {
   margin-bottom: var(--space-2xl);
 }
 
-.sd-ai-band h3 {
+/* The band's heading is an h2 so the section's heading order never skips a
+   level; the section rule above would blow it up to display size, so measure,
+   size and leading are reset to the small label the band is meant to be. */
+.sd-ai-band h2,
+section[id] .sd-ai-band h2 {
+  max-width: none;
   font-family: var(--font-display);
   font-size: 1.1rem;
+  line-height: 1.2;
   margin-bottom: var(--space-xs);
 }
 
