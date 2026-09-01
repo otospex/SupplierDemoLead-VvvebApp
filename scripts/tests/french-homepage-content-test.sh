@@ -28,7 +28,7 @@ forbid_text() {
 
 require_text 'Indépendant Digital' 'French homepage must use the Indépendant Digital brand.'
 require_text 'independantdigital\.fr' 'French homepage must use the final domain.'
-require_text 'Réduisez vos dépendances numériques' 'French homepage must use the approved core promise.'
+require_text 'Vers la souveraineté numérique' 'French homepage must use the approved souveraineté numérique H1 pivot.'
 require_text 'href="(#process|/page/methode-evaluation)"' 'French homepage must link to the evaluation methodology.'
 if ! rg -q "Indépendant Digital — Décider et migrer sans dépendance aveugle" "$seed"; then
     printf 'FAIL: deployment seed must use the approved French homepage title.\n' >&2
