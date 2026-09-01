@@ -93,6 +93,25 @@ $stripped = PartialLead::stripAcknowledgement([
 expectTrue(! array_key_exists('privacy_acknowledgement', $stripped), 'stripAcknowledgement must remove privacy_acknowledgement.');
 expectTrue(($stripped['email'] ?? null) === 'dsi@example.fr', 'stripAcknowledgement must not touch other fields.');
 
+// --- requiresLocalQueue(): named-introduction leads must never forward ----
+
+expectTrue(
+    PartialLead::requiresLocalQueue(['provider_introduction_requested' => '1', 'email' => 'dsi@example.fr']) === true,
+    'a payload with provider_introduction_requested === "1" must require the local queue.'
+);
+expectTrue(
+    PartialLead::requiresLocalQueue(['provider_introduction_requested' => '0']) === false,
+    'a payload with provider_introduction_requested !== "1" must not require the local queue.'
+);
+expectTrue(
+    PartialLead::requiresLocalQueue([]) === false,
+    'a payload with no provider_introduction_requested key must not require the local queue.'
+);
+expectTrue(
+    PartialLead::requiresLocalQueue(['provider_introduction_requested' => 1]) === false,
+    'provider_introduction_requested must be compared strictly against the string "1".'
+);
+
 if ($failures > 0) {
     fwrite(STDERR, "flush-partial tests: FAIL ($failures issue(s))\n");
     exit(1);

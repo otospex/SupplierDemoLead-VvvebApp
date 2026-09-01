@@ -1,5 +1,9 @@
 <?php
 
+// No cross-run locking: concurrent runs may double-send a row still mid-flush.
+// Schedule this single-flight (e.g. flock in cron, or a scheduler that never
+// overlaps runs of the same job) rather than relying on this script alone.
+
 if (PHP_SAPI !== 'cli') {
 	fwrite(STDERR, "CLI only.\n");
 	exit(1);
@@ -79,6 +83,12 @@ function flushRow(PDO $pdo, array $row): void {
 
 	$endpoint = fetchEndpoint($pdo, (string) ($row['endpoint_slug'] ?? ''));
 	$deliveryMode = DeliveryMode::resolve($endpoint);
+	// Named introductions stay in the confirmed local outbox for human
+	// qualification and auditable routing, exactly as both of submit.php's
+	// FORWARD-downgrade call sites enforce — an aged row is no exception.
+	if (PartialLead::requiresLocalQueue($deliverPayload) && $deliveryMode === DeliveryMode::FORWARD) {
+		$deliveryMode = DeliveryMode::QUEUE;
+	}
 
 	$status    = 'pending';
 	$http      = null;

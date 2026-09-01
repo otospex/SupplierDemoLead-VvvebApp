@@ -175,6 +175,18 @@ final class PartialLead {
 	}
 
 	/**
+	 * Named-introduction consent (provider_introduction_requested === '1')
+	 * must never leave this server directly — it stays in the confirmed
+	 * local outbox for human qualification and auditable routing, no matter
+	 * what delivery mode the endpoint would otherwise resolve to. Shared by
+	 * submit.php's two FORWARD-downgrade call sites and the flush job's
+	 * forward decision so the rule lives in exactly one place.
+	 */
+	public static function requiresLocalQueue(array $payload): bool {
+		return ($payload['provider_introduction_requested'] ?? null) === '1';
+	}
+
+	/**
 	 * Drop the privacy acknowledgement from a payload that is about to be
 	 * delivered — either to the platform or into the local confirmed queue.
 	 * The acknowledgement is a resumability aid (see merge()); once a row is

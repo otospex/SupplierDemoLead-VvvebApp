@@ -458,7 +458,7 @@ class Submit {
 		// Named introductions stay in the confirmed local outbox for human
 		// qualification and auditable routing. They are never forwarded directly
 		// from a public form, even after a generic platform is configured.
-		if ($consentAudit && $deliveryMode === DeliveryMode::FORWARD) {
+		if (PartialLead::requiresLocalQueue($fields) && $deliveryMode === DeliveryMode::FORWARD) {
 			$deliveryMode = DeliveryMode::QUEUE;
 		}
 
@@ -741,7 +741,7 @@ class Submit {
 		}
 		// Named introductions stay in the confirmed local outbox for human
 		// qualification and auditable routing, exactly as on the full path.
-		if ($consentAudit && $deliveryMode === DeliveryMode::FORWARD) {
+		if (PartialLead::requiresLocalQueue($deliverPayload) && $deliveryMode === DeliveryMode::FORWARD) {
 			$deliveryMode = DeliveryMode::QUEUE;
 		}
 

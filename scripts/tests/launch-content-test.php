@@ -129,7 +129,7 @@ requirePattern('/migrateLeadSubmission/', $installer, 'existing lead queue schem
 requirePattern('/migration verification failed/', $installer, 'lead queue migration is not verified.');
 requirePattern('/lpc-schema-v\d+/', $pluginBootstrap, 'existing installs do not receive versioned schema migrations.');
 requirePattern('/function app\(\) \{\s*\$this->ensureInstalled\(\);/s', $pluginBootstrap, 'schema migration is not triggered on existing public installations.');
-requirePattern('/\$consentAudit && \$deliveryMode === DeliveryMode::FORWARD/', $submitController, 'named provider introductions can bypass the durable local consent outbox.');
+requirePattern('/PartialLead::requiresLocalQueue\(\$\w+\) && \$deliveryMode === DeliveryMode::FORWARD/', $submitController, 'named provider introductions can bypass the durable local consent outbox.');
 
 if ($failures > 0) {
     fwrite(STDERR, "launch-content tests: FAIL ($failures issue(s))\n");
