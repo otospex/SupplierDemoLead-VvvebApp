@@ -2237,3 +2237,270 @@ section[id] p {
     max-width: 100%;
   }
 }
+
+/* ==========================================================================
+   LAYER 3 — HOMEPAGE (index.fr.html)
+
+   The homepage is deliberately off-grid: a left-biased hero, an asymmetric
+   routes grid whose first route spans two rows, a numbered method list with
+   no icons and no cards, and a statement footer. Section padding is varied
+   on purpose — a uniform vertical rhythm is what makes a page read as a
+   template. Every value below resolves through a token in hallmark-tokens.css.
+   ========================================================================== */
+
+/* Hero — left-biased, no centring */
+#hero {
+  padding-block: var(--space-4xl) var(--space-3xl);
+}
+
+#hero > .container > .row {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-3xl);
+  margin-inline: 0;
+}
+
+#hero > .container > .row > * {
+  padding-inline: 0;
+}
+
+/* Diagnostic — same two-column grid, copy left, form right */
+#diagnostic > .container > .row {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-2xl);
+  margin-inline: 0;
+}
+
+#diagnostic > .container > .row > * {
+  width: auto;
+  max-width: none;
+  padding-inline: 0;
+}
+
+#hero h1 {
+  max-width: 16ch;
+  margin-top: 0;
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 0.98;
+}
+
+#hero .lead {
+  max-width: 58ch;
+  margin-top: var(--space-lg);
+  margin-bottom: 0;
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
+.sd-hero-actions {
+  justify-content: flex-start;
+  gap: var(--space-lg);
+}
+
+#hero .sd-hero-journey {
+  max-width: none;
+  margin: 0;
+}
+
+/* Routes — asymmetric editorial grid */
+.sd-routes-grid {
+  display: grid;
+  gap: var(--space-xl);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  margin-top: var(--space-2xl);
+}
+
+.sd-route-wide {
+  grid-row: 1 / span 2;
+}
+
+.sd-route {
+  border-top: var(--rule-hair) solid var(--color-rule-strong);
+  padding-top: var(--space-lg);
+}
+
+.sd-route-index {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent-strong);
+}
+
+.sd-route h3 {
+  font-family: var(--font-display);
+  margin: var(--space-xs) 0 var(--space-sm);
+}
+
+.sd-route p {
+  color: var(--color-ink-soft);
+  max-width: 46ch;
+}
+
+.sd-route-note {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+/* Link-arrow — text CTA */
+.sd-link-arrow {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.sd-link-arrow::after {
+  content: " \2192";
+}
+
+.sd-link-arrow:hover,
+.sd-link-arrow:focus-visible {
+  color: var(--color-accent-strong);
+  text-decoration: underline;
+}
+
+/* Solutions block */
+.sd-solutions-block {
+  margin-block: var(--space-xl);
+}
+
+.sd-solutions-empty {
+  color: var(--color-muted);
+  max-width: 46rem;
+  margin: 0;
+}
+
+/* Method list */
+.sd-method-list {
+  max-width: 46rem;
+  display: grid;
+  gap: var(--space-md);
+  padding-left: 1.25rem;
+  margin-block: var(--space-2xl);
+  color: var(--color-ink-soft);
+}
+
+.sd-method-list li::marker {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-accent-strong);
+}
+
+.sd-method-list strong {
+  color: var(--color-ink);
+}
+
+/* AI band */
+.sd-ai-band {
+  border: var(--rule-hair) solid var(--color-rule);
+  border-left: none;
+  border-right: none;
+  padding: var(--space-lg) 0;
+  margin-bottom: var(--space-2xl);
+}
+
+.sd-ai-band h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: var(--space-xs);
+}
+
+.sd-ai-band p {
+  margin: 0;
+  color: var(--color-ink-soft);
+  max-width: 52rem;
+}
+
+/* Section rhythm — deliberately uneven */
+#voies,
+#methode {
+  padding-block: var(--space-4xl) var(--space-3xl);
+}
+
+#solutions {
+  padding-block: var(--space-2xl);
+  background: var(--color-paper-2);
+  border-block: var(--rule-hair) solid var(--color-rule);
+}
+
+#diagnostic {
+  padding-block: var(--space-3xl);
+}
+
+/* Statement footer */
+.sd-footer-statement {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.45;
+  max-width: 46rem;
+  color: var(--color-paper);
+}
+
+.sd-footer-rule {
+  color: var(--color-footer-muted);
+  font-size: 0.9rem;
+  max-width: 46rem;
+}
+
+.sd-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md) var(--space-lg);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-xl) 0;
+}
+
+.sd-footer-links li {
+  margin-bottom: 0;
+}
+
+@media (max-width: 991.98px) {
+  #hero > .container > .row,
+  #diagnostic > .container > .row,
+  .sd-routes-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sd-route-wide {
+    grid-row: auto;
+  }
+
+  #hero {
+    padding-block: var(--space-3xl) var(--space-2xl);
+  }
+
+  #hero h1 {
+    max-width: 100%;
+  }
+
+  #hero .lead {
+    font-size: 1.05rem;
+  }
+
+  #hero .sd-hero-journey {
+    margin-top: var(--space-xl);
+  }
+
+  #voies,
+  #methode {
+    padding-block: var(--space-3xl) var(--space-2xl);
+  }
+
+  #solutions,
+  #diagnostic {
+    padding-block: var(--space-2xl);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sd-hero-actions .sd-link-arrow {
+    width: 100%;
+  }
+
+  .sd-footer-statement {
+    font-size: 1.1rem;
+  }
+}
