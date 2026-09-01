@@ -18,12 +18,14 @@ Le code, les contenus et la file de demandes peuvent être testés en préproduc
 - [ ] Définir et tester la sauvegarde de la base contenant `lead_submission` ainsi que la procédure de restauration.
 - [ ] Configurer le système de distribution de leads en remplissant ensemble `platform_url` et la clé API. Laisser les deux champs vides maintient la file locale; n&rsquo;en remplir qu&rsquo;un bloque les envois.
 - [ ] Ajouter une tâche de purge alignée sur la durée de conservation retenue.
+- [ ] `seed.dokploy.sql` (~ligne 2195) écrit le titre/meta FR de la page d&rsquo;accueil sous une clé `site.settings.description` codée en dur `'2'`. Sur un déploiement propre où le français n&rsquo;obtient pas `language_id = 2`, la page d&rsquo;accueil FR perd son `<title>`/meta. Calculer la clé dynamiquement (comme le bloc v9 le fait déjà pour `@fr_id`/`site.settings.language_id`) avant tout nouveau déploiement.
 
 ## Validation commerciale et éditoriale
 
 - [ ] AIFEL fournit les preuves demandées dans `docs/providers/aifel/evidence-request.md`; la revue passe explicitement à publiable avant toute fiche ou formulaire nominatif.
 - [ ] Les pages d&rsquo;alternatives restent avec `editorial_ready=0` jusqu&rsquo;à saisie d&rsquo;une source de demande française et validation de la checklist manuelle.
 - [ ] Tout outil d&rsquo;analyse d&rsquo;audience ou de publicité est documenté avant activation; le bandeau et la politique de cookies sont adaptés aux traceurs réellement déployés.
+- [ ] La meta description de la page d&rsquo;accueil anglaise dans `seed.dokploy.sql` (~ligne 2198) affirme un cloud souverain « SecNumCloud-certified » : à réécrire avant toute exposition publique de `/en/`, cette certification n&rsquo;étant pas établie côté commercial/éditorial.
 
 ## Décision d&rsquo;ouverture
 

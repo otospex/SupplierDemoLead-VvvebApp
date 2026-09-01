@@ -58,7 +58,7 @@
 <section class="sd-section" style="padding-top:7rem;">
   <div class="container">
     <span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Ressources</span>
-    <h1 class="sd-gradient-text" style="font-size:clamp(2rem,4vw,3rem);font-weight:800;margin:1rem 0 2rem;">Blog</h1>
+    <h1>Blog</h1>
     <div class="row g-4" data-v-component-posts="latest" data-v-page="url" data-v-limit="9" data-v-image_size="large">
       <article class="col-md-6 col-lg-4" data-v-post data-v-if="posts.count > 0">
         <a class="sd-card d-block h-100 text-decoration-none" href="content/post.html" data-v-post-url>
@@ -97,16 +97,14 @@
     // again after any AJAX navigation (vvveb.loadUrl), so the active state stays
     // consistent regardless of which template served the page.
     (function () {
-      var SERVICE_SLUGS = ["/page/independance-numerique", "/page/sortir-microsoft-365", "/page/choisir-visioconference-collaboration", "/page/methode-evaluation", "/page/transparence-partenariats"];
+      var SERVICE_SLUGS = ["/page/independance-numerique", "/page/sortir-microsoft-365", "/page/choisir-visioconference-collaboration"];
       function syncActiveNav() {
         var path = window.location.pathname.replace(/\/+$/, "") || "/";
         var links = document.querySelectorAll(".sd-nav .navbar-nav .nav-link");
         if (!links.length) return;
         links.forEach(function (a) { a.classList.remove("active"); });
         function activate(sel) { var el = document.querySelector(sel); if (el) el.classList.add("active"); }
-        if (path === "/" || path === "") {
-          activate('.sd-nav .navbar-nav .nav-link[href="/"]');
-        } else if (SERVICE_SLUGS.indexOf(path) !== -1) {
+        if (SERVICE_SLUGS.indexOf(path) !== -1) {
           activate(".sd-nav .navbar-nav .nav-link.dropdown-toggle");
         } else if (path.indexOf("/blog") === 0) {
           activate('.sd-nav .navbar-nav .nav-link[href="/blog"]');

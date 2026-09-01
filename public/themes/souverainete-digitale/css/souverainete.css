@@ -1286,7 +1286,7 @@ a:hover {
 }
 
 .sd-nav .sd-btn {
-  min-height: auto;
+  min-height: 2.75rem;
   padding: var(--space-xs) var(--space-sm);
   color: var(--color-accent-strong) !important;
   background: transparent;
@@ -2425,6 +2425,7 @@ section[id] .sd-ai-band h2 {
 #voies,
 #methode {
   padding-block: var(--space-4xl) var(--space-3xl);
+  background: var(--color-paper);
 }
 
 #solutions {
@@ -2512,3 +2513,4 @@ section[id] .sd-ai-band h2 {
     font-size: 1.1rem;
   }
 }
+/* content-hash: f07f4201 */
