@@ -13,6 +13,7 @@ require_once $mapperFile;
 require_once $creatorFile;
 
 use Vvveb\Plugins\SolutionsDirectory\System\DraftCreator;
+use Vvveb\Plugins\SolutionsDirectory\System\DraftMapper;
 
 $failures = 0;
 
@@ -88,6 +89,15 @@ expectDraft(($draft['meta']['verification_status'] ?? '') === 'declare', 'new su
 expectDraft(($draft['meta']['commercial_relationship'] ?? '') === 'aucune', 'partner interest must not create a commercial relationship.');
 expectDraft(($draft['meta']['submitted_by_email'] ?? '') === $fields['email'], 'submitter email must map to private admin meta.');
 expectDraft(($draft['meta']['submission_id'] ?? null) === '314', 'submission id must be stored for idempotence.');
+expectDraft(($draft['meta']['partner_interest'] ?? '') === 'oui', 'partner interest must be recorded as private admin meta.');
+expectDraft(! array_key_exists('partner_interest', $draft['content'] ?? []), 'partner interest must never reach public post content.');
+expectDraft(! str_contains($draft['content']['content'] ?? '', 'partenariat commercial'), 'partner interest must not be written into the reviewed body.');
+
+$noInterestFields = $fields;
+unset($noInterestFields['partner_interest']);
+$withoutInterest = DraftMapper::map($noInterestFields, $config, 401);
+expectDraft(($withoutInterest['meta']['partner_interest'] ?? '') === 'non', 'an unchecked partner interest must be recorded as non.');
+expectDraft(($withoutInterest['meta']['commercial_relationship'] ?? '') === 'aucune', 'partner interest never sets a commercial relationship.');
 expectDraft(($draft['terms']['categorie'] ?? []) === $fields['categories'], 'category term slugs must be linked.');
 expectDraft(($draft['terms']['alternative-a'] ?? []) === $fields['alternative_to'], 'alternative term slugs must be linked.');
 

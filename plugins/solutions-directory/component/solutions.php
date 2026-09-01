@@ -29,6 +29,7 @@ class Solutions extends ComponentBase {
 
 	function results() {
 		$config = require __DIR__ . '/../config.php';
+		SolutionPresenter::configure($config);
 		$repository = new SolutionRepository($config);
 		$languageId = (int) ($this->options['language_id'] ?? 0);
 		$siteId = (int) ($this->options['site_id'] ?? 0);

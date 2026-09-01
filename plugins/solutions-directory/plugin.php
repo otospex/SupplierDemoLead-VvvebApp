@@ -11,10 +11,13 @@ Version: 0.1.0
 
 use Vvveb\System\Event;
 use Vvveb\Plugins\SolutionsDirectory\Install;
+use Vvveb\Plugins\SolutionsDirectory\System\QueueIntegration;
 
 if (! defined('V_VERSION')) {
 	die('Invalid request!');
 }
+
+require_once __DIR__ . '/system/queue-integration.php';
 
 #[\AllowDynamicProperties]
 class SolutionsDirectoryPlugin {
@@ -69,40 +72,34 @@ class SolutionsDirectoryPlugin {
 		}
 	}
 
-	private function isQueueTemplate(string $template): bool {
-		return str_replace('\\', '/', $template) === 'plugins/lead-platform-connector/admin/submissions.html';
-	}
-
 	private function adminHooks(): void {
 		Event::on('Vvveb\System\Core\View', 'template', __CLASS__, function ($filename, $compiledFilename, $view) {
-			if ($this->isQueueTemplate($filename)) {
-				$compiledFilename .= '-solutions-directory-v1';
+			if (QueueIntegration::isQueueTemplate((string) $filename)) {
+				$compiledFilename .= QueueIntegration::compiledSuffix();
 			}
 
 			return [$filename, $compiledFilename, $view];
 		});
 
 		Event::on('Vvveb\System\Core\View', 'compile', __CLASS__, function ($template, $filename, $tplFile, $engine, $view) {
-			if ($this->isQueueTemplate($template)) {
-				$filename = __DIR__ . '/public/admin/submissions.html';
+			if (QueueIntegration::isQueueTemplate((string) $template)) {
+				$filename = QueueIntegration::queueTemplateFile();
 			}
 
 			return [$template, $filename, $tplFile, $engine, $view];
 		});
 
 		Event::on('Vvveb\System\Core\FrontController', 'call', __CLASS__, function ($template, $controller, $actionName) {
-			if (get_class($controller) !== 'Vvveb\Plugins\LeadPlatformConnector\Controller\Submissions') {
+			if (get_class($controller) !== QueueIntegration::QUEUE_CONTROLLER) {
 				return [$template, $controller, $actionName];
 			}
 			$rows =& $controller->view->lead_submission;
-			$csrf = rawurlencode((string) $controller->session->get('csrf'));
 			if (is_array($rows)) {
-				foreach ($rows as &$row) {
-					$row['solution_action_url'] = '';
-					if (($row['endpoint_slug'] ?? '') === $this->config['endpoint_slug']) {
-						$row['solution_action_url'] = \Vvveb\adminPath() . 'index.php?module=plugins/solutions-directory/draft&lead_submission_id=' . (int) $row['lead_submission_id'] . '&csrf=' . $csrf;
-					}
-				}
+				$rows = QueueIntegration::decorateRows(
+					$rows,
+					$this->config,
+					QueueIntegration::draftActionUrl($this->config, \Vvveb\adminPath())
+				);
 			}
 
 			return [$template, $controller, $actionName];

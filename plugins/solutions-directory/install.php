@@ -49,15 +49,38 @@ final class Install {
 		$this->db->execute('INSERT INTO taxonomy_to_site (taxonomy_item_id, site_id) VALUES (:taxonomy_item_id, :site_id)', ['taxonomy_item_id' => $id, 'site_id' => $siteId]);
 	}
 
+	/**
+	 * Runs on plugin activation only.
+	 *
+	 * config/plugins.php lists solutions-directory as already active, which means
+	 * Vvveb never fires the activation event on a fresh deployment and this
+	 * installer never runs there. seed.dokploy.sql carries the same taxonomies,
+	 * terms, pages and lead endpoint for that path; the two must stay in step.
+	 */
 	function run(): void {
-		$engine = DB_ENGINE;
-		$import = new Sql();
-		$import->setPath(__DIR__ . "/install/sql/$engine/data/");
-		$import->createTables();
-
 		$config = require __DIR__ . '/config.php';
+		$engine = DB_ENGINE;
+
+		try {
+			$import = new Sql();
+			$import->setPath(__DIR__ . "/install/sql/$engine/data/");
+			$import->createTables();
+		} catch (\Throwable $e) {
+			// A half-installed directory is worse than a loud failure: without the
+			// tables the taxonomy writes below would fail one row at a time.
+			throw new \RuntimeException(
+				"solutions-directory: could not import install/sql/$engine/data/ — " . $e->getMessage(),
+				0,
+				$e
+			);
+		}
+
 		$data = require __DIR__ . '/system/term-data.php';
-		$language = $this->one("SELECT language_id FROM language WHERE slug = 'fr' OR code LIKE 'fr%' ORDER BY language_id LIMIT 1");
+		$languageSlug = (string) ($config['language_slug'] ?? 'fr');
+		$language = $this->one(
+			'SELECT language_id FROM language WHERE slug = :slug OR code LIKE :code ORDER BY language_id LIMIT 1',
+			['slug' => $languageSlug, 'code' => $languageSlug . '%']
+		);
 		$languageId = (int) ($language['language_id'] ?? 2);
 		$siteId = defined('SITE_ID') ? (int) SITE_ID : 1;
 		$categoryId = $this->taxonomy($config['post_type'], $config['taxonomies']['categorie'], 'Catégories', $languageId, $siteId);

@@ -227,22 +227,47 @@ final class SolutionRepository {
 		}
 	}
 
+	/**
+	 * Spec 5.4: other published solutions sharing at least one `alternative-a`
+	 * OR one `categorie` term — the union of both neighbourhoods, deduped, self
+	 * excluded, capped at $limit and ordered reviewed_at desc then name.
+	 *
+	 * The two sides are queried separately because a single statement would AND
+	 * the two EXISTS clauses. Each side is already ordered, so the top $limit of
+	 * the merged set is the true top $limit of the union.
+	 */
 	public function alternatives(array $solution, int $limit = 5, int $siteId = 0): array {
-		$categories = array_column($solution['categories'] ?? [], 'slug');
-		$alternative = array_column($solution['alternative_a'] ?? [], 'slug');
-		$filters = [
+		$limit = max(1, $limit);
+		$base  = [
 			'exclude_post_id' => (int) ($solution['post_id'] ?? 0),
-			'language_id' => (int) ($solution['language_id'] ?? 0),
-			'site_id' => $siteId,
+			'language_id'     => (int) ($solution['language_id'] ?? 0),
+			'site_id'         => $siteId,
 		];
-		if ($alternative) {
-			$filters['alternative_a'] = $alternative;
-		} elseif ($categories) {
-			$filters['categorie'] = $categories;
-		} else {
+		$neighbourhoods = [
+			'alternative_a' => array_column($solution['alternative_a'] ?? [], 'slug'),
+			'categorie'     => array_column($solution['categories'] ?? [], 'slug'),
+		];
+
+		$rows = [];
+		foreach ($neighbourhoods as $filter => $slugs) {
+			if (! $slugs) {
+				continue;
+			}
+			foreach ($this->published($base + [$filter => $slugs], $limit) as $row) {
+				$rows[(int) ($row['post_id'] ?? 0)] = $row;
+			}
+		}
+		if (! $rows) {
 			return [];
 		}
 
-		return $this->published($filters, $limit);
+		$rows = array_values($rows);
+		usort($rows, static function (array $left, array $right): int {
+			$date = strcmp((string) ($right['reviewed_at'] ?? ''), (string) ($left['reviewed_at'] ?? ''));
+
+			return $date !== 0 ? $date : strcasecmp((string) ($left['name'] ?? ''), (string) ($right['name'] ?? ''));
+		});
+
+		return array_slice($rows, 0, $limit);
 	}
 }

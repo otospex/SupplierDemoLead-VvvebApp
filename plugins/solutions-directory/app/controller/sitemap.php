@@ -32,12 +32,13 @@ class Sitemap extends Base {
 		$repository = new SolutionRepository($config);
 		$languageId = (int) ($this->global['language_id'] ?? 1);
 		$siteId = (int) ($this->global['site_id'] ?? 1);
-		$urls = [['path' => '/annuaire', 'lastmod' => '']];
+		$directory = rtrim((string) $config['directory_url'], '/');
+		$urls      = [['path' => $directory, 'lastmod' => '']];
 
 		foreach ($config['taxonomies'] as $routeKey => $taxonomy) {
 			$routeSegment = str_replace('_', '-', $routeKey);
 			foreach ($repository->terms($taxonomy, $languageId, $siteId) as $term) {
-				$urls[] = ['path' => "/annuaire/$routeSegment/{$term['slug']}", 'lastmod' => ''];
+				$urls[] = ['path' => "$directory/$routeSegment/{$term['slug']}", 'lastmod' => ''];
 			}
 		}
 
@@ -47,7 +48,7 @@ class Sitemap extends Base {
 		);
 		foreach ($solutions as $solution) {
 			$urls[] = [
-				'path' => '/solution/' . $solution['slug'],
+				'path' => rtrim((string) $config['solution_url'], '/') . '/' . $solution['slug'],
 				'lastmod' => $this->lastmod((string) ($solution['reviewed_at'] ?? '')),
 			];
 		}

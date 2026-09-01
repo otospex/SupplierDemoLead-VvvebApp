@@ -35,6 +35,10 @@ final class DraftMapper {
 		}, $value))));
 	}
 
+	private static function flag($value): string {
+		return in_array(strtolower(self::text($value)), ['1', 'on', 'oui', 'true', 'yes'], true) ? 'oui' : 'non';
+	}
+
 	private static function paragraphs(string $text): string {
 		$text = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
@@ -101,6 +105,10 @@ final class DraftMapper {
 				'reviewed_at'             => '',
 				'reviewer'                => '',
 				'submitted_by_email'      => self::text($fields['email'] ?? ''),
+				// Private, admin-only like submitted_by_email: it records that the
+				// submitter asked to discuss a partnership. It never becomes a
+				// commercial relationship and is never rendered publicly.
+				'partner_interest'        => self::flag($fields['partner_interest'] ?? ''),
 				'submission_id'           => (string) $submissionId,
 			],
 			'terms' => [

@@ -2646,3 +2646,26 @@ SET @sd_endpoint_sql := IF(@sd_endpoint_table=1,
 'INSERT INTO lead_endpoint (slug,label,platform_url,api_key_enc,campaign,field_map,allowed_origins,rate_limit,active,created_at,updated_at) VALUES (''solution-registration'',''Référencement de solutions'','''','''',''solution-registration'',NULL,NULL,10,1,NOW(),NOW()) ON DUPLICATE KEY UPDATE label=VALUES(label),platform_url='''',api_key_enc='''',campaign=VALUES(campaign),field_map=NULL,allowed_origins=NULL,rate_limit=VALUES(rate_limit),active=1,updated_at=NOW()',
 'SELECT 1');
 PREPARE sd_endpoint_stmt FROM @sd_endpoint_sql; EXECUTE sd_endpoint_stmt; DEALLOCATE PREPARE sd_endpoint_stmt;
+
+-- Guide pages embed the directory block for their use case (spec 2026-09-01
+-- §7 and §8). Components bind inside stored page content exactly like the
+-- diagnostic lead form does, so the block is appended to the French body of the
+-- two guides seeded earlier in this file.
+--
+-- Targeted CONCAT updates, never REPLACE INTO: those page rows carry copy owned
+-- by the launch section above and must not be rewritten from here. The
+-- `sd-solutions-embed` marker makes each update idempotent across seed runs.
+--
+-- Multi-value component options must be JSON arrays: Vvveb's component parser
+-- json_decodes any attribute value that contains a comma, so a bare
+-- "a,b,c" list would resolve to NULL and silently drop the filter.
+SET @sd_embed_visio := '<section class="sd-solutions-embed"><div class="container"><h2>Solutions référencées pour ce cas d&rsquo;usage</h2><div data-v-component-plugin-solutions-directory-solutions="guide" data-v-alternative_a=''["google-meet","microsoft-teams","zoom"]'' data-v-limit="6"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></div></section>';
+SET @sd_embed_m365 := '<section class="sd-solutions-embed"><div class="container"><h2>Solutions référencées pour ce cas d&rsquo;usage</h2><div data-v-component-plugin-solutions-directory-solutions="guide" data-v-alternative_a="microsoft-365" data-v-limit="6"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></div></section>';
+
+UPDATE post_content SET content = CONCAT(content, @sd_embed_visio)
+WHERE slug = 'choisir-visioconference-collaboration' AND language_id = @lang_fr
+  AND content NOT LIKE '%sd-solutions-embed%';
+
+UPDATE post_content SET content = CONCAT(content, @sd_embed_m365)
+WHERE slug = 'sortir-microsoft-365' AND language_id = @lang_fr
+  AND content NOT LIKE '%sd-solutions-embed%';

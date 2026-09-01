@@ -19,15 +19,26 @@ final class VvvebDraftStore {
 	}
 
 	public function findBySubmission(int $submissionId): ?int {
-		$quote = $this->db->quote;
-		$sql = "SELECT p.post_id FROM post p JOIN post_meta pm ON pm.post_id = p.post_id
-			WHERE p.type = :post_type AND pm.namespace = :namespace AND pm.{$quote}key{$quote} = 'submission_id'
-			AND pm.value = :submission_id LIMIT 1";
-		$stmt = $this->db->execute($sql, [
-			'post_type' => $this->config['post_type'],
-			'namespace' => $this->config['meta_namespace'],
+		$quote  = $this->db->quote;
+		$siteId = (int) ($this->config['site_id'] ?? 0);
+		$params = [
+			'post_type'     => $this->config['post_type'],
+			'namespace'     => $this->config['meta_namespace'],
 			'submission_id' => (string) $submissionId,
-		]);
+		];
+		// Submission ids are global but drafts are not: without the site join a
+		// multi-site install would hand back another site's listing.
+		$siteJoin = '';
+		$siteWhere = '';
+		if ($siteId > 0) {
+			$siteJoin  = ' JOIN post_to_site ps ON ps.post_id = p.post_id';
+			$siteWhere = ' AND ps.site_id = :site_id';
+			$params['site_id'] = $siteId;
+		}
+		$sql = "SELECT p.post_id FROM post p JOIN post_meta pm ON pm.post_id = p.post_id$siteJoin
+			WHERE p.type = :post_type AND pm.namespace = :namespace AND pm.{$quote}key{$quote} = 'submission_id'
+			AND pm.value = :submission_id$siteWhere LIMIT 1";
+		$stmt = $this->db->execute($sql, $params);
 		$row = $stmt ? $this->db->fetchArray($stmt) : [];
 
 		return ! empty($row['post_id']) ? (int) $row['post_id'] : null;

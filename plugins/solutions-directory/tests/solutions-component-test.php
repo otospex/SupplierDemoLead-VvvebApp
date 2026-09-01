@@ -116,6 +116,157 @@ if (! method_exists(SolutionPresenter::class, 'registrationForm')) {
     expectSolution(substr_count($form, '<fieldset') === 3, 'registration form must use three fieldsets.');
 }
 
+// --- Spec 5.4: alternatives are the OR of both neighbourhoods --------------
+final class UnionSolutionDb {
+    public string $quote = '`';
+    public array $calls = [];
+    private array $rowsByTaxonomy;
+    private array $pending = [];
+
+    function __construct(array $rowsByTaxonomy) {
+        $this->rowsByTaxonomy = $rowsByTaxonomy;
+    }
+
+    function execute(string $sql, array $params = []) {
+        $this->calls[] = $params;
+        if (isset($params['alternative_a_taxonomy'])) {
+            $this->pending = $this->rowsByTaxonomy['alternative-a'] ?? [];
+        } elseif (isset($params['categorie_taxonomy'])) {
+            $this->pending = $this->rowsByTaxonomy['categorie'] ?? [];
+        } else {
+            $this->pending = [];
+        }
+
+        return true;
+    }
+
+    function fetchAll($statement): array {
+        return $this->pending;
+    }
+}
+
+$repositoryConfig = [
+    'post_type' => 'solution',
+    'meta_namespace' => 'solution',
+    'taxonomies' => ['categorie' => 'categorie', 'alternative_a' => 'alternative-a'],
+];
+$sharedNeighbour = ['post_id' => 4, 'status' => 'publish', 'language_id' => 2, 'name' => 'Alpha', 'slug' => 'alpha', 'reviewed_at' => '2026-09-05'];
+$unionDb = new UnionSolutionDb([
+    'alternative-a' => [
+        ['post_id' => 2, 'status' => 'publish', 'language_id' => 2, 'name' => 'Zéphyr', 'slug' => 'zephyr', 'reviewed_at' => '2026-08-01'],
+        $sharedNeighbour,
+    ],
+    'categorie' => [
+        $sharedNeighbour,
+        ['post_id' => 5, 'status' => 'publish', 'language_id' => 2, 'name' => 'Delta', 'slug' => 'delta', 'reviewed_at' => '2026-07-01'],
+    ],
+]);
+$unionRepository = new SolutionRepository($repositoryConfig, $unionDb);
+$subject = [
+    'post_id' => 1,
+    'language_id' => 2,
+    'alternative_a' => [['name' => 'Microsoft 365', 'slug' => 'microsoft-365']],
+    'categories' => [['name' => 'Bureautique', 'slug' => 'bureautique']],
+];
+
+$union = $unionRepository->alternatives($subject, 5, 1);
+expectSolution(count($union) === 3, 'alternatives must union both neighbourhoods and dedupe (got ' . count($union) . ').');
+expectSolution(array_column($union, 'post_id') === [4, 2, 5], 'unioned alternatives must stay ordered by reviewed_at desc then name.');
+$taxonomyFilters = array_values(array_filter(array_map(
+    static fn (array $params): string => $params['alternative_a_taxonomy'] ?? ($params['categorie_taxonomy'] ?? ''),
+    $unionDb->calls
+)));
+expectSolution(in_array('alternative-a', $taxonomyFilters, true) && in_array('categorie', $taxonomyFilters, true), 'both neighbourhoods must be queried.');
+foreach ($unionDb->calls as $call) {
+    if (isset($call['alternative_a_taxonomy']) || isset($call['categorie_taxonomy'])) {
+        expectSolution(($call['exclude_post_id'] ?? 0) === 1, 'the solution itself must be excluded from its alternatives.');
+    }
+}
+
+$capped = (new SolutionRepository($repositoryConfig, new UnionSolutionDb([
+    'alternative-a' => [
+        ['post_id' => 2, 'status' => 'publish', 'language_id' => 2, 'name' => 'Zéphyr', 'slug' => 'zephyr', 'reviewed_at' => '2026-08-01'],
+        $sharedNeighbour,
+    ],
+    'categorie' => [
+        ['post_id' => 5, 'status' => 'publish', 'language_id' => 2, 'name' => 'Delta', 'slug' => 'delta', 'reviewed_at' => '2026-07-01'],
+    ],
+])))->alternatives($subject, 2, 1);
+expectSolution(count($capped) === 2 && array_column($capped, 'post_id') === [4, 2], 'unioned alternatives must respect the limit.');
+
+$categoryOnly = new UnionSolutionDb(['categorie' => [['post_id' => 5, 'status' => 'publish', 'language_id' => 2, 'name' => 'Delta', 'slug' => 'delta', 'reviewed_at' => '2026-07-01']]]);
+$categoryOnlyRows = (new SolutionRepository($repositoryConfig, $categoryOnly))->alternatives(
+    ['post_id' => 1, 'language_id' => 2, 'categories' => [['name' => 'Bureautique', 'slug' => 'bureautique']]],
+    5,
+    1
+);
+expectSolution(count($categoryOnlyRows) === 1, 'a solution with categories only still gets neighbours.');
+expectSolution(
+    [] === array_filter($categoryOnly->calls, static fn (array $params): bool => isset($params['alternative_a_taxonomy'])),
+    'an empty neighbourhood must not be queried.'
+);
+expectSolution($unionRepository->alternatives(['post_id' => 1, 'language_id' => 2], 5, 1) === [], 'a solution with no terms has no alternatives.');
+
+// --- Detail page: disclosure wording, JSON-LD URL, configurable paths -------
+$partner = [
+    'post_id' => 9,
+    'status' => 'publish',
+    'language_id' => 2,
+    'name' => 'AIFEL',
+    'slug' => 'aifel',
+    'excerpt' => 'Collaboration sécurisée.',
+    'content' => '<p>Corps relu.</p>',
+    'kind' => 'logiciel',
+    'verification_status' => 'verifie',
+    'reviewed_at' => '2026-09-01',
+    'website' => 'https://aifel.example.fr',
+    'commercial_relationship' => 'partenaire-non-exclusif',
+    'categories' => [['name' => 'Visioconférence', 'slug' => 'visioconference']],
+];
+$detail = SolutionPresenter::detail($partner);
+expectSolution(
+    str_contains($detail, 'AIFEL est un partenaire commercial non exclusif d&rsquo;Indépendant Digital.'),
+    'the disclosure must name the solution (2026-08-27 spec §6 wording).'
+);
+expectSolution(
+    str_contains($detail, 'AIFEL est évalué selon la même méthode que les autres solutions.'),
+    'the disclosure must close on the same-method sentence naming the solution.'
+);
+expectSolution(! str_contains($detail, 'Cette solution est un partenaire'), 'the disclosure must not fall back to a generic subject.');
+
+preg_match('#<script type="application/ld\+json">(.*?)</script>#s', $detail, $jsonLdMatch);
+$jsonLd = json_decode($jsonLdMatch[1] ?? '{}', true);
+expectSolution(($jsonLd['url'] ?? '') === 'https://aifel.example.fr', 'JSON-LD must publish the validated website URL.');
+preg_match('#<a class="sd-link-arrow" href="([^"]+)" rel#', $detail, $visibleLink);
+expectSolution(($visibleLink[1] ?? '') === ($jsonLd['url'] ?? ''), 'JSON-LD and the visible link must carry the same URL.');
+
+$hostileDetail = SolutionPresenter::detail(['status' => 'publish', 'name' => 'Piège', 'slug' => 'piege', 'kind' => 'logiciel', 'website' => 'javascript:alert(1)']);
+preg_match('#<script type="application/ld\+json">(.*?)</script>#s', $hostileDetail, $hostileMatch);
+$hostileJsonLd = json_decode($hostileMatch[1] ?? '{}', true);
+expectSolution(! isset($hostileJsonLd['url']), 'JSON-LD must omit a URL the page refuses to link to.');
+expectSolution(! str_contains($hostileDetail, 'javascript:'), 'a non-http scheme must never reach the rendered page.');
+
+SolutionPresenter::configure([
+    'directory_url' => '/repertoire',
+    'solution_url' => '/fiche/',
+    'registration_url' => '/repertoire/proposer',
+    'contact_url' => '/page/nous-ecrire',
+    'privacy_url' => '/page/vie-privee',
+]);
+$configured = SolutionPresenter::detail($partner);
+expectSolution(str_contains($configured, 'href="/repertoire"'), 'the breadcrumb must follow the configured directory URL.');
+expectSolution(str_contains($configured, 'href="/repertoire/categorie/visioconference"'), 'term chips must follow the configured directory URL.');
+expectSolution(str_contains($configured, 'href="/page/nous-ecrire"'), 'the error-report link must follow the configured contact URL.');
+expectSolution(str_contains(SolutionPresenter::listing([]), '/repertoire/proposer'), 'the empty state must follow the configured registration URL.');
+expectSolution(
+    str_contains(SolutionPresenter::listing([$partner]), 'href="/fiche/aifel"'),
+    'cards must follow the configured solution URL.'
+);
+$configuredForm = SolutionPresenter::registrationForm([], [], ['endpoint_slug' => 'solution-registration']);
+expectSolution(str_contains($configuredForm, 'href="/page/vie-privee"'), 'the privacy link must follow the configured URL.');
+expectSolution(! str_contains($configuredForm, 'data-success-msg'), 'the inert success-message attribute must be gone.');
+SolutionPresenter::configure([]);
+expectSolution(str_contains(SolutionPresenter::listing([]), '/annuaire/referencer-une-solution'), 'defaults must survive an empty configuration.');
 if ($failures > 0) {
     fwrite(STDERR, "solutions-component tests: FAIL ($failures issue(s))\n");
     exit(1);
