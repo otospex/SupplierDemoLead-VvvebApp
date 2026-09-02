@@ -6,6 +6,7 @@ use Vvveb\System\Core\Request;
 use Vvveb\Plugins\LeadPlatformConnector\System\Crypto;
 use Vvveb\Plugins\LeadPlatformConnector\System\CsrfToken;
 use Vvveb\Plugins\LeadPlatformConnector\System\DeliveryMode;
+use Vvveb\Plugins\LeadPlatformConnector\System\Honeypot;
 use Vvveb\Plugins\LeadPlatformConnector\System\LeadClient;
 use Vvveb\Plugins\LeadPlatformConnector\System\PartialLead;
 use Vvveb\Plugins\LeadPlatformConnector\System\PrivacyAcknowledgement;
@@ -398,6 +399,20 @@ class Submit {
 		if ($rlLimit > 0 && ! $this->rateLimit($rlKey, $rlLimit, 60)) {
 			$this->json(429, ['ok' => false, 'message' => 'Trop de demandes. Merci de réessayer plus tard.']);
 		}
+
+		// Server-side honeypot, before anything is validated or stored. The
+		// runtimes stop before posting when the decoy is filled and never
+		// serialize the field at all, so a request carrying it non-empty
+		// skipped the script. Answer with the ordinary queued-success body: a
+		// distinguishable rejection would only tell the next attempt what to
+		// avoid. Nothing is written — no row, no rate-limit credit spent on it
+		// beyond the check already made above.
+		if (Honeypot::tripped($fields)) {
+			$this->json(200, ['ok' => true, 'queued' => true]);
+		}
+		// An empty decoy is not an answer anyone gave; it must not be stored or
+		// forwarded alongside the real fields.
+		$fields = Honeypot::strip($fields);
 
 		// Staged intake: the diagnostic form posts the same endpoint three times.
 		// A payload without a `stage` key is the historical single-shot
