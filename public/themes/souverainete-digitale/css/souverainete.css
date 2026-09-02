@@ -1045,6 +1045,67 @@ img {
   font-size: 1.08rem;
 }
 
+/* Split page hero — copy left, intake card right (diagnostic page).
+   The dark band and the form live in the same seeded content block, so the
+   card can sit inside the hero rather than below it; nothing is pulled up
+   over the band, which leaves every other .sd-page-hero page untouched. */
+.sd-page-hero-split {
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.sd-page-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.sd-page-hero-split .sd-page-hero-copy h1 {
+  max-width: 18ch;
+}
+
+.sd-page-hero-note {
+  max-width: 54ch;
+  margin: var(--space-lg) 0 0;
+  padding-top: var(--space-md);
+  border-top: var(--rule-hair) solid var(--color-rule-on-dark);
+  color: var(--color-footer-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.sd-page-hero-note strong {
+  color: var(--color-paper);
+}
+
+/* The lead-in sentence stays on the dark band, above the card. */
+.sd-page-hero-form .sd-step-lead {
+  margin-bottom: var(--space-md);
+  color: var(--color-footer-muted);
+}
+
+/* A light panel on the dark band: it declares its own ink so nothing inside
+   inherits the band's near-white text colour. */
+.sd-page-hero-form .sd-form-card {
+  padding: var(--space-xl);
+  border-color: var(--color-rule-strong);
+  color: var(--color-ink);
+  background: var(--color-panel-raised);
+  box-shadow: var(--shadow-panel);
+}
+
+.sd-page-hero-form .sd-step-legend {
+  font-size: 1rem;
+  margin-bottom: var(--space-sm);
+}
+
+@media (max-width: 991.98px) {
+  .sd-page-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xl);
+  }
+}
+
 /* Production can retain an older Vvveb page wrapper in the persistent volume.
    Let article pages with their own hero/article layout break out of that shell. */
 body.page #site-content > .container:has(.post-content > .sd-page-hero) {
@@ -2396,14 +2457,17 @@ section[id] p {
    template. Every value below resolves through a token in hallmark-tokens.css.
    ========================================================================== */
 
-/* Hero — left-biased, no centring */
+/* Hero — left-biased, no centring. The hero carries the step-1 intake card on
+   the right, so the block padding is tighter than a copy-only hero would be:
+   the card is the page's first action and has to clear the fold. */
 #hero {
-  padding-block: var(--space-4xl) var(--space-3xl);
+  padding-block: var(--space-2xl) var(--space-3xl);
 }
 
 #hero > .container > .row {
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-3xl);
+  gap: var(--space-2xl);
+  align-items: start;
   margin-inline: 0;
 }
 
@@ -2411,18 +2475,50 @@ section[id] p {
   padding-inline: 0;
 }
 
-/* Diagnostic — same two-column grid, copy left, form right */
-#diagnostic > .container > .row {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: var(--space-2xl);
-  margin-inline: 0;
+/* The intake card carries its own Bootstrap grid. `.sd-hero .row` turns every
+   descendant row into a two-track CSS grid, which would squeeze the card's
+   `col-md-6` fields to a quarter of their width, so the card's rows are put
+   back on flex wherever the card is placed. */
+.sd-form-card .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0;
 }
 
-#diagnostic > .container > .row > * {
-  width: auto;
+/* Intake card in the hero. The card is narrower here than in a full-width
+   section, so its padding steps down and its heading is compact. */
+.sd-hero-form .sd-form-card {
+  padding: var(--space-xl);
+}
+
+/* Scoped through the card so it out-specifies `section[id] h2`, which sizes
+   section headings at display scale. */
+.sd-form-card .sd-form-card-title {
   max-width: none;
-  padding-inline: 0;
+  margin: 0 0 var(--space-2xs);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.sd-form-card .sd-form-card-lead {
+  margin: 0 0 var(--space-md);
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.sd-hero-form .sd-step-progress {
+  margin-bottom: var(--space-md);
+}
+
+.sd-hero-form .sd-step-legend {
+  font-size: 1rem;
+  margin-bottom: var(--space-sm);
 }
 
 #hero h1 {
@@ -2443,11 +2539,6 @@ section[id] p {
 .sd-hero-actions {
   justify-content: flex-start;
   gap: var(--space-lg);
-}
-
-#hero .sd-hero-journey {
-  max-width: none;
-  margin: 0;
 }
 
 /* Routes — asymmetric editorial grid */
@@ -2520,6 +2611,20 @@ section[id] p {
   margin: 0;
 }
 
+/* Method — the numbered decisions with the trajectory figure beside them:
+   the drawing illustrates the method, so it lives here rather than in the hero. */
+.sd-method-split {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-3xl);
+  align-items: center;
+  margin-top: var(--space-xl);
+}
+
+.sd-method-figure {
+  margin: 0;
+}
+
 /* Method list */
 .sd-method-list {
   max-width: 46rem;
@@ -2580,8 +2685,8 @@ section[id] .sd-ai-band h2 {
   border-block: var(--rule-hair) solid var(--color-rule);
 }
 
-#diagnostic {
-  padding-block: var(--space-3xl);
+#plateforme-ia {
+  padding-block: var(--space-2xl) var(--space-3xl);
 }
 
 /* Statement footer -- the statement and the link list share the container's
@@ -2630,7 +2735,7 @@ section[id] .sd-ai-band h2 {
 
 @media (max-width: 991.98px) {
   #hero > .container > .row,
-  #diagnostic > .container > .row,
+  .sd-method-split,
   .sd-footer-main,
   .sd-routes-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -2660,8 +2765,8 @@ section[id] .sd-ai-band h2 {
     font-size: 1.05rem;
   }
 
-  #hero .sd-hero-journey {
-    margin-top: var(--space-xl);
+  .sd-method-split {
+    gap: var(--space-xl);
   }
 
   #voies,
@@ -2670,7 +2775,7 @@ section[id] .sd-ai-band h2 {
   }
 
   #solutions,
-  #diagnostic {
+  #plateforme-ia {
     padding-block: var(--space-2xl);
   }
 }
@@ -3124,4 +3229,4 @@ section[id] .sd-ai-band h2 {
     padding: var(--space-md);
   }
 }
-/* content-hash: f6e2e5e3 */
+/* content-hash: b004ed6d */
