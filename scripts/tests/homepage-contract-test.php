@@ -58,8 +58,15 @@ foreach (['souveraineté numérique', 'Lancer le diagnostic', 'Voir la méthode'
 $rule = 'Le partenariat est toujours affiché';
 if (!str_contains($homeText, $rule)) $fail('partner rule sentence missing');
 
-// Nav contract
-if (!str_contains($homeText, '>Annuaire<')) $fail('nav must contain Annuaire');
+// Nav contract. The directory is reachable from the footer only: it is a
+// destination visitors arrive at from the diagnostic or from content, not a
+// top-level tab, and dropping it keeps the header CTA on one line.
+if (!preg_match('#<nav class="sd-nav\b.*?</nav>#s', $homeText, $navBlock)) $fail('sd-nav block missing');
+if (!preg_match('#<footer class="sd-footer\b.*?</footer>#s', $homeText, $footerBlock)) $fail('sd-footer block missing');
+if (str_contains($navBlock[0] ?? '', '>Annuaire<')) $fail('nav must not contain Annuaire (it belongs in the footer)');
+if (!preg_match('#<ul class="sd-footer-links".*?</ul>#s', $footerBlock[0] ?? '', $footerLinks))
+    $fail('footer must carry the sd-footer-links list');
+if (!str_contains($footerLinks[0] ?? '', '>Annuaire<')) $fail('footer links must contain Annuaire');
 if (!str_contains($homeText, '>Blog<')) $fail('nav must contain Blog');
 if (preg_match('/nav-link[^>]*>Accueil</', $homeText)) $fail('nav must not contain Accueil');
 
