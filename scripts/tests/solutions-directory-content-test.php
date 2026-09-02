@@ -87,6 +87,37 @@ foreach (['/annuaire', '/annuaire/categorie/{categorie}', '/annuaire/alternative
     }
 }
 
+// Reverse-URL hijack guard. A route data key (here the fixed 'slug') is merged
+// into the module's reverse-lookup parameter list by
+// system/routes.php::processRoute, and Routes::url() returns the FIRST route of
+// a module whose parameters are all satisfied. Registering these two fixed-slug
+// routes on content/page/index therefore made url('content/page/index',
+// ['slug' => ...]) return /annuaire/referencer-une-solution for EVERY page, so
+// feeds, sitemaps and menus all collapsed onto one URL. They must stay on a
+// delegate module.
+foreach (['/annuaire', '/annuaire/referencer-une-solution'] as $staticRoute) {
+    if (! preg_match("#'" . preg_quote($staticRoute, '#') . "'\\s*=>\\s*\\[[^\\]]*\\]#", $routes, $routeMatch)) {
+        directoryFail("static route $staticRoute could not be parsed from config/app-routes.php.");
+        continue;
+    }
+    if (! preg_match("#'module'\\s*=>\\s*'([^']+)'#", $routeMatch[0], $moduleMatch)) {
+        directoryFail("static route $staticRoute declares no module.");
+        continue;
+    }
+    if (! preg_match("#'slug'\\s*=>#", $routeMatch[0])) {
+        directoryFail("static route $staticRoute must pin its page with a 'slug' data key.");
+    }
+    if ($moduleMatch[1] === 'content/page/index') {
+        directoryFail("static route $staticRoute must not bind a fixed slug onto content/page/index; it hijacks Routes::url() for every page.");
+    }
+}
+$delegateController = $root . '/plugins/solutions-directory/app/controller/page.php';
+if (! is_file($delegateController)) {
+    directoryFail('the annuaire page delegate controller is missing.');
+} elseif (! str_contains((string) file_get_contents($delegateController), 'Vvveb\\Controller\\Content\\Page')) {
+    directoryFail('the annuaire page delegate must extend the stock content page controller.');
+}
+
 $seed = (string) file_get_contents($root . '/seed.dokploy.sql');
 $delimiter = '-- === solutions-directory (spec 2026-09-01) ===';
 $sectionStart = strrpos($seed, $delimiter);
@@ -318,7 +349,15 @@ foreach ($directoryRoutes as $route) {
         if (! preg_match('/class\s+\w+\s+extends\s+\\\\?([\w\\\\]+)/i', $source, $parent)) {
             break;
         }
-        $parentName = strtolower((string) (array_slice(explode('\\', $parent[1]), -1)[0] ?? ''));
+        $parentClass = trim($parent[1], '\\');
+        if (stripos($parentClass, 'Vvveb\\Controller\\') === 0) {
+            // A fully-qualified core controller (e.g. a plugin delegate that
+            // extends Vvveb\Controller\Content\Page) lives under app/controller.
+            $relative = strtolower(str_replace('\\', '/', substr($parentClass, strlen('Vvveb\\Controller\\'))));
+            $candidate = $root . '/app/controller/' . $relative . '.php';
+            continue;
+        }
+        $parentName = strtolower((string) (array_slice(explode('\\', $parentClass), -1)[0] ?? ''));
         $candidate = $parentName === '' ? null : dirname($candidate) . "/$parentName.php";
     }
     if (! $found) {
@@ -442,6 +481,50 @@ if (getenv('INTEGRATION') === '1') {
         }
         if ($needle !== null && ! str_contains($response['body'], $needle)) {
             directoryFail("INTEGRATION: $path is missing $needle.");
+        }
+    }
+
+    // Live proof of the reverse-URL fix: every reverse-generated page URL used
+    // to be /annuaire/referencer-une-solution. Each generated link must now be
+    // distinct, and the registration URL may appear at most once.
+    foreach (['/feed/pages' => 'link', '/feed/page-sitemap.xml' => 'loc'] as $feedPath => $tag) {
+        $feed = $fetch($baseUrl . $feedPath);
+        if ($feed['status'] === 404 && str_ends_with($feedPath, '.xml')) {
+            // Known, separately tracked: the nginx static-extension location
+            // (`location ~* "\.(?!php)([\w]{3,5})$"`) swallows /feed/*.xml, so
+            // the XML sitemaps only answer from page-cache. Recorded under
+            // "sitemap trio" in docs/launch/open-items.md; the RSS feed below
+            // exercises the same reverse-URL code path.
+            fwrite(STDOUT, "solutions-directory-content: SKIPPED $feedPath (nginx static-extension 404, see open-items).\n");
+            continue;
+        }
+        if ($feed['status'] !== 200) {
+            directoryFail("INTEGRATION: $feedPath returned {$feed['status']}, expected 200.");
+            continue;
+        }
+        if (! preg_match_all('#<' . $tag . '[^>]*>([^<]+)</' . $tag . '>#', $feed['body'], $feedMatches)) {
+            directoryFail("INTEGRATION: $feedPath exposed no <$tag> values to check.");
+            continue;
+        }
+        $entryUrls = array_values(array_filter(
+            $feedMatches[1],
+            static fn (string $value): bool => str_contains($value, '/page/')
+                || str_contains($value, '/annuaire')
+        ));
+        if (count($entryUrls) < 2) {
+            directoryFail("INTEGRATION: $feedPath listed fewer than two page URLs; the distinctness check is vacuous.");
+            continue;
+        }
+        $duplicates = array_filter(array_count_values($entryUrls), static fn (int $n): bool => $n > 1);
+        if ($duplicates !== []) {
+            directoryFail("INTEGRATION: $feedPath repeats page URL(s): " . implode(', ', array_keys($duplicates)) . '.');
+        }
+        $registrationHits = count(array_filter(
+            $entryUrls,
+            static fn (string $value): bool => str_ends_with($value, '/annuaire/referencer-une-solution')
+        ));
+        if ($registrationHits > 1) {
+            directoryFail("INTEGRATION: $feedPath emits the registration URL $registrationHits times; Routes::url() is hijacked again.");
         }
     }
 } else {

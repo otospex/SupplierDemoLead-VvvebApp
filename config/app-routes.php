@@ -28,10 +28,13 @@ return [
 	'/'           => ['module' => 'index/index'],
 
 	//Reviewed solutions directory. Keep these before generic /{slug} routes.
-	'/annuaire/referencer-une-solution' => ['module' => 'content/page/index', 'slug' => 'referencer-une-solution'],
+	//These two use a plugin delegate (not content/page/index) so their fixed
+	//'slug' data key does not enter the content/page/index reverse-url map;
+	//see plugins/solutions-directory/app/controller/page.php.
+	'/annuaire/referencer-une-solution' => ['module' => 'plugins/solutions-directory/page/index', 'slug' => 'referencer-une-solution'],
 	'/annuaire/categorie/{categorie}' => ['module' => 'plugins/solutions-directory/directory/index'],
 	'/annuaire/alternative-a/{alternative_a}' => ['module' => 'plugins/solutions-directory/directory/index'],
-	'/annuaire' => ['module' => 'content/page/index', 'slug' => 'annuaire'],
+	'/annuaire' => ['module' => 'plugins/solutions-directory/page/index', 'slug' => 'annuaire'],
 	'/solution/{slug}' => ['module' => 'content/post/index', 'type' => 'solution', 'edit' => '?module=content/post&slug={slug}&type=solution'],
 	'/feed/solutions.xml' => ['module' => 'plugins/solutions-directory/sitemap/index'],
 
