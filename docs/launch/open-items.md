@@ -35,3 +35,5 @@ Le code, les contenus et la file de demandes peuvent être testés en préproduc
 ## Décision d&rsquo;ouverture
 
 Le feu vert est consigné avec la date, le nom du responsable et les URL des notices finales. Une case cochée doit renvoyer vers une preuve ou une configuration vérifiée; elle ne doit pas reposer sur une hypothèse.
+
+- [ ] **Balises canonical/og inertes** — les fichiers `generated/*.fr.html` et `content/*.html` contiennent des balises `canonical`/`og:url` propres, mais la propagation d&rsquo;en-tête (`data-v-save-global="index.fr.html,head"`) les remplace à l&rsquo;exécution&nbsp;: elles sont sans effet. Lors de la mise en place des canonicals par page, corriger la propagation plutôt que ces fichiers.
