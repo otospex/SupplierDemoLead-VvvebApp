@@ -71,9 +71,15 @@ expectSolution((bool) preg_match('#href="https://zephyr\.example\.test"[^>]+rel=
 expectSolution((bool) preg_match('#href="https://alize\.example\.test"[^>]+rel="noopener"#', $html), 'verified outbound links need noopener.');
 expectSolution(! (bool) preg_match('#href="https://alize\.example\.test"[^>]+rel="[^"]*nofollow#', $html), 'verified outbound links must not keep nofollow.');
 
+// Two empty states: an unfiltered directory is not "missing criteria", it is
+// simply still empty, and the homepage teaser shows exactly that sentence.
 $empty = SolutionPresenter::listing([]);
-expectSolution(str_contains($empty, 'Aucune solution publiée ne correspond à ces critères.'), 'empty results need a useful sentence.');
+expectSolution(str_contains($empty, 'Aucune solution n&rsquo;est encore publiée dans l&rsquo;annuaire.'), 'an unfiltered empty directory must say it is empty.');
+expectSolution(! str_contains($empty, 'ces critères'), 'an unfiltered empty directory must not blame criteria nobody chose.');
 expectSolution(str_contains($empty, '/annuaire/referencer-une-solution'), 'empty results need the registration link.');
+
+$emptyFiltered = SolutionPresenter::listing([], ['filtered' => true]);
+expectSolution(str_contains($emptyFiltered, 'Aucune solution publiée ne correspond à ces critères.'), 'a filtered empty result must name the criteria.');
 
 final class CapturingSolutionDb {
     public string $quote = '`';

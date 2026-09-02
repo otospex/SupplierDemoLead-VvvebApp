@@ -153,7 +153,14 @@ final class SolutionPresenter {
 
 		$filters = ! empty($context['show_filters']) ? self::filters($context) : '';
 		if (! $rows) {
-			return $heading . $filters . '<div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p>'
+			// With no filter applied there are no "criteria" to miss: the
+			// directory is simply still empty, and saying so is the honest
+			// sentence for a launch day with nothing published yet.
+			$notice = empty($context['filtered'])
+				? 'Aucune solution n&rsquo;est encore publiée dans l&rsquo;annuaire.'
+				: 'Aucune solution publiée ne correspond à ces critères.';
+
+			return $heading . $filters . '<div class="sd-directory-empty"><p>' . $notice . '</p>'
 				. '<a class="sd-btn sd-btn-primary" href="' . self::e(self::url('registration_url')) . '">Référencer une solution</a></div>';
 		}
 

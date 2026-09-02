@@ -77,6 +77,11 @@ class Solutions extends ComponentBase {
 			}
 			break;
 		}
+		$context['filtered'] = (bool) array_filter([
+			$filters['kind'] ?? null,
+			$filters['categorie'] ?? null,
+			$filters['alternative_a'] ?? null,
+		]);
 		$context['show_filters'] = ! $embed;
 		if (! $embed) {
 			$context['category_terms'] = $repository->terms($config['taxonomies']['categorie'], $languageId, $siteId);
