@@ -97,7 +97,9 @@ class Language extends ComponentBase {
 					}
 				}
 
-				$params               = ['language' => $language['slug'], 'host' => $_SERVER['HTTP_HOST'] ?? '', 'scheme' => $scheme] + $content + $request->get;
+				//hreflang alternates live on the public origin, not the request host
+				$origin               = parse_url(defined('CANONICAL_URL') ? CANONICAL_URL : $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? ''));
+				$params               = ['language' => $language['slug'], 'host' => ($origin['host'] ?? '') . (isset($origin['port']) ? ':' . $origin['port'] : ''), 'scheme' => $origin['scheme'] ?? $scheme] + $content + $request->get;
 
 
 				if ($language['language_id'] == $options['default_language_id']) {

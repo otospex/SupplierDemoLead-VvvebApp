@@ -4,20 +4,16 @@ namespace Vvveb\Plugins\SolutionsDirectory\Controller;
 
 use Vvveb\Controller\Base;
 use Vvveb\Plugins\SolutionsDirectory\System\SolutionRepository;
+use function Vvveb\canonicalUrl;
 
 class Sitemap extends Base {
 	private function xml(string $value): string {
 		return htmlspecialchars($value, ENT_XML1 | ENT_QUOTES, 'UTF-8');
 	}
 
+	/** Absolute on the public origin, never on the request host or the site host pattern. */
 	private function absoluteUrl(string $path): string {
-		$base = rtrim((string) ($this->global['site']['url'] ?? ''), '/');
-		if (str_starts_with($base, '//')) {
-			$scheme = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https:' : 'http:';
-			$base = $scheme . $base;
-		}
-
-		return $base . '/' . ltrim($path, '/');
+		return canonicalUrl($path);
 	}
 
 	private function lastmod(string $value): string {

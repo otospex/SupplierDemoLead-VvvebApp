@@ -34,12 +34,15 @@ class Robots extends Base {
 		}
 
 		$path = (V_SUBDIR_INSTALL ? V_SUBDIR_INSTALL : '') . ($this->global['path'] ? $this->global['path'] : '');
-		$host = 'https://' . ($_SERVER['HTTP_HOST'] ?? '') . $path;
 
-		// change sitemap urls to absolute
+		// Sitemap directives must be absolute (sitemaps.org) and on the public
+		// origin, never on whatever host this request happened to use.
+		$text = preg_replace_callback('@^(sitemap):[ \t]*(/\S*)@mi', static function ($m) {
+			return $m[1] . ': ' . \Vvveb\canonicalUrl($m[2]);
+		}, $text);
+
 		if ($path) {
-			$text = preg_replace('@(sitemap):\s+/@', "$1: $host/", $text);
-			$text = preg_replace('@(disallow):\s+/@', "$1: $path/", $text);
+			$text = preg_replace('@(disallow):\s+/@i', "$1: $path/", $text);
 		}
 
 		$this->response->setType('text');

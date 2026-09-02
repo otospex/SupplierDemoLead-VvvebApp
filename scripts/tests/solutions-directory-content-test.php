@@ -275,7 +275,7 @@ if (str_contains($draftController, '&rsquo;')) {
 if (! str_contains($draftController, "language_slug")) {
     directoryFail('the draft action must resolve the site language, not the admin session language.');
 }
-if (! str_contains($routes, "'/feed/solutions.xml'")) {
+if (! str_contains($routes, "'/sitemap-solutions.xml'")) {
     directoryFail('published solution and term URLs need a dedicated sitemap route.');
 }
 $repository = (string) file_get_contents($root . '/plugins/solutions-directory/system/solution-repository.php');
@@ -293,9 +293,9 @@ if (! is_file($sitemapController)) {
         directoryFail('solutions sitemap must include published content and exclude registration.');
     }
 }
-$sitemapIndex = $theme . '/feed/index.xml';
-if (! is_file($sitemapIndex) || ! str_contains((string) file_get_contents($sitemapIndex), 'solutions.xml')) {
-    directoryFail('the theme sitemap index must advertise the solutions sitemap.');
+$sitemapIndex = (string) file_get_contents($root . '/app/controller/sitemap.php');
+if (! str_contains($sitemapIndex, '/sitemap-solutions.xml')) {
+    directoryFail('the sitemap index must advertise the solutions sitemap.');
 }
 
 // --- Spec §10 route wiring (static) ----------------------------------------
@@ -314,7 +314,7 @@ $directoryRoutes = [
     '/annuaire/alternative-a/{alternative_a}',
     '/annuaire/referencer-une-solution',
     '/solution/{slug}',
-    '/feed/solutions.xml',
+    '/sitemap-solutions.xml',
 ];
 foreach ($directoryRoutes as $route) {
     if (! isset($declaredRoutes[$route])) {
@@ -487,17 +487,8 @@ if (getenv('INTEGRATION') === '1') {
     // Live proof of the reverse-URL fix: every reverse-generated page URL used
     // to be /annuaire/referencer-une-solution. Each generated link must now be
     // distinct, and the registration URL may appear at most once.
-    foreach (['/feed/pages' => 'link', '/feed/page-sitemap.xml' => 'loc'] as $feedPath => $tag) {
+    foreach (['/feed/pages' => 'link', '/sitemap-pages.xml' => 'loc', '/sitemap-solutions.xml' => 'loc'] as $feedPath => $tag) {
         $feed = $fetch($baseUrl . $feedPath);
-        if ($feed['status'] === 404 && str_ends_with($feedPath, '.xml')) {
-            // Known, separately tracked: the nginx static-extension location
-            // (`location ~* "\.(?!php)([\w]{3,5})$"`) swallows /feed/*.xml, so
-            // the XML sitemaps only answer from page-cache. Recorded under
-            // "sitemap trio" in docs/launch/open-items.md; the RSS feed below
-            // exercises the same reverse-URL code path.
-            fwrite(STDOUT, "solutions-directory-content: SKIPPED $feedPath (nginx static-extension 404, see open-items).\n");
-            continue;
-        }
         if ($feed['status'] !== 200) {
             directoryFail("INTEGRATION: $feedPath returned {$feed['status']}, expected 200.");
             continue;
@@ -506,10 +497,12 @@ if (getenv('INTEGRATION') === '1') {
             directoryFail("INTEGRATION: $feedPath exposed no <$tag> values to check.");
             continue;
         }
+        // Every absolute page URL the feed emits, minus the feed's own link.
         $entryUrls = array_values(array_filter(
             $feedMatches[1],
-            static fn (string $value): bool => str_contains($value, '/annuaire')
-                || str_contains($value, '/solution/')
+            static fn (string $value): bool => str_starts_with($value, 'http')
+                && ! str_contains($value, '/feed/')
+                && rtrim($value, '/') !== rtrim($baseUrl, '/')
         ));
         if (count($entryUrls) < 2) {
             directoryFail("INTEGRATION: $feedPath listed fewer than two page URLs; the distinctness check is vacuous.");
@@ -523,8 +516,8 @@ if (getenv('INTEGRATION') === '1') {
             $entryUrls,
             static fn (string $value): bool => str_ends_with($value, '/annuaire/referencer-une-solution')
         ));
-        if ($registrationHits > 1) {
-            directoryFail("INTEGRATION: $feedPath emits the registration URL $registrationHits times; Routes::url() is hijacked again.");
+        if ($registrationHits > 0) {
+            directoryFail("INTEGRATION: $feedPath emits the registration URL; it is noindex by policy.");
         }
     }
 } else {

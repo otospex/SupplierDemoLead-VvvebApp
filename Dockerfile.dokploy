@@ -84,6 +84,10 @@ COPY seed.dokploy.sql /opt/seed/seed.dokploy.sql
 # 2. Custom PHP config (outside /var/www/html — applied at build time).
 COPY php.ini /usr/local/etc/php/php.ini
 
+# 2a. nginx server config: the upstream conf plus the sitemap location, so
+#     /sitemap*.xml reaches PHP with a 200 instead of the static-file 404.
+COPY nginx.dokploy.conf /etc/nginx/http.d/vvveb.conf
+
 # 3. Replace init.sh:
 #    - keep upstream bootstrap logic (curl + unzip Vvveb on first run)
 #    - copy our overlay AFTER bootstrap, EVERY run (so plugin updates land on redeploy)

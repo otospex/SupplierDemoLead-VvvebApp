@@ -34,3 +34,5 @@ node_modules
 *.phprj
 *.workspace
 .playwright-mcp/
+storage/*.lock
+storage/lpc-rl/

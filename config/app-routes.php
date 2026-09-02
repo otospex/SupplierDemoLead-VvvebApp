@@ -36,7 +36,10 @@ return [
 	'/annuaire/alternative-a/{alternative_a}' => ['module' => 'plugins/solutions-directory/directory/index'],
 	'/annuaire' => ['module' => 'plugins/solutions-directory/page/index', 'slug' => 'annuaire'],
 	'/solution/{slug}' => ['module' => 'content/post/index', 'type' => 'solution', 'edit' => '?module=content/post&slug={slug}&type=solution'],
-	'/feed/solutions.xml' => ['module' => 'plugins/solutions-directory/sitemap/index'],
+	'/sitemap-solutions.xml' => ['module' => 'plugins/solutions-directory/sitemap/index'],
+	//automatic sitemaps on the canonical origin (app/controller/sitemap.php)
+	'/sitemap.xml'           => ['module' => 'sitemap/index'],
+	'/sitemap-{section}.xml' => ['module' => 'sitemap/index'],
 
 	//pagination for blog posts when home has blog posts
 	'/p/#page#'  => ['module' => 'index/index'],
