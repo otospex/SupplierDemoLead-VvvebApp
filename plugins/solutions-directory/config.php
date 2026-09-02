@@ -24,6 +24,9 @@ return [
 
 	// Theme template rendered by the term routes.
 	'directory_template' => 'content/annuaire.fr.html',
+	// Term pages (/annuaire/categorie/x, /annuaire/alternative-a/x): no post
+	// block, the presenter renders the hero from the term itself.
+	'term_template'      => 'content/annuaire-terme.fr.html',
 
 	// Admin module that turns a queued registration into a draft listing.
 	'draft_module'    => 'plugins/solutions-directory/draft',

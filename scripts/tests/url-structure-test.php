@@ -129,6 +129,9 @@ if (getenv('INTEGRATION') === '1') {
     $frRoot = $fetch('/fr/');
     expectTrue($frRoot['status'] === 301 && rtrim($frRoot['location'], '/') === $baseUrl, '/fr/ must 301 to the root.');
     $term = $fetch('/annuaire/categorie/visioconference')['body'];
+    expectTrue(! str_contains($term, 'Un seul point d’entrée') && ! str_contains($term, 'data-v-component-post'), 'a term page must not render another page’s post content.');
+    expectTrue(str_contains($term, 'sd-directory-hero') && str_contains($term, 'sd-solution-aside'), 'a term page must render its own hero and the sidebar.');
+
     expectTrue(str_contains($term, '<title>Visioconférence — Annuaire des solutions souveraines</title>'), 'directory term pages must carry a title.');
     expectTrue(preg_match('/<meta name="description" content="[^"]{40,}"/', $term) === 1, 'directory term pages must carry a description.');
     $home = $fetch('/')['body'];

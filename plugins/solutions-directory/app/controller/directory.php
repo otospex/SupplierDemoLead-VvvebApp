@@ -45,7 +45,7 @@ class Directory extends Base {
 			$this->view->post = ['title' => $title, 'meta_description' => $intro, 'meta_keywords' => $name . ', annuaire, souveraineté numérique'];
 		}
 
-		$this->view->template($config['directory_template']);
+		$this->view->template($config['term_template'] ?? $config['directory_template']);
 		// The view derives the .tpl name from the template file name, so a
 		// language-suffixed template (content/annuaire.fr.html) would look for
 		// content/annuaire.fr.tpl and silently fall back to common.tpl, losing

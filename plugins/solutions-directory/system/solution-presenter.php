@@ -165,16 +165,30 @@ final class SolutionPresenter {
 			return $date !== 0 ? $date : strcasecmp((string) ($left['name'] ?? ''), (string) ($right['name'] ?? ''));
 		});
 
+		// A term page (layout "term") owns its whole main: a full-bleed hero,
+		// then the results beside the sidebar. Everything else (the hub, the
+		// guide embeds) renders inside the container the template provides.
+		$termLayout = ($context['layout'] ?? '') === 'term' && ! empty($context['term_name']);
 		$heading = '';
 		if (! empty($context['term_name'])) {
 			$title = ($context['taxonomy'] ?? '') === 'alternative-a'
 				? 'Alternatives à ' . $context['term_name']
 				: $context['term_name'];
-			$heading = '<header class="sd-directory-context"><p class="sd-eyebrow">Annuaire vérifié</p><h1>' . self::e($title) . '</h1>';
-			if (! empty($context['term_intro'])) {
-				$heading .= '<div class="sd-directory-context-copy">' . $context['term_intro'] . '</div>';
+			$count = count($rows);
+			$countLabel = $count === 0 ? '' : '<p class="sd-directory-count">' . $count . ' solution' . ($count > 1 ? 's' : '') . ' documentée' . ($count > 1 ? 's' : '') . '</p>';
+			if ($termLayout) {
+				$heading = '<section class="sd-directory-hero sd-page-hero"><div class="container">'
+					. '<nav class="sd-breadcrumb"><a href="/">Accueil</a><span>/</span><a href="' . self::e(self::url('directory_url')) . '">Annuaire</a><span>/</span>' . self::e($title) . '</nav>'
+					. '<p class="sd-eyebrow">' . (($context['taxonomy'] ?? '') === 'alternative-a' ? 'Solution à remplacer' : 'Cas d&rsquo;usage') . '</p><h1>' . self::e($title) . '</h1>'
+					. (empty($context['term_intro']) ? '' : '<div class="sd-directory-context-copy">' . $context['term_intro'] . '</div>')
+					. $countLabel . '</div></section>';
+			} else {
+				$heading = '<header class="sd-directory-context"><p class="sd-eyebrow">Annuaire vérifié</p><h1>' . self::e($title) . '</h1>';
+				if (! empty($context['term_intro'])) {
+					$heading .= '<div class="sd-directory-context-copy">' . $context['term_intro'] . '</div>';
+				}
+				$heading .= $countLabel . '</header>';
 			}
-			$heading .= '</header>';
 		}
 
 		$filters = ! empty($context['show_filters']) ? self::filters($context) : '';
@@ -200,11 +214,13 @@ final class SolutionPresenter {
 				? 'L&rsquo;annuaire ouvre ses premières fiches prochainement.'
 				: 'Aucune solution publiée ne correspond à ces critères.';
 
-			return $heading . $filters . '<div class="sd-directory-empty"><p>' . $notice . '</p>'
+			$empty = '<div class="sd-directory-empty"><p>' . $notice . '</p>'
 				. '<a class="sd-btn sd-btn-primary" href="' . self::e(self::url('registration_url')) . '">Référencer une solution</a></div>';
+
+			return $termLayout ? self::termLayout($heading, $filters . $empty, $context) : $heading . $filters . $empty;
 		}
 
-		$html = $heading . $filters . '<div class="sd-solutions-grid">';
+		$html = '<div class="sd-solutions-grid">';
 		foreach ($rows as $solution) {
 			$name = self::e($solution['name'] ?? '');
 			$url  = self::e(self::solutionUrl((string) ($solution['slug'] ?? '')));
@@ -214,11 +230,21 @@ final class SolutionPresenter {
 				. self::badge($solution) . '</div>'
 				. '<h3><a href="' . $url . '">' . $name . '</a></h3>'
 				. '<p>' . self::e($solution['excerpt'] ?? '') . '</p>'
+				. '<ul class="sd-solution-card-meta">'
+				. '<li data-icon="hq">' . self::countryLabel((string) ($solution['hq_country'] ?? '')) . '</li>'
+				. '<li data-icon="pricing">' . self::e(self::pricingLabel((string) ($solution['pricing_model'] ?? 'non-communique'))) . '</li></ul>'
 				. '<div class="sd-solution-card-links"><a class="sd-link-arrow" href="' . $url . '">Voir la fiche</a>'
 				. self::website($solution) . '</div></article>';
 		}
+		$html .= '</div>';
 
-		return $html . '</div>';
+		return $termLayout ? self::termLayout($heading, $filters . $html, $context) : $heading . $filters . $html;
+	}
+
+	/** Hero above, results beside the sidebar below, inside the site container. */
+	private static function termLayout(string $hero, string $results, array $context): string {
+		return $hero . '<section class="sd-directory-results"><div class="container"><div class="sd-solution-layout"><div class="sd-directory-main">' . $results . '</div>'
+			. '<aside class="sd-solution-aside" aria-label="Parcourir et contacter">' . self::browseCard($context) . self::asideWidgets() . '</aside></div></div></section>';
 	}
 
 	/**
@@ -394,6 +420,48 @@ final class SolutionPresenter {
 		return '<li data-icon="' . $icon . '"><span class="sd-aside-label">' . $label . '</span><span class="sd-aside-value">' . $value . '</span></li>';
 	}
 
+	/** The two calls to action shared by solution pages and term pages. */
+	private static function asideWidgets(): string {
+		$cta = '<section class="sd-aside-card sd-aside-cta" aria-labelledby="solution-aside-cta">'
+			. '<h2 class="sd-aside-title" id="solution-aside-cta">Besoin d&rsquo;aide pour choisir&nbsp;?</h2>'
+			. '<p>Décrivez votre contexte et vos contraintes&nbsp;: nous vous indiquons quelle solution convient, et à quelles conditions.</p>'
+			. '<a class="sd-btn sd-btn-primary" href="' . self::e(self::url('diagnostic_url')) . '">Lancer le diagnostic</a>'
+			. '<a class="sd-aside-link" href="' . self::e(self::url('contact_url')) . '">Ou écrivez-nous directement</a>'
+			. '</section>';
+
+		$provider = '<section class="sd-aside-card sd-aside-provider" aria-labelledby="solution-aside-provider">'
+			. '<h2 class="sd-aside-title" id="solution-aside-provider">Vous éditez une solution souveraine&nbsp;?</h2>'
+			. '<p>Proposez-la à l&rsquo;annuaire. Chaque fiche est relue avant publication, sources et dates à l&rsquo;appui.</p>'
+			. '<a class="sd-btn sd-btn-secondary" href="' . self::e(self::url('registration_url')) . '">Référencer une solution</a>'
+			. '</section>';
+
+		return $cta . $provider;
+	}
+
+	/** Sibling terms of the current taxonomy, so a term page is never a dead end. */
+	private static function browseCard(array $context): string {
+		$alternative = ($context['taxonomy'] ?? '') === 'alternative-a';
+		$terms   = self::normalizeTerms($context[$alternative ? 'alternative_terms' : 'category_terms'] ?? []);
+		$segment = $alternative ? 'alternative-a' : 'categorie';
+		$current = (string) ($context['term_slug'] ?? '');
+		$links   = '';
+		foreach ($terms as $term) {
+			$slug = (string) ($term['slug'] ?? '');
+			if ($slug === '' || $slug === $current) {
+				continue;
+			}
+			$links .= '<li><a href="' . self::e(self::termUrl($segment, $slug)) . '">' . self::e(($alternative ? 'Alternatives à ' : '') . ($term['name'] ?? $slug)) . '</a></li>';
+		}
+		if ($links === '') {
+			return '';
+		}
+
+		return '<section class="sd-aside-card sd-aside-browse" aria-labelledby="directory-aside-browse">'
+			. '<h2 class="sd-aside-title" id="directory-aside-browse">' . ($alternative ? 'Autres solutions à remplacer' : 'Autres cas d&rsquo;usage') . '</h2>'
+			. '<ul class="sd-aside-links">' . $links . '</ul>'
+			. '<a class="sd-aside-link" href="' . self::e(self::url('directory_url')) . '">Tout l&rsquo;annuaire</a></section>';
+	}
+
 	private static function aside(array $solution, string $reviewed): string {
 		$verified = ($solution['verification_status'] ?? 'declare') === 'verifie';
 		$status   = $verified
@@ -411,20 +479,7 @@ final class SolutionPresenter {
 			. ($website === '' ? '' : '<p class="sd-aside-site">' . $website . '</p>')
 			. '</section>';
 
-		$cta = '<section class="sd-aside-card sd-aside-cta" aria-labelledby="solution-aside-cta">'
-			. '<h2 class="sd-aside-title" id="solution-aside-cta">Besoin d&rsquo;aide pour choisir&nbsp;?</h2>'
-			. '<p>Décrivez votre contexte et vos contraintes&nbsp;: nous vous indiquons si cette solution convient, ou laquelle conviendrait mieux.</p>'
-			. '<a class="sd-btn sd-btn-primary" href="' . self::e(self::url('diagnostic_url')) . '">Lancer le diagnostic</a>'
-			. '<a class="sd-aside-link" href="' . self::e(self::url('contact_url')) . '">Ou écrivez-nous directement</a>'
-			. '</section>';
-
-		$provider = '<section class="sd-aside-card sd-aside-provider" aria-labelledby="solution-aside-provider">'
-			. '<h2 class="sd-aside-title" id="solution-aside-provider">Vous éditez une solution souveraine&nbsp;?</h2>'
-			. '<p>Proposez-la à l&rsquo;annuaire. Chaque fiche est relue avant publication, sources et dates à l&rsquo;appui.</p>'
-			. '<a class="sd-btn sd-btn-secondary" href="' . self::e(self::url('registration_url')) . '">Référencer une solution</a>'
-			. '</section>';
-
-		return '<aside class="sd-solution-aside" aria-label="Résumé et contact">' . $facts . $cta . $provider . '</aside>';
+		return '<aside class="sd-solution-aside" aria-label="Résumé et contact">' . $facts . self::asideWidgets() . '</aside>';
 	}
 
 	public static function detail(array $solution, array $alternatives = []): string {

@@ -19,6 +19,8 @@ $targets = [
 	// so both spellings are synced from the same source and stay identical.
 	$root . '/public/themes/souverainete-digitale/content/annuaire.fr.html',
 	$root . '/public/themes/souverainete-digitale/content/annuaire.html',
+	$root . '/public/themes/souverainete-digitale/content/annuaire-terme.fr.html',
+	$root . '/public/themes/souverainete-digitale/content/annuaire-terme.html',
 	$root . '/public/themes/souverainete-digitale/content/solution.fr.html',
 	$root . '/public/themes/souverainete-digitale/content/solution.html',
 	$root . '/public/themes/souverainete-digitale/content/solution-registration.fr.html',

@@ -28,7 +28,7 @@
 <link rel="shortcut icon" href="/media/logo.png" type="image/png" data-v-global-site.logo=""><link rel="icon" type="image/x-icon" href="/media/favicon.ico" data-v-global-site.favicon="">
 </head>
 
-<body class="page">
+<body class="page sd-directory-page">
 
   <nav class="sd-nav navbar navbar-expand-lg" data-v-save-global="index.fr.html,.sd-nav">
   <div class="container">
@@ -55,19 +55,9 @@
   </div>
 </nav>
 
-  <main id="site-content" data-v-component-post data-v-id="">
-    <div class="container" style="padding-top:7rem;">
-      <div class="row justify-content-center">
-        <article class="col-lg-9">
-          <span class="sd-eyebrow"><span class="sd-eyebrow-dot"></span>Blog</span>
-          <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-0.02em;margin:1rem 0;" data-v-post-name></h1>
-          <p class="text-muted" style="margin-bottom:1.5rem;">
-            <span data-v-post-display_name></span> &middot; <span data-v-post-created_at_formatted></span>
-          </p>
-          <img class="img-fluid rounded my-3" src="" alt="" loading="lazy" data-v-post-image data-v-if="post.image">
-          <div class="post-content" data-v-post-content></div>
-        </article>
-      </div>
+  <main id="site-content">
+    <div data-v-component-plugin-solutions-directory-solutions="directory" data-v-layout="term" data-v-kind="url" data-v-categorie="url" data-v-alternative_a="url" data-v-limit="24">
+      <section class="sd-directory-results"><div class="container"><div class="sd-directory-empty"><p>Aucune solution publiée ne correspond à ces critères.</p><a href="/annuaire/referencer-une-solution">Référencer une solution</a></div></div></section>
     </div>
   </main>
 
@@ -126,3 +116,4 @@
   </script>
 
 </body></html>
+

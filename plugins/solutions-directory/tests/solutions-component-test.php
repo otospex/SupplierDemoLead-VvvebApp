@@ -357,6 +357,45 @@ $visualsForm = SolutionPresenter::registrationForm([], [], ['endpoint_slug' => '
 expectSolution(str_contains($visualsForm, 'name="logo_url" type="url"'), 'the form must ask for a logo link.');
 expectSolution(substr_count($visualsForm, 'name="screenshot_urls[]" type="url"') === 3, 'the form must ask for up to three screenshot links.');
 expectSolution(! str_contains($visualsForm, 'type="file"'), 'no file upload yet: links only.');
+// --- Term pages: own hero, count, sidebar, browse card; cards carry facts --
+$termRows = [
+    ['status' => 'publish', 'name' => 'Tixeo', 'slug' => 'tixeo', 'kind' => 'logiciel', 'hq_country' => 'FR', 'pricing_model' => 'sur-devis', 'reviewed_at' => '2026-09-02'],
+    ['status' => 'publish', 'name' => 'Wimi', 'slug' => 'wimi', 'kind' => 'logiciel', 'hq_country' => 'FR', 'pricing_model' => 'public', 'reviewed_at' => '2026-09-01'],
+];
+$termContext = [
+    'layout' => 'term',
+    'taxonomy' => 'categorie',
+    'term_name' => 'Visioconférence',
+    'term_slug' => 'visioconference',
+    'term_intro' => '<p>Solutions pour organiser des réunions.</p>',
+    'show_filters' => true,
+    'filtered' => true,
+    'category_terms' => [['name' => 'Visioconférence', 'slug' => 'visioconference'], ['name' => 'Messagerie', 'slug' => 'messagerie'], ['name' => 'Sauvegarde', 'slug' => 'sauvegarde']],
+    'alternative_terms' => [['name' => 'Zoom', 'slug' => 'zoom']],
+];
+$termPage = SolutionPresenter::listing($termRows, $termContext);
+expectSolution(str_contains($termPage, '<section class="sd-directory-hero sd-page-hero">'), 'a term page renders its own full-bleed hero.');
+expectSolution(str_contains($termPage, '<h1>Visioconférence</h1>'), 'the term hero carries the term name.');
+expectSolution(str_contains($termPage, '2 solutions documentées'), 'the term hero counts the listed solutions.');
+expectSolution(str_contains($termPage, '<aside class="sd-solution-aside"'), 'a term page has the sidebar.');
+expectSolution(str_contains($termPage, 'href="/diagnostic-souverainete"') && str_contains($termPage, 'href="/annuaire/referencer-une-solution"'), 'the term sidebar carries both calls to action.');
+preg_match('#<section class="sd-aside-card sd-aside-browse"[^>]*>(.*?)</section>#s', $termPage, $browse);
+expectSolution(str_contains($browse[1] ?? '', 'href="/annuaire/categorie/messagerie"') && str_contains($browse[1] ?? '', 'href="/annuaire/categorie/sauvegarde"'), 'the browse card links the sibling terms.');
+expectSolution(! str_contains($browse[1] ?? '', 'href="/annuaire/categorie/visioconference"'), 'the browse card must not link the current term.');
+expectSolution(! str_contains($browse[1] ?? '', 'alternative-a'), 'the browse card sticks to the current taxonomy.');
+expectSolution(! str_contains($termPage, 'sd-directory-hubs'), 'a term page does not repeat the hub lists.');
+expectSolution(substr_count($termPage, '<ul class="sd-solution-card-meta">') === 2, 'every card carries a facts row.');
+expectSolution(str_contains($termPage, '<li data-icon="hq">France</li>') && str_contains($termPage, '<li data-icon="pricing">Tarifs publics</li>'), 'the card facts row shows HQ and pricing with icons.');
+$oneTerm = SolutionPresenter::listing([$termRows[0]], $termContext);
+expectSolution(str_contains($oneTerm, '1 solution documentée'), 'the count must agree in number.');
+$alt = SolutionPresenter::listing($termRows, ['taxonomy' => 'alternative-a', 'term_name' => 'Zoom', 'term_slug' => 'zoom', 'layout' => 'term', 'alternative_terms' => [['name' => 'Zoom', 'slug' => 'zoom'], ['name' => 'Slack', 'slug' => 'slack']]] + $termContext);
+expectSolution(str_contains($alt, '<h1>Alternatives à Zoom</h1>') && str_contains($alt, 'href="/annuaire/alternative-a/slack"') && ! str_contains($alt, 'href="/annuaire/alternative-a/zoom"'), 'an alternative term page browses its own siblings.');
+$emptyTermPage = SolutionPresenter::listing([], $termContext + ['directory_empty' => false]);
+expectSolution(str_contains($emptyTermPage, '<section class="sd-directory-hero sd-page-hero">') && str_contains($emptyTermPage, '<aside class="sd-solution-aside"'), 'an empty term page keeps hero and sidebar.');
+$hubPage = SolutionPresenter::listing($termRows, ['show_filters' => true, 'filtered' => false, 'category_terms' => $termContext['category_terms'], 'alternative_terms' => $termContext['alternative_terms']]);
+expectSolution(! str_contains($hubPage, 'sd-directory-hero') && ! str_contains($hubPage, 'sd-solution-aside'), 'the hub keeps its template hero and has no sidebar.');
+expectSolution(str_contains($hubPage, 'sd-directory-hubs'), 'the hub still lists every term.');
+
 if ($failures > 0) {
     fwrite(STDERR, "solutions-component tests: FAIL ($failures issue(s))\n");
     exit(1);

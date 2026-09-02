@@ -3448,11 +3448,13 @@ section[id] .sd-ai-band h2 {
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z'/%3E%3Ccircle cx='7' cy='7' r='1.5'/%3E%3C/svg%3E");
 }
 
-.sd-aside-list li[data-icon="hq"] {
+.sd-aside-list li[data-icon="hq"],
+.sd-solution-card-meta li[data-icon="hq"] {
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='2' width='16' height='20' rx='2'/%3E%3Cpath d='M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01'/%3E%3C/svg%3E");
 }
 
-.sd-aside-list li[data-icon="pricing"] {
+.sd-aside-list li[data-icon="pricing"],
+.sd-solution-card-meta li[data-icon="pricing"] {
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 10h12M4 14h9'/%3E%3Cpath d='M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2'/%3E%3C/svg%3E");
 }
 
@@ -3603,4 +3605,144 @@ section[id] .sd-ai-band h2 {
     padding: 0.5rem 0.75rem;
   }
 }
-/* content-hash: 18a28a55 */
+
+/* ---------- Directory term pages: hero, results + sidebar, browse card ---------- */
+.sd-directory-hero .sd-breadcrumb {
+  margin-bottom: var(--space-lg);
+  color: var(--color-on-dark-faint);
+}
+
+.sd-directory-hero .sd-breadcrumb a {
+  color: var(--color-on-dark-faint);
+}
+
+.sd-directory-hero .sd-breadcrumb a:hover {
+  color: var(--color-paper);
+}
+
+.sd-directory-hero .sd-directory-context-copy {
+  max-width: 46rem;
+  margin-top: var(--space-md);
+  color: var(--color-on-dark-faint);
+}
+
+.sd-directory-hero .sd-directory-context-copy p {
+  margin: 0;
+}
+
+.sd-directory-hero .sd-directory-context-copy a {
+  color: var(--color-paper);
+}
+
+.sd-directory-count {
+  display: inline-block;
+  margin: var(--space-lg) 0 0;
+  padding: 0.35rem 0.8rem;
+  border: var(--rule-hair) solid var(--color-on-dark-faint);
+  border-radius: 999px;
+  color: var(--color-paper);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sd-directory-context .sd-directory-count {
+  border-color: var(--color-rule-strong);
+  color: var(--color-ink-soft);
+}
+
+.sd-directory-results .sd-solution-aside {
+  padding-block: 0;
+}
+
+.sd-directory-main {
+  min-width: 0;
+}
+
+.sd-directory-main .sd-solutions-grid {
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+}
+
+.sd-aside-links {
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  list-style: none;
+}
+
+.sd-aside-links li {
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.sd-aside-links li:first-child {
+  border-top: 0;
+}
+
+.sd-aside-links a {
+  display: block;
+  padding: 0.45rem 0;
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.sd-aside-links a:hover,
+.sd-aside-links a:focus-visible {
+  color: var(--color-accent);
+}
+
+.sd-aside-browse .sd-aside-link {
+  text-align: left;
+}
+
+/* Card facts row: HQ and pricing, same icons as the solution sidebar. */
+.sd-solution-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-ink-soft);
+  font-size: 0.85rem;
+}
+
+.sd-solution-card-meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.sd-solution-card-meta li::before {
+  content: "";
+  width: 0.95rem;
+  height: 0.95rem;
+  background: var(--color-accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+/* Hub page: term lists as cards, filters as a compact bar. */
+.sd-directory-hub {
+  padding: 1.25rem 1.35rem;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-paper-2);
+}
+
+.sd-directory-hub h2 {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.sd-directory-hubs {
+  margin-bottom: var(--space-2xl);
+}
+
+.sd-directory-filters {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.sd-directory-filters .sd-btn {
+  padding-block: 0.7rem;
+}
+
+/* content-hash: 2fc65220 */

@@ -21,6 +21,7 @@ class Solutions extends ComponentBase {
 		'limit'         => 12,
 		'mode'          => 'listing',
 		'embed'         => '',
+		'layout'        => '',
 		'slug'          => 'url',
 		'language_id'   => null,
 		'site_id'       => null,
@@ -73,7 +74,7 @@ class Solutions extends ComponentBase {
 			$taxonomy = $config['taxonomies'][$filter];
 			$term = $repository->term($taxonomy, (string) $filters[$filter], $languageId, $siteId);
 			if ($term) {
-				$context = ['taxonomy' => $taxonomy, 'term_name' => $term['name'], 'term_intro' => $term['content']];
+				$context = ['taxonomy' => $taxonomy, 'term_name' => $term['name'], 'term_slug' => (string) $filters[$filter], 'term_intro' => $term['content']];
 			}
 			break;
 		}
@@ -83,6 +84,9 @@ class Solutions extends ComponentBase {
 			$filters['alternative_a'] ?? null,
 		]);
 		$context['show_filters'] = ! $embed;
+		// The term template declares data-v-layout="term": it has no hero of its
+		// own, the presenter renders one from the term.
+		$context['layout'] = (string) ($this->options['layout'] ?? '');
 		if (! $embed) {
 			$context['category_terms'] = $repository->terms($config['taxonomies']['categorie'], $languageId, $siteId);
 			$context['alternative_terms'] = $repository->terms($config['taxonomies']['alternative_a'], $languageId, $siteId);
