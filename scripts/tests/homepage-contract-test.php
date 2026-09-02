@@ -24,6 +24,16 @@ if ($themeCssPos === false) $fail('theme-css (souverainete.css) link missing');
 if ($bootstrapCssPos !== false && $themeCssPos !== false && $bootstrapCssPos > $themeCssPos)
     $fail('Bootstrap CDN stylesheet must appear before the souverainete.css link');
 
+// The homepage <head> is copied verbatim onto every other page
+// (data-v-save-global="index.fr.html,head" — see system/component/component.php,
+// which replaces the whole element). A canonical link in it therefore does not
+// describe the homepage, it tells search engines that every page on the site IS
+// the homepage. Head propagation is all-or-nothing, so there is no homepage-only
+// canonical to keep: no canonical is safer than one that is wrong everywhere.
+// Per-page canonicals are tracked in docs/launch/open-items.md.
+if (preg_match('/<link[^>]+rel="canonical"[^>]*href="[^"]+"/', $home))
+    $fail('homepage head must not carry a canonical: its head propagates site-wide, so every page would claim the homepage URL');
+
 // Banned patterns
 foreach (['sd-gradient-text', 'sd-stats', 'sd-cert-card', 'sd-step-icon', 'sd-decision-rule', 'sd-announce',
           'sd-quote-stars', 'sd-quote-avatar', 'sd-quote-mark'] as $cls) {
