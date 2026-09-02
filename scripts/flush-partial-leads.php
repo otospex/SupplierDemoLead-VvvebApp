@@ -1,8 +1,10 @@
 <?php
 
-// No cross-run locking: concurrent runs may double-send a row still mid-flush.
-// Schedule this single-flight (e.g. flock in cron, or a scheduler that never
-// overlaps runs of the same job) rather than relying on this script alone.
+// Single-flight: a second run started while one is still flushing would read
+// the same aged rows and could forward one twice. The script takes a
+// non-blocking flock on a file under storage/ and exits cleanly (code 0,
+// nothing flushed) when another run holds it, so overlapping cron ticks are
+// harmless whatever the scheduler does.
 
 if (PHP_SAPI !== 'cli') {
 	fwrite(STDERR, "CLI only.\n");
@@ -171,6 +173,17 @@ function utcClockWarning(PDO $pdo): void {
 	}
 }
 
+$lockPath = flushEnv('FLUSH_LOCK_FILE', DIR_ROOT . 'storage/flush-partial-leads.lock');
+$lock     = @fopen($lockPath, 'c');
+if ($lock === false) {
+	fwrite(STDERR, "flush partial leads failed: cannot open lock file $lockPath\n");
+	exit(1);
+}
+if (! flock($lock, LOCK_EX | LOCK_NB)) {
+	fwrite(STDOUT, "another flush run holds the lock; nothing to do\n");
+	exit(0);
+}
+
 try {
 	$driver   = strtolower((string) flushEnv('DB_DRIVER', flushEnv('DB_CONNECTION', 'mysql')));
 	$database = (string) flushEnv('DB_DATABASE', 'vvveb');
@@ -227,4 +240,7 @@ try {
 } catch (Throwable $error) {
 	fwrite(STDERR, 'flush partial leads failed: ' . $error->getMessage() . "\n");
 	exit(1);
+} finally {
+	flock($lock, LOCK_UN);
+	fclose($lock);
 }

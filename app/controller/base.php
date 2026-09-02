@@ -247,6 +247,9 @@ class Base {
 
 		$view         = $this->view;
 		$view->global = $this->global;
+		//per-page canonical: the global <head> is copied onto every template,
+		//so the value has to be computed here and bound in common.tpl.
+		$view->canonical = \Vvveb\canonicalUrl($_SERVER['REQUEST_URI'] ?? '/');
 
 		if ($errors = $this->session->get('errors')) {
 			if (is_array($errors)) {

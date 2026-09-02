@@ -136,7 +136,7 @@ foreach ($initialTerms as $slug) {
         directoryFail("final seed section is missing initial term $slug.");
     }
 }
-foreach (['/page/sortir-microsoft-365', '/page/choisir-visioconference-collaboration'] as $guidePath) {
+foreach (['"/sortir-microsoft-365"', '"/choisir-visioconference-collaboration"'] as $guidePath) {
     if (! str_contains($section ?: '', $guidePath)) {
         directoryFail("alternative term intros are missing guide mapping $guidePath.");
     }
@@ -508,8 +508,8 @@ if (getenv('INTEGRATION') === '1') {
         }
         $entryUrls = array_values(array_filter(
             $feedMatches[1],
-            static fn (string $value): bool => str_contains($value, '/page/')
-                || str_contains($value, '/annuaire')
+            static fn (string $value): bool => str_contains($value, '/annuaire')
+                || str_contains($value, '/solution/')
         ));
         if (count($entryUrls) < 2) {
             directoryFail("INTEGRATION: $feedPath listed fewer than two page URLs; the distinctness check is vacuous.");

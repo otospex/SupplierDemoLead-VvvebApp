@@ -22,6 +22,28 @@
 
 namespace Vvveb;
 
+/**
+ * Absolute URL on the public origin (CANONICAL_URL) for a site path.
+ * Strips the query string and any trailing slash except on the root, so the
+ * same page always yields the same canonical whatever host or query it was
+ * requested with.
+ */
+function canonicalUrl($path = '/') {
+	$origin = defined('CANONICAL_URL') ? CANONICAL_URL : ('https://' . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
+	$path   = (string) (parse_url((string) $path, PHP_URL_PATH) ?? '/');
+	$path   = '/' . ltrim($path, '/');
+
+	if (strlen($path) > 1) {
+		$path = rtrim($path, '/');
+	}
+
+	if ($path === '/index.php') {
+		$path = '/';
+	}
+
+	return $origin . $path;
+}
+
 function url($parameters, $mergeParameters = false, $useCurrentUrl = true) {
 	if (is_string($parameters) && $parameters) {
 		$result = '';

@@ -15,6 +15,10 @@ head base|href = <?php if($vvveb_is_page_edit) echo Vvveb\themeUrlPath()?>
 //csrf
 input[data-v-csrf]|value = <?php echo \Vvveb\session('csrf');?>
 
+//canonical and og:url follow the page, not the global head they were copied from
+head > link[rel="canonical"]|href       = $this->canonical
+head > meta[property="og:url"]|content  = $this->canonical
+
 import(components.tpl)
 import(ifmacros.tpl)
 import(notifications.tpl)

@@ -24,15 +24,15 @@ if ($themeCssPos === false) $fail('theme-css (souverainete.css) link missing');
 if ($bootstrapCssPos !== false && $themeCssPos !== false && $bootstrapCssPos > $themeCssPos)
     $fail('Bootstrap CDN stylesheet must appear before the souverainete.css link');
 
-// The homepage <head> is copied verbatim onto every other page
-// (data-v-save-global="index.fr.html,head" — see system/component/component.php,
-// which replaces the whole element). A canonical link in it therefore does not
-// describe the homepage, it tells search engines that every page on the site IS
-// the homepage. Head propagation is all-or-nothing, so there is no homepage-only
-// canonical to keep: no canonical is safer than one that is wrong everywhere.
-// Per-page canonicals are tracked in docs/launch/open-items.md.
-if (preg_match('/<link[^>]+rel="canonical"[^>]*href="[^"]+"/', $home))
-    $fail('homepage head must not carry a canonical: its head propagates site-wide, so every page would claim the homepage URL');
+// The homepage head propagates site-wide, so a hard-coded canonical would be
+// wrong on every other page. The head therefore carries ONE canonical element
+// whose href common.tpl rebinds per page from $this->canonical; the literal
+// value here only matters for the homepage itself.
+if (preg_match_all('/<link[^>]+rel="canonical"/', $home) !== 1)
+    $fail('homepage head must carry exactly one canonical element for the propagation to bind');
+$commonTpl = (string) file_get_contents($root . '/app/template/common.tpl');
+if (!str_contains($commonTpl, 'link[rel="canonical"]|href'))
+    $fail('common.tpl must rebind the canonical href per page, or every page claims the homepage URL');
 
 // Banned patterns
 foreach (['sd-gradient-text', 'sd-stats', 'sd-cert-card', 'sd-step-icon', 'sd-decision-rule', 'sd-announce',
@@ -97,8 +97,8 @@ foreach (['2', '3'] as $laterStage) {
     if (str_contains($home, 'data-v-stage="' . $laterStage . '"'))
         $fail("homepage must not render diagnostic step $laterStage");
 }
-if (!str_contains($home, 'data-v-stage-redirect="/page/diagnostic-souverainete"'))
-    $fail('homepage step 1 must hand the visitor to /page/diagnostic-souverainete after saving');
+if (!str_contains($home, 'data-v-stage-redirect="/diagnostic-souverainete"'))
+    $fail('homepage step 1 must hand the visitor to /diagnostic-souverainete after saving');
 // Every step-1 field must sit inside the step-1 fieldset, or a partial save
 // would post fields the visitor never saw.
 if (preg_match('/<fieldset[^>]*data-v-stage="1"[^>]*>(.*?)<\/fieldset>/s', $home, $sm)) {

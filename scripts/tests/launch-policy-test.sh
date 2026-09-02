@@ -46,10 +46,10 @@ for template in \
   public/themes/souverainete-digitale/content/page.fr.html \
   public/themes/souverainete-digitale/content/post.fr.html \
   public/themes/souverainete-digitale/content/contact.fr.html; do
-  grep -q '/page/independance-numerique' "$template" || fail "$template does not expose the reviewed independence hub."
-  grep -q '/page/methode-evaluation' "$template" || fail "$template does not expose the public evaluation method."
-  grep -q '/page/transparence-partenariats' "$template" || fail "$template does not expose the partnership disclosure."
-  if grep -q 'Nouveau livre blanc\|/page/solutions' "$template"; then
+  grep -q 'href="/independance-numerique"' "$template" || fail "$template does not expose the reviewed independence hub."
+  grep -q 'href="/methode-evaluation"' "$template" || fail "$template does not expose the public evaluation method."
+  grep -q 'href="/transparence-partenariats"' "$template" || fail "$template does not expose the partnership disclosure."
+  if grep -q 'Nouveau livre blanc\|href="/solutions"\|/page/' "$template"; then
     fail "$template still advertises an unreviewed legacy route or product."
   fi
   if grep -qi 'Supplier Demo\|Powerful and easy to use drag and drop\|Digital Sovereignty - B2B Solutions' "$template"; then

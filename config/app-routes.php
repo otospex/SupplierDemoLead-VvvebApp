@@ -146,6 +146,8 @@ return [
 	//content
 	'/blog'                  => ['module' => 'content'],
 	'/blog/#page#'           => ['module' => 'content'],
+	//blog posts live under /blog/ so they never compete with pages for /{slug}
+	'/blog/{slug}'           => ['module' => 'content/post/index', 'edit'=>'?module=content/post&slug={slug}&type=post'],
 	//post taxonomy
 	'/cat/{slug}'            => ['module' => 'content/category/index'],
 	'/cat/{slug}/#page#'     => ['module' => 'content/category/index'],
@@ -166,14 +168,12 @@ return [
 	//archive day
 	//'/#year#/#month#/#day#'=> ['module' => 'content/archive/index'],
 
-	//post
-	//'/#year{4,4}#-#month{1,2}#-#day#/{slug}'        => ['module' => 'content/post/index', 'edit'=>'?module=content/post&slug={slug}'],
-	'/{slug}'        => ['module' => 'content/post/index', 'edit'=>'?module=content/post&slug={slug}&type=post'],
-	//'/{slug}-#post_id#' => ['module' => 'content/post/index', 'edit'=>'?module=content/post&post_id={post_id}&type=post'],
-	//page
-	//'/{slug}'   	 => ['module' => 'content/page/index', 'edit'=>'?module=content/post&slug={slug}'],
-	'/page/{slug}'   => ['module' => 'content/page/index', 'edit'=>'?module=content/post&slug={slug}&type=page'],
-	//'/page/{slug}-#post_id#'   => ['module' => 'content/page/index', 'edit'=>'?module=content/post&post_id={post_id}&type=page'],
+	//page: the site's entity pages answer at the root, without a /page/ prefix.
+	//Posts moved to /blog/{slug} above, so the two types never share a key.
+	'/{slug}'        => ['module' => 'content/page/index', 'edit'=>'?module=content/post&slug={slug}&type=page'],
+	//legacy /page/{slug} URLs redirect permanently to /{slug}. Own module so
+	//no fixed data key enters the content/page/index reverse map.
+	'/page/{slug}'   => ['module' => 'content/legacy-page/index'],
 
 	//multi language content - language code must be at least 2 characters
 	'/{language{2,3}}/'           => ['module' => 'index/index'],
@@ -192,12 +192,11 @@ return [
 	'/{language{2,3}}/tag/{slug}'             => ['module' => 'content/tag/index', 'type' => 'page'],
 	'/{language{2,3}}/tag/{slug}/#page#'      => ['module' => 'content/tag/index', 'type' => 'page'],
 	//post
-	//'/{language{2,3}}/{slug}-#post_id#'       => ['module' => 'content/post/index', 'edit'=>'?module=content/post&post_id={post_id}'],
-	'/{language{2,3}}/p-#post_id#'       => ['module' => 'content/post/index', 'edit'=>'?module=content/post&post_id=#post_id#'],
-	'/{language{2,3}}/{slug}'       => ['module' => 'content/post/index', 'edit'=>'?module=content/post&slug={slug}'],
-	//'/{language{2,3}}/page/{slug}-#post_id#'  => ['module' => 'content/page/index', 'edit'=>'?module=content/post&post_id={post_id}'],
-	'/{language{2,3}}/page/p-#post_id#'  => ['module' => 'content/page/index', 'edit'=>'?module=content/post&post_id=#post_id#'],
-	'/{language{2,3}}/page/{slug}'  => ['module' => 'content/page/index', 'edit'=>'?module=content/post&slug={slug}'],
+	'/{language{2,3}}/blog/{slug}'  => ['module' => 'content/post/index', 'edit'=>'?module=content/post&slug={slug}&type=post'],
+	//page (no id-based variants: every row has a slug, and the id form
+	//used to win the reverse map for non-default languages)
+	'/{language{2,3}}/{slug}'       => ['module' => 'content/page/index', 'edit'=>'?module=content/post&slug={slug}&type=page'],
+	'/{language{2,3}}/page/{slug}'  => ['module' => 'content/legacy-page/index'],
 
 	'/{language{2,3}}/tag/{slug}'            => ['module' => 'content/tag/index'],
 	'/{language{2,3}}/tag/{slug}/#page#'     => ['module' => 'content/tag/index'],
