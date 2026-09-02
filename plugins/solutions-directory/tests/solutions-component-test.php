@@ -71,15 +71,29 @@ expectSolution((bool) preg_match('#href="https://zephyr\.example\.test"[^>]+rel=
 expectSolution((bool) preg_match('#href="https://alize\.example\.test"[^>]+rel="noopener"#', $html), 'verified outbound links need noopener.');
 expectSolution(! (bool) preg_match('#href="https://alize\.example\.test"[^>]+rel="[^"]*nofollow#', $html), 'verified outbound links must not keep nofollow.');
 
-// Two empty states: an unfiltered directory is not "missing criteria", it is
-// simply still empty, and the homepage teaser shows exactly that sentence.
+// Three empty states. An unfiltered directory is not "missing criteria", it is
+// simply not open yet; a filter that excluded everything is; and a filtered view
+// of a directory that holds nothing at all is the first case again, not the
+// second, because blaming the reader's filter would be untrue.
+$launchSentence = 'L&rsquo;annuaire ouvre ses premières fiches prochainement.';
+$noMatchSentence = 'Aucune solution publiée ne correspond à ces critères.';
+
 $empty = SolutionPresenter::listing([]);
-expectSolution(str_contains($empty, 'Aucune solution n&rsquo;est encore publiée dans l&rsquo;annuaire.'), 'an unfiltered empty directory must say it is empty.');
+expectSolution(str_contains($empty, $launchSentence), 'an unfiltered empty directory must say it is not open yet.');
 expectSolution(! str_contains($empty, 'ces critères'), 'an unfiltered empty directory must not blame criteria nobody chose.');
 expectSolution(str_contains($empty, '/annuaire/referencer-une-solution'), 'empty results need the registration link.');
 
-$emptyFiltered = SolutionPresenter::listing([], ['filtered' => true]);
-expectSolution(str_contains($emptyFiltered, 'Aucune solution publiée ne correspond à ces critères.'), 'a filtered empty result must name the criteria.');
+$emptyFiltered = SolutionPresenter::listing([], ['filtered' => true, 'directory_empty' => false]);
+expectSolution(str_contains($emptyFiltered, $noMatchSentence), 'a filtered empty result over a populated directory must name the criteria.');
+expectSolution(! str_contains($emptyFiltered, $launchSentence), 'a populated directory must not claim it is still opening.');
+
+$emptyFilteredEmptyDirectory = SolutionPresenter::listing([], ['filtered' => true, 'directory_empty' => true]);
+expectSolution(str_contains($emptyFilteredEmptyDirectory, $launchSentence), 'a filter over an empty directory must report the empty directory, not a failed filter.');
+expectSolution(! str_contains($emptyFilteredEmptyDirectory, 'ces critères'), 'an empty directory must not blame the reader\'s filter.');
+
+// A term page is a narrowed view even without an explicit filter flag.
+$emptyTerm = SolutionPresenter::listing([], ['term_name' => 'Microsoft 365', 'taxonomy' => 'alternative-a', 'directory_empty' => false]);
+expectSolution(str_contains($emptyTerm, $noMatchSentence), 'an empty term page over a populated directory must name the criteria.');
 
 final class CapturingSolutionDb {
     public string $quote = '`';

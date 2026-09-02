@@ -153,11 +153,19 @@ final class SolutionPresenter {
 
 		$filters = ! empty($context['show_filters']) ? self::filters($context) : '';
 		if (! $rows) {
-			// With no filter applied there are no "criteria" to miss: the
-			// directory is simply still empty, and saying so is the honest
-			// sentence for a launch day with nothing published yet.
-			$notice = empty($context['filtered'])
-				? 'Aucune solution n&rsquo;est encore publiée dans l&rsquo;annuaire.'
+			// Two different facts, two different sentences. "No match" blames
+			// criteria the reader chose; before anything is published there are
+			// no criteria to miss, and telling a launch-day visitor that their
+			// filter failed would be simply untrue. A filtered view therefore
+			// asks the caller whether the directory holds anything at all
+			// ('directory_empty'); with no filter and no term, an empty result
+			// already proves it.
+			$narrowed = ! empty($context['filtered']) || ! empty($context['term_name']);
+			$directoryEmpty = array_key_exists('directory_empty', $context)
+				? (bool) $context['directory_empty']
+				: ! $narrowed;
+			$notice = $directoryEmpty
+				? 'L&rsquo;annuaire ouvre ses premières fiches prochainement.'
 				: 'Aucune solution publiée ne correspond à ces critères.';
 
 			return $heading . $filters . '<div class="sd-directory-empty"><p>' . $notice . '</p>'

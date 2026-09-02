@@ -90,6 +90,16 @@ class Solutions extends ComponentBase {
 		}
 
 		$rows = $repository->published($filters, (int) ($this->options['limit'] ?? 12));
+		if (! $rows && ($context['filtered'] || ! empty($context['term_name']))) {
+			// A narrowed view that came back empty cannot tell on its own
+			// whether the filter excluded everything or the directory is still
+			// unpopulated. One extra probe, only on the empty path, lets the
+			// presenter pick the sentence that is actually true.
+			$context['directory_empty'] = $repository->published([
+				'language_id' => $languageId,
+				'site_id'     => $siteId,
+			], 1) === [];
+		}
 
 		return ['html' => SolutionPresenter::listing($rows, $context)];
 	}
