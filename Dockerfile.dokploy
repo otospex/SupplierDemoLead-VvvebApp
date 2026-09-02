@@ -75,6 +75,50 @@ COPY scripts/approve-scheduled-content.php \
 COPY scripts/migrate-lead-schema.php \
      /opt/lpc-overlay/scripts/migrate-lead-schema.php
 
+# 1c. Everything else the fork owns. scripts/tests/deploy-overlay-test.php
+#     derives the fork's footprint from git and fails when a file is missing
+#     here, so this list cannot silently drift again.
+COPY config/app-routes.php \
+     /opt/lpc-overlay/config/app-routes.php
+COPY env.php \
+     /opt/lpc-overlay/env.php
+
+# Canonical host, per-page canonical/og tags, legacy /page/ redirects, sitemaps, robots.
+COPY system/functions.php \
+     /opt/lpc-overlay/system/functions.php
+COPY system/sitemap-builder.php \
+     /opt/lpc-overlay/system/sitemap-builder.php
+COPY app/component/language.php \
+     /opt/lpc-overlay/app/component/language.php
+COPY app/controller/content/legacy-page.php \
+     /opt/lpc-overlay/app/controller/content/legacy-page.php
+COPY app/controller/feed/robots.php \
+     /opt/lpc-overlay/app/controller/feed/robots.php
+COPY app/controller/sitemap.php \
+     /opt/lpc-overlay/app/controller/sitemap.php
+COPY app/template/common.tpl \
+     /opt/lpc-overlay/app/template/common.tpl
+COPY app/template/content/post.tpl \
+     /opt/lpc-overlay/app/template/content/post.tpl
+COPY public/vrobots.txt \
+     /opt/lpc-overlay/public/vrobots.txt
+
+# Solutions directory plugin (annuaire): PHP side and browser-served assets.
+COPY plugins/solutions-directory \
+     /opt/lpc-overlay/plugins/solutions-directory
+COPY public/plugins/solutions-directory \
+     /opt/lpc-overlay/public/plugins/solutions-directory
+
+# Editorial media referenced by the seeded pages and the theme.
+COPY public/media/editorial \
+     /opt/lpc-overlay/public/media/editorial
+COPY public/media/independant-digital-logo.png \
+     /opt/lpc-overlay/public/media/independant-digital-logo.png
+
+# Operational and editorial CLIs (flush/purge jobs, audits, chrome sync).
+COPY scripts \
+     /opt/lpc-overlay/scripts
+
 # 1b. One-time DB seed scripts. Staged OUTSIDE /opt/lpc-overlay so the
 #     `cp -a /opt/lpc-overlay/.` webroot overlay does NOT copy them into the
 #     public tree (keeps seed.dokploy.sql from ever being web-served).

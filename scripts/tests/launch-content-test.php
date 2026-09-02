@@ -24,6 +24,7 @@ $launchSlugs = [
     'sortir-microsoft-365',
     'choisir-visioconference-collaboration',
     'confidentialite',
+    'mentions-legales',
 ];
 foreach ($launchSlugs as $slug) {
     requirePattern("/'" . preg_quote($slug, '/') . "'/u", $seed, "launch seed is missing $slug.");

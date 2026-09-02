@@ -3229,4 +3229,15 @@ section[id] .sd-ai-band h2 {
     padding: var(--space-md);
   }
 }
-/* content-hash: b004ed6d */
+
+/* Launch placeholders in legal copy: visible until the operator fills them
+   in, so an unfinished notice can never pass for a finished one. */
+.sd-todo {
+  color: var(--color-ink);
+  padding: 0 0.3em;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+/* content-hash: a181c763 */

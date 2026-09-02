@@ -13,6 +13,15 @@
 config/*
 !config/sites.php
 !config/plugins.php
+!config/app-routes.php
+!env.php
+!nginx.dokploy.conf
+
+# Canonical host, sitemaps, robots, legacy /page/ redirects.
+!system
+system/*
+!system/functions.php
+!system/sitemap-builder.php
 
 # Content controller carrying the language-suffixed-template fallback that
 # localizes sub-page / post chrome (content/<name>.<lang>.html).
@@ -22,10 +31,24 @@ app/*
 app/controller/*
 !app/controller/base.php
 !app/controller/index.php
+!app/controller/sitemap.php
 !app/controller/content
 app/controller/content/*
 !app/controller/content/index.php
 !app/controller/content/post.php
+!app/controller/content/legacy-page.php
+!app/controller/feed
+app/controller/feed/*
+!app/controller/feed/robots.php
+!app/component
+app/component/*
+!app/component/language.php
+!app/template
+app/template/*
+!app/template/common.tpl
+!app/template/content
+app/template/content/*
+!app/template/content/post.tpl
 
 # Frontend post-status guards copied by Dockerfile.dokploy.
 !app/sql
@@ -40,25 +63,28 @@ app/sql/pgsql/*
 app/sql/sqlite/*
 !app/sql/sqlite/post.sql
 
-# Gated content scheduler copied outside the public document root.
+# Operational and editorial CLIs, copied outside the public document root.
 !scripts
-scripts/*
-!scripts/lib
-scripts/lib/*
-!scripts/lib/scheduled-publisher.php
-!scripts/lib/cache-invalidator.php
-!scripts/publish-scheduled-content.php
-!scripts/approve-scheduled-content.php
-!scripts/migrate-lead-schema.php
+!scripts/**
 
 # Custom plugin sources + browser-served assets (Dockerfile.dokploy COPYs these).
 !plugins
 !plugins/lead-platform-connector
 !plugins/lead-platform-connector/**
+!plugins/solutions-directory
+!plugins/solutions-directory/**
 !public
 !public/plugins
 !public/plugins/lead-platform-connector
 !public/plugins/lead-platform-connector/**
+!public/plugins/solutions-directory
+!public/plugins/solutions-directory/**
+!public/vrobots.txt
+!public/media
+public/media/*
+!public/media/editorial
+!public/media/editorial/**
+!public/media/independant-digital-logo.png
 
 # Theme overrides.
 !public/themes
