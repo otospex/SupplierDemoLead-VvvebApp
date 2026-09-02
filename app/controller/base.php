@@ -61,6 +61,16 @@ class Base {
 		if (($lang = ($this->request->get['language'] ?? false)) && ! is_array($lang)) {
 			$language  = filter('/[A-Za-z_-]+/', $lang, 10);
 
+			//the default language is served unprefixed: /fr/x is a duplicate of
+			///x with its own canonical, so it redirects permanently instead.
+			if (APP === 'app' && $default_language && $language === $default_language && isset($languages[$language])) {
+				$uri   = (string) ($_SERVER['REQUEST_URI'] ?? '/');
+				$path  = (string) (parse_url($uri, PHP_URL_PATH) ?? '/');
+				$query = (string) (parse_url($uri, PHP_URL_QUERY) ?? '');
+				$path  = preg_replace('#^/' . preg_quote($language, '#') . '(?=/|$)#', '', $path) ?: '/';
+				$this->response->redirect(\Vvveb\canonicalUrl($path) . ($query !== '' ? '?' . $query : ''), 301);
+			}
+
 			if (isset($languages[$language])) {
 				$lg        = $languages[$language];
 				$language_id = $lg['language_id'];

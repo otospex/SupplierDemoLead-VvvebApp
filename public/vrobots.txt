@@ -30,5 +30,8 @@ Allow: /
 Disallow: /admin/
 Disallow: /user/
 Disallow: /search/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /page-cache/
 
 Sitemap: /sitemap.xml

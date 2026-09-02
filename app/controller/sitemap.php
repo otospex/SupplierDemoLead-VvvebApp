@@ -21,8 +21,18 @@ use function Vvveb\canonicalUrl;
 use function Vvveb\url;
 
 class Sitemap extends Base {
-	/** Published pages that must stay out of search: noindex by policy. */
-	const EXCLUDED_PAGE_SLUGS = ['referencer-une-solution'];
+	/**
+	 * Published pages that must stay out of search: the registration page is
+	 * noindex by policy; /annuaire is listed by the directory sitemap.
+	 */
+	const EXCLUDED_PAGE_SLUGS = ['referencer-une-solution', 'annuaire'];
+
+	/**
+	 * Languages whose templates carry <meta name="robots" content="noindex">
+	 * (the English site is not launched: content/page.html, post.html and
+	 * index.html all say so). A sitemap must not list what robots forbids.
+	 */
+	const NOINDEX_LANGUAGES = ['en'];
 
 	const SECTIONS = [
 		'pages' => ['type' => 'page', 'module' => 'content/page/index'],
@@ -74,6 +84,9 @@ class Sitemap extends Base {
 		$languages = [];
 
 		foreach (Locale::availableLanguages() as $language) {
+			if (in_array((string) $language['slug'], self::NOINDEX_LANGUAGES, true)) {
+				continue;
+			}
 			$languages[(int) $language['language_id']] = ['slug' => $language['slug'], 'code' => $language['code'] ?? $language['slug']];
 		}
 

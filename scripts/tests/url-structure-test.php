@@ -124,6 +124,17 @@ if (getenv('INTEGRATION') === '1') {
     expectTrue($en['status'] === 301 && rtrim($en['location'], '/') === $baseUrl . '/en/about', '/en/page/about must 301 to /en/about.');
     expectTrue($fetch('/en/about')['status'] === 200, '/en/about must answer 200.');
     expectTrue($fetch('/no-such-page-' . time())['status'] === 404, 'an unknown slug must still 404.');
+    $fr = $fetch('/fr/methode-evaluation');
+    expectTrue($fr['status'] === 301 && rtrim($fr['location'], '/') === $baseUrl . '/methode-evaluation', 'the default-language prefix /fr/ must 301 to the unprefixed URL, got ' . $fr['status'] . ' ' . $fr['location'] . '.');
+    $frRoot = $fetch('/fr/');
+    expectTrue($frRoot['status'] === 301 && rtrim($frRoot['location'], '/') === $baseUrl, '/fr/ must 301 to the root.');
+    $term = $fetch('/annuaire/categorie/visioconference')['body'];
+    expectTrue(str_contains($term, '<title>Visioconférence — Annuaire des solutions souveraines</title>'), 'directory term pages must carry a title.');
+    expectTrue(preg_match('/<meta name="description" content="[^"]{40,}"/', $term) === 1, 'directory term pages must carry a description.');
+    $home = $fetch('/')['body'];
+    expectTrue(! preg_match('/<script type="application\/ld\+json">[^<]*&[a-z]+;/', $home), 'JSON-LD must not contain HTML entities.');
+    $hub = $fetch('/annuaire')['body'];
+    expectTrue(str_contains($hub, 'href="/annuaire/categorie/sauvegarde"') && str_contains($hub, 'href="/annuaire/alternative-a/salesforce"'), '/annuaire must link every category and alternative page.');
 }
 
 if ($failures > 0) {

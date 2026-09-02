@@ -18,8 +18,8 @@ return [
 	'directory_url'   => '/annuaire',
 	'solution_url'    => '/solution/',
 	'registration_url'=> '/annuaire/referencer-une-solution',
-	'contact_url'     => '/page/contact',
-	'privacy_url'     => '/page/confidentialite',
+	'contact_url'     => '/contact',
+	'privacy_url'     => '/confidentialite',
 
 	// Theme template rendered by the term routes.
 	'directory_template' => 'content/annuaire.fr.html',

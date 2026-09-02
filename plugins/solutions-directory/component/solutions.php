@@ -85,6 +85,7 @@ class Solutions extends ComponentBase {
 		$context['show_filters'] = ! $embed;
 		if (! $embed) {
 			$context['category_terms'] = $repository->terms($config['taxonomies']['categorie'], $languageId, $siteId);
+			$context['alternative_terms'] = $repository->terms($config['taxonomies']['alternative_a'], $languageId, $siteId);
 			$context['selected_kind'] = $filters['kind'] ?? '';
 			$context['selected_categorie'] = $filters['categorie'] ?? '';
 		}

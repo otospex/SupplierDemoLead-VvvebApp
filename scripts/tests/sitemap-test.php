@@ -89,6 +89,10 @@ foreach (['GPTBot', 'ClaudeBot', 'PerplexityBot', 'Google-Extended', 'CCBot', 'O
     expectTrue(preg_match('/^User-agent: ' . preg_quote($bot, '/') . '$/mi', $robots) === 1, "robots.txt must name $bot.");
 }
 expectTrue(preg_match('/^Allow: \/$/m', $robots) === 1, 'the LLM crawler group must be allowed everything public.');
+expectTrue(substr_count($robots, 'Disallow: /page-cache/') === 2 && substr_count($robots, 'Disallow: /checkout/') === 2, 'both robots groups must close the same private paths.');
+$sitemapController = (string) file_get_contents($root . '/app/controller/sitemap.php');
+expectTrue(str_contains($sitemapController, "NOINDEX_LANGUAGES = ['en']"), 'the sitemap must skip the noindex English site.');
+expectTrue(str_contains($sitemapController, "'annuaire'"), 'the sitemap must leave /annuaire to the directory sitemap.');
 expectTrue(preg_match('/^Sitemap: \/sitemap\.xml$/m', $robots) === 1, 'the source robots file declares the sitemap by path; the controller absolutizes it.');
 expectTrue(! str_contains($robots, '/feed/'), 'robots.txt must not point at the old feed sitemaps.');
 $robotsController = (string) file_get_contents($root . '/app/controller/feed/robots.php');
@@ -124,8 +128,10 @@ if (getenv('INTEGRATION') === '1') {
     $pages = $fetch('/sitemap-pages.xml')['body'];
     expectTrue(str_contains($pages, '<loc>' . $baseUrl . '/methode-evaluation</loc>'), 'the pages sitemap must list /methode-evaluation without a /page/ prefix.');
     expectTrue(! str_contains($pages, '/page/'), 'the pages sitemap must not contain /page/ URLs.');
+    expectTrue(! str_contains($pages, '/en/'), 'the pages sitemap must not list the noindex English pages.');
+    expectTrue(! str_contains($pages, '<loc>' . $baseUrl . '/annuaire</loc>'), '/annuaire belongs to the directory sitemap only.');
     expectTrue(! str_contains($pages, 'referencer-une-solution'), 'the registration page is noindex and must not be in the sitemap.');
-    expectTrue(str_contains($pages, 'hreflang="x-default"'), 'translated pages must carry hreflang alternates.');
+    expectTrue(! str_contains($pages, 'hreflang='), 'with a single indexable language there are no hreflang alternates to emit.');
     expectTrue($fetch('/sitemap-nope.xml')['status'] === 404, 'an unknown sitemap section must 404.');
     $rb = $fetch('/robots.txt');
     expectTrue($rb['status'] === 200 && str_contains($rb['body'], 'Sitemap: ' . $baseUrl . '/sitemap.xml'), 'robots.txt must declare the absolute sitemap URL, got: ' . trim(strrchr($rb['body'], "\n") ?: ''));

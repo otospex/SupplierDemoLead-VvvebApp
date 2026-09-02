@@ -17,8 +17,8 @@ final class SolutionPresenter {
 		'directory_url'    => '/annuaire',
 		'solution_url'     => '/solution/',
 		'registration_url' => '/annuaire/referencer-une-solution',
-		'contact_url'      => '/page/contact',
-		'privacy_url'      => '/page/confidentialite',
+		'contact_url'      => '/contact',
+		'privacy_url'      => '/confidentialite',
 	];
 
 	private static array $config = [];
@@ -115,6 +115,31 @@ final class SolutionPresenter {
 		return $value === $current ? ' selected' : '';
 	}
 
+	private static function hubs(array $context): string {
+		$directory = self::url('directory_url');
+		$groups = [
+			['Par cas d&rsquo;usage', 'categorie', self::normalizeTerms($context['category_terms'] ?? []), ''],
+			['Par solution à remplacer', 'alternative-a', self::normalizeTerms($context['alternative_terms'] ?? []), 'Alternatives à '],
+		];
+		$html = '';
+		foreach ($groups as [$title, $segment, $terms, $prefix]) {
+			if (! $terms) {
+				continue;
+			}
+			$html .= '<div class="sd-directory-hub"><h2>' . $title . '</h2><ul>';
+			foreach ($terms as $term) {
+				$slug = (string) ($term['slug'] ?? '');
+				if ($slug === '') {
+					continue;
+				}
+				$html .= '<li><a href="' . self::e($directory . '/' . $segment . '/' . $slug) . '">' . self::e($prefix . ($term['name'] ?? $slug)) . '</a></li>';
+			}
+			$html .= '</ul></div>';
+		}
+
+		return $html === '' ? '' : '<nav class="sd-directory-hubs" aria-label="Parcourir l&rsquo;annuaire">' . $html . '</nav>';
+	}
+
 	private static function filters(array $context): string {
 		$categories = self::normalizeTerms($context['category_terms'] ?? []);
 		$html = '<form class="sd-directory-filters" action="' . self::e(self::url('directory_url')) . '" method="get" aria-label="Filtrer l&rsquo;annuaire">'
@@ -152,6 +177,12 @@ final class SolutionPresenter {
 		}
 
 		$filters = ! empty($context['show_filters']) ? self::filters($context) : '';
+		// The unfiltered directory is the hub: every category and every
+		// "alternative à" page is linked from here, so none of them is an
+		// orphan reachable only through a <select> or a solution's chips.
+		if (! empty($context['show_filters']) && empty($context['filtered'])) {
+			$filters = self::hubs($context) . $filters;
+		}
 		if (! $rows) {
 			// Two different facts, two different sentences. "No match" blames
 			// criteria the reader chose; before anything is published there are
@@ -179,7 +210,7 @@ final class SolutionPresenter {
 			$html .= '<article class="sd-solution-card">'
 				. '<div class="sd-solution-card-top"><span class="sd-solution-kind">' . self::e(self::kindLabel((string) ($solution['kind'] ?? ''))) . '</span>'
 				. self::badge($solution) . '</div>'
-				. '<h2><a href="' . $url . '">' . $name . '</a></h2>'
+				. '<h3><a href="' . $url . '">' . $name . '</a></h3>'
 				. '<p>' . self::e($solution['excerpt'] ?? '') . '</p>'
 				. '<div class="sd-solution-card-links"><a class="sd-link-arrow" href="' . $url . '">Voir la fiche</a>'
 				. self::website($solution) . '</div></article>';
