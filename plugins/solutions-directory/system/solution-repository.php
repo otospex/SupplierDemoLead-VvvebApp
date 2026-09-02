@@ -89,13 +89,13 @@ final class SolutionRepository {
 				WHERE ptti.post_id = p.post_id AND tc.slug = :$taxKey AND tic.slug IN (" . implode(',', $holders) . '))';
 		}
 
-		$metaKeys = ['kind', 'website', 'hq_country', 'hosting_countries', 'pricing_model', 'qualifications', 'commercial_relationship', 'verification_status', 'reviewed_at', 'reviewer'];
+		$metaKeys = ['kind', 'website', 'hq_country', 'hosting_countries', 'pricing_model', 'qualifications', 'commercial_relationship', 'verification_status', 'reviewed_at', 'reviewer', 'screenshots'];
 		$metaColumns = [];
 		foreach ($metaKeys as $key) {
 			$metaColumns[] = $this->metaSelect($key) . " AS $key";
 		}
 
-		$sql = 'SELECT p.post_id, p.status, p.type, pc.language_id, pc.name, pc.slug, pc.excerpt, pc.content, pc.meta_description, '
+		$sql = 'SELECT p.post_id, p.status, p.type, p.image, pc.language_id, pc.name, pc.slug, pc.excerpt, pc.content, pc.meta_description, '
 			. implode(', ', $metaColumns)
 			. ' FROM post p JOIN post_content pc ON pc.post_id = p.post_id' . $siteJoin . ' WHERE '
 			. implode(' AND ', $where)

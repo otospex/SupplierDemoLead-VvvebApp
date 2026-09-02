@@ -133,7 +133,7 @@ if (! method_exists(SolutionPresenter::class, 'registrationForm')) {
     }
     expectSolution(str_contains($form, 'value="bureautique"'), 'registration categories must come from taxonomy data.');
     expectSolution(str_contains($form, 'value="microsoft-365"'), 'registration alternatives must come from taxonomy data.');
-    expectSolution(substr_count($form, '<fieldset') === 3, 'registration form must use three fieldsets.');
+    expectSolution(substr_count($form, '<fieldset') === 4, 'registration form must use four fieldsets.');
 }
 
 // --- Spec 5.4: alternatives are the OR of both neighbourhoods --------------
@@ -317,6 +317,46 @@ expectSolution(str_contains($configuredAside, 'href="/bilan"'), 'the diagnostic 
 expectSolution(str_contains($configuredAside, 'href="/ecrire"'), 'the sidebar contact link must follow the configured URL.');
 expectSolution(str_contains($configuredAside, 'href="/repertoire/proposer"'), 'the provider invitation must follow the configured registration URL.');
 SolutionPresenter::configure([]);
+
+// --- Detail page and cards: logo, monogram fallback, screenshots -----------
+$illustrated = $partner + [
+    'image' => 'media/solutions/aifel/logo.svg',
+    'screenshots' => "media/solutions/aifel/capture-1.png | Tableau de bord\nmedia/solutions/aifel/capture-2.png\n\n   ",
+    'submitted_logo_url' => 'https://evil.example/logo.png',
+    'submitted_screenshot_urls' => 'https://evil.example/shot.png',
+];
+$illustratedDetail = SolutionPresenter::detail($illustrated);
+expectSolution(str_contains($illustratedDetail, '<img class="sd-solution-logo" src="/media/solutions/aifel/logo.svg" alt=""'), 'the hero must show the logo from the post image, rooted at /.');
+expectSolution(! str_contains($illustratedDetail, 'sd-solution-monogram'), 'a solution with a logo must not also show the monogram.');
+preg_match('#<section class="sd-solution-screens"[^>]*>(.*?)</section>#s', $illustratedDetail, $screens);
+expectSolution(substr_count($screens[1] ?? '', '<figure') === 2, 'blank screenshot lines must be skipped and each remaining one becomes a figure.');
+expectSolution(str_contains($screens[1] ?? '', '<figcaption>Tableau de bord</figcaption>'), 'a screenshot caption must be rendered.');
+expectSolution(str_contains($screens[1] ?? '', 'alt="AIFEL — Tableau de bord"') && str_contains($screens[1] ?? '', 'alt="AIFEL — capture d&rsquo;écran 2"'), 'every screenshot needs a meaningful alt, caption or numbered fallback.');
+expectSolution(str_contains($screens[1] ?? '', 'loading="lazy"'), 'screenshots must lazy-load.');
+expectSolution(str_contains($screens[1] ?? '', 'href="/media/solutions/aifel/capture-1.png"'), 'each screenshot must link to the full-size file.');
+expectSolution(! str_contains($illustratedDetail, 'evil.example'), 'submitted media links are private and must never be rendered.');
+preg_match('#<script type="application/ld\+json">(.*?)</script>#s', $illustratedDetail, $ldMatch);
+$ld = json_decode($ldMatch[1] ?? '{}', true);
+expectSolution(($ld['logo'] ?? '') === '/media/solutions/aifel/logo.svg' && ($ld['image'] ?? '') === '/media/solutions/aifel/logo.svg', 'JSON-LD must carry the logo.');
+expectSolution(($ld['screenshot'] ?? []) === ['/media/solutions/aifel/capture-1.png', 'media/solutions/aifel/capture-2.png' === '' ? '' : '/media/solutions/aifel/capture-2.png'], 'JSON-LD must list the screenshots.');
+
+$plainDetail = SolutionPresenter::detail($partner);
+expectSolution(str_contains($plainDetail, '<span class="sd-solution-monogram" aria-hidden="true">A</span>'), 'without a logo the hero shows a monogram of the initials.');
+expectSolution(! str_contains($plainDetail, 'sd-solution-screens'), 'no screenshots means no screenshots section at all.');
+expectSolution(! isset(json_decode(preg_match('#<script type="application/ld\+json">(.*?)</script>#s', $plainDetail, $pm) ? $pm[1] : '{}', true)['logo']), 'JSON-LD must omit the logo when there is none.');
+$hostileLogo = SolutionPresenter::detail($partner + ['image' => 'https://evil.example/x.svg', 'screenshots' => "//evil.example/a.png | x\njavascript:alert(1) | y"]);
+expectSolution(! str_contains($hostileLogo, 'evil.example') && ! str_contains($hostileLogo, 'javascript:'), 'media paths must be local, never remote or scheme-bearing.');
+expectSolution(str_contains($hostileLogo, 'sd-solution-monogram'), 'a rejected logo falls back to the monogram.');
+expectSolution(str_contains(SolutionPresenter::detail(['name' => 'Ma Suite Libre'] + $partner), '>MS</span>'), 'the monogram takes the initials of the first two words.');
+
+$cards = SolutionPresenter::listing([$illustrated, ['slug' => 'nu', 'name' => 'Nu'] + $partner]);
+expectSolution(str_contains($cards, '<img class="sd-solution-card-logo" src="/media/solutions/aifel/logo.svg" alt=""'), 'cards show the logo.');
+expectSolution(str_contains($cards, '<span class="sd-solution-monogram" aria-hidden="true">N</span>'), 'cards fall back to the monogram.');
+
+$visualsForm = SolutionPresenter::registrationForm([], [], ['endpoint_slug' => 'solution-registration']);
+expectSolution(str_contains($visualsForm, 'name="logo_url" type="url"'), 'the form must ask for a logo link.');
+expectSolution(substr_count($visualsForm, 'name="screenshot_urls[]" type="url"') === 3, 'the form must ask for up to three screenshot links.');
+expectSolution(! str_contains($visualsForm, 'type="file"'), 'no file upload yet: links only.');
 if ($failures > 0) {
     fwrite(STDERR, "solutions-component tests: FAIL ($failures issue(s))\n");
     exit(1);

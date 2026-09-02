@@ -209,6 +209,7 @@ final class SolutionPresenter {
 			$name = self::e($solution['name'] ?? '');
 			$url  = self::e(self::solutionUrl((string) ($solution['slug'] ?? '')));
 			$html .= '<article class="sd-solution-card">'
+				. '<div class="sd-solution-card-logo-box">' . self::logo($solution, 'sd-solution-card-logo') . '</div>'
 				. '<div class="sd-solution-card-top"><span class="sd-solution-kind">' . self::e(self::kindLabel((string) ($solution['kind'] ?? ''))) . '</span>'
 				. self::badge($solution) . '</div>'
 				. '<h3><a href="' . $url . '">' . $name . '</a></h3>'
@@ -218,6 +219,75 @@ final class SolutionPresenter {
 		}
 
 		return $html . '</div>';
+	}
+
+	/**
+	 * A public media path is local, under media/, and nothing else: no scheme,
+	 * no protocol-relative host, no traversal. Returned rooted at "/".
+	 */
+	private static function mediaPath($value): string {
+		$value = ltrim(trim((string) $value), '/');
+		if (! preg_match('#^media/[A-Za-z0-9][A-Za-z0-9._/-]*\.(?:png|jpe?g|webp|svg|gif|avif)$#i', $value) || str_contains($value, '..')) {
+			return '';
+		}
+
+		return '/' . $value;
+	}
+
+	/** Initials of the first two words, for a solution without a logo. */
+	private static function monogram(string $name): string {
+		$words = preg_split('/[\s\-_]+/u', trim($name)) ?: [];
+		$initials = '';
+		foreach (array_slice(array_filter($words), 0, 2) as $word) {
+			$initials .= mb_strtoupper(mb_substr($word, 0, 1));
+		}
+
+		return '<span class="sd-solution-monogram" aria-hidden="true">' . self::e($initials) . '</span>';
+	}
+
+	private static function logo(array $solution, string $class): string {
+		$path = self::mediaPath($solution['image'] ?? '');
+		if ($path === '') {
+			return self::monogram((string) ($solution['name'] ?? ''));
+		}
+
+		return '<img class="' . $class . '" src="' . self::e($path) . '" alt="" loading="lazy" decoding="async">';
+	}
+
+	/**
+	 * The `screenshots` meta holds one image per line as "path | caption";
+	 * blank lines and non-local paths are dropped.
+	 *
+	 * @return array<int, array{path: string, caption: string}>
+	 */
+	private static function screenshots(array $solution): array {
+		$items = [];
+		foreach (preg_split('/\R/u', (string) ($solution['screenshots'] ?? '')) ?: [] as $line) {
+			$parts   = array_map('trim', explode('|', $line, 2));
+			$path    = self::mediaPath($parts[0]);
+			if ($path === '') {
+				continue;
+			}
+			$items[] = ['path' => $path, 'caption' => (string) ($parts[1] ?? '')];
+		}
+
+		return array_slice($items, 0, 6);
+	}
+
+	private static function screensSection(string $name, array $screens): string {
+		if (! $screens) {
+			return '';
+		}
+
+		$html = '<section class="sd-solution-screens" aria-labelledby="solution-screens"><h2 id="solution-screens">Captures d&rsquo;écran</h2><div class="sd-solution-screens-grid">';
+		foreach ($screens as $index => $screen) {
+			$alt = $name . ' — ' . ($screen['caption'] !== '' ? self::e($screen['caption']) : 'capture d&rsquo;écran ' . ($index + 1));
+			$html .= '<figure><a href="' . self::e($screen['path']) . '" target="_blank" rel="noopener"><img src="' . self::e($screen['path']) . '" alt="' . $alt . '" loading="lazy" decoding="async"></a>'
+				. ($screen['caption'] !== '' ? '<figcaption>' . self::e($screen['caption']) . '</figcaption>' : '')
+				. '</figure>';
+		}
+
+		return $html . '</div></section>';
 	}
 
 	public static function registrationForm(array $categories, array $alternatives, array $config): string {
@@ -244,6 +314,11 @@ final class SolutionPresenter {
 			$html .= '<label><input name="alternative_to[]" type="checkbox" value="' . self::e($term['slug'] ?? '') . '"> ' . self::e($term['name'] ?? '') . '</label>';
 		}
 		$html .= '</div><label>Autre solution remplacée ou complétée<input name="alternative_to_other" type="text"></label></fieldset>'
+			. '<fieldset><legend>Visuels</legend><p class="sd-form-help">Liens vers votre logo et jusqu&rsquo;à trois captures d&rsquo;écran (PNG, SVG ou WebP). Ils ne sont utilisés qu&rsquo;après vérification des droits d&rsquo;usage, par un membre de l&rsquo;équipe qui héberge les fichiers sur ce site.</p>'
+			. '<div class="sd-form-grid"><label>Logo (lien)<input name="logo_url" type="url" placeholder="https://"></label>'
+			. '<label>Capture d&rsquo;écran 1 (lien)<input name="screenshot_urls[]" type="url" placeholder="https://"></label>'
+			. '<label>Capture d&rsquo;écran 2 (lien)<input name="screenshot_urls[]" type="url" placeholder="https://"></label>'
+			. '<label>Capture d&rsquo;écran 3 (lien)<input name="screenshot_urls[]" type="url" placeholder="https://"></label></div></fieldset>'
 			. '<fieldset><legend>Votre contact</legend><div class="sd-form-grid"><label>Nom et prénom<input name="contact_name" type="text" required></label><label>Adresse e-mail professionnelle<input name="email" type="email" required></label><label>Fonction<input name="contact_role" type="text"></label></div></fieldset>'
 			. '<fieldset><legend>Détails à examiner</legend><label>Avantages et cas d&rsquo;usage<textarea name="advantages" rows="5" required></textarea></label><div class="sd-form-grid"><label>Pays d&rsquo;hébergement<input name="hosting_countries" type="text" placeholder="FR, DE ou non communiqué"></label><label>Qualifications, avec périmètre et date<textarea name="qualifications" rows="3"></textarea></label><label>Modèle tarifaire<select name="pricing_model"><option value="non-communique">Non communiqué</option><option value="public">Tarifs publics</option><option value="sur-devis">Sur devis</option><option value="gratuit">Gratuit</option><option value="mixte">Mixte</option></select></label></div>'
 			. '<label class="sd-form-check"><input name="partner_interest" type="checkbox" value="1"> Je souhaite discuter d&rsquo;un partenariat commercial</label>'
@@ -365,7 +440,8 @@ final class SolutionPresenter {
 			: 'Aucune relation commerciale déclarée';
 
 		$html = '<div class="sd-solution-layout"><article class="sd-solution-detail"><header class="sd-solution-hero"><nav class="sd-breadcrumb"><a href="/">Accueil</a><span>/</span><a href="' . self::e(self::url('directory_url')) . '">Annuaire</a><span>/</span>' . $name . '</nav>'
-			. '<span class="sd-solution-kind">' . self::e(self::kindLabel($kind)) . '</span><h1>' . $name . '</h1>'
+			. '<div class="sd-solution-identity"><div class="sd-solution-logo-box">' . self::logo($solution, 'sd-solution-logo') . '</div>'
+			. '<div><span class="sd-solution-kind">' . self::e(self::kindLabel($kind)) . '</span><h1>' . $name . '</h1></div></div>'
 			. '<p class="sd-solution-pitch">' . self::e($solution['excerpt'] ?? '') . '</p>' . self::badge($solution)
 			. self::termLinks($solution, 'categories', 'categorie')
 			. self::termLinks($solution, 'alternative_a', 'alternative-a', 'Alternative à ') . '</header>';
@@ -382,6 +458,9 @@ final class SolutionPresenter {
 			$html .= '<div><dt>' . self::e($label) . '</dt><dd>' . $value . '</dd></div>';
 		}
 		$html .= '</dl><div class="sd-solution-body">' . ($solution['content'] ?? '') . '</div>';
+
+		$screens = self::screenshots($solution);
+		$html .= self::screensSection($name, $screens);
 
 		$html .= '<section class="sd-solution-alternatives" aria-labelledby="solution-alternatives"><h2 id="solution-alternatives">Alternatives</h2>';
 		if ($alternatives) {
@@ -417,6 +496,13 @@ final class SolutionPresenter {
 		];
 		if (($website = self::websiteUrl($solution)) !== '') {
 			$jsonLd['url'] = $website;
+		}
+		if (($logo = self::mediaPath($solution['image'] ?? '')) !== '') {
+			$jsonLd['logo']  = $logo;
+			$jsonLd['image'] = $logo;
+		}
+		if ($screens) {
+			$jsonLd['screenshot'] = array_column($screens, 'path');
 		}
 
 		return $html . '<script type="application/ld+json">' . json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) . '</script>';

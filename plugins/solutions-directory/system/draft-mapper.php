@@ -35,6 +35,28 @@ final class DraftMapper {
 		}, $value))));
 	}
 
+	/** An http(s) URL or nothing: the editor follows it, the page never does. */
+	private static function link($value): string {
+		$value = self::text($value);
+		if (! filter_var($value, FILTER_VALIDATE_URL) || ! in_array(parse_url($value, PHP_URL_SCHEME), ['http', 'https'], true)) {
+			return '';
+		}
+
+		return $value;
+	}
+
+	private static function links($value): string {
+		$links = [];
+		foreach (is_array($value) ? $value : [$value] as $item) {
+			$link = self::link($item);
+			if ($link !== '') {
+				$links[] = $link;
+			}
+		}
+
+		return implode("\n", array_slice(array_unique($links), 0, 6));
+	}
+
 	private static function flag($value): string {
 		return in_array(strtolower(self::text($value)), ['1', 'on', 'oui', 'true', 'yes'], true) ? 'oui' : 'non';
 	}
@@ -109,6 +131,11 @@ final class DraftMapper {
 				// submitter asked to discuss a partnership. It never becomes a
 				// commercial relationship and is never rendered publicly.
 				'partner_interest'        => self::flag($fields['partner_interest'] ?? ''),
+				// Media links stay private too: the editor fetches them, checks
+				// the usage rights and uploads the files; only then do post.image
+				// and the `screenshots` meta get a value. Nothing here is rendered.
+				'submitted_logo_url'      => self::link($fields['logo_url'] ?? ''),
+				'submitted_screenshot_urls' => self::links($fields['screenshot_urls'] ?? $fields['screenshot_urls[]'] ?? []),
 				'submission_id'           => (string) $submissionId,
 			],
 			'terms' => [

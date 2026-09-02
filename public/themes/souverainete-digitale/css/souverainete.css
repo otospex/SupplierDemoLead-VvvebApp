@@ -3472,4 +3472,135 @@ section[id] .sd-ai-band h2 {
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
 }
 
-/* content-hash: bf8498bb */
+/* ---------- Solution identity: logo or monogram, screenshots ---------- */
+.sd-solution-identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.sd-solution-identity h1 {
+  margin-block: var(--space-xs) 0;
+}
+
+.sd-solution-logo-box,
+.sd-solution-card-logo-box {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+}
+
+.sd-solution-logo-box {
+  width: 10rem;
+  height: 5.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.sd-solution-card-logo-box {
+  width: 7rem;
+  height: 3rem;
+  margin-bottom: var(--space-sm);
+  padding: 0.4rem 0.6rem;
+}
+
+.sd-solution-logo,
+.sd-solution-card-logo {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.sd-solution-monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--radius-md) - 0.25rem);
+  color: var(--color-accent);
+  background: var(--color-accent-wash);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
+}
+
+.sd-solution-card-logo-box .sd-solution-monogram {
+  font-size: 1rem;
+}
+
+.sd-solution-screens {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-2xl);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.sd-solution-screens > h2 {
+  margin-bottom: var(--space-lg);
+}
+
+.sd-solution-screens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-lg);
+}
+
+.sd-solution-screens figure {
+  margin: 0;
+}
+
+.sd-solution-screens a {
+  display: block;
+  overflow: hidden;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-2);
+}
+
+.sd-solution-screens img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.2s ease;
+}
+
+.sd-solution-screens a:hover img,
+.sd-solution-screens a:focus-visible img {
+  transform: scale(1.02);
+}
+
+.sd-solution-screens figcaption {
+  margin-top: var(--space-xs);
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.sd-solution-registration-form .sd-form-help {
+  margin: 0 0 var(--space-md);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 575.98px) {
+  .sd-solution-identity {
+    align-items: flex-start;
+  }
+
+  .sd-solution-logo-box {
+    width: 7.5rem;
+    height: 4rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+/* content-hash: 18a28a55 */

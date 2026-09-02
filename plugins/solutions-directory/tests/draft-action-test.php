@@ -69,6 +69,8 @@ $fields = [
     'qualifications' => 'Qualification déclarée — périmètre et date à vérifier',
     'pricing_model' => 'sur-devis',
     'partner_interest' => '1',
+    'logo_url' => 'https://etoile.example.fr/presse/logo.svg',
+    'screenshot_urls' => ['https://etoile.example.fr/presse/ecran-1.png', 'javascript:alert(1)', '', 'ftp://etoile.example.fr/x.png', 'https://etoile.example.fr/presse/ecran-2.png'],
 ];
 
 $store = new MemoryDraftStore();
@@ -83,6 +85,10 @@ expectDraft(($draft['post']['template'] ?? '') === 'content/solution.html', 'sol
 expectDraft(($draft['content']['name'] ?? '') === 'Étoile Suite', 'solution name must map to post content.');
 expectDraft(($draft['content']['slug'] ?? '') === 'etoile-suite', 'solution name must produce a stable slug.');
 expectDraft(($draft['content']['excerpt'] ?? '') === $fields['pitch'], 'pitch must map to excerpt.');
+expectDraft(($draft['meta']['submitted_logo_url'] ?? '') === 'https://etoile.example.fr/presse/logo.svg', 'the logo link is kept privately for the editor.');
+expectDraft(($draft['meta']['submitted_screenshot_urls'] ?? '') === "https://etoile.example.fr/presse/ecran-1.png\nhttps://etoile.example.fr/presse/ecran-2.png", 'screenshot links keep only http(s) URLs, one per line.');
+expectDraft(($draft['post']['image'] ?? '') === '' && ! isset($draft['meta']['screenshots']), 'submitted links never become public media until an editor uploads them.');
+expectDraft(($draft['meta']['submitted_logo_url'] ?? '') !== '' && DraftMapper::map(['logo_url' => 'javascript:alert(1)'] + $fields, $config, 1)['meta']['submitted_logo_url'] === '', 'a non-http logo link is dropped.');
 expectDraft(str_contains($draft['content']['content'] ?? '', 'Édition collaborative'), 'advantages must be pre-formatted into the review body.');
 expectDraft(str_contains($draft['content']['content'] ?? '', 'périmètre et date à vérifier'), 'qualifications must be pre-formatted into the review body.');
 expectDraft(($draft['meta']['verification_status'] ?? '') === 'declare', 'new submissions must start declared, not verified.');

@@ -91,6 +91,8 @@ public/media/*
 !public/media/editorial
 !public/media/editorial/**
 !public/media/independant-digital-logo.png
+!public/media/solutions
+!public/media/solutions/**
 
 # Theme overrides.
 !public/themes

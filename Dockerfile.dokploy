@@ -114,6 +114,9 @@ COPY public/media/editorial \
      /opt/lpc-overlay/public/media/editorial
 COPY public/media/independant-digital-logo.png \
      /opt/lpc-overlay/public/media/independant-digital-logo.png
+# Solution logos and screenshots referenced by post.image / the screenshots meta.
+COPY public/media/solutions \
+     /opt/lpc-overlay/public/media/solutions
 
 # Operational and editorial CLIs (flush/purge jobs, audits, chrome sync).
 COPY scripts \
