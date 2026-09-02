@@ -112,6 +112,44 @@ expectTrue(
     'provider_introduction_requested must be compared strictly against the string "1".'
 );
 
+// --- the cron script's SQL pre-filter ------------------------------------
+// The job selects with an age cutoff so an old install does not page every
+// unfinished row into PHP. isFlushable() must stay the authority — the SQL
+// bound is only allowed to be at least as permissive as it, never narrower, or
+// rows would go unflushed without any code deciding so.
+
+$flushScript = (string) file_get_contents(__DIR__ . '/../../../scripts/flush-partial-leads.php');
+expectTrue(
+    str_contains($flushScript, 'created_at <= :cutoff'),
+    'the flush job must bound its SELECT by an age cutoff instead of scanning every unfinished row.'
+);
+expectTrue(
+    str_contains($flushScript, 'PartialLead::TTL_HOURS * 3600'),
+    'the SQL cutoff must be derived from PartialLead::TTL_HOURS, not a second hardcoded age.'
+);
+expectTrue(
+    str_contains($flushScript, 'PartialLead::isFlushable($row, $now)'),
+    'isFlushable() must remain the per-row authority after the SQL pre-filter.'
+);
+expectTrue(
+    str_contains($flushScript, 'UTC_TIMESTAMP()'),
+    'the flush job must check that the database clock is UTC before ageing rows against it.'
+);
+
+// The cutoff the script computes and the boundary isFlushable() enforces are the
+// same instant, so the pre-filter can never drop a row isFlushable() would take.
+$cutoffNow = '2026-09-02 12:00:00';
+$cutoff = gmdate('Y-m-d H:i:s', strtotime($cutoffNow . ' UTC') - PartialLead::TTL_HOURS * 3600);
+expectTrue($cutoff === '2026-09-01 12:00:00', 'the UTC cutoff must be exactly TTL_HOURS before now.');
+expectTrue(
+    PartialLead::isFlushable(['stage' => 1, 'created_at' => $cutoff], $cutoffNow) === true,
+    'a row created exactly at the cutoff must still be flushable, so the inclusive SQL bound matches.'
+);
+expectTrue(
+    PartialLead::isFlushable(['stage' => 1, 'created_at' => '2026-09-01 12:00:01'], $cutoffNow) === false,
+    'a row one second younger than the cutoff must not be flushable.'
+);
+
 if ($failures > 0) {
     fwrite(STDERR, "flush-partial tests: FAIL ($failures issue(s))\n");
     exit(1);

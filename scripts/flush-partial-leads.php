@@ -146,6 +146,31 @@ function flushRow(PDO $pdo, array $row): void {
 	]);
 }
 
+/**
+ * Warn when the database clock is not UTC. Drivers that cannot answer the
+ * question (SQLite has no UTC_TIMESTAMP()) are left alone.
+ */
+function utcClockWarning(PDO $pdo): void {
+	try {
+		$driver = (string) $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+		if ($driver === 'sqlite') {
+			return;
+		}
+		$sql = $driver === 'pgsql'
+			? "SELECT EXTRACT(EPOCH FROM (LOCALTIMESTAMP - (NOW() AT TIME ZONE 'UTC')))"
+			: 'SELECT TIMESTAMPDIFF(SECOND, UTC_TIMESTAMP(), NOW())';
+		$skew = $pdo->query($sql)->fetchColumn();
+		if ($skew !== false && abs((int) $skew) > 1) {
+			fwrite(STDERR, sprintf(
+				"warning: database clock is %+ds from UTC; created_at ages are computed in UTC.\n",
+				(int) $skew
+			));
+		}
+	} catch (\Throwable $clockError) {
+		fwrite(STDERR, 'warning: could not verify the database is on UTC: ' . $clockError->getMessage() . "\n");
+	}
+}
+
 try {
 	$driver   = strtolower((string) flushEnv('DB_DRIVER', flushEnv('DB_CONNECTION', 'mysql')));
 	$database = (string) flushEnv('DB_DATABASE', 'vvveb');
@@ -165,12 +190,27 @@ try {
 
 	$now = gmdate('Y-m-d H:i:s');
 
+	// created_at is written by the database (CURRENT_TIMESTAMP), and every
+	// comparison here — the SQL cutoff below and PartialLead::isFlushable() —
+	// reads it as UTC. A database on local time would make rows look younger or
+	// older than they are, so say so loudly rather than silently flushing the
+	// wrong set. This is a warning, not a hard stop: isFlushable() re-checks
+	// every row in PHP, so a skewed clock costs correctness in the SQL
+	// pre-filter only, and stopping the job entirely would strand real rows.
+	utcClockWarning($pdo);
+
+	// Pre-filter in SQL so an old install does not have to page every
+	// unfinished row into PHP just to reject it. isFlushable() stays the
+	// authority: it re-checks stage and age per row, and is the only thing
+	// that decides a row is actually flushable.
+	$cutoff = gmdate('Y-m-d H:i:s', strtotime($now . ' UTC') - PartialLead::TTL_HOURS * 3600);
+
 	$stmt = $pdo->prepare(
 		'SELECT lead_submission_id, endpoint_slug, stage, payload_enc, created_at
 		 FROM lead_submission
-		 WHERE stage < :final'
+		 WHERE stage < :final AND created_at <= :cutoff'
 	);
-	$stmt->execute(['final' => PartialLead::FINAL_STAGE]);
+	$stmt->execute(['final' => PartialLead::FINAL_STAGE, 'cutoff' => $cutoff]);
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 	$flushed = 0;
