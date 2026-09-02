@@ -19,6 +19,7 @@ final class SolutionPresenter {
 		'registration_url' => '/annuaire/referencer-une-solution',
 		'contact_url'      => '/contact',
 		'privacy_url'      => '/confidentialite',
+		'diagnostic_url'   => '/diagnostic-souverainete',
 	];
 
 	private static array $config = [];
@@ -269,6 +270,88 @@ final class SolutionPresenter {
 		return $html . '</div>';
 	}
 
+	private static function countryLabel(string $code): string {
+		$code = strtoupper(trim($code));
+
+		return [
+			'FR' => 'France',
+			'DE' => 'Allemagne',
+			'BE' => 'Belgique',
+			'CH' => 'Suisse',
+			'LU' => 'Luxembourg',
+			'NL' => 'Pays-Bas',
+			'ES' => 'Espagne',
+			'IT' => 'Italie',
+			'EU' => 'Union européenne',
+		][$code] ?? ($code === '' ? 'Non communiqué' : self::e($code));
+	}
+
+	/**
+	 * A declared fact arrives as one free-text field where the editor separated
+	 * items with semicolons (hosting) or line breaks (qualifications). Each item
+	 * keeps its own text, em-dashes included: they are prose, not sub-fields.
+	 *
+	 * @return string[] escaped items, empty when the field is blank
+	 */
+	private static function factItems(string $value, string $separator): array {
+		$items = [];
+		foreach (preg_split($separator, $value) ?: [] as $item) {
+			$item = trim($item, " \t\r\n.");
+			if ($item !== '') {
+				$items[] = self::e($item);
+			}
+		}
+
+		return $items;
+	}
+
+	private static function factList(string $value, string $separator, string $fact, string $placeholder): string {
+		$items = self::factItems($value, $separator);
+		if (! $items) {
+			return self::e($placeholder);
+		}
+
+		return '<ul class="sd-solution-list" data-fact="' . $fact . '"><li>' . implode('</li><li>', $items) . '</li></ul>';
+	}
+
+	/** One row of the sidebar summary: icon name, label, already-escaped value. */
+	private static function asideRow(string $icon, string $label, string $value): string {
+		return '<li data-icon="' . $icon . '"><span class="sd-aside-label">' . $label . '</span><span class="sd-aside-value">' . $value . '</span></li>';
+	}
+
+	private static function aside(array $solution, string $reviewed): string {
+		$verified = ($solution['verification_status'] ?? 'declare') === 'verifie';
+		$status   = $verified
+			? 'Vérifié par Indépendant Digital' . ($reviewed === '' ? '' : ' le ' . $reviewed)
+			: 'Déclaré par l&rsquo;éditeur' . ($reviewed === '' ? '' : ', relu le ' . $reviewed);
+
+		$rows = self::asideRow('kind', 'Type', self::e(self::kindLabel((string) ($solution['kind'] ?? ''))))
+			. self::asideRow('hq', 'Siège', self::countryLabel((string) ($solution['hq_country'] ?? '')))
+			. self::asideRow('pricing', 'Tarification', self::e(self::pricingLabel((string) ($solution['pricing_model'] ?? 'non-communique'))))
+			. self::asideRow($verified ? 'verified' : 'declared', 'Statut', $status);
+
+		$website = self::website($solution);
+		$facts   = '<section class="sd-aside-card sd-aside-facts" aria-labelledby="solution-aside-facts">'
+			. '<h2 class="sd-aside-title" id="solution-aside-facts">En bref</h2><ul class="sd-aside-list">' . $rows . '</ul>'
+			. ($website === '' ? '' : '<p class="sd-aside-site">' . $website . '</p>')
+			. '</section>';
+
+		$cta = '<section class="sd-aside-card sd-aside-cta" aria-labelledby="solution-aside-cta">'
+			. '<h2 class="sd-aside-title" id="solution-aside-cta">Besoin d&rsquo;aide pour choisir&nbsp;?</h2>'
+			. '<p>Décrivez votre contexte et vos contraintes&nbsp;: nous vous indiquons si cette solution convient, ou laquelle conviendrait mieux.</p>'
+			. '<a class="sd-btn sd-btn-primary" href="' . self::e(self::url('diagnostic_url')) . '">Lancer le diagnostic</a>'
+			. '<a class="sd-aside-link" href="' . self::e(self::url('contact_url')) . '">Ou écrivez-nous directement</a>'
+			. '</section>';
+
+		$provider = '<section class="sd-aside-card sd-aside-provider" aria-labelledby="solution-aside-provider">'
+			. '<h2 class="sd-aside-title" id="solution-aside-provider">Vous éditez une solution souveraine&nbsp;?</h2>'
+			. '<p>Proposez-la à l&rsquo;annuaire. Chaque fiche est relue avant publication, sources et dates à l&rsquo;appui.</p>'
+			. '<a class="sd-btn sd-btn-secondary" href="' . self::e(self::url('registration_url')) . '">Référencer une solution</a>'
+			. '</section>';
+
+		return '<aside class="sd-solution-aside" aria-label="Résumé et contact">' . $facts . $cta . $provider . '</aside>';
+	}
+
 	public static function detail(array $solution, array $alternatives = []): string {
 		if (($solution['status'] ?? '') !== 'publish') {
 			return '';
@@ -281,23 +364,22 @@ final class SolutionPresenter {
 			? 'Partenaire commercial non exclusif'
 			: 'Aucune relation commerciale déclarée';
 
-		$html = '<article class="sd-solution-detail"><header class="sd-solution-hero"><nav class="sd-breadcrumb"><a href="/">Accueil</a><span>/</span><a href="' . self::e(self::url('directory_url')) . '">Annuaire</a><span>/</span>' . $name . '</nav>'
+		$html = '<div class="sd-solution-layout"><article class="sd-solution-detail"><header class="sd-solution-hero"><nav class="sd-breadcrumb"><a href="/">Accueil</a><span>/</span><a href="' . self::e(self::url('directory_url')) . '">Annuaire</a><span>/</span>' . $name . '</nav>'
 			. '<span class="sd-solution-kind">' . self::e(self::kindLabel($kind)) . '</span><h1>' . $name . '</h1>'
 			. '<p class="sd-solution-pitch">' . self::e($solution['excerpt'] ?? '') . '</p>' . self::badge($solution)
 			. self::termLinks($solution, 'categories', 'categorie')
 			. self::termLinks($solution, 'alternative_a', 'alternative-a', 'Alternative à ') . '</header>';
 
+		// The long-form, checkable facts stay in the reading column; the short
+		// ones (type, HQ, pricing, status, website) live in the sidebar summary.
 		$facts = [
-			'Site'                    => self::website($solution),
-			'Siège'                   => self::e($solution['hq_country'] ?? 'Non communiqué'),
-			'Hébergement'             => self::e($solution['hosting_countries'] ?? 'Non communiqué'),
-			'Tarification'            => self::e(self::pricingLabel((string) ($solution['pricing_model'] ?? 'non-communique'))),
-			'Qualifications déclarées'=> nl2br(self::e($solution['qualifications'] ?? 'Non communiquées')),
+			'Hébergement'             => self::factList((string) ($solution['hosting_countries'] ?? ''), '/\s*;\s*/u', 'hosting', 'Non communiqué'),
+			'Qualifications déclarées'=> self::factList((string) ($solution['qualifications'] ?? ''), '/\R+/u', 'qualifications', 'Non communiquées'),
 			'Relation commerciale'    => self::e($relationship),
 		];
 		$html .= '<dl class="sd-solution-facts">';
 		foreach ($facts as $label => $value) {
-			$html .= '<div><dt>' . self::e($label) . '</dt><dd>' . ($value ?: 'Non communiqué') . '</dd></div>';
+			$html .= '<div><dt>' . self::e($label) . '</dt><dd>' . $value . '</dd></div>';
 		}
 		$html .= '</dl><div class="sd-solution-body">' . ($solution['content'] ?? '') . '</div>';
 
@@ -322,7 +404,8 @@ final class SolutionPresenter {
 		// grammatical (and truthful) in that state.
 		$reviewer = trim((string) ($solution['reviewer'] ?? '')) ?: 'Indépendant Digital';
 		$html .= '<footer class="sd-solution-review"><p>Revue par ' . self::e($reviewer) . ($reviewed === '' ? '' : ' le ' . $reviewed) . '.</p>'
-			. '<a href="' . self::e(self::url('contact_url')) . '">Signaler une erreur</a></footer></article>';
+			. '<a href="' . self::e(self::url('contact_url')) . '">Signaler une erreur</a></footer></article>'
+			. self::aside($solution, $reviewed) . '</div>';
 
 		// Same scheme-validated URL as the visible link; omitted when there is none,
 		// so the markup can never advertise a URL the page refuses to link to.

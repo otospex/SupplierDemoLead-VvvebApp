@@ -3275,4 +3275,201 @@ section[id] .sd-ai-band h2 {
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
-/* content-hash: 49b8b706 */
+
+/* ---------- Solution detail: reading column + sidebar ----------
+   The article keeps its 52rem measure; the sidebar (summary, diagnostic
+   call to action, provider invitation) sits beside it on wide screens and
+   stacks under it below the navbar breakpoint. Same card grammar as .sd-toc. */
+.sd-solution-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2xl);
+}
+
+@media (min-width: 992px) {
+  .sd-solution-layout {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    column-gap: var(--space-3xl);
+    align-items: start;
+  }
+}
+
+.sd-solution-aside {
+  position: sticky;
+  top: 5.625rem;
+  display: grid;
+  gap: var(--space-md);
+  padding-block: var(--space-3xl);
+}
+
+@media (max-width: 991.98px) {
+  .sd-solution-aside {
+    position: static;
+    padding-top: 0;
+  }
+}
+
+.sd-aside-card {
+  padding: 1.25rem 1.35rem;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-paper-2);
+}
+
+.sd-aside-title {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-muted);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sd-aside-card p {
+  margin: 0 0 var(--space-md);
+  color: var(--color-ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.sd-aside-card .sd-btn {
+  width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+
+.sd-aside-link {
+  display: block;
+  margin-top: var(--space-sm);
+  color: var(--color-accent);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.sd-aside-cta {
+  border-color: var(--color-accent-soft);
+  background: var(--color-accent-wash);
+}
+
+.sd-aside-cta .sd-aside-title {
+  color: var(--color-accent);
+}
+
+.sd-aside-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sd-aside-list li {
+  display: grid;
+  grid-template-columns: 1.2rem minmax(0, 1fr);
+  column-gap: var(--space-sm);
+  padding: 0.6rem 0;
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.sd-aside-list li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.sd-aside-list li::before {
+  content: "";
+  grid-row: span 2;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.2rem;
+  background: var(--color-accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.sd-aside-label {
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sd-aside-value {
+  color: var(--color-ink);
+  font-size: 0.92rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.sd-aside-site {
+  margin: var(--space-md) 0 0;
+  padding-top: var(--space-md);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.sd-aside-facts p.sd-aside-site {
+  margin-bottom: 0;
+}
+
+/* Long-form facts in the reading column: one item per line, one icon per
+   item, instead of dash-and-semicolon prose. */
+.sd-solution-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sd-solution-list li {
+  position: relative;
+  padding-left: 1.7rem;
+  line-height: 1.5;
+}
+
+.sd-solution-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.22rem;
+  left: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  background: var(--color-accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.sd-solution-facts dd .sd-solution-list li + li {
+  padding-top: 0.55rem;
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.sd-aside-list li[data-icon="kind"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z'/%3E%3Ccircle cx='7' cy='7' r='1.5'/%3E%3C/svg%3E");
+}
+
+.sd-aside-list li[data-icon="hq"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='2' width='16' height='20' rx='2'/%3E%3Cpath d='M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01'/%3E%3C/svg%3E");
+}
+
+.sd-aside-list li[data-icon="pricing"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 10h12M4 14h9'/%3E%3Cpath d='M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2'/%3E%3C/svg%3E");
+}
+
+.sd-aside-list li[data-icon="verified"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+}
+
+.sd-aside-list li[data-icon="declared"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8'/%3E%3C/svg%3E");
+}
+
+.sd-solution-list[data-fact="hosting"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='20' height='8' x='2' y='2' rx='2'/%3E%3Crect width='20' height='8' x='2' y='14' rx='2'/%3E%3Cpath d='M6 6h.01M6 18h.01'/%3E%3C/svg%3E");
+}
+
+.sd-solution-list[data-fact="qualifications"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+}
+
+/* content-hash: bf8498bb */

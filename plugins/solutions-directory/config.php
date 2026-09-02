@@ -20,6 +20,7 @@ return [
 	'registration_url'=> '/annuaire/referencer-une-solution',
 	'contact_url'     => '/contact',
 	'privacy_url'     => '/confidentialite',
+	'diagnostic_url'  => '/diagnostic-souverainete',
 
 	// Theme template rendered by the term routes.
 	'directory_template' => 'content/annuaire.fr.html',

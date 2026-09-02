@@ -287,6 +287,36 @@ expectSolution(str_contains($configuredForm, 'href="/page/vie-privee"'), 'the pr
 expectSolution(! str_contains($configuredForm, 'data-success-msg'), 'the inert success-message attribute must be gone.');
 SolutionPresenter::configure([]);
 expectSolution(str_contains(SolutionPresenter::listing([]), '/annuaire/referencer-une-solution'), 'defaults must survive an empty configuration.');
+
+// --- Detail page: sidebar widgets and structured facts ---------------------
+$structured = $partner + [
+    'hq_country' => 'FR',
+    'hosting_countries' => 'France — deux sites ; Union européenne — cloud privé qualifié ; chez le client',
+    'pricing_model' => 'sur-devis',
+    'qualifications' => "SecNumCloud 3.2 — décision n° 1 — du 01/01/2025 au 01/01/2028\nISO 27001 — déclarée par le fournisseur",
+];
+$structuredDetail = SolutionPresenter::detail($structured);
+expectSolution(str_contains($structuredDetail, '<aside class="sd-solution-aside"'), 'the detail page must render a sidebar.');
+expectSolution(str_contains($structuredDetail, 'href="/diagnostic-souverainete"'), 'the sidebar must carry the diagnostic call to action.');
+expectSolution(str_contains($structuredDetail, 'href="/contact"'), 'the sidebar must link to the contact page.');
+expectSolution(str_contains($structuredDetail, 'href="/annuaire/referencer-une-solution"'), 'the sidebar must invite other providers to register.');
+expectSolution(substr_count($structuredDetail, 'Visiter le site') === 1, 'the website link must appear exactly once, in the sidebar.');
+preg_match('#<ul class="sd-solution-list" data-fact="hosting">(.*?)</ul>#s', $structuredDetail, $hostingList);
+expectSolution(substr_count($hostingList[1] ?? '', '<li>') === 3, 'hosting segments separated by semicolons must become list items.');
+expectSolution(str_contains($hostingList[1] ?? '', 'France — deux sites'), 'a hosting item must keep its own em-dash text intact.');
+preg_match('#<ul class="sd-solution-list" data-fact="qualifications">(.*?)</ul>#s', $structuredDetail, $qualificationList);
+expectSolution(substr_count($qualificationList[1] ?? '', '<li>') === 2, 'qualifications separated by newlines must become list items.');
+expectSolution(! str_contains($structuredDetail, '<br'), 'the facts panel must not rely on line breaks any more.');
+$bare = SolutionPresenter::detail(['status' => 'publish', 'name' => 'Nu', 'slug' => 'nu', 'kind' => 'logiciel']);
+expectSolution(str_contains($bare, 'Non communiqué'), 'a solution without facts must show the placeholder, not an empty list.');
+expectSolution(! str_contains($bare, '<ul class="sd-solution-list"'), 'a missing fact must not render an empty list.');
+
+SolutionPresenter::configure(['diagnostic_url' => '/bilan', 'contact_url' => '/ecrire', 'registration_url' => '/repertoire/proposer']);
+$configuredAside = SolutionPresenter::detail($structured);
+expectSolution(str_contains($configuredAside, 'href="/bilan"'), 'the diagnostic call to action must follow the configured URL.');
+expectSolution(str_contains($configuredAside, 'href="/ecrire"'), 'the sidebar contact link must follow the configured URL.');
+expectSolution(str_contains($configuredAside, 'href="/repertoire/proposer"'), 'the provider invitation must follow the configured registration URL.');
+SolutionPresenter::configure([]);
 if ($failures > 0) {
     fwrite(STDERR, "solutions-component tests: FAIL ($failures issue(s))\n");
     exit(1);
