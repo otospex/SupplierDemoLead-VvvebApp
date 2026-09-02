@@ -2693,3 +2693,187 @@ WHERE slug IN ('choisir-visioconference-collaboration', 'sortir-microsoft-365')
   AND language_id = @lang_fr
   AND content LIKE '%sd-solutions-embed%'
   AND content NOT LIKE '%data-v-embed%';
+
+-- =====================================================================
+-- Directory seed: six reviewed French providers, one per use case, so the
+-- annuaire, the term pages and the guide embeds render with real data.
+-- Every entry is verification_status='declare' (editor-declared, sources
+-- are the provider's own pages and the ANSSI catalogue of 2026-09-01) with
+-- qualifications scoped by holder, service, decision and dates. Slug-keyed
+-- and idempotent: meta and term links are rewritten on every run.
+-- =====================================================================
+SET NAMES utf8mb4;
+SET @lang_fr := (SELECT language_id FROM language WHERE slug = 'fr' OR code LIKE 'fr%' ORDER BY language_id LIMIT 1);
+
+-- Tixeo
+SET @ex := (SELECT post_id FROM post_content WHERE slug='tixeo' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'solution','content/solution.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @id_sol := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='solution',template='content/solution.html',updated_at=NOW() WHERE post_id=@id_sol;
+INSERT INTO post_to_site (post_id,site_id) SELECT @id_sol,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_sol AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
+(@id_sol,@lang_fr,'Tixeo','tixeo','<h2>Ce que la solution propose</h2><p>Tixeo (TIXEO SAS, Montpellier, fondée en 2004 selon le fournisseur) édite une solution de visioconférence et de collaboration — réunions, messagerie, partage d&rsquo;écran, transfert de fichiers — avec un chiffrement de bout en bout multipoint&nbsp;: le serveur ne détient pas les clés des réunions. Trois modes de déploiement&nbsp;: TixeoCloud (SaaS), TixeoPrivateCloud (espace dédié géré par Tixeo) et TixeoServer (installation sur l&rsquo;infrastructure du client).</p><h2>Hébergement, juridiction et éléments de preuve</h2><p>Le fournisseur indique un hébergement « 100&nbsp;% européen » en stratégie multi-cloud pour TixeoCloud, sans nommer les prestataires, et une infrastructure qualifiée SecNumCloud (prestataire non nommé) pour TixeoPrivateCloud. TixeoServer s&rsquo;installe sur les serveurs du client, ce qui place l&rsquo;hébergement sous le contrôle direct de l&rsquo;organisation. Entreprise française indépendante selon le fournisseur.</p><h2>Qualifications déclarées</h2><p>Le catalogue ANSSI liste la certification CSPN ANSSI-CSPN-2022/12 pour TixeoServer 16.6.2.3 (catégorie communication sécurisée, CESTI AMOSSYS), valable du 24/01/2023 au 24/01/2026&nbsp;: la date de fin est dépassée à la date de revue et le renouvellement reste à vérifier. Les CSPN 2017/08 et 2021/14 sont marquées « non maintenu ». La « qualification ANSSI » et les labels France Cybersecurity, UAF et Cybersecurity Made in Europe affichés par le fournisseur n&rsquo;ont pas été retrouvés dans le catalogue ANSSI et sont donc déclarés par l&rsquo;éditeur.</p><h2>Tarification</h2><p>Facturation par organisateur (les participants ne paient pas). TixeoCloud à partir de 10 organisateurs, tarif sur demande&nbsp;; TixeoPrivateCloud et TixeoServer sur devis, à partir de 50 organisateurs selon le fournisseur.</p><h2>Limites et questions ouvertes</h2><p>Prestataires d&rsquo;hébergement de TixeoCloud non nommés&nbsp;; statut du renouvellement de la CSPN à confirmer&nbsp;; le chiffrement de bout en bout implique des contraintes (enregistrement, transcription) à vérifier selon l&rsquo;usage. Les références défense et administrations citées par le fournisseur n&rsquo;ont pas été vérifiées.</p><h2>Relation commerciale</h2><p>Aucune relation commerciale avec Indépendant Digital à la date de revue. La fiche est établie à partir des sources publiques du fournisseur et du catalogue ANSSI&nbsp;; le fournisseur peut demander la correction d&rsquo;une erreur factuelle.</p><h2>Alternatives</h2><p>Pour un besoin de suite collaborative complète plutôt que de visioconférence seule, voir Wimi (AirTime intégré) ou Oodrive Meet&nbsp;; pour une messagerie instantanée sécurisée sans visio d&rsquo;équipe, Olvid.</p>','Visioconférence et collaboration chiffrées de bout en bout, éditeur français de Montpellier, en cloud, cloud privé ou sur serveur installé chez le client.','Tixeo, visioconference','Tixeo : visioconférence française chiffrée de bout en bout, en cloud, cloud privé ou sur site, CSPN ANSSI sur TixeoServer. Alternative à Zoom et Teams.');
+DELETE FROM post_meta WHERE post_id=@id_sol AND namespace='solution';
+INSERT INTO post_meta (post_id,namespace,`key`,value) VALUES
+(@id_sol,'solution','kind','logiciel'),
+(@id_sol,'solution','website','https://www.tixeo.com/'),
+(@id_sol,'solution','hq_country','FR'),
+(@id_sol,'solution','hosting_countries','France / Union européenne — TixeoCloud sur des clouds européens (prestataires non nommés) ; TixeoPrivateCloud sur une infrastructure qualifiée SecNumCloud gérée par Tixeo ; TixeoServer installé chez le client'),
+(@id_sol,'solution','pricing_model','sur-devis'),
+(@id_sol,'solution','qualifications','CSPN ANSSI-CSPN-2022/12 — TixeoServer 16.6.2.3 (serveurs TMMS/TCS, clients TCC) — validité du 24/01/2023 au 24/01/2026, renouvellement à vérifier au catalogue ANSSI
+CSPN 2017/08 et 2021/14 — versions antérieures — marquées « non maintenu » au catalogue ANSSI'),
+(@id_sol,'solution','commercial_relationship','aucune'),
+(@id_sol,'solution','verification_status','declare'),
+(@id_sol,'solution','reviewed_at','2026-09-02'),
+(@id_sol,'solution','reviewer','Indépendant Digital');
+DELETE FROM post_to_taxonomy_item WHERE post_id=@id_sol;
+INSERT INTO post_to_taxonomy_item (post_id,taxonomy_item_id)
+SELECT DISTINCT @id_sol, ti.taxonomy_item_id FROM taxonomy_item ti
+JOIN taxonomy t ON t.taxonomy_id=ti.taxonomy_id AND t.post_type='solution'
+JOIN taxonomy_content tc ON tc.taxonomy_id=t.taxonomy_id AND tc.language_id=@lang_fr
+JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr
+WHERE (tc.slug='categorie' AND tic.slug IN ('visioconference'))
+   OR (tc.slug='alternative-a' AND tic.slug IN ('zoom','microsoft-teams','google-meet'));
+
+-- Oodrive Work
+SET @ex := (SELECT post_id FROM post_content WHERE slug='oodrive-work' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'solution','content/solution.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @id_sol := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='solution',template='content/solution.html',updated_at=NOW() WHERE post_id=@id_sol;
+INSERT INTO post_to_site (post_id,site_id) SELECT @id_sol,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_sol AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
+(@id_sol,@lang_fr,'Oodrive Work','oodrive-work','<h2>Ce que la solution propose</h2><p>Oodrive (SAS, Paris, fondée en 2000) édite Oodrive Work, une plateforme de stockage, de partage sécurisé et de coédition de documents (Collabora Online ou OnlyOffice), complétée par une messagerie, la visioconférence Oodrive Meet, la signature électronique et des connecteurs SharePoint et Outlook.</p><h2>Hébergement, juridiction et éléments de preuve</h2><p>Le fournisseur indique un hébergement en France sur deux sites, sans nommer les centres de données ni l&rsquo;opérateur d&rsquo;infrastructure. Les éditions « cloud privé » de Work, Meet et Work Share sont celles qui portent la qualification SecNumCloud&nbsp;; l&rsquo;offre cloud public standard n&rsquo;est pas couverte par cette qualification. Capital français selon le fournisseur (investisseurs Tikehau Capital, MI3, Nextage, Iris Capital).</p><h2>Qualifications déclarées</h2><p>Le catalogue ANSSI liste Oodrive_Work, Oodrive_Meet et Oodrive_Work_Share comme services SaaS qualifiés SecNumCloud (décisions n°&nbsp;241 à 243), du 20/01/2025 au 25/01/2028, au référentiel 3.2 selon l&rsquo;annonce du fournisseur du 20/02/2025. ISO 27001, ISO 27701 et HDS sont revendiquées sur la page de conformité sans que le périmètre exact soit précisé.</p><h2>Tarification</h2><p>Sur devis. Deux plans selon le fournisseur&nbsp;: Work Standard (dès un compte, 25&nbsp;Go par utilisateur) et Work Enterprise (dix comptes minimum, 1&nbsp;To par utilisateur), chacun déclinable en version SecNumCloud.</p><h2>Limites et questions ouvertes</h2><p>Opérateur d&rsquo;infrastructure non nommé&nbsp;; périmètre des certifications ISO et HDS à demander&nbsp;; la qualification ne couvre que les éditions cloud privé, à préciser dans tout appel d&rsquo;offres. Les références ministère des Armées, EDF, Airbus, La Poste citées par le fournisseur n&rsquo;ont pas été vérifiées.</p><h2>Relation commerciale</h2><p>Aucune relation commerciale avec Indépendant Digital à la date de revue. La fiche est établie à partir des sources publiques du fournisseur et du catalogue ANSSI&nbsp;; le fournisseur peut demander la correction d&rsquo;une erreur factuelle.</p><h2>Alternatives</h2><p>Wimi couvre le même besoin de drive et de coédition dans une suite collaborative plus large (plans publics, éditions SecNumCloud sur devis)&nbsp;; pour un simple partage de fichiers hébergé chez soi, un serveur Nextcloud administré par un intégrateur français est une option hors annuaire à ce jour.</p>','Stockage, partage sécurisé et coédition de documents hébergés en France, avec éditions cloud privé qualifiées SecNumCloud (Oodrive Work, Meet, Work Share).','Oodrive Work, fichiers-et-partage, bureautique','Oodrive Work : collaboration documentaire française hébergée en France, éditions cloud privé qualifiées SecNumCloud 3.2 par l’ANSSI jusqu’en 2028.');
+DELETE FROM post_meta WHERE post_id=@id_sol AND namespace='solution';
+INSERT INTO post_meta (post_id,namespace,`key`,value) VALUES
+(@id_sol,'solution','kind','logiciel'),
+(@id_sol,'solution','website','https://www.oodrive.com/fr/produits/oodrive-work/'),
+(@id_sol,'solution','hq_country','FR'),
+(@id_sol,'solution','hosting_countries','France — deux sites d’hébergement (villes et opérateurs non précisés) ; cloud public ou cloud privé qualifié SecNumCloud'),
+(@id_sol,'solution','pricing_model','sur-devis'),
+(@id_sol,'solution','qualifications','SecNumCloud 3.2 (SaaS) — Oodrive Work, Oodrive Meet, Oodrive Work Share, éditions cloud privé — décisions ANSSI n° 241, 242 et 243 — du 20/01/2025 au 25/01/2028
+ISO 27001, ISO 27701, HDS — déclarées par le fournisseur, périmètre non précisé sur la page de conformité'),
+(@id_sol,'solution','commercial_relationship','aucune'),
+(@id_sol,'solution','verification_status','declare'),
+(@id_sol,'solution','reviewed_at','2026-09-02'),
+(@id_sol,'solution','reviewer','Indépendant Digital');
+DELETE FROM post_to_taxonomy_item WHERE post_id=@id_sol;
+INSERT INTO post_to_taxonomy_item (post_id,taxonomy_item_id)
+SELECT DISTINCT @id_sol, ti.taxonomy_item_id FROM taxonomy_item ti
+JOIN taxonomy t ON t.taxonomy_id=ti.taxonomy_id AND t.post_type='solution'
+JOIN taxonomy_content tc ON tc.taxonomy_id=t.taxonomy_id AND tc.language_id=@lang_fr
+JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr
+WHERE (tc.slug='categorie' AND tic.slug IN ('fichiers-et-partage','bureautique'))
+   OR (tc.slug='alternative-a' AND tic.slug IN ('sharepoint','onedrive','dropbox','google-workspace'));
+
+-- BlueMind
+SET @ex := (SELECT post_id FROM post_content WHERE slug='bluemind' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'solution','content/solution.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @id_sol := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='solution',template='content/solution.html',updated_at=NOW() WHERE post_id=@id_sol;
+INSERT INTO post_to_site (post_id,site_id) SELECT @id_sol,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_sol AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
+(@id_sol,@lang_fr,'BlueMind','bluemind','<h2>Ce que la solution propose</h2><p>BlueMind (SAS, Labège près de Toulouse) édite une suite de messagerie collaborative open source&nbsp;: courriel, agenda, contacts, visioconférence intégrée et téléphonie. La compatibilité native avec Outlook, sans connecteur, est l&rsquo;argument central de l&rsquo;éditeur face à Exchange. Le logiciel s&rsquo;installe sur l&rsquo;infrastructure du client ou est fourni par des hébergeurs partenaires (souscription HOST).</p><h2>Hébergement, juridiction et éléments de preuve</h2><p>BlueMind ne nomme aucun centre de données&nbsp;: l&rsquo;hébergement est celui du client ou de l&rsquo;hébergeur partenaire choisi, à qualifier au cas par cas. L&rsquo;éditeur est français&nbsp;; son président co-préside le CNLL (union des entreprises du logiciel libre) selon son site.</p><h2>Qualifications déclarées</h2><p>Aucune qualification ni certification ANSSI n&rsquo;est listée au catalogue pour BlueMind, et l&rsquo;éditeur n&rsquo;en revendique pas. Le code est publié sous licence libre, ce qui permet un audit indépendant.</p><h2>Tarification</h2><p>Souscription par utilisateur (types HOST, PROD, TRIAL et FREE, cette dernière limitée à dix comptes pour associations et particuliers)&nbsp;; tarifs non publiés, sur devis auprès de l&rsquo;éditeur ou d&rsquo;un partenaire.</p><h2>Limites et questions ouvertes</h2><p>Sans hébergeur intégré, la souveraineté effective dépend du choix d&rsquo;hébergement&nbsp;; absence de qualification ANSSI&nbsp;; les références publiques (ministères, CHU, universités) sont déclarées par l&rsquo;éditeur et n&rsquo;ont pas été vérifiées.</p><h2>Relation commerciale</h2><p>Aucune relation commerciale avec Indépendant Digital à la date de revue. La fiche est établie à partir des sources publiques du fournisseur et du catalogue ANSSI&nbsp;; le fournisseur peut demander la correction d&rsquo;une erreur factuelle.</p><h2>Alternatives</h2><p>Pour une suite qui intègre aussi le drive, les tâches et le chat, voir Wimi&nbsp;; pour un besoin de messagerie instantanée plutôt que de courriel, Olvid.</p>','Messagerie collaborative open source (courriel, agenda, contacts, visio) compatible Outlook sans connecteur, à installer chez soi ou chez un hébergeur partenaire.','BlueMind, messagerie','BlueMind : messagerie et agenda open source (Toulouse), compatible Outlook, à installer chez soi ou chez un hébergeur partenaire. Alternative à Microsoft 365.');
+DELETE FROM post_meta WHERE post_id=@id_sol AND namespace='solution';
+INSERT INTO post_meta (post_id,namespace,`key`,value) VALUES
+(@id_sol,'solution','kind','logiciel'),
+(@id_sol,'solution','website','https://www.bluemind.net/'),
+(@id_sol,'solution','hq_country','FR'),
+(@id_sol,'solution','hosting_countries','Au choix du client : sur ses propres serveurs, ou chez un hébergeur partenaire de BlueMind (aucun centre de données nommé par l’éditeur)'),
+(@id_sol,'solution','pricing_model','mixte'),
+(@id_sol,'solution','qualifications','Non communiquées — aucune entrée au catalogue ANSSI ; logiciel open source'),
+(@id_sol,'solution','commercial_relationship','aucune'),
+(@id_sol,'solution','verification_status','declare'),
+(@id_sol,'solution','reviewed_at','2026-09-02'),
+(@id_sol,'solution','reviewer','Indépendant Digital');
+DELETE FROM post_to_taxonomy_item WHERE post_id=@id_sol;
+INSERT INTO post_to_taxonomy_item (post_id,taxonomy_item_id)
+SELECT DISTINCT @id_sol, ti.taxonomy_item_id FROM taxonomy_item ti
+JOIN taxonomy t ON t.taxonomy_id=ti.taxonomy_id AND t.post_type='solution'
+JOIN taxonomy_content tc ON tc.taxonomy_id=t.taxonomy_id AND tc.language_id=@lang_fr
+JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr
+WHERE (tc.slug='categorie' AND tic.slug IN ('messagerie'))
+   OR (tc.slug='alternative-a' AND tic.slug IN ('microsoft-365','google-workspace'));
+
+-- OUTSCALE
+SET @ex := (SELECT post_id FROM post_content WHERE slug='outscale' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'solution','content/solution.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @id_sol := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='solution',template='content/solution.html',updated_at=NOW() WHERE post_id=@id_sol;
+INSERT INTO post_to_site (post_id,site_id) SELECT @id_sol,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_sol AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
+(@id_sol,@lang_fr,'OUTSCALE','outscale','<h2>Ce que la solution propose</h2><p>OUTSCALE (SASU, Saint-Cloud, fondée en 2010, marque de Dassault Systèmes) fournit des machines virtuelles, du stockage bloc et objet, du réseau, des GPU et un Kubernetes managé (OKS), à travers une API compatible avec celle d&rsquo;AWS, ce qui facilite la réutilisation d&rsquo;outillage existant.</p><h2>Hébergement, juridiction et éléments de preuve</h2><p>Les régions françaises sont réparties sur Magny-les-Hameaux, Pantin et Aubergenville&nbsp;; la région cloudgouv-eu-west-1 est celle qui porte la qualification SecNumCloud. Des régions aux États-Unis et au Japon existent aussi&nbsp;: le choix de région conditionne la juridiction applicable. Actionnaire majoritaire&nbsp;: Dassault Systèmes (France).</p><h2>Qualifications déclarées</h2><p>Le catalogue ANSSI liste « Outscale — IaaS Cloud on Demand » comme service qualifié SecNumCloud (décision n°&nbsp;2118), du 30/11/2023 au 30/11/2026, au référentiel 3.2 selon le communiqué du fournisseur du 11/12/2023&nbsp;; le renouvellement est dû en novembre 2026. ISO 27001, 27017, 27018, HDS, SOC 2 type 2 et le code de conduite CISPE sont déclarés avec certificats téléchargeables, sans recoupement auprès des organismes.</p><h2>Tarification</h2><p>Paiement à l&rsquo;usage facturé à la seconde, sans engagement, grille publique (par exemple vCore, RAM, stockage bloc et GPU au tarif horaire ou mensuel)&nbsp;; réservations et plans d&rsquo;économies disponibles.</p><h2>Limites et questions ouvertes</h2><p>Le renouvellement SecNumCloud arrive à échéance fin 2026&nbsp;; l&rsquo;offre PaaS et les services managés restent plus limités que ceux des hyperscalers&nbsp;; la référence Toulouse Métropole est déclarée par le fournisseur.</p><h2>Relation commerciale</h2><p>Aucune relation commerciale avec Indépendant Digital à la date de revue. La fiche est établie à partir des sources publiques du fournisseur et du catalogue ANSSI&nbsp;; le fournisseur peut demander la correction d&rsquo;une erreur factuelle.</p><h2>Alternatives</h2><p>D&rsquo;autres IaaS français sont en cours de qualification SecNumCloud selon la liste ANSSI (Scaleway, OVHcloud SNC Cloud Platform, Orange Cloud Avenue) et seront ajoutés à l&rsquo;annuaire une fois le visa obtenu ou la fiche revue.</p>','Cloud IaaS français (machines virtuelles, stockage, réseau, GPU, Kubernetes managé) avec API compatible AWS et une région qualifiée SecNumCloud, filiale de Dassault Systèmes.','OUTSCALE, hebergement-et-cloud','OUTSCALE : cloud IaaS français (Dassault Systèmes), API compatible AWS, région qualifiée SecNumCloud 3.2 jusqu’au 30/11/2026, tarifs publics à l’usage.');
+DELETE FROM post_meta WHERE post_id=@id_sol AND namespace='solution';
+INSERT INTO post_meta (post_id,namespace,`key`,value) VALUES
+(@id_sol,'solution','kind','hebergeur'),
+(@id_sol,'solution','website','https://fr.outscale.com/'),
+(@id_sol,'solution','hq_country','FR'),
+(@id_sol,'solution','hosting_countries','France — régions eu-west-2 (Magny-les-Hameaux, Pantin, Aubergenville) et cloudgouv-eu-west-1 qualifiée SecNumCloud ; régions hors UE disponibles (États-Unis, Japon)'),
+(@id_sol,'solution','pricing_model','public'),
+(@id_sol,'solution','qualifications','SecNumCloud 3.2 (IaaS) — « Outscale — IaaS Cloud on Demand », région cloudgouv-eu-west-1 — décision ANSSI n° 2118 — du 30/11/2023 au 30/11/2026 (renouvellement dû)
+ISO 27001, ISO 27017, ISO 27018, HDS, SOC 2 type 2, CISPE — déclarées par le fournisseur avec certificats en ligne, périmètre annoncé : ensemble de l’infrastructure cloud'),
+(@id_sol,'solution','commercial_relationship','aucune'),
+(@id_sol,'solution','verification_status','declare'),
+(@id_sol,'solution','reviewed_at','2026-09-02'),
+(@id_sol,'solution','reviewer','Indépendant Digital');
+DELETE FROM post_to_taxonomy_item WHERE post_id=@id_sol;
+INSERT INTO post_to_taxonomy_item (post_id,taxonomy_item_id)
+SELECT DISTINCT @id_sol, ti.taxonomy_item_id FROM taxonomy_item ti
+JOIN taxonomy t ON t.taxonomy_id=ti.taxonomy_id AND t.post_type='solution'
+JOIN taxonomy_content tc ON tc.taxonomy_id=t.taxonomy_id AND tc.language_id=@lang_fr
+JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr
+WHERE (tc.slug='categorie' AND tic.slug IN ('hebergement-et-cloud'))
+   OR (tc.slug='alternative-a' AND tic.slug IN ('aws','microsoft-azure','google-cloud'));
+
+-- Olvid
+SET @ex := (SELECT post_id FROM post_content WHERE slug='olvid' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'solution','content/solution.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @id_sol := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='solution',template='content/solution.html',updated_at=NOW() WHERE post_id=@id_sol;
+INSERT INTO post_to_site (post_id,site_id) SELECT @id_sol,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_sol AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
+(@id_sol,@lang_fr,'Olvid','olvid','<h2>Ce que la solution propose</h2><p>Olvid (SAS, Paris) édite une messagerie instantanée chiffrée de bout en bout — messages, pièces jointes, appels — qui fonctionne sans annuaire central ni numéro de téléphone&nbsp;: les contacts s&rsquo;échangent par invitation. Disponible sur iOS, Android, Windows, macOS et Linux, avec console d&rsquo;administration et SSO en version Entreprise. Le code des applications est publié depuis 2021 et celui du serveur depuis 2026 selon l&rsquo;éditeur.</p><h2>Hébergement, juridiction et éléments de preuve</h2><p>Les conditions d&rsquo;utilisation désignent un hébergement en France (AWS, Clichy) tandis que les actualités du fournisseur annoncent une migration vers Clever Cloud&nbsp;; l&rsquo;état exact est à confirmer auprès de l&rsquo;éditeur. L&rsquo;architecture chiffrée de bout en bout limite ce que l&rsquo;hébergeur peut voir, mais n&rsquo;annule pas la question de juridiction sur les métadonnées.</p><h2>Qualifications déclarées</h2><p>Deux certifications CSPN figurent au catalogue ANSSI (iOS, 2020, et Android, 2021, CESTI Synacktiv)&nbsp;; toutes deux sont marquées « non maintenu » à la date de revue. Le fournisseur communique « certifié CSPN » sans cette précision. Une circulaire de la Première ministre du 21/11/2023 a imposé Olvid aux membres du Gouvernement et cabinets selon le fournisseur.</p><h2>Tarification</h2><p>Version gratuite&nbsp;; achat intégré 4,99&nbsp;€ par utilisateur et par mois&nbsp;; Business 9,90&nbsp;€ HT par utilisateur et par mois (engagement annuel)&nbsp;; Entreprise 9,90&nbsp;€ HT par utilisateur et par mois plus 4&nbsp;990&nbsp;€ HT par an (console, SSO, MDM), selon la grille publiée.</p><h2>Limites et questions ouvertes</h2><p>Aucune CSPN en cours de validité&nbsp;; hébergeur en transition&nbsp;; pas de canaux d&rsquo;équipe comparables à Slack ou Teams — Olvid répond à un besoin de messagerie confidentielle, pas de collaboration documentaire.</p><h2>Relation commerciale</h2><p>Aucune relation commerciale avec Indépendant Digital à la date de revue. La fiche est établie à partir des sources publiques du fournisseur et du catalogue ANSSI&nbsp;; le fournisseur peut demander la correction d&rsquo;une erreur factuelle.</p><h2>Alternatives</h2><p>Pour des canaux d&rsquo;équipe et des espaces de travail, voir Wimi (Chat qualifié SecNumCloud)&nbsp;; pour la visioconférence chiffrée, Tixeo.</p>','Messagerie instantanée chiffrée de bout en bout sans annuaire central ni numéro de téléphone, éditeur français, code applicatif et serveur publiés.','Olvid, messagerie','Olvid : messagerie instantanée française chiffrée de bout en bout, sans annuaire central, deux CSPN ANSSI (2020, 2021), version gratuite et offres pro.');
+DELETE FROM post_meta WHERE post_id=@id_sol AND namespace='solution';
+INSERT INTO post_meta (post_id,namespace,`key`,value) VALUES
+(@id_sol,'solution','kind','logiciel'),
+(@id_sol,'solution','website','https://olvid.io/fr/'),
+(@id_sol,'solution','hq_country','FR'),
+(@id_sol,'solution','hosting_countries','France — serveurs hébergés en France selon le fournisseur (migration d’AWS Clichy vers Clever Cloud en cours d’après ses actualités) ; chiffrement de bout en bout, les serveurs n’accèdent pas au contenu'),
+(@id_sol,'solution','pricing_model','mixte'),
+(@id_sol,'solution','qualifications','CSPN ANSSI-CSPN-2020/30 — Olvid iOS 0.8.2 — 18/09/2020 — marquée « non maintenu » au catalogue ANSSI
+CSPN ANSSI-CSPN-2021/12 — Olvid Android 0.9.x — 26/05/2021 — marquée « non maintenu » au catalogue ANSSI'),
+(@id_sol,'solution','commercial_relationship','aucune'),
+(@id_sol,'solution','verification_status','declare'),
+(@id_sol,'solution','reviewed_at','2026-09-02'),
+(@id_sol,'solution','reviewer','Indépendant Digital');
+DELETE FROM post_to_taxonomy_item WHERE post_id=@id_sol;
+INSERT INTO post_to_taxonomy_item (post_id,taxonomy_item_id)
+SELECT DISTINCT @id_sol, ti.taxonomy_item_id FROM taxonomy_item ti
+JOIN taxonomy t ON t.taxonomy_id=ti.taxonomy_id AND t.post_type='solution'
+JOIN taxonomy_content tc ON tc.taxonomy_id=t.taxonomy_id AND tc.language_id=@lang_fr
+JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr
+WHERE (tc.slug='categorie' AND tic.slug IN ('messagerie'))
+   OR (tc.slug='alternative-a' AND tic.slug IN ('slack','microsoft-teams'));
+
+-- Wimi
+SET @ex := (SELECT post_id FROM post_content WHERE slug='wimi' AND language_id=@lang_fr LIMIT 1);
+INSERT INTO post (admin_id,status,image,comment_status,password,parent,sort_order,type,template,comment_count,views,created_at,updated_at) SELECT 1,'publish','','closed','',0,0,'solution','content/solution.html',0,0,NOW(),NOW() WHERE @ex IS NULL;
+SET @id_sol := IFNULL(@ex,LAST_INSERT_ID()); UPDATE post SET status='publish',type='solution',template='content/solution.html',updated_at=NOW() WHERE post_id=@id_sol;
+INSERT INTO post_to_site (post_id,site_id) SELECT @id_sol,1 WHERE NOT EXISTS (SELECT 1 FROM post_to_site WHERE post_id=@id_sol AND site_id=1);
+REPLACE INTO post_content (post_id,language_id,name,slug,content,excerpt,meta_keywords,meta_description) VALUES
+(@id_sol,@lang_fr,'Wimi','wimi','<h2>Ce que la solution propose</h2><p>Wimi (Cloud Solutions SAS, Paris, fondée en 2010) réunit dans une même plateforme SaaS des espaces de travail, un drive avec coédition de documents, une messagerie instantanée, la gestion de tâches (Kanban, Gantt), un agenda partagé, la visioconférence AirTime et un réseau social d&rsquo;entreprise. L&rsquo;éditeur se positionne explicitement face à Microsoft 365, Teams et Google Workspace.</p><h2>Hébergement, juridiction et éléments de preuve</h2><p>Le fournisseur annonce un hébergement exclusivement en France (Île-de-France, Hauts-de-France) dans des centres de données certifiés ISO 27001. Sa page HDS précise que l&rsquo;infrastructure physique et virtuelle est fournie par Opcore, et Wimi Restricted est hébergé chez Thales&nbsp;: le prestataire IaaS de l&rsquo;offre SecNumCloud n&rsquo;est pas nommé. Société détenue par ses fondateurs, sans investisseur externe, selon l&rsquo;éditeur.</p><h2>Qualifications déclarées</h2><p>Le catalogue ANSSI liste huit modules Wimi comme services SaaS qualifiés SecNumCloud 3.2&nbsp;: Communautés, Chat, AirTime, Agenda, Espaces de travail, Tâches et Gantt et Workboard (décisions n°&nbsp;2816 à 2822, du 18/05/2026 au 19/05/2029), puis Documents et co-édition (décision n°&nbsp;3110, du 03/07/2026 au 18/05/2029). La décision précise que seul l&rsquo;accès par navigateur est couvert&nbsp;; applications mobiles et clients lourds sont hors périmètre. La qualification vise les éditions SecNumCloud sur devis, pas les plans standard. ISO 27001:2022 et HDS sont déclarées par le fournisseur. L&rsquo;homologation « Diffusion Restreinte » de Wimi Restricted relève d&rsquo;une autorité d&rsquo;emploi et n&rsquo;est pas un visa ANSSI.</p><h2>Tarification</h2><p>Grille publique par utilisateur et par mois&nbsp;: Communauté 3&nbsp;€, Drive 9&nbsp;€, Projets 12&nbsp;€, Suite 15&nbsp;€ (jusqu&rsquo;à 100 utilisateurs)&nbsp;; Drive Entreprise 12&nbsp;€ et Projets Entreprise 15&nbsp;€ (50 utilisateurs minimum)&nbsp;; Suite Entreprise, éditions SecNumCloud et Diffusion Restreinte sur devis. Forfaits par strate de population pour les collectivités.</p><h2>Limites et questions ouvertes</h2><p>Prestataire IaaS de l&rsquo;offre SecNumCloud non nommé&nbsp;; qualification limitée à l&rsquo;accès navigateur&nbsp;; incohérence entre « nos datacenters » et l&rsquo;infrastructure Opcore à clarifier&nbsp;; les références (ministères, régions, Assemblée nationale) sont déclarées par l&rsquo;éditeur.</p><h2>Relation commerciale</h2><p>Aucune relation commerciale avec Indépendant Digital à la date de revue. La fiche est établie à partir des sources publiques du fournisseur et du catalogue ANSSI&nbsp;; le fournisseur peut demander la correction d&rsquo;une erreur factuelle.</p><h2>Alternatives</h2><p>Pour la collaboration documentaire seule, Oodrive Work (qualifié SecNumCloud en cloud privé)&nbsp;; pour le courriel et l&rsquo;agenda hébergés chez soi, BlueMind&nbsp;; pour la visioconférence chiffrée de bout en bout, Tixeo.</p>','Suite collaborative française (espaces de travail, drive et coédition, chat, tâches, agenda, visio) avec éditions qualifiées SecNumCloud 3.2 et grille tarifaire publique.','Wimi, bureautique, fichiers-et-partage, visioconference','Wimi : suite collaborative française (drive, coédition, chat, tâches, visio), huit modules qualifiés SecNumCloud 3.2 jusqu’en 2029, de 3 à 15 € par utilisateur.');
+DELETE FROM post_meta WHERE post_id=@id_sol AND namespace='solution';
+INSERT INTO post_meta (post_id,namespace,`key`,value) VALUES
+(@id_sol,'solution','kind','logiciel'),
+(@id_sol,'solution','website','https://www.wimi-teamwork.com/fr'),
+(@id_sol,'solution','hq_country','FR'),
+(@id_sol,'solution','hosting_countries','France — Île-de-France et Hauts-de-France selon le fournisseur ; infrastructure des activités HDS 1 et 2 fournie par Opcore ; Wimi Restricted hébergé chez Thales (TrustNest R-Cloud)'),
+(@id_sol,'solution','pricing_model','public'),
+(@id_sol,'solution','qualifications','SecNumCloud 3.2 (SaaS) — éditions SecNumCloud de Wimi Communautés, Chat, AirTime, Agenda, Espaces de travail, Tâches et Gantt, Workboard — décisions ANSSI n° 2816 à 2822 — du 18/05/2026 au 19/05/2029 ; Wimi Documents et co-édition — décision n° 3110 — du 03/07/2026 au 18/05/2029 ; accès par navigateur uniquement (condition C2)
+ISO/IEC 27001:2022 et HDS (activités 1-2 via Opcore, 4, 5, 6) — déclarées par le fournisseur, organisme et date non précisés'),
+(@id_sol,'solution','commercial_relationship','aucune'),
+(@id_sol,'solution','verification_status','declare'),
+(@id_sol,'solution','reviewed_at','2026-09-02'),
+(@id_sol,'solution','reviewer','Indépendant Digital');
+DELETE FROM post_to_taxonomy_item WHERE post_id=@id_sol;
+INSERT INTO post_to_taxonomy_item (post_id,taxonomy_item_id)
+SELECT DISTINCT @id_sol, ti.taxonomy_item_id FROM taxonomy_item ti
+JOIN taxonomy t ON t.taxonomy_id=ti.taxonomy_id AND t.post_type='solution'
+JOIN taxonomy_content tc ON tc.taxonomy_id=t.taxonomy_id AND tc.language_id=@lang_fr
+JOIN taxonomy_item_content tic ON tic.taxonomy_item_id=ti.taxonomy_item_id AND tic.language_id=@lang_fr
+WHERE (tc.slug='categorie' AND tic.slug IN ('bureautique','fichiers-et-partage','visioconference'))
+   OR (tc.slug='alternative-a' AND tic.slug IN ('microsoft-365','microsoft-teams','google-workspace','slack','notion'));
