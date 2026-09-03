@@ -108,12 +108,20 @@ COPY plugins/solutions-directory \
      /opt/lpc-overlay/plugins/solutions-directory
 COPY public/plugins/solutions-directory \
      /opt/lpc-overlay/public/plugins/solutions-directory
+COPY plugins/site-tracking \
+     /opt/lpc-overlay/plugins/site-tracking
+COPY public/plugins/site-tracking \
+     /opt/lpc-overlay/public/plugins/site-tracking
 
 # Editorial media referenced by the seeded pages and the theme.
 COPY public/media/editorial \
      /opt/lpc-overlay/public/media/editorial
 COPY public/media/independant-digital-logo.png \
      /opt/lpc-overlay/public/media/independant-digital-logo.png
+COPY public/media/logo.png \
+     /opt/lpc-overlay/public/media/logo.png
+COPY public/media/favicon.ico \
+     /opt/lpc-overlay/public/media/favicon.ico
 # Solution logos and screenshots referenced by post.image / the screenshots meta.
 COPY public/media/solutions \
      /opt/lpc-overlay/public/media/solutions

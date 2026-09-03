@@ -31,5 +31,8 @@
 		'solutions-directory' => [
 			'status' => 'active',
 		],
+		'site-tracking' => [
+			'status' => 'active',
+		],
 	],
  ];

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="/favicon.ico">
+	<base href="">
+	<title>Vvveb - Suivi et consentement</title>
+	<link href="css/admin.css" rel="stylesheet">
+</head>
+
+<body class="settings">
+
+	<div id="container">
+
+		<div class="sidebar" data-v-copy-from="index.html,.sidebar"></div>
+
+		<div class="main">
+
+			<div class="clearfix top-header" data-v-copy-from="index.html,.top-header"></div>
+
+			<form id="settings-form" action="" method="post" class="settings" data-v-tracking>
+				<input type="hidden" name="action" value="save">
+				<input type="hidden" name="csrf" data-v-csrf>
+
+				<div class="actions flex-column flex-md-row">
+					<div class="title">
+						<h4 class="text-muted my-3">
+							<i class="icon-analytics-outline"></i>
+							<span>Suivi et consentement</span>
+						</h4>
+					</div>
+					<div class="btns">
+						<button type="submit" class="btn btn-primary btn-icon ms-1">
+							<i class="icon-create-outline"></i><span>Enregistrer</span>
+						</button>
+					</div>
+				</div>
+
+				<div id="main-content">
+
+					<div class="notifications" data-v-notifications data-v-copy-from="index.html,.notifications"></div>
+
+					<div class="content clearfix">
+						<div class="container-fluid p-3">
+
+							<div class="card mb-3">
+								<div class="card-header"><strong>Mesure d’audience sans consentement (Matomo)</strong></div>
+								<div class="card-body">
+									<p class="text-muted">Le tag Matomo est émis sans cookie (<code>disableCookies</code>) : configuration exemptée de consentement par la CNIL. Renseignez l’adresse de votre instance Matomo et l’identifiant du site.</p>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label">Adresse de l’instance Matomo</label>
+											<input type="url" class="form-control" name="tracking[matomo_url]" placeholder="https://stats.example.fr/" data-v-tracking-matomo_url>
+										</div>
+										<div class="col-md-3">
+											<label class="form-label">Identifiant du site (idSite)</label>
+											<input type="text" class="form-control" name="tracking[matomo_site_id]" placeholder="1" inputmode="numeric" pattern="[0-9]*" data-v-tracking-matomo_site_id>
+										</div>
+										<div class="col-md-3">
+											<label class="form-label">Objectif « lead » (idGoal, optionnel)</label>
+											<input type="text" class="form-control" name="tracking[matomo_goal_id]" placeholder="1" inputmode="numeric" pattern="[0-9]*" data-v-tracking-matomo_goal_id>
+											<small class="text-muted">Déclenché à chaque demande envoyée.</small>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="card mb-3">
+								<div class="card-header"><strong>Scripts chargés sur toutes les pages, sans consentement</strong></div>
+								<div class="card-body">
+									<p class="text-muted">Uniquement des outils exemptés (mesure d’audience sans cookie). Collé tel quel dans le <code>&lt;head&gt;</code>.</p>
+									<textarea class="form-control font-monospace" rows="6" name="tracking[head_scripts]" spellcheck="false" data-v-tracking-head_scripts></textarea>
+								</div>
+							</div>
+
+							<div class="card mb-3">
+								<div class="card-header"><strong>Tags marketing, chargés après consentement</strong></div>
+								<div class="card-body">
+									<p class="text-muted">Google Tag Manager, Google Ads, Meta, LinkedIn… Collez les extraits fournis par ces plateformes. Ils restent inertes tant que le visiteur n’a pas accepté dans le bandeau ; le choix est conservé six mois. Dès qu’un extrait est présent, le bandeau s’affiche et le lien « Cookies » du pied de page permet de changer d’avis.</p>
+									<textarea class="form-control font-monospace" rows="10" name="tracking[marketing_scripts]" spellcheck="false" data-v-tracking-marketing_scripts></textarea>
+									<label class="form-label mt-3">Texte du bandeau (optionnel)</label>
+									<textarea class="form-control" rows="2" name="tracking[consent_text]" data-v-tracking-consent_text></textarea>
+									<p class="text-muted mt-3 mb-0">Événements disponibles pour vos tags : <code>document.addEventListener('id:track', e =&gt; e.detail)</code> (nom <code>lead</code> à chaque demande envoyée), et <code>dataLayer.push({event: 'id_lead'})</code> pour GTM.</p>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

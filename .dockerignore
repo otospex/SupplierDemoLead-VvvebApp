@@ -85,12 +85,18 @@ app/sql/sqlite/*
 !public/plugins/lead-platform-connector/**
 !public/plugins/solutions-directory
 !public/plugins/solutions-directory/**
+!plugins/site-tracking
+!plugins/site-tracking/**
+!public/plugins/site-tracking
+!public/plugins/site-tracking/**
 !public/vrobots.txt
 !public/media
 public/media/*
 !public/media/editorial
 !public/media/editorial/**
 !public/media/independant-digital-logo.png
+!public/media/logo.png
+!public/media/favicon.ico
 !public/media/solutions
 !public/media/solutions/**
 

@@ -66,7 +66,7 @@ sort($missing);
 expectTrue($missing === [], "fork files not covered by a Dockerfile.dokploy COPY (they never reach production):\n  - " . implode("\n  - ", $missing));
 
 // Files that must ship whatever git says.
-foreach (['config/app-routes.php', 'plugins/solutions-directory', 'public/plugins/solutions-directory', 'app/controller/sitemap.php', 'system/sitemap-builder.php', 'app/controller/feed/robots.php', 'public/vrobots.txt', 'scripts/flush-partial-leads.php', 'scripts/purge-leads.php', 'env.php', 'app/template/common.tpl', 'app/template/content/post.tpl', 'nginx.dokploy.conf'] as $must) {
+foreach (['config/app-routes.php', 'plugins/solutions-directory', 'public/plugins/solutions-directory', 'plugins/site-tracking', 'public/plugins/site-tracking', 'app/controller/sitemap.php', 'system/sitemap-builder.php', 'app/controller/feed/robots.php', 'public/vrobots.txt', 'scripts/flush-partial-leads.php', 'scripts/purge-leads.php', 'env.php', 'app/template/common.tpl', 'app/template/content/post.tpl', 'nginx.dokploy.conf'] as $must) {
     expectTrue($covered($must), "$must must be overlaid onto the image.");
 }
 // .dockerignore is default-deny: every COPY source must be un-ignored or the build fails.
