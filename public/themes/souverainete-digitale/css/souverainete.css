@@ -3745,4 +3745,21 @@ section[id] .sd-ai-band h2 {
   padding-block: 0.7rem;
 }
 
-/* content-hash: 2fc65220 */
+/* Sources list at the end of a guide: compact, one primary source per line. */
+.sd-article .sd-sources {
+  padding-left: 1.2rem;
+  color: var(--color-ink-soft);
+  font-size: 0.92rem;
+}
+
+.sd-article .sd-sources li + li {
+  margin-top: 0.35rem;
+}
+
+.sd-nav .dropdown-divider {
+  margin: 0.4rem 0;
+  border-top: var(--rule-hair) solid var(--color-rule);
+  opacity: 1;
+}
+
+/* content-hash: 9d467acf */
