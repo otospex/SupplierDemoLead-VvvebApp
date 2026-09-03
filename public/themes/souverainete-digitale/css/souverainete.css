@@ -1483,7 +1483,8 @@ a:hover {
 
 .sd-brand-logo {
   display: block;
-  width: clamp(16rem, 24vw, 19rem);
+  /* Two-line wordmark (609x119): capped so the navbar keeps its height. */
+  width: clamp(11rem, 16vw, 13.5rem);
   max-width: 100%;
   height: auto;
 }
@@ -2318,7 +2319,7 @@ section[id] p {
   }
 
   .sd-brand-logo {
-    width: 100%;
+    width: min(100%, 12rem);
   }
 
   .sd-nav .navbar-collapse {
@@ -3761,5 +3762,4 @@ section[id] .sd-ai-band h2 {
   border-top: var(--rule-hair) solid var(--color-rule);
   opacity: 1;
 }
-
-/* content-hash: 9d467acf */
+/* content-hash: 4cc67b04 */
