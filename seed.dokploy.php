@@ -31,7 +31,14 @@ $root      = '/var/www/html';
 // v9 sets the frontend default language to French (site.settings.language='fr')
 // and clears the app.site.* / site.* caches (which the old flush glob missed),
 // so / serves French and the switcher treats French as the prefix-free default.
-$marker    = $root . '/storage/.seed-souverainete-applied-v9';
+// v10 replaces the French homepage metadata with the Indépendant Digital brand
+// and removes the unsupported certification and CLOUD Act guarantee from it.
+// v11 publishes the evaluation method and partnership-transparency pages.
+// v12 migrates named-provider consent audit fields for existing lead tables.
+// v13 adds the reviewed French launch set and encrypted local lead intake.
+// v14 adds editorially gated scheduled acquisition drafts.
+// v15 retires unreviewed legacy pages/posts and clears demo-era claims.
+$marker    = $root . '/storage/.seed-souverainete-applied-v15';
 $sqlFile   = __DIR__ . '/seed.dokploy.sql';
 
 function out($m) { fwrite(STDOUT, "[seed] $m\n"); }

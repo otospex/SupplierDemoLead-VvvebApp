@@ -10,6 +10,35 @@
   <a href="https://twitter.com/vvvebcms">Twitter</a> 
 </p>
 
+## Indépendant Digital editorial checks
+
+This repository contains the French-first Indépendant Digital site. Publishable copy is subject to an editorial claim audit in addition to manual review.
+
+Run the automated checks from the repository root:
+
+```bash
+php scripts/editorial-audit.php public/themes/souverainete-digitale seed.dokploy.sql
+php scripts/tests/editorial-audit-test.php
+```
+
+The audit blocks known forms of unsupported customer proof, demo customer brands, carbon superlatives, unscoped certification claims, and absolute guarantees concerning extraterritorial law. A passing audit is a guardrail, not publication approval. Every page still requires the manual review and source checks defined in `docs/superpowers/specs/2026-08-27-independant-digital-growth-system-design.md`.
+
+### Operations: URLs, sitemaps, robots, jobs
+
+- **Public origin.** `CANONICAL_URL` (env; default `https://independantdigital.fr`, see `env.php`) is the only source of the site's absolute URLs: per-page `<link rel="canonical">`, `og:url`, hreflang, sitemaps and the `Sitemap:` line of `robots.txt`. The local preview sets it to `http://127.0.0.1:8090` in `docker-compose.override.yaml`.
+- **URL shape.** Pages answer at `/{slug}` (English at `/en/{slug}`), blog posts at `/blog/{slug}`; the historical `/page/{slug}` form redirects permanently.
+- **Sitemaps.** `/sitemap.xml` indexes `/sitemap-pages.xml`, `/sitemap-posts.xml` (when it has URLs) and `/sitemap-solutions.xml`; they are generated from the database on request and cached like pages. `nginx.dokploy.conf` (installed by `Dockerfile.dokploy`) routes `/sitemap*.xml` to PHP.
+- **robots.txt** is rendered from `public/vrobots.txt`; AI crawlers are explicitly allowed.
+- **Lead jobs.** `php scripts/flush-partial-leads.php` settles abandoned partial diagnostics; `LEAD_RETENTION_DAYS=<days> php scripts/purge-leads.php [--apply]` enforces the published retention (dry run without `--apply`). Both are single-flight through a lock file under `storage/`.
+- **Deploy overlay.** `Dockerfile.dokploy` copies the fork's files over the upstream image; `php scripts/tests/deploy-overlay-test.php` fails when a fork-authored file is not covered.
+
+Run every suite:
+
+```bash
+for t in scripts/tests/*.php plugins/*/tests/*.php; do INTEGRATION=1 php "$t"; done
+for t in scripts/tests/*.sh; do bash "$t"; done
+```
+
 ### [Live Demo](https://demo.vvveb.com) / [Admin Demo](https://demo.vvveb.com/admin) / [Page Builder Demo](https://demo.vvveb.com/admin/?module=/editor/editor&template=index.html&url=/)
 
 [![](https://www.vvveb.com/img/dark-theme.webp)](https://www.vvveb.com/img/dark-theme.png)
@@ -128,4 +157,3 @@ If you like the project you can support it with a [PayPal donation](https://payp
 ## License
 
 GNU Affero General Public License Version 3 (AGPLv3) or any later version
-

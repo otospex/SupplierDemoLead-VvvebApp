@@ -52,6 +52,13 @@ defined('V_SHARED_SESSION') || define('V_SHARED_SESSION', false);
 
 defined('LOG_SQL_QUERIES') || define('LOG_SQL_QUERIES', false);
 
+/*
+Public origin of the site, used for canonical links, og:url, sitemaps and
+robots.txt. The request host is never trusted for these (www vs apex,
+preview hosts, proxies). Override per environment with CANONICAL_URL.
+*/
+defined('CANONICAL_URL') || define('CANONICAL_URL', rtrim((string) (getenv('CANONICAL_URL') ?: 'https://independantdigital.fr'), '/'));
+
 defined('REST') || define('REST', false);
 defined('GRAPHQL') || define('GRAPHQL', false);
 defined('GRAPHQL_CAMELCASE') || define('GRAPHQL_CAMELCASE', true);

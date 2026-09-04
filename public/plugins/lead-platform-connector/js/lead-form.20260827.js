@@ -48,17 +48,35 @@
 
 	function serialize(form, honeypotName) {
 		const fd = new FormData(form);
-		const out = {};
+		let out = {};
 		fd.forEach(function (value, key) {
 			if (key === honeypotName) return;
 			out[key] = value;
 		});
+		// Additive extension point for endpoint-specific field shapes (for
+		// example repeated checkbox names). The connector remains generic.
+		const fieldsEvent = new CustomEvent('lead-platform-connector:fields', {
+			bubbles: true,
+			detail: { form: form, fields: out }
+		});
+		form.dispatchEvent(fieldsEvent);
+		out = fieldsEvent.detail.fields || out;
+		if (out.provider_introduction_requested === '1') {
+			out.consent_timestamp = new Date().toISOString();
+		} else {
+			delete out.provider_introduction_requested;
+			delete out.provider_slug;
+			delete out.consent_text_version;
+			delete out.consent_timestamp;
+		}
 		return out;
 	}
 
 	function attach(form, cfg) {
 		if (!form || form.__lpcBound) return;
 		form.__lpcBound = true;
+		const initialButton = form.querySelector('button[type=submit], input[type=submit]');
+		if (initialButton) initialButton.disabled = true;
 
 		// The form may carry novalidate from the editor; on the live page we
 		// want native HTML5 validation on `required` inputs.
@@ -66,6 +84,10 @@
 
 		form.addEventListener('submit', function (ev) {
 			ev.preventDefault();
+			if (!cfg.ready || !cfg.csrf || !cfg.submitUrl) {
+				showAlert(form, 'error', 'Le formulaire est temporairement indisponible. Rechargez la page puis réessayez.');
+				return;
+			}
 
 			if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
 				if (typeof form.reportValidity === 'function') form.reportValidity();
@@ -74,21 +96,21 @@
 
 			const hp = form.querySelector('[name="' + HONEYPOT + '"]');
 			if (hp && hp.value) {
-				showAlert(form, 'success', 'Thanks — your request was received.');
+				showAlert(form, 'success', 'Merci — votre demande a bien été reçue.');
 				return;
 			}
 
 			const elapsed = Date.now() - cfg.renderTs;
 			if (cfg.renderTs && elapsed < MIN_TIMEMS) {
-				showAlert(form, 'error', 'One moment — the form just loaded. Please try again.');
+				showAlert(form, 'error', 'Le formulaire vient de charger. Merci de réessayer dans un instant.');
 				return;
 			}
 
 			const btn = form.querySelector('button[type=submit], input[type=submit]');
 			if (btn) {
 				btn.disabled = true;
-				btn.dataset.origLabel = btn.textContent || btn.value || 'Submit';
-				if ('textContent' in btn) btn.textContent = 'Sending…';
+				btn.dataset.origLabel = btn.textContent || btn.value || 'Envoyer';
+				if ('textContent' in btn) btn.textContent = 'Envoi…';
 			}
 
 			const fields = serialize(form, HONEYPOT);
@@ -111,16 +133,21 @@
 			.then(function (res) {
 				if (btn) {
 					btn.disabled = false;
-					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Submit';
+					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Envoyer';
 				}
 
 				if (res.body && res.body.ok) {
-					showAlert(form, 'success', 'Thanks — your request was received.');
+					const successEvent = new CustomEvent('lead-platform-connector:success', {
+						bubbles: true,
+						detail: { form: form, message: 'Merci — votre demande a bien été reçue.' }
+					});
+					form.dispatchEvent(successEvent);
+					showAlert(form, 'success', successEvent.detail.message);
 					form.reset();
 					// Refresh token after a successful submit (single-use semantics in practice).
 					fetchToken(cfg.endpoint).then(function (next) { if (next) cfg.csrf = next.csrf; cfg.renderTs = next ? next.renderTs : cfg.renderTs; });
 				} else {
-					const msg = (res.body && res.body.message) ? res.body.message : 'Sorry, something went wrong. Please try again.';
+					const msg = (res.body && res.body.message) ? res.body.message : 'Une erreur est survenue. Merci de réessayer.';
 					showAlert(form, 'error', msg);
 					if (res.http === 419) {
 						// Token expired — refresh it.
@@ -131,9 +158,9 @@
 			.catch(function () {
 				if (btn) {
 					btn.disabled = false;
-					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Submit';
+					if ('textContent' in btn) btn.textContent = btn.dataset.origLabel || 'Envoyer';
 				}
-				showAlert(form, 'error', 'Network error. Please try again.');
+				showAlert(form, 'error', 'Erreur réseau. Merci de réessayer.');
 			});
 		});
 	}
@@ -156,17 +183,20 @@
 		forms.forEach(function (form) {
 			const slug = form.getAttribute('data-v-endpoint');
 			if (!slug) return;
+			const cfg = { endpoint: slug, csrf: '', submitUrl: '', renderTs: Date.now(), ready: false };
+			attach(form, cfg);
 			fetchToken(slug).then(function (tok) {
 				if (!tok) {
 					console.warn('[LPC] could not acquire token for slug', slug);
+					showAlert(form, 'error', 'Le formulaire est temporairement indisponible. Rechargez la page puis réessayez.');
 					return;
 				}
-				attach(form, {
-					endpoint:  slug,
-					csrf:      tok.csrf,
-					submitUrl: tok.submitUrl,
-					renderTs:  tok.renderTs,
-				});
+				cfg.csrf = tok.csrf;
+				cfg.submitUrl = tok.submitUrl;
+				cfg.renderTs = tok.renderTs;
+				cfg.ready = true;
+				const button = form.querySelector('button[type=submit], input[type=submit]');
+				if (button) button.disabled = false;
 			});
 		});
 	}

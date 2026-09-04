@@ -19,11 +19,22 @@ Vvveb plugin that lets pages built with the visual editor send form submissions 
 
 The browser **never** sees the API key. It only sees a per-page CSRF token bound to an endpoint slug.
 
+General diagnostic forms and named provider introductions are separate. A
+provider is forwarded only when the form sends `provider_introduction_requested=1`,
+an allowlisted `provider_slug`, a versioned consent sentence, and a timestamp.
+Newsletter consent and endpoint names never imply provider consent.
+
+An active endpoint with both `platform_url` and `api_key_enc` blank runs in
+local queue mode. The full delivery payload is encrypted separately in
+`payload_enc`; the ordinary audit payload remains stripped of phone and e-mail.
+Filling both endpoint values later switches the same forms to forwarding mode.
+A partially configured endpoint fails closed.
+
 ## What's included
 
 | File | Purpose |
 |---|---|
-| `plugin.php` | Plugin bootstrap. Registers admin menu, editor component asset, install hook, and a `View::render` listener that injects `lead-form.js` on pages containing the block. |
+| `plugin.php` | Plugin bootstrap. Registers admin menu, editor component asset, install hook, and a `View::render` listener that injects the versioned lead-form runtime on pages containing the block. |
 | `install.php` + `install/sql/{pgsql,mysqli,sqlite}/schema/*.sql` | Creates `lead_endpoint` (config) and `lead_submission` (audit log) tables. |
 | `system/Crypto.php` | AES-256-GCM encryption for stored API keys; key derived from `SECRET`/`AUTH_KEY` constants or a generated `storage/lead-platform-connector.key`. |
 | `system/CsrfToken.php` | HMAC-signed token bound to endpoint slug + 30 min TTL. |
@@ -32,7 +43,7 @@ The browser **never** sees the API key. It only sees a per-page CSRF token bound
 | `app/template/lead-form.tpl` | PHP-included template that injects the CSRF token + render timestamp into the form's data attributes. |
 | `app/controller/submit.php` | Public proxy endpoint. Verifies CSRF/origin/rate, applies field map, calls platform, logs result. |
 | `public/editor/components.js` | Registers the **"Lead Form (Platform)"** block in the Vvveb editor's component panel under "Plugins". |
-| `public/js/lead-form.js` | Runtime: AJAX submit, honeypot check, time-gate, success redirect. |
+| `public/js/lead-form.20260827.js` | Versioned runtime: AJAX submit, honeypot check, time-gate, success feedback. |
 | `admin/controller/endpoints.php` + `admin/template/endpoints.tpl` | CRUD for endpoints (slug, platform URL, API key, campaign, field map, allowed origins, rate limit). |
 | `admin/controller/submissions.php` + `admin/template/submissions.tpl` | Read-only audit log. |
 
@@ -80,6 +91,9 @@ Unmapped fields whose key isn't a known top-level field are auto-collected into 
 - Per-IP file-based rate limiting per endpoint (default 30/min, configurable).
 - Honeypot field + minimum-time-to-submit gate (default 1500 ms).
 - Phone/email hashed in audit log; raw payload excludes them.
+- Pending delivery payload encrypted at rest in a separate queue column.
+- Named introductions store only provider, consent version and consent time in
+  dedicated audit columns; the raw consent sentence is not duplicated.
 - Soft success on platform 5xx/network — submission persisted as `pending` for retry; visitor isn't blocked.
 
 ## Installing / activating

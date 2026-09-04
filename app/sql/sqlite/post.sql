@@ -62,6 +62,8 @@
 			AND _.type = :type
         	END @IF			
 
+			AND _.status = 'publish'
+
         LIMIT 1; 
 		
 		
@@ -109,6 +111,8 @@
 		THEN 
 			AND post.type = :type
 		END @IF
+
+		AND post.status = 'publish'
 		
 		@IF isset(:site_id)
 		THEN

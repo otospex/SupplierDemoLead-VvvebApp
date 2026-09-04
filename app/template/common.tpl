@@ -15,6 +15,10 @@ head base|href = <?php if($vvveb_is_page_edit) echo Vvveb\themeUrlPath()?>
 //csrf
 input[data-v-csrf]|value = <?php echo \Vvveb\session('csrf');?>
 
+//canonical and og:url follow the page, not the global head they were copied from
+head > link[rel="canonical"]|href       = $this->canonical
+head > meta[property="og:url"]|content  = $this->canonical
+
 import(components.tpl)
 import(ifmacros.tpl)
 import(notifications.tpl)
@@ -94,3 +98,9 @@ head > link[hreflang]|after = <?php
 head > title                            = <?php echo htmlspecialchars($this->global['site']['description']['title'] ??  '');?>
 head > meta[name="description"]|content = <?php echo htmlspecialchars($this->global['site']['description']['meta-description'] ?? '@@macro Escape("@@__content__@@")@@');?>
 head > meta[name="keywords"]|content    = <?php echo htmlspecialchars($this->global['site']['description']['meta-keywords'] ?? '@@macro Escape("@@__content__@@")@@');?>
+
+// Site tracking (plugins/site-tracking): cookieless audience tag in <head>,
+// consent-gated marketing tags + banner at the end of <body>. Both return ''
+// when the plugin is inactive or nothing is configured.
+head|append = <?php echo class_exists('\Vvveb\Plugins\SiteTracking\System\Tracking') ? \Vvveb\Plugins\SiteTracking\System\Tracking::headHtml() : ''; ?>
+body|append = <?php echo class_exists('\Vvveb\Plugins\SiteTracking\System\Tracking') ? \Vvveb\Plugins\SiteTracking\System\Tracking::bodyHtml() : ''; ?>

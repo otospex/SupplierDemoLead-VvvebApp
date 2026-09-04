@@ -10,7 +10,11 @@
 # the upstream init.sh with a version that runs upstream bootstrap first, copies
 # our overlays on top, and then starts supervisord (php-fpm + nginx).
 
-FROM vvveb/vvvebcms:latest
+FROM vvveb/vvvebcms@sha256:ba2fff03f58b5914c81c9eb9924e1ab8e095f788244c2d4fb563c288ff096b8a
+
+# The production stack uses MySQL. The upstream runtime ships mysqli for the
+# CMS but not the PDO driver required by the scheduler and approval CLIs.
+RUN docker-php-ext-install pdo_mysql
 
 # 1. Stage our overlays in a neutral path that upstream init.sh's existence check ignores.
 COPY plugins/lead-platform-connector \
@@ -33,6 +37,12 @@ COPY public/themes/souverainete-digitale \
 COPY config/sites.php \
      /opt/lpc-overlay/config/sites.php
 
+# Keep the connector active after the upstream bootstrap or a volume-backed
+# redeploy. The seed creates its storage; this configuration enables its
+# runtime hooks and administration screens.
+COPY config/plugins.php \
+     /opt/lpc-overlay/config/plugins.php
+
 COPY app/controller/index.php \
      /opt/lpc-overlay/app/controller/index.php
 
@@ -45,6 +55,81 @@ COPY app/controller/content/index.php \
 COPY app/controller/content/post.php \
      /opt/lpc-overlay/app/controller/content/post.php
 
+# Frontend route guards for scheduled/draft posts.
+COPY app/sql/mysqli/post.sql \
+     /opt/lpc-overlay/app/sql/mysqli/post.sql
+COPY app/sql/pgsql/post.sql \
+     /opt/lpc-overlay/app/sql/pgsql/post.sql
+COPY app/sql/sqlite/post.sql \
+     /opt/lpc-overlay/app/sql/sqlite/post.sql
+
+# Editorially gated scheduled publisher. These scripts live outside public/.
+COPY scripts/lib/scheduled-publisher.php \
+     /opt/lpc-overlay/scripts/lib/scheduled-publisher.php
+COPY scripts/lib/cache-invalidator.php \
+     /opt/lpc-overlay/scripts/lib/cache-invalidator.php
+COPY scripts/publish-scheduled-content.php \
+     /opt/lpc-overlay/scripts/publish-scheduled-content.php
+COPY scripts/approve-scheduled-content.php \
+     /opt/lpc-overlay/scripts/approve-scheduled-content.php
+COPY scripts/migrate-lead-schema.php \
+     /opt/lpc-overlay/scripts/migrate-lead-schema.php
+
+# 1c. Everything else the fork owns. scripts/tests/deploy-overlay-test.php
+#     derives the fork's footprint from git and fails when a file is missing
+#     here, so this list cannot silently drift again.
+COPY config/app-routes.php \
+     /opt/lpc-overlay/config/app-routes.php
+COPY env.php \
+     /opt/lpc-overlay/env.php
+
+# Canonical host, per-page canonical/og tags, legacy /page/ redirects, sitemaps, robots.
+COPY system/functions.php \
+     /opt/lpc-overlay/system/functions.php
+COPY system/sitemap-builder.php \
+     /opt/lpc-overlay/system/sitemap-builder.php
+COPY app/component/language.php \
+     /opt/lpc-overlay/app/component/language.php
+COPY app/controller/content/legacy-page.php \
+     /opt/lpc-overlay/app/controller/content/legacy-page.php
+COPY app/controller/feed/robots.php \
+     /opt/lpc-overlay/app/controller/feed/robots.php
+COPY app/controller/sitemap.php \
+     /opt/lpc-overlay/app/controller/sitemap.php
+COPY app/template/common.tpl \
+     /opt/lpc-overlay/app/template/common.tpl
+COPY app/template/content/post.tpl \
+     /opt/lpc-overlay/app/template/content/post.tpl
+COPY public/vrobots.txt \
+     /opt/lpc-overlay/public/vrobots.txt
+
+# Solutions directory plugin (annuaire): PHP side and browser-served assets.
+COPY plugins/solutions-directory \
+     /opt/lpc-overlay/plugins/solutions-directory
+COPY public/plugins/solutions-directory \
+     /opt/lpc-overlay/public/plugins/solutions-directory
+COPY plugins/site-tracking \
+     /opt/lpc-overlay/plugins/site-tracking
+COPY public/plugins/site-tracking \
+     /opt/lpc-overlay/public/plugins/site-tracking
+
+# Editorial media referenced by the seeded pages and the theme.
+COPY public/media/editorial \
+     /opt/lpc-overlay/public/media/editorial
+COPY public/media/independant-digital-logo.png \
+     /opt/lpc-overlay/public/media/independant-digital-logo.png
+COPY public/media/logo.png \
+     /opt/lpc-overlay/public/media/logo.png
+COPY public/media/favicon.ico \
+     /opt/lpc-overlay/public/media/favicon.ico
+# Solution logos and screenshots referenced by post.image / the screenshots meta.
+COPY public/media/solutions \
+     /opt/lpc-overlay/public/media/solutions
+
+# Operational and editorial CLIs (flush/purge jobs, audits, chrome sync).
+COPY scripts \
+     /opt/lpc-overlay/scripts
+
 # 1b. One-time DB seed scripts. Staged OUTSIDE /opt/lpc-overlay so the
 #     `cp -a /opt/lpc-overlay/.` webroot overlay does NOT copy them into the
 #     public tree (keeps seed.dokploy.sql from ever being web-served).
@@ -53,6 +138,10 @@ COPY seed.dokploy.sql /opt/seed/seed.dokploy.sql
 
 # 2. Custom PHP config (outside /var/www/html — applied at build time).
 COPY php.ini /usr/local/etc/php/php.ini
+
+# 2a. nginx server config: the upstream conf plus the sitemap location, so
+#     /sitemap*.xml reaches PHP with a 200 instead of the static-file 404.
+COPY nginx.dokploy.conf /etc/nginx/http.d/vvveb.conf
 
 # 3. Replace init.sh:
 #    - keep upstream bootstrap logic (curl + unzip Vvveb on first run)

@@ -1,0 +1,158 @@
+<?php
+
+define('V_VERSION', 'test');
+
+$file = __DIR__ . '/../system/partial-lead.php';
+if (! is_file($file)) {
+    fwrite(STDERR, "FAIL: partial lead helper is missing.\n");
+    exit(1);
+}
+
+require_once $file;
+
+use Vvveb\Plugins\LeadPlatformConnector\System\PartialLead;
+
+$failures = 0;
+
+function expectTrue($condition, string $message): void {
+    global $failures;
+    if (! $condition) {
+        fwrite(STDERR, "FAIL: $message\n");
+        $failures++;
+    }
+}
+
+$now = '2026-09-01 12:00:00';
+
+// --- isFlushable(): an aged partial row (stage < FINAL_STAGE, created_at more
+// than 24h before "now") must be flushable. ---------------------------------
+
+$agedPartial = [
+    'stage'      => 2,
+    'created_at' => '2026-08-31 11:59:59', // 24h00m01s before $now
+];
+expectTrue(PartialLead::isFlushable($agedPartial, $now) === true, 'a partial row older than 24h must be flushable.');
+
+$agedFirstStage = [
+    'stage'      => PartialLead::FIRST_STAGE,
+    'created_at' => '2026-08-01 00:00:00',
+];
+expectTrue(PartialLead::isFlushable($agedFirstStage, $now) === true, 'a stage-1 row older than 24h must be flushable.');
+
+// Boundary: exactly 24h old must also be flushable ("<=").
+$exactlyAged = [
+    'stage'      => 1,
+    'created_at' => '2026-08-31 12:00:00',
+];
+expectTrue(PartialLead::isFlushable($exactlyAged, $now) === true, 'a partial row exactly 24h old must be flushable.');
+
+// --- isFlushable(): a fresh partial row (created within the last 24h) must
+// not be flushable yet. ------------------------------------------------------
+
+$freshPartial = [
+    'stage'      => 1,
+    'created_at' => '2026-09-01 11:00:00', // 1h before $now
+];
+expectTrue(PartialLead::isFlushable($freshPartial, $now) === false, 'a partial row younger than 24h must not be flushable.');
+
+$justUnderThreshold = [
+    'stage'      => 2,
+    'created_at' => '2026-08-31 12:00:01', // 23h59m59s before $now
+];
+expectTrue(PartialLead::isFlushable($justUnderThreshold, $now) === false, 'a partial row 1s short of 24h must not be flushable.');
+
+// --- isFlushable(): a complete row (stage === FINAL_STAGE) must never be
+// flushable, no matter how old. ----------------------------------------------
+
+$completeOld = [
+    'stage'      => PartialLead::FINAL_STAGE,
+    'created_at' => '2020-01-01 00:00:00',
+];
+expectTrue(PartialLead::isFlushable($completeOld, $now) === false, 'a complete row must never be flushable, however old.');
+
+// --- isFlushable(): defensive — a missing/malformed created_at must not
+// crash and must not be treated as flushable. --------------------------------
+
+$malformed = [
+    'stage'      => 1,
+    'created_at' => 'not-a-date',
+];
+expectTrue(PartialLead::isFlushable($malformed, $now) === false, 'a malformed created_at must not be flushable.');
+
+$missingCreatedAt = [
+    'stage' => 1,
+];
+expectTrue(PartialLead::isFlushable($missingCreatedAt, $now) === false, 'a row with no created_at must not be flushable.');
+
+// --- stripAcknowledgement(): removes only privacy_acknowledgement ----------
+
+$stripped = PartialLead::stripAcknowledgement([
+    'email'                   => 'dsi@example.fr',
+    'privacy_acknowledgement' => '1',
+]);
+expectTrue(! array_key_exists('privacy_acknowledgement', $stripped), 'stripAcknowledgement must remove privacy_acknowledgement.');
+expectTrue(($stripped['email'] ?? null) === 'dsi@example.fr', 'stripAcknowledgement must not touch other fields.');
+
+// --- requiresLocalQueue(): named-introduction leads must never forward ----
+
+expectTrue(
+    PartialLead::requiresLocalQueue(['provider_introduction_requested' => '1', 'email' => 'dsi@example.fr']) === true,
+    'a payload with provider_introduction_requested === "1" must require the local queue.'
+);
+expectTrue(
+    PartialLead::requiresLocalQueue(['provider_introduction_requested' => '0']) === false,
+    'a payload with provider_introduction_requested !== "1" must not require the local queue.'
+);
+expectTrue(
+    PartialLead::requiresLocalQueue([]) === false,
+    'a payload with no provider_introduction_requested key must not require the local queue.'
+);
+expectTrue(
+    PartialLead::requiresLocalQueue(['provider_introduction_requested' => 1]) === false,
+    'provider_introduction_requested must be compared strictly against the string "1".'
+);
+
+// --- the cron script's SQL pre-filter ------------------------------------
+// The job selects with an age cutoff so an old install does not page every
+// unfinished row into PHP. isFlushable() must stay the authority — the SQL
+// bound is only allowed to be at least as permissive as it, never narrower, or
+// rows would go unflushed without any code deciding so.
+
+$flushScript = (string) file_get_contents(__DIR__ . '/../../../scripts/flush-partial-leads.php');
+expectTrue(
+    str_contains($flushScript, 'created_at <= :cutoff'),
+    'the flush job must bound its SELECT by an age cutoff instead of scanning every unfinished row.'
+);
+expectTrue(
+    str_contains($flushScript, 'PartialLead::TTL_HOURS * 3600'),
+    'the SQL cutoff must be derived from PartialLead::TTL_HOURS, not a second hardcoded age.'
+);
+expectTrue(
+    str_contains($flushScript, 'PartialLead::isFlushable($row, $now)'),
+    'isFlushable() must remain the per-row authority after the SQL pre-filter.'
+);
+expectTrue(
+    str_contains($flushScript, 'UTC_TIMESTAMP()'),
+    'the flush job must check that the database clock is UTC before ageing rows against it.'
+);
+
+// The cutoff the script computes and the boundary isFlushable() enforces are the
+// same instant, so the pre-filter can never drop a row isFlushable() would take.
+$cutoffNow = '2026-09-02 12:00:00';
+$cutoff = gmdate('Y-m-d H:i:s', strtotime($cutoffNow . ' UTC') - PartialLead::TTL_HOURS * 3600);
+expectTrue($cutoff === '2026-09-01 12:00:00', 'the UTC cutoff must be exactly TTL_HOURS before now.');
+expectTrue(
+    PartialLead::isFlushable(['stage' => 1, 'created_at' => $cutoff], $cutoffNow) === true,
+    'a row created exactly at the cutoff must still be flushable, so the inclusive SQL bound matches.'
+);
+expectTrue(
+    PartialLead::isFlushable(['stage' => 1, 'created_at' => '2026-09-01 12:00:01'], $cutoffNow) === false,
+    'a row one second younger than the cutoff must not be flushable.'
+);
+
+if ($failures > 0) {
+    fwrite(STDERR, "flush-partial tests: FAIL ($failures issue(s))\n");
+    exit(1);
+}
+
+fwrite(STDOUT, "flush-partial tests: PASS\n");

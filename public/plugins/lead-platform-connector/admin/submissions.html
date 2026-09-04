@@ -58,6 +58,7 @@
 										<th>Source</th>
 										<th>IP</th>
 										<th>Attempts</th>
+										<th>Stage</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -78,6 +79,10 @@
 										<td class="small text-truncate" style="max-width:240px;"><span data-v-lead_submission-source_page></span></td>
 										<td class="small"><span data-v-lead_submission-client_ip></span></td>
 										<td><span data-v-lead_submission-attempts>0</span></td>
+										<td class="small text-nowrap">
+											<span data-v-lead_submission-stage>3</span>
+											<span class="badge bg-secondary ms-1" data-v-if="lead_submission.stage < 3">Diagnostic incomplet</span>
+										</td>
 									</tr>
 									<tr data-v-if-not="this.count > 0" class="no-items">
 										<td colspan="100">

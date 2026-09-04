@@ -14,6 +14,8 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_ENGINE: mysqli
+      # Public origin for canonical links, og:url, sitemaps and robots.txt.
+      CANONICAL_URL: https://independantdigital.fr
     volumes:
       # Single explicit named volume for /var/www/html. This overrides the
       # anonymous volume Docker would otherwise create from the upstream image's
@@ -31,11 +33,11 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=dokploy-network
-      - traefik.http.routers.independance.rule=Host(`independance.otospex.dev`)
+      - traefik.http.routers.independance.rule=Host(`independantdigital.fr`,`www.independantdigital.fr`)
       - traefik.http.routers.independance.entrypoints=websecure
       - traefik.http.routers.independance.tls.certresolver=letsencrypt
       - traefik.http.services.independance.loadbalancer.server.port=80
-      - traefik.http.routers.independance-http.rule=Host(`independance.otospex.dev`)
+      - traefik.http.routers.independance-http.rule=Host(`independantdigital.fr`,`www.independantdigital.fr`)
       - traefik.http.routers.independance-http.entrypoints=web
       - traefik.http.routers.independance-http.middlewares=independance-redirect
       - traefik.http.middlewares.independance-redirect.redirectscheme.scheme=https

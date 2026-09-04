@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 640" role="img" aria-labelledby="title desc">
+  <title>Carte des dépendances d’un système numérique</title>
+  <desc>Les couches identité, données, collaboration, applications et hébergement sont reliées à un noyau opérationnel et à leurs conditions de sortie.</desc>
+  <style>
+    :root {
+      --art-ink: #04172C;
+      --art-accent: #0055A5;
+      --art-signal: #EE4137;
+      --art-paper: #F8FBFE;
+      --art-panel: #FFFFFF;
+      --art-rule: #D6E4F0;
+      --art-rule-strong: #AFC8DC;
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--art-accent)"/>
+    </marker>
+  </defs>
+
+  <rect x="1" y="1" width="718" height="638" rx="18" fill="var(--art-paper)" stroke="var(--art-rule)" stroke-width="2"/>
+  <path d="M360 135 V250 M194 225 L292 278 M526 225 L428 278 M194 415 L292 362 M526 415 L428 362 M360 505 V390" stroke="var(--art-accent)" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+
+  <g fill="var(--art-panel)" stroke="var(--art-rule-strong)" stroke-width="2">
+    <rect x="286" y="54" width="148" height="82" rx="12"/>
+    <rect x="86" y="174" width="154" height="102" rx="12"/>
+    <rect x="480" y="174" width="154" height="102" rx="12"/>
+    <rect x="86" y="364" width="154" height="102" rx="12"/>
+    <rect x="480" y="364" width="154" height="102" rx="12"/>
+    <rect x="286" y="504" width="148" height="82" rx="12"/>
+  </g>
+
+  <rect x="286" y="250" width="148" height="140" rx="18" fill="var(--art-ink)"/>
+  <circle cx="360" cy="320" r="30" fill="var(--art-panel)"/>
+  <path d="M346 320 L356 330 L376 306" fill="none" stroke="var(--art-accent)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g fill="var(--art-accent)">
+    <circle cx="360" cy="95" r="18"/>
+    <circle cx="163" cy="225" r="18"/>
+    <circle cx="557" cy="225" r="18"/>
+    <circle cx="163" cy="415" r="18"/>
+    <circle cx="557" cy="415" r="18"/>
+    <circle cx="360" cy="545" r="18"/>
+  </g>
+
+  <g fill="var(--art-panel)">
+    <circle cx="360" cy="95" r="6"/>
+    <path d="M149 225 H177 M163 211 V239" stroke="var(--art-panel)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M544 214 H570 V236 H544 Z" fill="none" stroke="var(--art-panel)" stroke-width="4"/>
+    <path d="M150 427 L163 404 L176 427 Z" fill="none" stroke="var(--art-panel)" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M544 415 H570 M557 402 V428" stroke="var(--art-panel)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M348 545 H372" stroke="var(--art-panel)" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <path d="M115 320 H240 M480 320 H605" stroke="var(--art-signal)" stroke-width="3" stroke-dasharray="7 7"/>
+  <circle cx="115" cy="320" r="7" fill="var(--art-signal)"/>
+  <circle cx="605" cy="320" r="7" fill="var(--art-signal)"/>
+</svg>

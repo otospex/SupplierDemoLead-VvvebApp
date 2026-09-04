@@ -1,5 +1,31 @@
 [
   {
+    "date": "2026-09-01",
+    "scope": "public/themes/souverainete-digitale/index.fr.html",
+    "brief": "Sovereignty copy platform — 5-section homepage, three routes, statement footer",
+    "macrostructure": "Workbench",
+    "genre": "modern-minimal",
+    "theme": "Cobalt",
+    "enrichment": "E5 Tier-B hand-built SVG (reused)",
+    "nav": "project header",
+    "footer": "Ft5 Statement",
+    "tone": "technical",
+    "notes": "Single stylesheet souverainete.css; custom.css retained for English templates only."
+  },
+  {
+    "date": "2026-08-29",
+    "scope": "public/themes/souverainete-digitale/index.fr.html",
+    "brief": "Centered ICP-first homepage with a visual dependency-to-reversibility map",
+    "macrostructure": "Map / Diagram",
+    "genre": "modern-minimal",
+    "theme": "Cobalt",
+    "enrichment": "E5 Tier-B hand-built SVG",
+    "nav": "project header",
+    "footer": "Ft5 Statement",
+    "tone": "technical",
+    "notes": "Homepage centered around DSI/RSSI problems; partnership references reduced to contextual disclosure and the footer."
+  },
+  {
     "date": "2026-07-08",
     "scope": "public/themes/souverainete-digitale",
     "brief": "Digital Sovereignty B2B lead site redesign using existing docs and theme content",
