@@ -100,9 +100,18 @@ expectTrue(str_contains($robotsController, 'canonicalUrl('), 'robots.php must ab
 expectTrue(! preg_match('/if \(\$path\) \{\s*\$text = preg_replace\(\'@\(sitemap\)/', $robotsController), 'the sitemap absolutizing must not be gated on a sub-path.');
 
 // --- head links ---------------------------------------------------------------
-foreach (glob($root . '/public/themes/souverainete-digitale/**/*.html') + glob($root . '/public/themes/souverainete-digitale/*.html') as $file) {
-    if (str_contains((string) file_get_contents($file), 'href="/feed/index"')) {
-        expectTrue(false, basename($file) . ' still advertises /feed/index as the sitemap.');
+// glob() has no '**' recursion in PHP, so walk the tree: every publishable
+// template, at any depth, must point at the new sitemap.
+$themeDir = $root . '/public/themes/souverainete-digitale';
+$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($themeDir, FilesystemIterator::SKIP_DOTS));
+foreach ($iterator as $file) {
+    $path = str_replace('\\', '/', $file->getPathname());
+    // backup/ holds the page editor's local, gitignored snapshots.
+    if (! str_ends_with($path, '.html') || str_contains($path, '/backup/')) {
+        continue;
+    }
+    if (str_contains((string) file_get_contents($path), 'href="/feed/index"')) {
+        expectTrue(false, basename($path) . ' still advertises /feed/index as the sitemap.');
     }
 }
 

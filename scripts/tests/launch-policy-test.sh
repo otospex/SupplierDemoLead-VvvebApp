@@ -30,13 +30,16 @@ if rg -n 'href="/page/(cloud-souverain-guide|protection-donnees|conformite-audit
   fail 'French homepage links to routes retired by the launch allowlist.'
 fi
 
+# backup/ holds the page editor's local, gitignored snapshots; the launch
+# policy governs publishable assets only.
 if rg -n 'souverainete-digitale\.fr|Digital\.Sovereignty|independance-otospex-dev|admin@admin\.com|contact@admin\.com' \
+  --glob '!**/backup/**' \
   public/themes/souverainete-digitale seed.dokploy.sql >/dev/null; then
   fail 'Old domains, demo identity or development endpoints remain in publishable assets.'
 fi
 
 if rg -n 'href="https://(?:www\.)?(?:linkedin\.com|x\.com|github\.com|youtube\.com)/"' \
-  public/themes/souverainete-digitale --glob '*.fr.html' >/dev/null; then
+  public/themes/souverainete-digitale --glob '*.fr.html' --glob '!**/backup/**' >/dev/null; then
   fail 'French templates still expose placeholder social links.'
 fi
 
